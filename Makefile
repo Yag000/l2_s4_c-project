@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-I.
+CFLAGS=-I. -Wall
 SRCDIR=src/main
 OBJDIR=obj
 
