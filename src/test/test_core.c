@@ -21,5 +21,5 @@ void destroy_test_info(test_info *info)
 
 void print_test_info(test_info *info)
 {
-    printf("passed: %d, failed: %d, total: %d, time: %f seconds", info->passed, info->failed, info->total, info->time);
+    printf("passed: %d, failed: %d, total: %d, time: %f seconds\n", info->passed, info->failed, info->total, info->time);
 }
