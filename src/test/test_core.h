@@ -1,8 +1,10 @@
 #include <time.h>
+#include <stdbool.h>
 
 #ifndef TEST_CORE_H
-
 #define TEST_CORE_H
+
+extern bool verbose;
 
 // Sructure to hold test information.
 typedef struct test_info
