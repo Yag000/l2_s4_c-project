@@ -1,3 +1,5 @@
+#include <time.h>
+
 #ifndef TEST_CORE_H
 
 #define TEST_CORE_H
@@ -14,5 +16,7 @@ typedef struct test_info
 test_info *create_test_info();
 void destroy_test_info(test_info *);
 void print_test_info(test_info *);
+
+double clock_ticks_to_seconds(clock_t);
 
 #endif

@@ -26,3 +26,8 @@ void print_test_info(test_info *info)
 {
     printf("passed: %d, failed: %d, total: %d, time: %f seconds\n", info->passed, info->failed, info->total, info->time);
 }
+
+double clock_ticks_to_seconds(clock_t ticks)
+{
+    return (double)ticks / CLOCKS_PER_SEC;
+}

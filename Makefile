@@ -30,6 +30,7 @@ $(OBJDIRTEST)/%.o: $(TESTDIR)/%.c
 
 main: $(OBJFILESWITHMAIN)
 	$(CC) -o $@ $^ $(CFLAGS)
+	
 
 test: $(OBJFILES) $(TESTOBJFILES)
 	$(CC) -o $@ $^ $(CFLAGS)
