@@ -2,6 +2,7 @@
 
 #define TEST_CORE_H
 
+// Sructure to hold test information.
 typedef struct test_info
 {
     int passed;

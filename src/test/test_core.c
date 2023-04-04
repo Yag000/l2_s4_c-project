@@ -3,6 +3,7 @@
 
 #include "test_core.h"
 
+// Create a new test info
 test_info *create_test_info()
 {
     test_info *info = malloc(sizeof(test_info));
@@ -14,11 +15,13 @@ test_info *create_test_info()
     return info;
 }
 
+// Destroy the test info
 void destroy_test_info(test_info *info)
 {
     free(info);
 }
 
+// Print the test info
 void print_test_info(test_info *info)
 {
     printf("passed: %d, failed: %d, total: %d, time: %f seconds\n", info->passed, info->failed, info->total, info->time);
