@@ -1,5 +1,7 @@
 #include <time.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifndef TEST_CORE_H
 #define TEST_CORE_H
@@ -20,5 +22,8 @@ void destroy_test_info(test_info *);
 void print_test_info(test_info *);
 
 double clock_ticks_to_seconds(clock_t);
+
+// All the tests
+test_info *test_example();
 
 #endif

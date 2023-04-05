@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+
 
 #include "test_core.h"
 
@@ -15,6 +14,7 @@ int main(int argc, char *argv[])
     if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'v')
     {
         verbose = true;
+        puts("Verbose mode enabled");
     }
 
     // Create the test info
@@ -22,6 +22,8 @@ int main(int argc, char *argv[])
     clock_t before = clock();
 
     // Add tests here
+
+    update_test_info(info, test_example());
 
     // End of tests
 
