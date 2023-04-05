@@ -31,11 +31,13 @@ function testOuput(){
 make test
 
 # Run the tests
-$verbose && ./test -v
-! $verbose && ./test
+$verbose && ./test -v || has_failed=true
+! $verbose && ./test || has_failed=true
 
 # Test the output
 testOuput
+
+rm -rf src/test/output/*
 
 # Exit with a non-zero status if any of the tests failed
 $has_failed && exit 1
