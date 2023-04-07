@@ -56,3 +56,10 @@ obj/
 
 # Project compiled executable
 main
+!src/main
+
+test
+!src/test
+
+# VSCode
+.vscode/
