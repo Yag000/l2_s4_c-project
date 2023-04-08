@@ -12,6 +12,6 @@ typedef struct command
 command *create_command(char *name, int argsNumber, char **args);
 void destroy_command(command *cmd);
 
-int parse_command(const command *cmd);
+int execute_command(const command *cmd);
 
 #endif

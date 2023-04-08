@@ -41,5 +41,6 @@ void test_parse_file(test_info *info)
         fclose(out_stream);
     }
     out_stream = stdout;
+
     handle_boolean_test(error_code == 0, true, __LINE__, __FILE__, info);
 }

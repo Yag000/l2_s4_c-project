@@ -12,9 +12,8 @@
 // We could also use a dynamic array to store the arguments,
 // but for the purpose of this project, we will use a fixed size array of 2.
 #define MAX_COMMAND_ARGUMENTS 2
-// TODO : add documentation
+
 command *get_command_from_iterator(string_iterator *iterator);
-char *strip(char *str);
 void close_file(FILE *file);
 
 /**
@@ -56,7 +55,7 @@ int parse_file(const char *path)
 
 /**
  * Parses a line of the file.
- * It returns 0 if the command is valid.
+ * It returns 0 if the command execution is successful.
  */
 int parse_line(char *line)
 {
@@ -76,7 +75,7 @@ int parse_line(char *line)
         return -1;
     }
 
-    int exit_code = parse_command(command);
+    int exit_code = execute_command(command);
 
     destroy_string_iterator(iterator);
     destroy_command(command);
@@ -84,6 +83,9 @@ int parse_line(char *line)
     return exit_code;
 }
 
+/**
+ * Returns a command from a string iterator.
+ */
 command *get_command_from_iterator(string_iterator *iterator)
 {
     if (!has_next_word(iterator))
@@ -104,7 +106,7 @@ command *get_command_from_iterator(string_iterator *iterator)
     int argsNumber = 0;
     while (has_next_word(iterator) && argsNumber < MAX_COMMAND_ARGUMENTS)
     {
-        args[argsNumber] = strip(next_word(iterator));
+        args[argsNumber] = strip_newline(next_word(iterator));
         argsNumber++;
     }
 
@@ -122,23 +124,6 @@ command *get_command_from_iterator(string_iterator *iterator)
     }
 
     return create_command(command_, argsNumber, args);
-}
-
-char *strip(char *str)
-{
-    int i = 0;
-    int j = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] != '\n')
-        {
-            str[j++] = str[i];
-        }
-        i++;
-    }
-    str[j] = '\0';
-    str = realloc(str, sizeof(char) * (j + 1));
-    return str;
 }
 
 void close_file(FILE *file)

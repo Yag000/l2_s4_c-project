@@ -22,4 +22,6 @@ void destroy_string_iterator(string_iterator *);
 bool has_next_word(const string_iterator *);
 char *next_word(string_iterator *);
 
+char *strip_newline(char *string);
+
 #endif

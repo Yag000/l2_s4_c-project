@@ -66,3 +66,23 @@ void update_index_to_next_word(string_iterator *iterator)
         iterator->index++;
     }
 }
+
+/**
+ * Strips the new line character from a string.
+ */
+char *strip_newline(char *str)
+{
+    int i = 0;
+    int j = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] != '\n')
+        {
+            str[j++] = str[i];
+        }
+        i++;
+    }
+    str[j] = '\0';
+    str = realloc(str, sizeof(char) * (j + 1));
+    return str;
+}

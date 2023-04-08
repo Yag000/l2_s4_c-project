@@ -9,6 +9,7 @@
  */
 
 #include "test_core.h"
+#include "../main/constants.h"
 
 bool test1();
 bool test2();
