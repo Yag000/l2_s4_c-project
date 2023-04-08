@@ -1,10 +1,11 @@
+
+#ifndef TEST_CORE_H
+#define TEST_CORE_H
+
 #include <time.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#ifndef TEST_CORE_H
-#define TEST_CORE_H
 
 extern bool verbose;
 
@@ -24,7 +25,11 @@ void print_test_info(const test_info *);
 // Test utils
 double clock_ticks_to_seconds(clock_t);
 
+void print_test_header(char *name);
+void print_test_footer(char *name);
+
 void handle_string_test(char *expected, char *actual, int line, char *file, test_info *info);
+void handle_boolean_test(bool expected, bool actual, int line, char *file, test_info *info);
 
 // All the tests
 test_info *test_example();

@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// TODO: remove this
-#include <stdio.h>
-
 #include "string_utils.h"
 
 void update_index_to_next_word(string_iterator *iterator);
@@ -23,18 +20,26 @@ void destroy_string_iterator(string_iterator *iterator)
     free(iterator);
 }
 
-bool has_next_string(const string_iterator *iterator)
+/**
+ * Returns true if there is another word in the string.
+ */
+bool has_next_word(const string_iterator *iterator)
 {
     return iterator->string[iterator->index] != '\0';
 }
 
-char *next_string(string_iterator *iterator)
+/**
+ * Returns the next word in the string. If there are no more words
+ * in the string, NULL is returned.
+ */
+char *next_word(string_iterator *iterator)
 {
-    if (!has_next_string(iterator))
+    if (!has_next_word(iterator))
     {
         return NULL;
     }
 
+    // We iterate through the string until we find a delimiter, i order to skip the word
     int start = iterator->index;
     while (iterator->string[iterator->index] != '\0' && iterator->string[iterator->index] != iterator->delimiter)
     {
@@ -50,6 +55,10 @@ char *next_string(string_iterator *iterator)
 
     return result;
 }
+
+/**
+ * Updates the index to the next word in the string.
+ */
 void update_index_to_next_word(string_iterator *iterator)
 {
     while (iterator->string[iterator->index] != '\0' && iterator->string[iterator->index] == iterator->delimiter)

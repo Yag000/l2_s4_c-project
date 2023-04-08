@@ -33,6 +33,23 @@ double clock_ticks_to_seconds(clock_t ticks)
     return (double)ticks / CLOCKS_PER_SEC;
 }
 
+void print_test_header(char *name)
+{
+    if (verbose)
+    {
+        printf("\n----------------------- Testing %s -----------------------\n", name);
+    }
+}
+
+void print_test_footer(char *name)
+{
+    if (verbose)
+    {
+
+        printf("\n----------------------- End test %s -----------------------\n", name);
+    }
+}
+
 void handle_string_test(char *expected, char *actual, int line, char *file, test_info *info)
 {
     if (strcmp(expected, actual) != 0)
@@ -42,6 +59,29 @@ void handle_string_test(char *expected, char *actual, int line, char *file, test
     }
     else
     {
+        if (verbose)
+        {
+            printf("Passed: %s == %s at line %d in file %s \n", actual, expected, line, file);
+        }
+        info->passed++;
+    }
+
+    info->total++;
+}
+
+void handle_boolean_test(bool expected, bool actual, int line, char *file, test_info *info)
+{
+    if (expected != actual)
+    {
+        printf("Error: %d != %d at line %d in file %s \n", actual, expected, line, file);
+        info->failed++;
+    }
+    else
+    {
+        if (verbose)
+        {
+            printf("Passed: %d == %d at line %d in file %s \n", actual, expected, line, file);
+        }
         info->passed++;
     }
 

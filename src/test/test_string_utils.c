@@ -1,70 +1,90 @@
 #include "test_core.h"
 #include "../main/string_utils.h"
 
-void test_string_iterator(test_info *info);
+void test_string_iterator_empty(test_info *info);
+void test_string_iterator_with_text(test_info *info);
 
 test_info *test_string_utils()
 {
+    print_test_header("string utils");
+
     clock_t before = clock();
     // Create the test info
     test_info *info = create_test_info();
 
     // Add tests here
-    test_string_iterator(info);
+    test_string_iterator_empty(info);
+    test_string_iterator_with_text(info);
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     printf("Test string utils: ");
     print_test_info(info);
+    print_test_footer("string utils");
     return info;
 }
 
-void test_string_iterator(test_info *info)
+void test_string_iterator_empty(test_info *info)
 {
+
+    if (verbose)
+    {
+        printf("\nTesting string iterator with empty string \n");
+    }
+    char *str = "     ";
+
+    string_iterator *iterator = create_string_iterator(str, ' ');
+
+    handle_boolean_test(false, has_next_word(iterator), __LINE__, __FILE__, info);
+
+    destroy_string_iterator(iterator);
+
+    str = "";
+
+    iterator = create_string_iterator(str, ' ');
+
+    handle_boolean_test(false, has_next_word(iterator), __LINE__, __FILE__, info);
+
+    destroy_string_iterator(iterator);
+}
+
+void test_string_iterator_with_text(test_info *info)
+{
+    if (verbose)
+    {
+        printf("\nTesting string iterator with text \n");
+    }
 
     char *str = "   this    is   a test  ";
 
     string_iterator *iterator = create_string_iterator(str, ' ');
 
-    char *current_string = next_string(iterator);
+    char *current_string = next_word(iterator);
     handle_string_test("this", current_string, __LINE__, __FILE__, info);
 
-    current_string = next_string(iterator);
+    current_string = next_word(iterator);
     handle_string_test("is", current_string, __LINE__, __FILE__, info);
 
-    current_string = next_string(iterator);
+    current_string = next_word(iterator);
     handle_string_test("a", current_string, __LINE__, __FILE__, info);
 
-    current_string = next_string(iterator);
+    current_string = next_word(iterator);
     handle_string_test("test", current_string, __LINE__, __FILE__, info);
 
-    if (has_next_string(iterator))
-    {
-        printf("Error: has_next_string should return false at line %d in file %s \n", __LINE__, __FILE__);
-        info->failed++;
-    }
-    else
-    {
-        info->passed++;
-    }
-    info->total++;
+    handle_boolean_test(false, has_next_word(iterator), __LINE__, __FILE__, info);
 
     destroy_string_iterator(iterator);
 
-    str = "     ";
+    str = "cd   ../test/test/test.c";
 
     iterator = create_string_iterator(str, ' ');
 
-    if (has_next_string(iterator))
-    {
-        printf("Error: has_next_string should return false at line %d in file %s \n", __LINE__, __FILE__);
-        info->failed++;
-    }
-    else
-    {
-        info->passed++;
-    }
+    current_string = next_word(iterator);
+    handle_string_test("cd", current_string, __LINE__, __FILE__, info);
 
-    info->total++;
+    current_string = next_word(iterator);
+    handle_string_test("../test/test/test.c", current_string, __LINE__, __FILE__, info);
+
+    handle_boolean_test(false, has_next_word(iterator), __LINE__, __FILE__, info);
 
     destroy_string_iterator(iterator);
 }
