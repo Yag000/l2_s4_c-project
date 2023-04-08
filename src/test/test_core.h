@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../main/constants.h"
+
 // Structure to hold test information.
 typedef struct test_info
 {
