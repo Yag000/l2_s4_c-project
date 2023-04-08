@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern bool verbose;
 
 // Structure to hold test information.
 typedef struct test_info
@@ -34,5 +33,6 @@ void handle_boolean_test(bool expected, bool actual, int line, char *file, test_
 // All the tests
 test_info *test_example();
 test_info *test_string_utils();
+test_info *test_parser();
 
 #endif

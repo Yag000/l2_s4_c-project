@@ -2,7 +2,10 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "constants.h"
 #include "command.h"
+
+int debug_command(int argsNumber, char **args);
 
 command *create_command(char *name, int argsNumber, char **args)
 {
@@ -24,6 +27,21 @@ void destroy_command(command *cmd)
     free(cmd);
 }
 
+void print_command(const command *cmd)
+{
+    if (!verbose)
+    {
+        return;
+    }
+
+    printf("$ %s ", cmd->name);
+    for (int i = 0; i < cmd->argsNumber; i++)
+    {
+        printf("%s ", cmd->args[i]);
+    }
+    puts("");
+}
+
 bool is_command(const command *command, const char *name)
 {
     return strcmp(command->name, name) == 0;
@@ -32,6 +50,7 @@ bool is_command(const command *command, const char *name)
 int parse_command(const command *cmd)
 {
     // TODO we need to implement the commands and their return value
+    print_command(cmd);
     if (is_command(cmd, "ls"))
     {
         // ls command
@@ -76,9 +95,35 @@ int parse_command(const command *cmd)
     {
         // print command
     }
+    else if (is_command(cmd, "debug"))
+    {
+        return debug_command(cmd->argsNumber, cmd->args);
+    }
     else
     {
         // command not found
     }
+    return 0;
+}
+
+int debug_command(int argsNumber, char **args)
+{
+    for (int i = 0; i < argsNumber; i++)
+    {
+        if (verbose && out_stream != stdout)
+        {
+            printf("%s ", args[i]);
+        }
+        fputs(args[i], out_stream);
+        if (i < argsNumber - 1)
+        {
+            fputs(" ", out_stream);
+        }
+    }
+    if (verbose && out_stream != stdout)
+    {
+        printf("\n");
+    }
+    fputs("\n", out_stream);
     return 0;
 }
