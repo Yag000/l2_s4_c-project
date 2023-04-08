@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-typedef struct a
+typedef struct string_iterator
 {
     char *string;
     int index;
