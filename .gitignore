@@ -61,5 +61,7 @@ main
 test
 !src/test
 
+src/test/output
+
 # VSCode
 .vscode/
