@@ -1,10 +1,11 @@
 name: Test
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: messeb/valgrind
 
     steps:
       - uses: actions/checkout@v3
@@ -14,3 +15,5 @@ jobs:
         run: make test
       - name: Run test
         run: ./test
+      - name: Run valgrind for memory leaks
+        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./test
