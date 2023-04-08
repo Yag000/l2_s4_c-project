@@ -1,8 +1,16 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-int main()
+#include "parser.h"
+
+int main(int argc, char *argv[])
 {
-    puts("Hello, world!");
-    return EXIT_SUCCESS;
+    if (argc != 2)
+    {
+        perror("Nombre d'arguments incorrect");
+        return -1;
+    }
+
+    int error_code = parse_file(argv[1]);
+    return error_code == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
