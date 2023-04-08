@@ -14,4 +14,6 @@ jobs:
       - name: Compile tests
         run: make test
       - name: Run test
-        run: valgrind --leak-check=yes ./test
+        run: ./test
+      - name: Run valgrind for memory leaks
+        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./test
