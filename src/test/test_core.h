@@ -1,11 +1,10 @@
-
 #ifndef TEST_CORE_H
 #define TEST_CORE_H
 
 #include <time.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h
 
 
 // Structure to hold test information.
