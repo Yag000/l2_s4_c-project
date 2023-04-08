@@ -60,15 +60,19 @@ void test_string_iterator_with_text(test_info *info)
 
     char *current_string = next_word(iterator);
     handle_string_test("this", current_string, __LINE__, __FILE__, info);
+    free(current_string);
 
     current_string = next_word(iterator);
     handle_string_test("is", current_string, __LINE__, __FILE__, info);
+    free(current_string);
 
     current_string = next_word(iterator);
     handle_string_test("a", current_string, __LINE__, __FILE__, info);
+    free(current_string);
 
     current_string = next_word(iterator);
     handle_string_test("test", current_string, __LINE__, __FILE__, info);
+    free(current_string);
 
     handle_boolean_test(false, has_next_word(iterator), __LINE__, __FILE__, info);
 
@@ -80,9 +84,11 @@ void test_string_iterator_with_text(test_info *info)
 
     current_string = next_word(iterator);
     handle_string_test("cd", current_string, __LINE__, __FILE__, info);
+    free(current_string);
 
     current_string = next_word(iterator);
     handle_string_test("../test/test/test.c", current_string, __LINE__, __FILE__, info);
+    free(current_string);
 
     handle_boolean_test(false, has_next_word(iterator), __LINE__, __FILE__, info);
 
