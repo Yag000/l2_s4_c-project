@@ -1,6 +1,5 @@
 #!/bin/bash
 
-verbose=false
 has_passed=true
 
 function testOuput(){
@@ -27,7 +26,6 @@ function testOuput(){
     rm -rf src/test/output/*
 }
 
-[ "$1" == "-v" ] && verbose=true
 
 # Compile and run the tests
 echo "Compiling..."
