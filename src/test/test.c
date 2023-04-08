@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
 
     // Add tests here
 
-    update_test_info(info, test_example());
     update_test_info(info, test_string_utils());
     update_test_info(info, test_parser());
 

@@ -31,7 +31,6 @@ void handle_string_test(char *expected, char *actual, int line, char *file, test
 void handle_boolean_test(bool expected, bool actual, int line, char *file, test_info *info);
 
 // All the tests
-test_info *test_example();
 test_info *test_string_utils();
 test_info *test_parser();
 
