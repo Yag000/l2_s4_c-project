@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "parser.h"
 
@@ -11,6 +12,5 @@ int main(int argc, char *argv[])
     }
 
     int error_code = parse_file(argv[1]);
-
     return error_code == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }

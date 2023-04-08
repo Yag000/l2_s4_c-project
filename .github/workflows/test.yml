@@ -1,0 +1,16 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Compile program
+        run: make
+      - name: Compile tests
+        run: make test
+      - name: Run test
+        run: ./test
