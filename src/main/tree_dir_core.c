@@ -10,7 +10,7 @@ noeud *create_empty_noeud()
     return node;
 }
 
-noeud *create_noeud(bool est_dossier, char *nom, noeud *pere, noeud *racine)
+noeud *create_noeud(bool est_dossier, char *nom, noeud *pere)
 {
     noeud *node = create_empty_noeud();
 
@@ -22,18 +22,30 @@ noeud *create_noeud(bool est_dossier, char *nom, noeud *pere, noeud *racine)
     }
 
     memmove(node->nom, nom, length_nom);
-    node->nom[length_nom] = '0';
+    node->nom[length_nom] = '\0';
 
     node->est_dossier = est_dossier;
     node->pere = pere;
-    node->racine = racine;
+    if (pere != NULL)
+    {
+        node->racine = pere->racine;
+        return;
+    }
+    node->racine = NULL;
 }
 
-noeud *create_noeud_with_fils(bool est_dossier, char *nom, noeud *pere, noeud *racine, liste_noeud *fils)
+noeud *create_noeud_with_fils(bool est_dossier, char *nom, noeud *pere, liste_noeud *fils)
 {
-    noeud *node = create_noeud(est_dossier, nom, pere, racine);
+    noeud *node = create_noeud(est_dossier, nom, pere);
 
     node->fils = fils;
+}
+
+noeud *create_root_noeud(char *nom)
+{
+    noeud *node = create_noeud(true, nom, NULL);
+    node->pere = node;
+    node->racine = node;
 }
 
 void destroy_noeud(noeud *node)
@@ -57,11 +69,14 @@ bool are_noeud_equal(noeud *node1, noeud *node2)
     {
         return false;
     }
-
-    return strcmp(node1->nom, node2->nom);
+    if (strcmp(node1->nom, node2->nom) == 0)
+    {
+        return true;
+    }
+    return false;
 }
 
-bool is_fils_of_node_empty(noeud *node)
+bool is_fils_of_noeud_empty(noeud *node)
 {
     if (node == NULL)
     {
@@ -70,23 +85,48 @@ bool is_fils_of_node_empty(noeud *node)
     return node->fils == NULL;
 }
 
+noeud *get_a_fils_of_noeud(noeud *node, const char *name)
+{
+    if (node == NULL || !node->est_dossier)
+    {
+        return NULL;
+    }
+    return get_liste_noeud(node->fils, name);
+}
+
 bool append_a_fils_to_noeud(noeud *pere, noeud *fils)
 {
+    if (pere == NULL || fils == NULL)
+    {
+        return false;
+    }
     if (!pere->est_dossier)
     {
         return false;
     }
+    bool append_success;
+
     if (pere->fils == NULL)
     {
         pere->fils = create_liste_noeud(fils);
-        return true;
+        append_success = true;
     }
-    return append_liste_noeud(pere->fils, fils);
+    else
+    {
+        bool append_success = append_liste_noeud(pere->fils, fils);
+    }
+    if (append_success)
+    {
+        fils->pere = pere;
+        fils->racine = pere->racine;
+    }
+
+    return append_success;
 }
 
 bool remove_a_fils_of_noeud(noeud *pere, noeud *fils)
 {
-    if (!pere->est_dossier)
+    if (pere == NULL || fils == NULL || !pere->est_dossier)
     {
         return false;
     }
@@ -128,6 +168,19 @@ bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
         return true;
     }
     return contains_liste_noeud(node_list->succ, node);
+}
+
+noeud *get_liste_noeud(liste_noeud *node_list, const char *name)
+{
+    if (node_list == NULL)
+    {
+        return NULL;
+    }
+    if (strcmp(node_list->no->nom, name))
+    {
+        return node_list->no;
+    }
+    return get_liste_noeud(node_list->succ, name);
 }
 
 bool append_liste_noeud(liste_noeud *node_list, noeud *node)
