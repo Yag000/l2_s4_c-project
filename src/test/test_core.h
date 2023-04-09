@@ -1,4 +1,3 @@
-
 #ifndef TEST_CORE_H
 #define TEST_CORE_H
 
@@ -7,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern bool verbose;
+#include "../main/constants.h"
 
 // Structure to hold test information.
 typedef struct test_info
@@ -32,8 +31,8 @@ void handle_string_test(char *expected, char *actual, int line, char *file, test
 void handle_boolean_test(bool expected, bool actual, int line, char *file, test_info *info);
 
 // All the tests
-test_info *test_example();
 test_info *test_string_utils();
 test_info *test_tree_dir_core();
+test_info *test_parser();
 
 #endif

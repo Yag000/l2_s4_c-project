@@ -1,5 +1,3 @@
-
-
 #include "test_core.h"
 
 void update_test_info(test_info *target_info, test_info *origin_info);
@@ -23,9 +21,9 @@ int main(int argc, char *argv[])
 
     // Add tests here
 
-    update_test_info(info, test_example());
     update_test_info(info, test_string_utils());
     update_test_info(info, test_tree_dir_core());
+    update_test_info(info, test_parser());
 
     // End of tests
 
