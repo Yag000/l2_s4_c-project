@@ -132,14 +132,13 @@ bool append_a_fils_to_noeud(noeud *pere, noeud *fils)
     }
     else
     {
-        bool append_success = append_liste_noeud(pere->fils, fils);
+        append_success = append_liste_noeud(pere->fils, fils);
     }
     if (append_success)
     {
         fils->pere = pere;
         fils->racine = pere->racine;
     }
-
     return append_success;
 }
 
@@ -196,7 +195,7 @@ unsigned size_liste_noeud(liste_noeud *node_list)
     {
         return 0;
     }
-    return 1 + size_liste_noeud(node_list);
+    return 1 + size_liste_noeud(node_list->succ);
 }
 
 noeud *get_liste_noeud(liste_noeud *node_list, const char *name)

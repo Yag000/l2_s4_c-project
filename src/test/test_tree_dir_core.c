@@ -23,6 +23,7 @@ test_info *test_tree_dir_core()
     test_is_fils_of_node_empty(info);
     test_create_liste_noeud(info);
     test_contains_liste_noeud(info);
+    test_append_liste_noeud(info);
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     printf("Test tree dir core: ");
@@ -37,6 +38,7 @@ void test_create_noeud(test_info *info)
     {
         printf("\nTesting to create a node\n");
     }
+
     noeud *pere = create_root_noeud("pere");
     handle_boolean_test(are_noeud_equal(pere, pere->pere), true, __LINE__, __FILE__, info);
     handle_boolean_test(are_noeud_equal(pere, pere->racine), true, __LINE__, __FILE__, info);
@@ -78,6 +80,7 @@ void test_is_fils_of_node_empty(test_info *info)
     {
         printf("\nTesting if fils of node is empty\n");
     }
+
     noeud *root = create_root_noeud("root");
 
     handle_boolean_test(is_fils_of_noeud_empty(root), true, __LINE__, __FILE__, info);
@@ -95,6 +98,7 @@ void test_create_liste_noeud(test_info *info)
     {
         printf("\nTesting to create a liste noeud\n");
     }
+
     noeud *node = create_root_noeud("test");
 
     liste_noeud *node_list = create_liste_noeud(node);
@@ -117,6 +121,7 @@ void test_contains_liste_noeud(test_info *info)
     {
         printf("\nTesting contains liste noeud\n");
     }
+
     noeud *root_node = create_root_noeud("root");
 
     noeud *node = create_noeud(true, "test", NULL);
@@ -128,6 +133,7 @@ void test_contains_liste_noeud(test_info *info)
     append_a_fils_to_noeud(root_node, create_noeud(false, "test3", NULL));
     node = create_noeud(false, "test4", NULL);
     handle_boolean_test(contains_liste_noeud(root_node->fils, node), false, __LINE__, __FILE__, info);
+
     append_a_fils_to_noeud(root_node, node);
     handle_boolean_test(contains_liste_noeud(root_node->fils, node), true, __LINE__, __FILE__, info);
     append_a_fils_to_noeud(root_node, create_noeud(false, "test5", NULL));
@@ -138,6 +144,33 @@ void test_contains_liste_noeud(test_info *info)
 
 void test_append_liste_noeud(test_info *info)
 {
+    if (verbose)
+    {
+        printf("\nTesting to append a node in a liste_noeud\n");
+    }
+    noeud *root_node = create_root_noeud("root");
+    handle_boolean_test(root_node->fils == NULL, true, __LINE__, __FILE__, info);
+
+    noeud *node = create_noeud(false, "test", NULL);
+    append_a_fils_to_noeud(root_node, node);
+    handle_boolean_test(root_node->fils != NULL, true, __LINE__, __FILE__, info);
+    handle_boolean_test(are_noeud_equal(root_node->fils->no, node), true, __LINE__, __FILE__, info);
+    handle_boolean_test(are_noeud_equal(root_node->fils->no->pere, root_node), true, __LINE__, __FILE__, info);
+    handle_boolean_test(are_noeud_equal(root_node->fils->no->racine, root_node), true, __LINE__, __FILE__, info);
+
+    node = create_noeud(false, "test2", NULL);
+    handle_boolean_test(contains_liste_noeud(root_node->fils, node), false, __LINE__, __FILE__, info);
+    handle_boolean_test(append_a_fils_to_noeud(root_node, node), true, __LINE__, __FILE__, info);
+    handle_boolean_test(contains_liste_noeud(root_node->fils, node), true, __LINE__, __FILE__, info);
+    handle_boolean_test(are_noeud_equal(node->pere, root_node), true, __LINE__, __FILE__, info);
+    handle_boolean_test(are_noeud_equal(node->racine, root_node), true, __LINE__, __FILE__, info);
+
+    append_a_fils_to_noeud(root_node, create_noeud(false, "test3", NULL));
+    handle_boolean_test(contains_liste_noeud(root_node->fils, node), true, __LINE__, __FILE__, info);
+
+    handle_boolean_test(size_liste_noeud(root_node->fils) == 3, true, __LINE__, __FILE__, info);
+
+    destroy_noeud(root_node);
 }
 
 void test_remove_liste_noeud(test_info *info)
