@@ -95,6 +95,15 @@ bool contains_noeud(noeud *pere, noeud *fils)
     return contains_liste_noeud(pere->fils, fils);
 }
 
+unsigned get_number_of_fils(noeud *noeud)
+{
+    if (noeud == NULL)
+    {
+        return;
+    }
+    return size_liste_noeud(noeud->fils);
+}
+
 noeud *get_a_fils_of_noeud(noeud *node, const char *name)
 {
     if (node == NULL || !node->est_dossier)
@@ -179,6 +188,15 @@ bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
         return true;
     }
     return contains_liste_noeud(node_list->succ, node);
+}
+
+unsigned size_liste_noeud(liste_noeud *node_list)
+{
+    if (node_list == NULL)
+    {
+        return 0;
+    }
+    return 1 + size_liste_noeud(node_list);
 }
 
 noeud *get_liste_noeud(liste_noeud *node_list, const char *name)
