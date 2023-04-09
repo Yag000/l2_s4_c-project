@@ -24,13 +24,14 @@ noeud *create_noeud(bool est_dossier, char *nom, noeud *pere);
 noeud *create_noeud_with_fils(bool est_dossier, char *nom, noeud *pere, liste_noeud *fils);
 noeud *create_root_noeud(char *nom);
 void destroy_noeud(noeud *node);
-bool are_noeud_equal(noeud *node1, noeud *node2);
+bool are_noeuds_equal(noeud *node1, noeud *node2);
 bool is_fils_of_noeud_empty(noeud *node);
 bool contains_noeud(noeud *pere, noeud *fils);
 unsigned get_number_of_fils(noeud *noeud);
 noeud *get_a_fils_of_noeud(noeud *node, const char *name);
 bool append_a_fils_to_noeud(noeud *pere, noeud *fils);
 bool remove_a_fils_of_noeud(noeud *pere, noeud *fils);
+
 liste_noeud *create_liste_noeud(noeud *node);
 void destroy_liste_noeud(liste_noeud *node_list);
 bool contains_liste_noeud(liste_noeud *node_list, noeud *node);

@@ -26,27 +26,37 @@ noeud *create_noeud(bool est_dossier, char *nom, noeud *pere)
 
     node->est_dossier = est_dossier;
     node->pere = pere;
+    node->fils = NULL;
+
     if (pere != NULL)
     {
         node->racine = pere->racine;
-        return;
+        return node;
     }
+
     node->racine = NULL;
-    node->fils = NULL;
+    return node;
 }
 
-noeud *create_noeud_with_fils(bool est_dossier, char *nom, noeud *pere, liste_noeud *fils)
+noeud *create_noeud_with_fils(bool is_directory, char *name, noeud *parent, liste_noeud *children)
 {
-    noeud *node = create_noeud(est_dossier, nom, pere);
+    noeud *node = create_noeud(is_directory, name, parent);
 
-    node->fils = fils;
+    node->fils = children;
+
+    return node;
 }
 
-noeud *create_root_noeud(char *nom)
+/*
+Create a node with pere and racine set to himself
+*/
+noeud *create_root_noeud(char *name)
 {
-    noeud *node = create_noeud(true, nom, NULL);
+    noeud *node = create_noeud(true, name, NULL);
     node->pere = node;
     node->racine = node;
+
+    return node;
 }
 
 void destroy_noeud(noeud *node)
@@ -55,14 +65,18 @@ void destroy_noeud(noeud *node)
     {
         return;
     }
-    if (node->est_dossier && node->fils != NULL)
+
+    if (node->est_dossier)
     {
         destroy_liste_noeud(node->fils);
     }
     free(node);
 }
 
-bool are_noeud_equal(noeud *node1, noeud *node2)
+/*
+Return true (for the moment) if the nodes have the same name
+*/
+bool are_noeuds_equal(noeud *node1, noeud *node2)
 {
     // TODO (should have the path)
 
@@ -70,11 +84,8 @@ bool are_noeud_equal(noeud *node1, noeud *node2)
     {
         return false;
     }
-    if (strcmp(node1->nom, node2->nom) == 0)
-    {
-        return true;
-    }
-    return false;
+
+    return (strcmp(node1->nom, node2->nom) == 0);
 }
 
 bool is_fils_of_noeud_empty(noeud *node)
@@ -86,24 +97,30 @@ bool is_fils_of_noeud_empty(noeud *node)
     return node->fils == NULL;
 }
 
-bool contains_noeud(noeud *pere, noeud *fils)
+/*
+Return true if the node pere contains node in these own fils
+*/
+bool contains_noeud(noeud *parent, noeud *node)
 {
-    if (pere == NULL)
+    if (parent == NULL)
     {
         return false;
     }
-    return contains_liste_noeud(pere->fils, fils);
+    return contains_liste_noeud(parent->fils, node);
 }
 
-unsigned get_number_of_fils(noeud *noeud)
+unsigned get_number_of_fils(noeud *node)
 {
-    if (noeud == NULL)
+    if (node == NULL)
     {
-        return;
+        return 0;
     }
-    return size_liste_noeud(noeud->fils);
+    return size_liste_noeud(node->fils);
 }
 
+/*
+Return the node that has its nom equal to name
+*/
 noeud *get_a_fils_of_noeud(noeud *node, const char *name)
 {
     if (node == NULL || !node->est_dossier)
@@ -113,46 +130,57 @@ noeud *get_a_fils_of_noeud(noeud *node, const char *name)
     return get_liste_noeud(node->fils, name);
 }
 
-bool append_a_fils_to_noeud(noeud *pere, noeud *fils)
+/*
+Return true if the child node has been appended to parent
+Otherwise, return false if the node parent already contains node
+or if it's not a directory
+*/
+bool append_a_fils_to_noeud(noeud *parent, noeud *node)
 {
-    if (pere == NULL || fils == NULL)
+    if (parent == NULL || node == NULL || !parent->est_dossier)
     {
         return false;
     }
-    if (!pere->est_dossier)
-    {
-        return false;
-    }
+
     bool append_success;
 
-    if (pere->fils == NULL)
+    if (parent->fils == NULL)
     {
-        pere->fils = create_liste_noeud(fils);
+        parent->fils = create_liste_noeud(node);
         append_success = true;
     }
     else
     {
-        append_success = append_liste_noeud(pere->fils, fils);
+        append_success = append_liste_noeud(parent->fils, node);
     }
+
     if (append_success)
     {
-        fils->pere = pere;
-        fils->racine = pere->racine;
+        node->pere = parent;
+        node->racine = parent->racine;
     }
     return append_success;
 }
 
-bool remove_a_fils_of_noeud(noeud *pere, noeud *fils)
+/*
+Return true if node has been removed from the fils of parent
+Otherwise, return false if node did not contain it or if
+it's not a directory
+*/
+bool remove_a_fils_of_noeud(noeud *parent, noeud *node)
 {
-    if (pere == NULL || fils == NULL || !pere->est_dossier)
+    if (parent == NULL || node == NULL || !parent->est_dossier)
     {
         return false;
     }
-    if (!contains_liste_noeud(pere->fils, fils))
+
+    if (!contains_liste_noeud(parent->fils, node))
     {
         return false;
     }
-    pere->fils = remove_liste_noeud(pere->fils, fils);
+
+    parent->fils = remove_liste_noeud(parent->fils, node);
+
     return true;
 }
 
@@ -162,6 +190,8 @@ liste_noeud *create_liste_noeud(noeud *node)
 
     node_list->no = node;
     node_list->succ = NULL;
+
+    return node_list;
 }
 
 void destroy_liste_noeud(liste_noeud *node_list)
@@ -170,77 +200,101 @@ void destroy_liste_noeud(liste_noeud *node_list)
     {
         return;
     }
+
     destroy_liste_noeud(node_list->succ);
     destroy_noeud(node_list->no);
 
     free(node_list);
 }
 
+/*
+Return true if the liste_noeud node_list contains node
+*/
 bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
 {
     if (node_list == NULL)
     {
         return false;
     }
-    if (are_noeud_equal(node_list->no, node))
+
+    if (are_noeuds_equal(node_list->no, node))
     {
         return true;
     }
+
     return contains_liste_noeud(node_list->succ, node);
 }
 
+/*
+Return the number of node in node_list
+*/
 unsigned size_liste_noeud(liste_noeud *node_list)
 {
     if (node_list == NULL)
     {
         return 0;
     }
+
     return 1 + size_liste_noeud(node_list->succ);
 }
 
+/*
+Return a node in node_list which has these nom equals to name
+Return NULL otherwise
+*/
 noeud *get_liste_noeud(liste_noeud *node_list, const char *name)
 {
     if (node_list == NULL)
     {
         return NULL;
     }
-    if (strcmp(node_list->no->nom, name))
+
+    if (strcmp(node_list->no->nom, name) == 0)
     {
         return node_list->no;
     }
+
     return get_liste_noeud(node_list->succ, name);
 }
 
+/*
+Return true if the append of node in node_list succeeds
+Otherwise, return false if the node already exists in node_list
+*/
 bool append_liste_noeud(liste_noeud *node_list, noeud *node)
 {
-    if (node_list == NULL)
+    if (node_list == NULL || are_noeuds_equal(node_list->no, node))
     {
         return false;
     }
-    if (are_noeud_equal(node_list->no, node))
-    {
-        return false;
-    }
+
     if (node_list->succ == NULL)
     {
         node_list->succ = create_liste_noeud(node);
         return true;
     }
+
     return append_liste_noeud(node_list->succ, node);
 }
 
+/*
+Return the new list without node if it founds node
+*/
 liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
 {
     if (node_list == NULL)
     {
         return NULL;
     }
-    if (are_noeud_equal(node_list->no, node))
+
+    if (are_noeuds_equal(node_list->no, node))
     {
         liste_noeud *acc = node_list->succ;
         free(node_list);
         return acc;
     }
+
     node_list->succ = remove_liste_noeud(node_list->succ, node);
+
     return node_list;
 }
