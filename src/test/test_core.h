@@ -34,5 +34,6 @@ void handle_boolean_test(bool expected, bool actual, int line, char *file, test_
 // All the tests
 test_info *test_example();
 test_info *test_string_utils();
+test_info *test_tree_dir_core();
 
 #endif
