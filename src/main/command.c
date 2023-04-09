@@ -5,13 +5,13 @@
 #include "constants.h"
 #include "command.h"
 
-int debug_command(int argsNumber, char **args);
+int debug_command(int args_number, char **args);
 
-command *create_command(char *name, int argsNumber, char **args)
+command *create_command(char *name, int args_number, char **args)
 {
     command *cmd = malloc(sizeof(command));
     cmd->name = name;
-    cmd->argsNumber = argsNumber;
+    cmd->args_number = args_number;
     cmd->args = args;
     return cmd;
 }
@@ -21,7 +21,7 @@ command *create_command(char *name, int argsNumber, char **args)
 void destroy_command(command *cmd)
 {
     free(cmd->name);
-    for (int i = 0; i < cmd->argsNumber; i++)
+    for (int i = 0; i < cmd->args_number; i++)
     {
         free(cmd->args[i]);
     }
@@ -40,7 +40,7 @@ void print_command(const command *cmd)
     }
 
     printf("$ %s ", cmd->name);
-    for (int i = 0; i < cmd->argsNumber; i++)
+    for (int i = 0; i < cmd->args_number; i++)
     {
         printf("%s ", cmd->args[i]);
     }
@@ -108,7 +108,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "debug"))
     {
-        return debug_command(cmd->argsNumber, cmd->args);
+        return debug_command(cmd->args_number, cmd->args);
     }
     else
     {
@@ -121,16 +121,16 @@ int execute_command(const command *cmd)
  * Prints the command to the output stream.
  * This is used for debugging purposes.
  */
-int debug_command(int argsNumber, char **args)
+int debug_command(int args_number, char **args)
 {
-    for (int i = 0; i < argsNumber; i++)
+    for (int i = 0; i < args_number; i++)
     {
         if (verbose && out_stream != stdout)
         {
             printf("%s ", args[i]);
         }
         fputs(args[i], out_stream);
-        if (i < argsNumber - 1)
+        if (i < args_number - 1)
         {
             fputs(" ", out_stream);
         }

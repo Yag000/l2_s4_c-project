@@ -103,27 +103,27 @@ command *get_command_from_iterator(string_iterator *iterator)
         return NULL;
     }
 
-    int argsNumber = 0;
-    while (has_next_word(iterator) && argsNumber < MAX_COMMAND_ARGUMENTS)
+    int args_number = 0;
+    while (has_next_word(iterator) && args_number < MAX_COMMAND_ARGUMENTS)
     {
-        args[argsNumber] = strip_newline(next_word(iterator));
-        argsNumber++;
+        args[args_number] = strip_newline(next_word(iterator));
+        args_number++;
     }
 
-    if (argsNumber < MAX_COMMAND_ARGUMENTS)
+    if (args_number < MAX_COMMAND_ARGUMENTS)
     {
-        if (argsNumber == 0)
+        if (args_number == 0)
         {
             free(args);
             args = NULL;
         }
         else
         {
-            args = realloc(args, sizeof(char *) * argsNumber);
+            args = realloc(args, sizeof(char *) * args_number);
         }
     }
 
-    return create_command(command_, argsNumber, args);
+    return create_command(command_, args_number, args);
 }
 
 void close_file(FILE *file)
