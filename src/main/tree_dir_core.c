@@ -289,6 +289,7 @@ bool append_liste_noeud(liste_noeud *node_list, noeud *node)
 
 /*
 Return the new list without node if it founds node
+Free the list removed (but don't free the node)
 */
 liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
 {
@@ -300,6 +301,8 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
     if (are_noeuds_equal(node_list->no, node))
     {
         liste_noeud *acc = node_list->succ;
+
+        // !WARNING! here, just the list is free, the user must free the node himself
         free(node_list);
 
         return acc;
