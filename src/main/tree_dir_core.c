@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "tree_dir_core.h"
 
@@ -7,10 +8,12 @@ noeud *create_empty_noeud()
 {
     noeud *node = malloc(sizeof(noeud));
 
+    assert(node != NULL);
+
     return node;
 }
 
-noeud *create_noeud(bool est_dossier, char *nom, noeud *pere)
+noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
     noeud *node = create_empty_noeud();
 
@@ -25,20 +28,20 @@ noeud *create_noeud(bool est_dossier, char *nom, noeud *pere)
     node->nom[length_nom] = '\0';
 
     node->est_dossier = est_dossier;
-    node->pere = pere;
     node->fils = NULL;
 
-    if (pere != NULL)
+    if (pere == NULL)
     {
-        node->racine = pere->racine;
+        node->pere = node;
+        node->racine = node;
         return node;
     }
-
-    node->racine = NULL;
+    node->pere = pere;
+    node->racine = pere->racine;
     return node;
 }
 
-noeud *create_noeud_with_fils(bool is_directory, char *name, noeud *parent, liste_noeud *children)
+noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent, liste_noeud *children)
 {
     noeud *node = create_noeud(is_directory, name, parent);
 
@@ -50,9 +53,9 @@ noeud *create_noeud_with_fils(bool is_directory, char *name, noeud *parent, list
 /*
 Create a node with pere and racine set to himself
 */
-noeud *create_root_noeud(char *name)
+noeud *create_root_noeud()
 {
-    noeud *node = create_noeud(true, name, NULL);
+    noeud *node = create_noeud(true, "", NULL);
     node->pere = node;
     node->racine = node;
 
@@ -76,19 +79,24 @@ void destroy_noeud(noeud *node)
 /*
 Return true (for the moment) if the nodes have the same name
 */
-bool are_noeuds_equal(noeud *node1, noeud *node2)
+bool are_noeuds_equal(const noeud *node1, const noeud *node2)
 {
     // TODO (should have the path)
+
+    if (node1 == NULL && node2 == NULL)
+    {
+        return true;
+    }
 
     if (node1 == NULL || node2 == NULL)
     {
         return false;
     }
 
-    return (strcmp(node1->nom, node2->nom) == 0);
+    return (strcmp(node1->nom, node2->nom) == 0) && (node1->est_dossier == node2->est_dossier);
 }
 
-bool is_fils_of_noeud_empty(noeud *node)
+bool is_fils_of_noeud_empty(const noeud *node)
 {
     if (node == NULL)
     {
@@ -187,6 +195,8 @@ bool remove_a_fils_of_noeud(noeud *parent, noeud *node)
 liste_noeud *create_liste_noeud(noeud *node)
 {
     liste_noeud *node_list = malloc(sizeof(liste_noeud));
+
+    assert(node_list != NULL);
 
     node_list->no = node;
     node_list->succ = NULL;
@@ -291,6 +301,7 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
     {
         liste_noeud *acc = node_list->succ;
         free(node_list);
+
         return acc;
     }
 

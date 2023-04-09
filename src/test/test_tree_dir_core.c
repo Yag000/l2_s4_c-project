@@ -2,11 +2,10 @@
 #include "../main/tree_dir_core.h"
 
 void test_create_noeud(test_info *info);
-void test_are_noeud_equal(test_info *info);
 void test_is_fils_of_node_empty(test_info *info);
-void test_append_a_fils_to_noeud(test_info *info);
 void test_create_liste_noeud(test_info *info);
 void test_contains(test_info *info);
+void test_get(test_info *info);
 void test_append(test_info *info);
 void test_remove(test_info *info);
 
@@ -41,7 +40,7 @@ void test_create_noeud(test_info *info)
         printf("\nTesting to create a node\n");
     }
 
-    noeud *pere = create_root_noeud("pere");
+    noeud *pere = create_root_noeud();
     handle_boolean_test(are_noeuds_equal(pere, pere->pere), true, __LINE__, __FILE__, info);
     handle_boolean_test(are_noeuds_equal(pere, pere->racine), true, __LINE__, __FILE__, info);
     handle_boolean_test(pere->est_dossier, true, __LINE__, __FILE__, info);
@@ -83,7 +82,7 @@ void test_is_fils_of_node_empty(test_info *info)
         printf("\nTesting if fils of node is empty\n");
     }
 
-    noeud *root = create_root_noeud("root");
+    noeud *root = create_root_noeud();
 
     handle_boolean_test(is_fils_of_noeud_empty(root), true, __LINE__, __FILE__, info);
     noeud *node = create_noeud(false, "test", NULL);
@@ -101,13 +100,13 @@ void test_create_liste_noeud(test_info *info)
         printf("\nTesting to create a liste noeud\n");
     }
 
-    noeud *node = create_root_noeud("test");
+    noeud *node = create_noeud(false, "test1", NULL);
 
     liste_noeud *node_list = create_liste_noeud(node);
     handle_boolean_test(are_noeuds_equal(node, node_list->no), true, __LINE__, __FILE__, info);
     handle_boolean_test(node_list->succ == NULL, true, __LINE__, __FILE__, info);
 
-    noeud *node2 = create_root_noeud("test2");
+    noeud *node2 = create_root_noeud(false, "test2", NULL);
 
     handle_boolean_test(append_liste_noeud(node_list, node2), true, __LINE__, __FILE__, info);
     handle_boolean_test(node_list->succ != NULL, true, __LINE__, __FILE__, info);
@@ -124,7 +123,7 @@ void test_contains(test_info *info)
         printf("\nTesting contains liste noeud\n");
     }
 
-    noeud *root_node = create_root_noeud("root");
+    noeud *root_node = create_root_noeud();
 
     noeud *node = create_noeud(true, "test", NULL);
     handle_boolean_test(contains_liste_noeud(root_node->fils, node), false, __LINE__, __FILE__, info);
@@ -150,7 +149,7 @@ void test_get(test_info *info)
     {
         printf("\nTesting to get a node in a liste_noeud with name\n");
     }
-    noeud *root_node = create_root_noeud("root");
+    noeud *root_node = create_root_noeud();
 
     noeud *node = create_noeud(false, "test", NULL);
     append_a_fils_to_noeud(root_node, node);
@@ -181,7 +180,7 @@ void test_append(test_info *info)
     {
         printf("\nTesting to append a node in a liste_noeud\n");
     }
-    noeud *root_node = create_root_noeud("root");
+    noeud *root_node = create_root_noeud();
     handle_boolean_test(root_node->fils == NULL, true, __LINE__, __FILE__, info);
 
     noeud *node = create_noeud(false, "test", NULL);
@@ -214,7 +213,7 @@ void test_remove(test_info *info)
     {
         printf("\nTesting to remove a node in a liste_noeud\n");
     }
-    noeud *root_node = create_root_noeud("root");
+    noeud *root_node = create_root_noeud();
 
     noeud *node = create_noeud(false, "test", NULL);
     append_a_fils_to_noeud(root_node, node);
@@ -239,4 +238,10 @@ void test_remove(test_info *info)
 
     destroy_noeud(node);
     destroy_noeud(root_node);
+
+    node = create_noeud(false, "test", NULL);
+    liste_noeud *list = create_liste_noeud(node);
+    handle_boolean_test(remove_liste_noeud(list, node) == NULL, true, __LINE__, __FILE__, info);
+
+    destroy_noeud(node);
 }
