@@ -24,6 +24,7 @@ test_info *test_tree_dir_core()
     test_create_liste_noeud(info);
     test_contains_liste_noeud(info);
     test_append_liste_noeud(info);
+    test_remove_liste_noeud(info);
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     printf("Test tree dir core: ");
@@ -165,6 +166,8 @@ void test_append_liste_noeud(test_info *info)
     handle_boolean_test(are_noeud_equal(node->pere, root_node), true, __LINE__, __FILE__, info);
     handle_boolean_test(are_noeud_equal(node->racine, root_node), true, __LINE__, __FILE__, info);
 
+    handle_boolean_test(append_a_fils_to_noeud(root_node, node), false, __LINE__, __FILE__, info);
+
     append_a_fils_to_noeud(root_node, create_noeud(false, "test3", NULL));
     handle_boolean_test(contains_liste_noeud(root_node->fils, node), true, __LINE__, __FILE__, info);
 
@@ -175,4 +178,33 @@ void test_append_liste_noeud(test_info *info)
 
 void test_remove_liste_noeud(test_info *info)
 {
+    if (verbose)
+    {
+        printf("\nTesting to remove a node in a liste_noeud\n");
+    }
+    noeud *root_node = create_root_noeud("root");
+
+    noeud *node = create_noeud(false, "test", NULL);
+    append_a_fils_to_noeud(root_node, node);
+    handle_boolean_test(are_noeud_equal(root_node->fils->no, node), true, __LINE__, __FILE__, info);
+
+    handle_boolean_test(remove_a_fils_of_noeud(root_node, node), true, __LINE__, __FILE__, info);
+    handle_boolean_test(root_node->fils == NULL, true, __LINE__, __FILE__, info);
+    handle_boolean_test(remove_a_fils_of_noeud(root_node, node), false, __LINE__, __FILE__, info);
+
+    destroy_noeud(node);
+
+    append_a_fils_to_noeud(root_node, create_noeud(false, "test1", NULL));
+    append_a_fils_to_noeud(root_node, create_noeud(false, "test2", NULL));
+    node = create_noeud(false, "test3", NULL);
+    append_a_fils_to_noeud(root_node, node);
+    append_a_fils_to_noeud(root_node, create_noeud(false, "test4", NULL));
+
+    handle_boolean_test(contains_noeud(root_node, node), true, __LINE__, __FILE__, info);
+    handle_boolean_test(remove_a_fils_of_noeud(root_node, node), true, __LINE__, __FILE__, info);
+    handle_boolean_test(contains_noeud(root_node, node), false, __LINE__, __FILE__, info);
+    handle_boolean_test(remove_a_fils_of_noeud(root_node, node), false, __LINE__, __FILE__, info);
+
+    destroy_noeud(node);
+    destroy_noeud(root_node);
 }

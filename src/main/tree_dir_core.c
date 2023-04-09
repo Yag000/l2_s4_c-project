@@ -152,7 +152,7 @@ bool remove_a_fils_of_noeud(noeud *pere, noeud *fils)
     {
         return false;
     }
-    remove_liste_noeud(pere, fils);
+    pere->fils = remove_liste_noeud(pere->fils, fils);
     return true;
 }
 
@@ -241,6 +241,6 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
         free(node_list);
         return acc;
     }
-    node_list->succ = remove_liste_noeud(node_list, node);
+    node_list->succ = remove_liste_noeud(node_list->succ, node);
     return node_list;
 }
