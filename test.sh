@@ -22,8 +22,6 @@ function testOuput(){
             has_passed=false
         fi
     done
-    
-    # rm -rf src/test/output/*
 }
 
 [ ! -d "${output_dir}" ] && mkdir "${output_dir}"
