@@ -26,10 +26,11 @@ noeud *create_noeud_with_fils(bool est_dossier, char *nom, noeud *pere, noeud *r
 void destroy_noeud(noeud *node);
 bool are_noeud_equal(noeud *node1, noeud *node2);
 bool is_fils_of_node_empty(noeud *node);
+bool append_a_fils_to_noeud(noeud *pere, noeud *fils);
 liste_noeud *create_liste_noeud(noeud *node);
 void destroy_liste_noeud(liste_noeud *node_list);
 bool contains_liste_noeud(liste_noeud *node_list, noeud *node);
 bool append_liste_noeud(liste_noeud *node_list, noeud *node);
-bool remove_liste_noeud(liste_noeud *node);
+liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node);
 
 #endif
