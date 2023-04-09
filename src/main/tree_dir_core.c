@@ -32,6 +32,7 @@ noeud *create_noeud(bool est_dossier, char *nom, noeud *pere)
         return;
     }
     node->racine = NULL;
+    node->fils = NULL;
 }
 
 noeud *create_noeud_with_fils(bool est_dossier, char *nom, noeud *pere, liste_noeud *fils)
@@ -83,6 +84,15 @@ bool is_fils_of_noeud_empty(noeud *node)
         return true;
     }
     return node->fils == NULL;
+}
+
+bool contains_noeud(noeud *pere, noeud *fils)
+{
+    if (pere == NULL)
+    {
+        return false;
+    }
+    return contains_liste_noeud(pere->fils, fils);
 }
 
 noeud *get_a_fils_of_noeud(noeud *node, const char *name)
@@ -143,6 +153,7 @@ liste_noeud *create_liste_noeud(noeud *node)
     liste_noeud *node_list = malloc(sizeof(liste_noeud));
 
     node_list->no = node;
+    node_list->succ = NULL;
 }
 
 void destroy_liste_noeud(liste_noeud *node_list)
@@ -195,7 +206,7 @@ bool append_liste_noeud(liste_noeud *node_list, noeud *node)
     }
     if (node_list->succ == NULL)
     {
-        liste_noeud *succ = create_liste_noeud(node);
+        node_list->succ = create_liste_noeud(node);
         return true;
     }
     return append_liste_noeud(node_list->succ, node);

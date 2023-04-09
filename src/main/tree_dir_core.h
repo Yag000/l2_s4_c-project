@@ -20,13 +20,13 @@ typedef struct liste_noeud
     struct liste_noeud *succ;
 } liste_noeud;
 
-noeud *create_empty_noeud();
 noeud *create_noeud(bool est_dossier, char *nom, noeud *pere);
 noeud *create_noeud_with_fils(bool est_dossier, char *nom, noeud *pere, liste_noeud *fils);
 noeud *create_root_noeud(char *nom);
 void destroy_noeud(noeud *node);
 bool are_noeud_equal(noeud *node1, noeud *node2);
 bool is_fils_of_noeud_empty(noeud *node);
+bool contains_noeud(noeud *pere, noeud *fils);
 noeud *get_a_fils_of_noeud(noeud *node, const char *name);
 bool append_a_fils_to_noeud(noeud *pere, noeud *fils);
 bool remove_a_fils_of_noeud(noeud *pere, noeud *fils);
