@@ -105,7 +105,22 @@ void test_concat_words_with_delimiter(test_info *info)
         printf("\nTesting concat words with delimiter \n");
     }
 
-    char *c = concat_words_with_delimiter(0, NULL, '/');
+    char *c = concat_two_words_with_delimiter("", "", '/');
+    handle_string_test("", c, __LINE__, __FILE__, info);
+
+    free(c);
+
+    c = concat_two_words_with_delimiter("abc", "efg", 'd');
+    handle_string_test("abcdefg", c, __LINE__, __FILE__, info);
+
+    free(c);
+
+    c = concat_two_words_with_delimiter("/path/of/directory", "file", '/');
+    handle_string_test("/path/of/directory/file", c, __LINE__, __FILE__, info);
+
+    free(c);
+
+    c = concat_words_with_delimiter(0, NULL, '/');
     handle_string_test("", c, __LINE__, __FILE__, info);
 
     free(c);

@@ -141,7 +141,7 @@ char *concat_two_words_with_delimiter(const char *word1, const char *word2, char
 /**
  * Return the string of all words concatenated, and delimited by delimiter
  */
-char *concat_words_with_delimiter(size_t size, const char **words, char delimiter)
+char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
 {
     char *words_concat;
 
