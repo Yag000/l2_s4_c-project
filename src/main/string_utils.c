@@ -111,10 +111,37 @@ unsigned get_number_of_char(size_t size, char **words)
     return n;
 }
 
+char *concat_two_words_with_delimiter(const char *word1, const char *word2, char delimiter)
+{
+    char *words_concat;
+
+    unsigned len_word1 = strlen(word1);
+    unsigned len_word2 = strlen(word2);
+
+    if (len_word1 + len_word2 == 0)
+    {
+        words_concat = malloc(sizeof(char));
+        assert(words_concat != NULL);
+
+        words_concat[0] = '\0';
+        return words_concat;
+    }
+
+    words_concat = malloc(sizeof(char) * (len_word1 + len_word2) + 2);
+    assert(words_concat != NULL);
+
+    memmove(words_concat, word1, len_word1);
+    words_concat[len_word1] = delimiter;
+    memmove(words_concat + len_word1 + 1, word2, len_word2);
+    words_concat[len_word1 + len_word2 + 1] = '\0';
+
+    return words_concat;
+}
+
 /**
  * Return the string of all words concatenated, and delimited by delimiter
  */
-char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
+char *concat_words_with_delimiter(size_t size, const char **words, char delimiter)
 {
     char *words_concat;
 
