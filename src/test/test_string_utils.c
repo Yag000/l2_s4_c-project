@@ -4,6 +4,7 @@
 
 void test_string_iterator_empty(test_info *info);
 void test_string_iterator_with_text(test_info *info);
+void test_concat_words_with_delimiter(test_info *info);
 
 test_info *test_string_utils()
 {
@@ -16,6 +17,7 @@ test_info *test_string_utils()
     // Add tests here
     test_string_iterator_empty(info);
     test_string_iterator_with_text(info);
+    test_concat_words_with_delimiter(info);
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     printf("Test string utils: ");
@@ -94,4 +96,66 @@ void test_string_iterator_with_text(test_info *info)
     handle_boolean_test(false, has_next_word(iterator), __LINE__, __FILE__, info);
 
     destroy_string_iterator(iterator);
+}
+
+void test_concat_words_with_delimiter(test_info *info)
+{
+    if (verbose)
+    {
+        printf("\nTesting concat words with delimiter \n");
+    }
+
+    char *c = concat_two_words_with_delimiter("", "", '/');
+    handle_string_test("", c, __LINE__, __FILE__, info);
+
+    free(c);
+
+    c = concat_two_words_with_delimiter("abc", "efg", 'd');
+    handle_string_test("abcdefg", c, __LINE__, __FILE__, info);
+
+    free(c);
+
+    c = concat_two_words_with_delimiter("/path/of/directory", "file", '/');
+    handle_string_test("/path/of/directory/file", c, __LINE__, __FILE__, info);
+
+    free(c);
+
+    c = concat_words_with_delimiter(0, NULL, '/');
+    handle_string_test("", c, __LINE__, __FILE__, info);
+
+    free(c);
+
+    size_t size_words = 4;
+
+    char **words = malloc(size_words * sizeof(char *));
+    words[0] = "ab";
+    words[1] = "bc";
+    words[2] = "cd";
+    words[3] = "de";
+
+    c = concat_words_with_delimiter(size_words, words, '/');
+    handle_string_test("ab/bc/cd/de", c, __LINE__, __FILE__, info);
+
+    words[0] = "";
+    words[1] = "";
+    words[2] = "";
+    words[3] = "";
+
+    free(c);
+
+    c = concat_words_with_delimiter(size_words, words, '/');
+    handle_string_test("///", c, __LINE__, __FILE__, info);
+
+    free(c);
+
+    words[0] = "";
+    words[1] = "path";
+    words[2] = "of";
+    words[3] = "directory";
+
+    c = concat_words_with_delimiter(size_words, words, '/');
+    handle_string_test("/path/of/directory", c, __LINE__, __FILE__, info);
+
+    free(c);
+    free(words);
 }
