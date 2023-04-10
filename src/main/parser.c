@@ -29,6 +29,8 @@ int parse_file(const char *path)
     {
         char *message = malloc(sizeof(char) * (strlen("Probleme ouverture fichier ") + strlen(path) + 1));
         assert(message != NULL);
+        message = strcat(message, "Probleme ouverture fichier ");
+        message = strcat(message, path);
         perror(message);
         free(message);
         return -1;
