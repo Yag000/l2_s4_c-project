@@ -239,6 +239,16 @@ void test_remove(test_info *info)
     destroy_noeud(node);
     destroy_noeud(root_node);
 
+    root_node = create_root_noeud();
+    node = create_noeud(false, "test", NULL);
+    append_a_fils_to_noeud(root_node, node);
+
+    handle_boolean_test(remove_a_fils_of_noeud(root_node, node->nom), true, __LINE__, __FILE__, info);
+    handle_boolean_test(root_node->fils == NULL, true, __LINE__, __FILE__, info);
+    handle_boolean_test(remove_a_fils_of_noeud(root_node, node->nom), false, __LINE__, __FILE__, info);
+
+    destroy_noeud(root_node);
+
     node = create_noeud(false, "test", NULL);
     liste_noeud *list = create_liste_noeud(node);
     handle_boolean_test(remove_liste_noeud(list, node) == NULL, true, __LINE__, __FILE__, info);
