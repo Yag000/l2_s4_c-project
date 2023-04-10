@@ -30,7 +30,8 @@ bool contains_noeud(noeud *pere, noeud *fils);
 unsigned get_number_of_fils(noeud *noeud);
 noeud *get_a_fils_of_noeud(noeud *node, const char *name);
 bool append_a_fils_to_noeud(noeud *pere, noeud *fils);
-bool remove_a_fils_of_noeud(noeud *pere, noeud *fils);
+bool remove_a_node_from_fils(noeud *pere, noeud *fils);
+bool remove_a_fils_of_noeud(noeud *parent, const char *name);
 
 liste_noeud *create_liste_noeud(noeud *node);
 void destroy_liste_noeud(liste_noeud *node_list);

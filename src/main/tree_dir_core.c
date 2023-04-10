@@ -172,10 +172,10 @@ bool append_a_fils_to_noeud(noeud *parent, noeud *node)
 
 /*
 Return true if node has been removed from the fils of parent
-Otherwise, return false if node did not contain it or if
+Otherwise, return false if parent did not contain it or if
 it's not a directory
 */
-bool remove_a_fils_of_noeud(noeud *parent, noeud *node)
+bool remove_a_node_from_fils(noeud *parent, noeud *node)
 {
     if (parent == NULL || node == NULL || !parent->est_dossier)
     {
@@ -188,6 +188,30 @@ bool remove_a_fils_of_noeud(noeud *parent, noeud *node)
     }
 
     parent->fils = remove_liste_noeud(parent->fils, node);
+
+    return true;
+}
+
+/*
+Return true if node has been removed from the fils of parent
+and has been destroyed
+Otherwise, return false if parent did not contain it or if
+it's not a directory
+*/
+bool remove_a_fils_of_noeud(noeud *parent, const char *name)
+{
+    if (parent == NULL || !parent->est_dossier)
+    {
+        return false;
+    }
+    noeud *node = get_liste_noeud(parent->fils, name);
+
+    if (node == NULL)
+    {
+        return false;
+    }
+    parent->fils = remove_liste_noeud(parent->fils, node);
+    destroy_noeud(node);
 
     return true;
 }
