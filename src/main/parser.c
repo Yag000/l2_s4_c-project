@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "parser.h"
 #include "command.h"
@@ -27,6 +28,7 @@ int parse_file(const char *path)
     if (file == NULL)
     {
         char *message = malloc(sizeof(char) * (strlen("Probleme ouverture fichier ") + strlen(path) + 1));
+        assert(message != NULL);
         perror(message);
         free(message);
         return -1;
@@ -97,6 +99,7 @@ command *get_command_from_iterator(string_iterator *iterator)
     char *command_ = next_word(iterator);
 
     char **args = malloc(sizeof(char *) * MAX_COMMAND_ARGUMENTS);
+    assert(args != NULL);
     if (args == NULL)
     {
         perror("Probleme allocation arguments");

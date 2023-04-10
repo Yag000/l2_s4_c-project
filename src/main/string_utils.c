@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "string_utils.h"
 
@@ -8,6 +9,7 @@ void update_index_to_next_word(string_iterator *iterator);
 string_iterator *create_string_iterator(char *string, char delimiter)
 {
     string_iterator *iterator = malloc(sizeof(string_iterator));
+    assert(iterator != NULL);
     iterator->string = string;
     iterator->index = 0;
     iterator->delimiter = delimiter;
@@ -50,6 +52,7 @@ char *next_word(string_iterator *iterator)
     int length = end - start;
 
     char *result = malloc(sizeof(char) * (length + 1));
+    assert(result != NULL);
     result = memmove(result, iterator->string + start, length);
     result[length] = '\0';
 

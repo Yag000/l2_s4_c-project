@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "test_core.h"
 
@@ -8,6 +9,7 @@
 test_info *create_test_info()
 {
     test_info *info = malloc(sizeof(test_info));
+    assert(info != NULL);
     info->passed = 0;
     info->failed = 0;
     info->total = 0;
