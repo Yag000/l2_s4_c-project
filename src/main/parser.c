@@ -102,11 +102,6 @@ command *get_command_from_iterator(string_iterator *iterator)
 
     char **args = malloc(sizeof(char *) * MAX_COMMAND_ARGUMENTS);
     assert(args != NULL);
-    if (args == NULL)
-    {
-        perror("Probleme allocation arguments");
-        return NULL;
-    }
 
     int args_number = 0;
     while (has_next_word(iterator) && args_number < MAX_COMMAND_ARGUMENTS)
