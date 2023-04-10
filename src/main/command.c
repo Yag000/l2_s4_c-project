@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <assert.h>
 
 #include "constants.h"
 #include "command.h"
@@ -10,6 +11,7 @@ int debug_command(int args_number, char **args);
 command *create_command(char *name, int args_number, char **args)
 {
     command *cmd = malloc(sizeof(command));
+    assert(cmd != NULL);
     cmd->name = name;
     cmd->args_number = args_number;
     cmd->args = args;
