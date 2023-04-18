@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
     info->time = clock_ticks_to_seconds(end - before);
     bool success = info->passed == info->total;
 
+    printf("\nTotal: ");
     print_test_info(info);
     destroy_test_info(info);
 
