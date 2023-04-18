@@ -5,6 +5,21 @@
 
 #include "test_core.h"
 
+void print_green()
+{
+    printf("\033[0;32m");
+}
+
+void print_red()
+{
+    printf("\033[0;31m");
+}
+
+void print_no_color()
+{
+    printf("\033[0m");
+}
+
 // Create a new test info
 test_info *create_test_info()
 {
@@ -27,7 +42,16 @@ void destroy_test_info(test_info *info)
 // Print the test info
 void print_test_info(const test_info *info)
 {
+    if (info->failed > 0)
+    {
+        print_red();
+    }
+    else
+    {
+        print_green();
+    }
     printf("passed: %d, failed: %d, total: %d, time: %f seconds\n", info->passed, info->failed, info->total, info->time);
+    print_no_color();
 }
 
 double clock_ticks_to_seconds(clock_t ticks)
@@ -56,14 +80,18 @@ void handle_string_test(char *expected, char *actual, int line, char *file, test
 {
     if (strcmp(expected, actual) != 0)
     {
-        printf("Error: %s != %s at line %d in file %s \n", actual, expected, line, file);
+        print_red();
+        printf("\033[0;31m Error: %s != %s at line %d in file %s\n", actual, expected, line, file);
+        print_no_color();
         info->failed++;
     }
     else
     {
         if (verbose)
         {
-            printf("Passed: %s == %s at line %d in file %s \n", actual, expected, line, file);
+            print_green();
+            printf("\033[0;32m Passed: %s == %s at line %d in file %s\n", actual, expected, line, file);
+            print_no_color();
         }
         info->passed++;
     }
@@ -75,14 +103,18 @@ void handle_boolean_test(bool expected, bool actual, int line, char *file, test_
 {
     if (expected != actual)
     {
-        printf("Error: %d != %d at line %d in file %s \n", actual, expected, line, file);
+        print_red();
+        printf("Error: %d != %d at line %d in file %s\n", actual, expected, line, file);
+        print_no_color();
         info->failed++;
     }
     else
     {
         if (verbose)
         {
-            printf("Passed: %d == %d at line %d in file %s \n", actual, expected, line, file);
+            print_green();
+            printf("\033[0;32m Passed: %d == %d at line %d in file %s\n", actual, expected, line, file);
+            print_no_color();
         }
         info->passed++;
     }

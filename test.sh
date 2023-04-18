@@ -3,7 +3,12 @@
 has_passed=true
 output_dir="src/test/output"
 
+COLOR_OFF="$(tput sgr0)"
+RED="$(tput setaf 1)"
+GREEN="$(tput setaf 2)"
+
 function testOuput(){
+    has_test_output_failed=false
     expected_output_dir="src/test/expected_output"
     
     # Get a list of input file names (excluding directories)
@@ -20,8 +25,10 @@ function testOuput(){
             echo ""
             echo "FAIL: $file"
             has_passed=false
+            has_test_output_failed=true
         fi
     done
+    ($has_test_output_failed && printf "%s%s%s\n" $RED "There is at least one difference from the expected output" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The output is correct" $COLOR_OFF
 }
 
 [ ! -d "${output_dir}" ] && mkdir "${output_dir}"
