@@ -35,7 +35,7 @@ test_info *test_tree_dir_core()
 
 void test_create_noeud(test_info *info)
 {
-    print_test_name("\nTesting to create a node\n");
+    print_test_name("Testing to create a node");
 
     noeud *pere = create_root_noeud();
     handle_boolean_test(true, are_noeuds_equal(pere, pere->pere), __LINE__, __FILE__, info);
@@ -89,7 +89,7 @@ void test_is_fils_of_node_empty(test_info *info)
 
 void test_create_liste_noeud(test_info *info)
 {
-    print_test_name("\nTesting to create a liste noeud\n");
+    print_test_name("Testing to create a liste noeud");
 
     noeud *node = create_noeud(false, "test1", NULL);
 

@@ -55,7 +55,7 @@ void print_test_name(const char *name)
 {
     if (debug)
     {
-        printf("\n->%s\n", name);
+        printf("\n-> %s\n", name);
     }
 }
 
