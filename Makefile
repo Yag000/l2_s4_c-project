@@ -1,9 +1,9 @@
 CC=gcc
-CFLAGS=-I. -Wall -std=c99
+CFLAGS=-Wall -std=c99
+EXEC=main
+
 SRCDIR=src/main
 TESTDIR=src/test
-
-MAINFILE=main
 
 OBJDIR=obj
 OBJDIRMAIN=$(OBJDIR)/main
@@ -26,7 +26,7 @@ $(OBJDIRMAIN)/%.o: $(SRCDIR)/%.c
 $(OBJDIRTEST)/%.o: $(TESTDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-
+all: main 
 
 main: $(OBJFILESWITHMAIN)
 	$(CC) -o $@ $^ $(CFLAGS)
