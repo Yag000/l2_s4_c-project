@@ -74,7 +74,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "pwd"))
     {
-        // pwd command
+        pwd(cmd);
     }
     else if (is_command(cmd, "mkdir"))
     {
@@ -142,5 +142,26 @@ int debug_command(int args_number, char **args)
         printf("\n");
     }
     fputs("\n", out_stream);
+    return 0;
+}
+
+bool handle_number_of_args(unsigned expected, unsigned actual)
+{
+    // TODO
+
+    return expected == actual;
+}
+
+int write_result_command(char *result)
+{
+    // TODO
+
+    return 0;
+}
+
+int write_result_lines_command(size_t line_number, char **result)
+{
+    // TODO
+
     return 0;
 }
