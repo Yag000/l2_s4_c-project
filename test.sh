@@ -39,11 +39,10 @@ function testOuput(){
 
 
 # Compile and run the tests
-echo "Compiling..."
+echo "|-=-=-=-=-=-=-=-=-| Compiling tests |-=-=-=-=-=-=-=-=|"
 make test
 echo
-echo
-echo "----------------Running tests----------------"
+echo "|-=-=-=-=-=-=-=-=-| Running tests |-=-=-=-=-=-=-=-=-|"
 
 if ./test $1; then
     has_passed=true
@@ -52,7 +51,7 @@ else
 fi
 
 echo
-echo "----------------Testing output----------------"
+echo "|-=-=-=-=-=-=-=-=-| Testing output |-=-=-=-=-=-=-=-=-|"
 
 # Test the output
 testOuput
