@@ -1,6 +1,14 @@
+$ debug
+
+$ debug one
 one
+$ debug one two
 one two
+$ debug one two
 one two
+$ debug one two
 one two
+$ debug one two
 one two
+$ debug one two
 one two
