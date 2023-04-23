@@ -28,11 +28,8 @@ test_info *test_string_utils()
 
 void test_string_iterator_empty(test_info *info)
 {
+    print_test_name("Testing string iterator with empty string");
 
-    if (verbose)
-    {
-        printf("\nTesting string iterator with empty string \n");
-    }
     char *str = "     ";
 
     string_iterator *iterator = create_string_iterator(str, ' ');
@@ -52,10 +49,7 @@ void test_string_iterator_empty(test_info *info)
 
 void test_string_iterator_with_text(test_info *info)
 {
-    if (verbose)
-    {
-        printf("\nTesting string iterator with text \n");
-    }
+    print_test_name("Testing string iterator with text");
 
     char *str = "   this    is   a test  ";
 
@@ -100,10 +94,7 @@ void test_string_iterator_with_text(test_info *info)
 
 void test_concat_words_with_delimiter(test_info *info)
 {
-    if (verbose)
-    {
-        printf("\nTesting concat words with delimiter \n");
-    }
+    print_test_name("Testing concat words with delimiter");
 
     char *c = concat_two_words_with_delimiter("", "", '/');
     handle_string_test("", c, __LINE__, __FILE__, info);

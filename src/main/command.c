@@ -41,12 +41,14 @@ void print_command(const command *cmd)
         return;
     }
 
-    printf("$ %s ", cmd->name);
+    fputs("$ ", out_stream);
+    fputs(cmd->name, out_stream);
     for (int i = 0; i < cmd->args_number; i++)
     {
-        printf("%s ", cmd->args[i]);
+        fputs(" ", out_stream);
+        fputs(cmd->args[i], out_stream);
     }
-    puts("");
+    fputs("\n", out_stream);
 }
 
 /**
@@ -127,19 +129,11 @@ int debug_command(int args_number, char **args)
 {
     for (int i = 0; i < args_number; i++)
     {
-        if (verbose && out_stream != stdout)
-        {
-            printf("%s ", args[i]);
-        }
         fputs(args[i], out_stream);
         if (i < args_number - 1)
         {
             fputs(" ", out_stream);
         }
-    }
-    if (verbose && out_stream != stdout)
-    {
-        printf("\n");
     }
     fputs("\n", out_stream);
     return 0;
