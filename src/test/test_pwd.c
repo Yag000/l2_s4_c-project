@@ -3,6 +3,10 @@
 #include "../main/pwd.h"
 #include "../main/tree_dir_core.h"
 
+void test_pwd_function(test_info *info);
+void test_get_absolute_path_of_node(test_info *info);
+void test_get_number_of_node_in_absolute_path(test_info *info);
+
 test_info *test_pwd()
 {
     print_test_header("pwd");
@@ -29,6 +33,7 @@ void test_pwd_function(test_info *info)
 
 void test_get_absolute_path_of_node(test_info *info)
 {
+    print_test_name("Test to get the absolute path of node");
     noeud *root = create_root_noeud();
 
     char *path = get_absolute_path_of_node(root);
