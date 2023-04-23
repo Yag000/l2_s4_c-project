@@ -5,6 +5,7 @@
 
 #include "constants.h"
 #include "command.h"
+#include "pwd.h"
 
 int debug_command(int args_number, char **args);
 
@@ -76,7 +77,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "pwd"))
     {
-        pwd(cmd);
+        return pwd(cmd);
     }
     else if (is_command(cmd, "mkdir"))
     {

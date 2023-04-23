@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     update_test_info(info, test_string_utils());
     update_test_info(info, test_tree_dir_core());
     update_test_info(info, test_parser());
+    update_test_info(info, test_pwd());
 
     // End of tests
 
