@@ -40,6 +40,7 @@ function testOuput(){
 
 # Compile and run the tests
 echo "|-=-=-=-=-=-=-=-=-| Compiling tests |-=-=-=-=-=-=-=-=|"
+make clean
 make test
 echo
 echo "|-=-=-=-=-=-=-=-=-| Running tests |-=-=-=-=-=-=-=-=-|"
