@@ -1,7 +1,10 @@
 #include "test_core.h"
 
+bool verbose = true;
+bool debug;
+
 void update_test_info(test_info *target_info, test_info *origin_info);
-bool verbose;
+
 /**
  * This is the main function for the test program.
  * Every test should be called from here and the results should be printed.
@@ -11,8 +14,8 @@ int main(int argc, char *argv[])
 {
     if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'v')
     {
-        verbose = true;
-        puts("Verbose mode enabled");
+        debug = true;
+        puts("Debug mode enabled");
     }
 
     // Create the test info
@@ -31,6 +34,7 @@ int main(int argc, char *argv[])
     info->time = clock_ticks_to_seconds(end - before);
     bool success = info->passed == info->total;
 
+    printf("\nTotal: ");
     print_test_info(info);
     destroy_test_info(info);
 

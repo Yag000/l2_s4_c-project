@@ -35,10 +35,7 @@ test_info *test_tree_dir_core()
 
 void test_create_noeud(test_info *info)
 {
-    if (verbose)
-    {
-        printf("\nTesting to create a node\n");
-    }
+    print_test_name("Testing to create a node");
 
     noeud *pere = create_root_noeud();
     handle_boolean_test(true, are_noeuds_equal(pere, pere->pere), __LINE__, __FILE__, info);
@@ -77,10 +74,7 @@ void test_are_noeud_equal(test_info *info)
 
 void test_is_fils_of_node_empty(test_info *info)
 {
-    if (verbose)
-    {
-        printf("\nTesting if fils of node is empty\n");
-    }
+    print_test_name("Testing if fils of node is empty");
 
     noeud *root = create_root_noeud();
 
@@ -95,10 +89,7 @@ void test_is_fils_of_node_empty(test_info *info)
 
 void test_create_liste_noeud(test_info *info)
 {
-    if (verbose)
-    {
-        printf("\nTesting to create a liste noeud\n");
-    }
+    print_test_name("Testing to create a liste noeud");
 
     noeud *node = create_noeud(false, "test1", NULL);
 
@@ -118,10 +109,7 @@ void test_create_liste_noeud(test_info *info)
 
 void test_contains(test_info *info)
 {
-    if (verbose)
-    {
-        printf("\nTesting contains liste noeud\n");
-    }
+    print_test_name("Testing contains liste noeud");
 
     noeud *root_node = create_root_noeud();
 
@@ -145,10 +133,9 @@ void test_contains(test_info *info)
 
 void test_get(test_info *info)
 {
-    if (verbose)
-    {
-        printf("\nTesting to get a node in a liste_noeud with name\n");
-    }
+
+    print_test_name("Testing to get a node in a liste_noeud with name");
+
     noeud *root_node = create_root_noeud();
 
     noeud *node = create_noeud(false, "test", NULL);
@@ -176,10 +163,9 @@ void test_get(test_info *info)
 
 void test_append(test_info *info)
 {
-    if (verbose)
-    {
-        printf("\nTesting to append a node in a liste_noeud\n");
-    }
+
+    print_test_name("Testing to append a node in a liste_noeud");
+
     noeud *root_node = create_root_noeud();
     handle_boolean_test(true, root_node->fils == NULL, __LINE__, __FILE__, info);
 
@@ -209,10 +195,8 @@ void test_append(test_info *info)
 
 void test_remove(test_info *info)
 {
-    if (verbose)
-    {
-        printf("\nTesting to remove a node in a liste_noeud\n");
-    }
+    print_test_name("Testing to remove a node in a liste_noeud");
+
     noeud *root_node = create_root_noeud();
 
     noeud *node = create_noeud(false, "test", NULL);

@@ -8,6 +8,8 @@
 
 #include "../main/constants.h"
 
+extern bool debug;
+
 // Structure to hold test information.
 typedef struct test_info
 {
@@ -24,11 +26,12 @@ void print_test_info(const test_info *);
 // Test utils
 double clock_ticks_to_seconds(clock_t);
 
-void print_test_header(char *name);
-void print_test_footer(char *name);
+void print_test_header(const char *name);
+void print_test_footer(const char *name);
+void print_test_name(const char *name);
 
-void handle_string_test(char *expected, char *actual, int line, char *file, test_info *info);
-void handle_boolean_test(bool expected, bool actual, int line, char *file, test_info *info);
+void handle_string_test(const char *expected, const char *actual, int line, const char *file, test_info *info);
+void handle_boolean_test(bool expected, bool actual, int line, const char *file, test_info *info);
 
 // All the tests
 test_info *test_string_utils();
