@@ -1,8 +1,8 @@
 #ifndef TEST_CORE_H
 #define TEST_CORE_H
 
-#include <time.h>
 #include <stdbool.h>
+#include <time.h>
 
 extern bool debug;
 extern char *out_stream_path;
@@ -31,6 +31,7 @@ void print_test_name(const char *);
 
 void handle_string_test(const char *, const char *, int, const char *, test_info *);
 void handle_boolean_test(bool, bool, int, const char *, test_info *);
+void handle_int_test(int, int, int, const char *, test_info *);
 
 // All the tests
 test_info *test_string_utils();
