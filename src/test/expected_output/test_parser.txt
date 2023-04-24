@@ -1,3 +1,4 @@
+Parsing file src/test/input/test_parser.txt ...
 $ debug
 
 $ debug one
