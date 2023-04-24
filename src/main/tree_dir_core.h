@@ -45,5 +45,6 @@ bool append_liste_noeud(liste_noeud *node_list, noeud *node);
 liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node);
 
 char *get_absolute_path_of_node(const noeud *node);
+void destroy_root();
 
 #endif

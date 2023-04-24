@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     current_node = create_root_noeud();
     int error_code = parse_file(argv[1]);
 
-    destroy_noeud(current_node->racine);
+    destroy_root();
 
     return error_code == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }

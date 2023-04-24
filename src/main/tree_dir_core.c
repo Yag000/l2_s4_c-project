@@ -388,3 +388,11 @@ char *get_absolute_path_of_node(const noeud *node)
 
     return absolute_path;
 }
+
+void destroy_root()
+{
+    assert(current_node != NULL);
+    assert(current_node->racine != NULL);
+
+    destroy_noeud(current_node->racine);
+}
