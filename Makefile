@@ -10,7 +10,7 @@ OBJDIRMAIN=$(OBJDIR)/main
 OBJDIRTEST=$(OBJDIR)/test
 
 SRCFILES := $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/**/*.c)
-OBJFILES := $(filter-out $(OBJDIRMAIN)/$(MAINFILE).o, $(patsubst $(SRCDIR)/%.c,$(OBJDIRMAIN)/%.o,$(SRCFILES)))
+OBJFILES := $(filter-out $(OBJDIRMAIN)/$(EXEC).o, $(patsubst $(SRCDIR)/%.c,$(OBJDIRMAIN)/%.o,$(SRCFILES)))
 OBJFILESWITHMAIN := $(patsubst $(SRCDIR)/%.c,$(OBJDIRMAIN)/%.o,$(SRCFILES))
 
 TESTSRCFILES := $(wildcard $(TESTDIR)/*.c) $(wildcard $(TESTDIR)/**/*.c)
@@ -26,6 +26,8 @@ $(OBJDIRMAIN)/%.o: $(SRCDIR)/%.c
 $(OBJDIRTEST)/%.o: $(TESTDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
+.PHONY:all, clean 
+
 all: main 
 
 main: $(OBJFILESWITHMAIN)
@@ -35,7 +37,6 @@ main: $(OBJFILESWITHMAIN)
 test: $(OBJFILES) $(TESTOBJFILES)
 	$(CC) -o $@ $^ $(CFLAGS)
 
-.PHONY: clean
 
 clean:
 	rm -rf $(OBJDIR) main test
