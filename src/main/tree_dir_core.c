@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "tree_dir_core.h"
+#include "string_utils.h"
 
 noeud *create_empty_noeud()
 {
@@ -15,6 +16,8 @@ noeud *create_empty_noeud()
 
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
+    assert(strcmp(nom, "") != 0 && strcmp(nom, ".") != 0 && strcmp(nom, "..") != 0);
+
     noeud *node = create_empty_noeud();
 
     int length_nom = strlen(nom);
@@ -55,9 +58,13 @@ Create a node with pere and racine set to himself
 */
 noeud *create_root_noeud()
 {
-    noeud *node = create_noeud(true, "", NULL);
+    noeud *node = create_empty_noeud();
+
+    node->nom[0] = '\0';
     node->pere = node;
     node->racine = node;
+    node->est_dossier = true;
+    node->fils = NULL;
 
     return node;
 }
@@ -81,8 +88,6 @@ Return true (for the moment) if the nodes have the same name
 */
 bool are_noeuds_equal(const noeud *node1, const noeud *node2)
 {
-    // TODO (should have the path)
-
     if (node1 == NULL && node2 == NULL)
     {
         return true;
@@ -93,7 +98,16 @@ bool are_noeuds_equal(const noeud *node1, const noeud *node2)
         return false;
     }
 
-    return (strcmp(node1->nom, node2->nom) == 0) && (node1->est_dossier == node2->est_dossier);
+    return node1 == node2;
+}
+
+bool is_root_node(const noeud *node)
+{
+    if (node == NULL)
+    {
+        return false;
+    }
+    return (strcmp(node->nom, "") == 0) && node == node->pere && node == node->racine;
 }
 
 bool is_fils_of_noeud_empty(const noeud *node)
@@ -297,7 +311,7 @@ Otherwise, return false if the node already exists in node_list
 */
 bool append_liste_noeud(liste_noeud *node_list, noeud *node)
 {
-    if (node_list == NULL || are_noeuds_equal(node_list->no, node))
+    if (node_list == NULL || strcmp(node_list->no->nom, node->nom) == 0)
     {
         return false;
     }
@@ -335,4 +349,42 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
     node_list->succ = remove_liste_noeud(node_list->succ, node);
 
     return node_list;
+}
+
+/**
+ * Returns the string containing the absolute path of the node
+ */
+char *get_absolute_path_of_node(const noeud *node)
+{
+    assert(node != NULL);
+
+    char *absolute_path;
+
+    if (is_root_node(node))
+    {
+        absolute_path = malloc(2 * sizeof(char));
+        absolute_path[0] = '/';
+        absolute_path[1] = '\0';
+
+        return absolute_path;
+    }
+
+    if (is_root_node(node->pere))
+    {
+        char *root_path = malloc(sizeof(char));
+        root_path[0] = '\0';
+
+        absolute_path = concat_two_words_with_delimiter(root_path, node->nom, '/');
+
+        free(root_path);
+
+        return absolute_path;
+    }
+
+    char *parent_absolute_path = get_absolute_path_of_node(node->pere);
+    absolute_path = concat_two_words_with_delimiter(parent_absolute_path, node->nom, '/');
+
+    free(parent_absolute_path);
+
+    return absolute_path;
 }
