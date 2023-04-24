@@ -1,10 +1,12 @@
 #include <stdlib.h>
+#include <assert.h>
 
 #include "pwd.h"
 #include "tree_dir_core.h"
 #include "string_utils.h"
 #include "command.h"
 
+noeud *current_node;
 /**
  * Adds to the output the absolute path of the constant node
  */
@@ -28,49 +30,35 @@ int pwd(const command *cmd)
  */
 char *get_absolute_path_of_node(noeud *node)
 {
-    unsigned n = get_number_of_node_in_absolute_path(node);
-    char **list_of_absolute_path_name = get_list_of_noeud_above_node(node, n);
+    assert(node != NULL);
 
-    char *absolute_path = concat_words_with_delimiter(n, list_of_absolute_path_name, '/');
-
-    free(list_of_absolute_path_name);
-
-    return absolute_path;
-}
-
-/**
- * Returns the list of n - 1 names of the node's parents, with the given node as the nth node
- */
-char **get_list_of_noeud_above_node(noeud *node, unsigned n)
-{
-    char **list_of_names = malloc(n * sizeof(char *));
-
-    unsigned i = 0;
-    noeud *temp_noeud = node;
-
-    while (i < n)
-    {
-        list_of_names[n - i - 1] = temp_noeud->nom;
-
-        temp_noeud = temp_noeud->pere;
-        ++i;
-    }
-    return list_of_names;
-}
-
-/**
- * Returns the number of parents above the node, with the given node included
- */
-unsigned get_number_of_node_in_absolute_path(noeud *node)
-{
-    if (node == NULL)
-    {
-        return 0;
-    }
+    char *absolute_path;
 
     if (is_root_node(node))
     {
-        return 1;
+        absolute_path = malloc(2 * sizeof(char));
+        absolute_path[0] = '/';
+        absolute_path[1] = '\0';
+
+        return absolute_path;
     }
-    return 1 + get_number_of_node_in_absolute_path(node->pere);
+
+    if (is_root_node(node->pere))
+    {
+        char *root_path = malloc(sizeof(char));
+        root_path[0] = '\0';
+
+        absolute_path = concat_two_words_with_delimiter(root_path, node->nom, '/');
+
+        free(root_path);
+
+        return absolute_path;
+    }
+
+    char *parent_absolute_path = get_absolute_path_of_node(node->pere);
+    absolute_path = concat_two_words_with_delimiter(parent_absolute_path, node->nom, '/');
+
+    free(parent_absolute_path);
+
+    return absolute_path;
 }

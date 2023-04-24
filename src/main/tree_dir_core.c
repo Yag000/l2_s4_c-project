@@ -103,7 +103,7 @@ bool are_noeuds_equal(noeud *node1, noeud *node2)
     return result;
 }
 
-bool is_root_node(noeud *node)
+bool is_root_node(const noeud *node)
 {
     if (node == NULL)
     {

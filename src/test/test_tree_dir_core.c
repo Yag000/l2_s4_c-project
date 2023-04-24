@@ -93,17 +93,13 @@ void test_create_liste_noeud(test_info *info)
 
     noeud *root_node = create_root_noeud();
 
-    noeud *node = create_noeud(false, "test1", NULL);
-    node->pere = root_node;
-    node->racine = root_node;
+    noeud *node = create_noeud(false, "test1", root_node);
 
     root_node->fils = create_liste_noeud(node);
     handle_string_test("test1", root_node->fils->no->nom, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->fils->succ == NULL, __LINE__, __FILE__, info);
 
-    noeud *node2 = create_noeud(false, "test2", NULL);
-    node2->pere = root_node;
-    node2->racine = root_node;
+    noeud *node2 = create_noeud(false, "test2", root_node);
 
     handle_boolean_test(true, append_liste_noeud(root_node->fils, node2), __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->fils->succ != NULL, __LINE__, __FILE__, info);
@@ -126,9 +122,7 @@ void test_contains(test_info *info)
 
     append_a_fils_to_noeud(root_node, create_noeud(false, "test2", NULL));
     append_a_fils_to_noeud(root_node, create_noeud(false, "test3", NULL));
-    node = create_noeud(false, "test4", NULL);
-    node->pere = root_node;
-    node->racine = root_node;
+    node = create_noeud(false, "test4", root_node);
     handle_boolean_test(false, contains_liste_noeud(root_node->fils, node), __LINE__, __FILE__, info);
 
     append_a_fils_to_noeud(root_node, node);
@@ -184,9 +178,7 @@ void test_append(test_info *info)
     handle_boolean_test(true, are_noeuds_equal(root_node->fils->no->pere, root_node), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_noeuds_equal(root_node->fils->no->racine, root_node), __LINE__, __FILE__, info);
 
-    node = create_noeud(false, "test2", NULL);
-    node->racine = root_node;
-    node->pere = root_node;
+    node = create_noeud(false, "test2", root_node);
     handle_boolean_test(false, contains_liste_noeud(root_node->fils, node), __LINE__, __FILE__, info);
     handle_boolean_test(true, append_a_fils_to_noeud(root_node, node), __LINE__, __FILE__, info);
     handle_boolean_test(true, contains_liste_noeud(root_node->fils, node), __LINE__, __FILE__, info);

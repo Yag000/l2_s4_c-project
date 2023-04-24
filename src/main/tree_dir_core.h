@@ -28,7 +28,7 @@ noeud *create_root_noeud();
 void destroy_noeud(noeud *node);
 bool are_noeuds_equal(noeud *node1, noeud *node2);
 bool is_fils_of_noeud_empty(const noeud *node);
-bool is_root_node(noeud *node);
+bool is_root_node(const noeud *node);
 bool contains_noeud(noeud *pere, noeud *fils);
 unsigned get_number_of_fils(noeud *noeud);
 noeud *get_a_fils_of_noeud(noeud *node, const char *name);
