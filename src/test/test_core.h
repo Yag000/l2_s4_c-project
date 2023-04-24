@@ -6,7 +6,9 @@
 
 extern bool debug;
 
-// Structure to hold test information.
+/*
+Structure to hold test information.
+*/
 typedef struct test_info
 {
     int passed;

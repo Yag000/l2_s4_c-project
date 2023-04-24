@@ -4,9 +4,9 @@
 #include "tree_dir_core.h"
 #include "command.h"
 
-/**
- * Adds to the output the absolute path of the constant node
- */
+/*
+Adds to the output the absolute path of the current node.
+*/
 int pwd(const command *cmd)
 {
     if (!handle_number_of_args(0, cmd->args_number))

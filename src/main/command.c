@@ -17,9 +17,9 @@ command *create_command(char *name, int args_number, char **args)
     cmd->args = args;
     return cmd;
 }
-/**
- * Frees the memory allocated for a command.
- */
+/*
+Frees the memory allocated for a command.
+*/
 void destroy_command(command *cmd)
 {
     free(cmd->name);
@@ -31,9 +31,9 @@ void destroy_command(command *cmd)
     free(cmd);
 }
 
-/**
- * Prints a command if verbose mode is enabled.
- */
+/*
+Prints a command if verbose mode is enabled.
+*/
 void print_command(const command *cmd)
 {
     if (!verbose)
@@ -51,17 +51,17 @@ void print_command(const command *cmd)
     fputs("\n", out_stream);
 }
 
-/**
- * Returns true if the command name matches the given name.
- */
+/*
+Returns true if the command name matches the given name.
+*/
 bool is_command(const command *command, const char *name)
 {
     return strcmp(command->name, name) == 0;
 }
 
-/**
- * Executes a command and returns the exit code.
- */
+/*
+Executes a command and returns the exit code.
+*/
 int execute_command(const command *cmd)
 {
     // TODO we need to implement the commands and their return value
@@ -121,10 +121,10 @@ int execute_command(const command *cmd)
     return 0;
 }
 
-/**
- * Prints the command to the output stream.
- * This is used for debugging purposes.
- */
+/*
+Prints the command to the output stream.
+This is used for debugging purposes.
+*/
 int debug_command(int args_number, char **args)
 {
     for (int i = 0; i < args_number; i++)

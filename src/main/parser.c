@@ -8,19 +8,21 @@
 #include "string_utils.h"
 
 #define MAX_LINE_LENGTH 512
-// The maximum number of arguments for a command.
-// We could also use a dynamic array to store the arguments,
-// but for the purpose of this project, we will use a fixed size array of 2.
+/*
+The maximum number of arguments for a command.
+We could also use a dynamic array to store the arguments,
+but for the purpose of this project, we will use a fixed size array of 2.
+*/
 #define MAX_COMMAND_ARGUMENTS 2
 
 command *get_command_from_iterator(string_iterator *iterator);
 void close_file(FILE *file);
 
-/**
- * Parses a file containing commands.
- * The file parses lines up to MAX_LINE_LENGTH characters.
- * It returns 0 if the execution of the commands is successful.
- */
+/*
+Parses a file containing commands.
+The file parses lines up to MAX_LINE_LENGTH characters.
+It returns 0 if the execution of the commands is successful.
+*/
 int parse_file(const char *path)
 {
     FILE *file = fopen(path, "r");
@@ -56,10 +58,10 @@ int parse_file(const char *path)
     return exit_code;
 }
 
-/**
- * Parses a line of the file.
- * It returns 0 if the command execution is successful.
- */
+/*
+Parses a line of the file.
+It returns 0 if the command execution is successful.
+*/
 int parse_line(char *line)
 {
     string_iterator *iterator = create_string_iterator(line, ' ');
@@ -86,9 +88,9 @@ int parse_line(char *line)
     return exit_code;
 }
 
-/**
- * Returns a command from a string iterator.
- */
+/*
+Returns a command from a string iterator.
+*/
 command *get_command_from_iterator(string_iterator *iterator)
 {
     if (!has_next_word(iterator))
