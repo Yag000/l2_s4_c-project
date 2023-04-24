@@ -96,7 +96,7 @@ void handle_string_test(const char *expected, const char *actual, int line, cons
     if (strcmp(expected, actual) != 0)
     {
         print_red();
-        printf("\033[0;31m Error: %s != %s at line %d in file %s\n", actual, expected, line, file);
+        printf("Error: %s != %s at line %d in file %s\n", actual, expected, line, file);
         print_no_color();
         info->failed++;
     }
@@ -105,7 +105,7 @@ void handle_string_test(const char *expected, const char *actual, int line, cons
         if (debug)
         {
             print_green();
-            printf("\033[0;32m Passed: %s == %s at line %d in file %s\n", actual, expected, line, file);
+            printf("Passed: %s == %s at line %d in file %s\n", actual, expected, line, file);
             print_no_color();
         }
         info->passed++;
@@ -128,7 +128,7 @@ void handle_boolean_test(bool expected, bool actual, int line, const char *file,
         if (debug)
         {
             print_green();
-            printf("\033[0;32m Passed: %d == %d at line %d in file %s\n", actual, expected, line, file);
+            printf("Passed: %d == %d at line %d in file %s\n", actual, expected, line, file);
             print_no_color();
         }
         info->passed++;
