@@ -107,7 +107,7 @@ bool is_root_node(noeud *node)
 {
     if (node == NULL)
     {
-        return NULL;
+        return false;
     }
     return (strcmp(node->nom, "") == 0) && node == node->pere && node == node->racine;
 }

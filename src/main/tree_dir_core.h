@@ -20,7 +20,7 @@ typedef struct liste_noeud
     struct liste_noeud *succ;
 } liste_noeud;
 
-extern noeud *constant_node;
+extern noeud *current_node;
 
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere);
 noeud *create_noeud_with_fils(bool est_dossier, const char *nom, noeud *pere, liste_noeud *fils);
