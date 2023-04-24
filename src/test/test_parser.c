@@ -1,6 +1,7 @@
-#include "../main/constants.h"
-#include "../main/parser.h"
+#include <stdio.h>
 
+#include "../main/parser.h"
+#include "../main/constants.h"
 #include "test_core.h"
 
 FILE *out_stream;
