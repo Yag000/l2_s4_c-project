@@ -92,15 +92,7 @@ bool are_noeuds_equal(noeud *node1, noeud *node2)
         return false;
     }
 
-    char *path1 = get_absolute_path_of_node(node1);
-    char *path2 = get_absolute_path_of_node(node2);
-
-    bool result = (strcmp(path1, path2) == 0) && (node1->est_dossier == node2->est_dossier);
-
-    free(path1);
-    free(path2);
-
-    return result;
+    return node1 == node2;
 }
 
 bool is_root_node(const noeud *node)
