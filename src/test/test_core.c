@@ -128,3 +128,26 @@ void handle_boolean_test(bool expected, bool actual, int line, const char *file,
 
     info->total++;
 }
+
+void handle_int_test(int expected, int actual, int line, const char *file, test_info *info)
+{
+    if (expected != actual)
+    {
+        print_red();
+        printf("Error: %d != %d at line %d in file %s\n", actual, expected, line, file);
+        print_no_color();
+        info->failed++;
+    }
+    else
+    {
+        if (debug)
+        {
+            print_green();
+            printf("Passed: %d == %d at line %d in file %s\n", actual, expected, line, file);
+            print_no_color();
+        }
+        info->passed++;
+    }
+
+    info->total++;
+}
