@@ -4,7 +4,6 @@
 #include "tree_dir_core.h"
 #include "string_utils.h"
 #include "command.h"
-noeud *constant_node;
 
 /**
  * Adds to the output the absolute path of the constant node
