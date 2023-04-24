@@ -7,6 +7,7 @@
 void test_string_iterator_empty(test_info *info);
 void test_string_iterator_with_text(test_info *info);
 void test_concat_words_with_delimiter(test_info *info);
+static void test_is_alphanumeric(test_info *info);
 
 test_info *test_string_utils()
 {
@@ -20,6 +21,8 @@ test_info *test_string_utils()
     test_string_iterator_empty(info);
     test_string_iterator_with_text(info);
     test_concat_words_with_delimiter(info);
+    test_is_alphanumeric(info);
+
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     printf("Test string utils: ");
@@ -151,4 +154,31 @@ void test_concat_words_with_delimiter(test_info *info)
 
     free(c);
     free(words);
+}
+
+static void test_is_alphanumeric(test_info *info)
+{
+    print_test_name("Testing is alphanumeric");
+
+    // Single character
+    handle_boolean_test(true, is_alphanumeric("a"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_alphanumeric("z"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_alphanumeric("A"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_alphanumeric("Z"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_alphanumeric("0"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_alphanumeric("9"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_alphanumeric(" "), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_alphanumeric("\\"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_alphanumeric(""), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_alphanumeric(NULL), __LINE__, __FILE__, info);
+
+    // Multiple characters
+    handle_boolean_test(true, is_alphanumeric("abc"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_alphanumeric("ABC"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_alphanumeric("123"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_alphanumeric("1a3"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_alphanumeric("1ADS"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_alphanumeric("-3"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_alphanumeric("das123das\\"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_alphanumeric(".123-"), __LINE__, __FILE__, info);
 }

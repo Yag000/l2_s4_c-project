@@ -28,4 +28,6 @@ unsigned get_number_of_char(size_t size, char **words);
 char *concat_two_words_with_delimiter(const char *word1, const char *word2, char delimiter);
 char *concat_words_with_delimiter(size_t size, char **words, char delimiter);
 
+bool is_alphanumeric(const char *);
+
 #endif

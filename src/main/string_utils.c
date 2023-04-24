@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <assert.h>
 
 #include "string_utils.h"
@@ -177,4 +178,24 @@ char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
     words_concat[acc] = '\0';
 
     return words_concat;
+}
+
+/*
+Returns true if the given string is alphanumeric.
+*/
+bool is_alphanumeric(const char *str)
+{
+    if (str == NULL || strlen(str) == 0)
+    {
+        return false;
+    }
+
+    for (unsigned i = 0; i < strlen(str); ++i)
+    {
+        if (!isalnum(str[i]))
+        {
+            return false;
+        }
+    }
+    return true;
 }
