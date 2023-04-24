@@ -69,7 +69,7 @@ unsigned get_number_of_node_in_absolute_path(noeud *node)
         return 0;
     }
 
-    if (are_noeuds_equal(node, node->racine))
+    if (is_root_node(node))
     {
         return 1;
     }
