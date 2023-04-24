@@ -94,7 +94,7 @@ void print_test_name(const char *name)
 void handle_string_test(const char *expected, const char *actual, int line, const char *file, test_info *info)
 {
     info->total++;
-    if (strcmp(expected, actual) == 0)
+    if (strcmp(expected, actual) != 0)
     {
         print_red();
         printf("Error: %s != %s at line %d in file %s\n", actual, expected, line, file);
