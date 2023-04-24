@@ -20,7 +20,9 @@ void print_no_color()
     printf("\033[0m");
 }
 
-// Create a new test info
+/*
+Creates a new test_info.
+*/
 test_info *create_test_info()
 {
     test_info *info = malloc(sizeof(test_info));
@@ -33,13 +35,17 @@ test_info *create_test_info()
     return info;
 }
 
-// Destroy the test info
+/*
+Destroys the test_info .
+*/
 void destroy_test_info(test_info *info)
 {
     free(info);
 }
 
-// Print the test info
+/*
+Prints the test info.
+*/
 void print_test_info(const test_info *info)
 {
     if (info->failed > 0)
