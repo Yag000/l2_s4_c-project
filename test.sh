@@ -56,6 +56,10 @@ echo "|-=-=-=-=-=-=-=-=-| Testing output |-=-=-=-=-=-=-=-=-|"
 # Test the output
 testOuput
 
+echo
+echo "|-=-=-=-=-=-=-=-=-| Results |-=-=-=-=-=-=-=-=-|"
+($has_passed && printf '%s%s%s\n' $GREEN "All tests passed" $COLOR_OFF) || printf '%s%s%s\n' $RED "Some tests failed" $COLOR_OFF
+
 # Exit with a non-zero status if any of the tests failed
 $has_passed && exit 0
 
