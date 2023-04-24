@@ -33,5 +33,6 @@ void handle_boolean_test(bool expected, bool actual, int line, const char *file,
 test_info *test_string_utils();
 test_info *test_tree_dir_core();
 test_info *test_parser();
+test_info *test_pwd();
 
 #endif

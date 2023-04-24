@@ -154,7 +154,7 @@ char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
         return words_concat;
     }
 
-    words_concat = malloc(sizeof(char) * get_number_of_char(size, words) + size);
+    words_concat = malloc(sizeof(char) * (get_number_of_char(size, words) + size));
 
     assert(words_concat != NULL);
 
