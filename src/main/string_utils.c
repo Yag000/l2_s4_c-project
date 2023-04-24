@@ -4,8 +4,7 @@
 
 #include "string_utils.h"
 
-void update_index_to_next_word(string_iterator *iterator);
-unsigned get_number_of_char(size_t size, char **words);
+static void update_index_to_next_word(string_iterator *iterator);
 
 string_iterator *create_string_iterator(char *string, char delimiter)
 {
@@ -42,7 +41,7 @@ char *next_word(string_iterator *iterator)
         return NULL;
     }
 
-    // We iterate through the string until we find a delimiter, i order to skip the word
+    // We iterate through the string until we find a delimiter, in order to skip the word
     int start = iterator->index;
     while (iterator->string[iterator->index] != '\0' && iterator->string[iterator->index] != iterator->delimiter)
     {
@@ -63,7 +62,7 @@ char *next_word(string_iterator *iterator)
 /**
  * Updates the index to the next word in the string.
  */
-void update_index_to_next_word(string_iterator *iterator)
+static void update_index_to_next_word(string_iterator *iterator)
 {
     while (iterator->string[iterator->index] != '\0' && iterator->string[iterator->index] == iterator->delimiter)
     {

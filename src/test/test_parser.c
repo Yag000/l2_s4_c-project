@@ -6,7 +6,7 @@
 
 FILE *out_stream;
 
-void test_parse_file(test_info *info);
+static void test_parse_file(test_info *info);
 
 test_info *test_parser()
 {
@@ -23,7 +23,7 @@ test_info *test_parser()
     return info;
 }
 
-void test_parse_file(test_info *info)
+static void test_parse_file(test_info *info)
 {
     out_stream = fopen("src/test/output/test_parser.txt", "w");
     int error_code = -1;

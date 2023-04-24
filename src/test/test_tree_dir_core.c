@@ -4,16 +4,16 @@
 #include "test_core.h"
 #include "../main/tree_dir_core.h"
 
-void test_create_noeud(test_info *info);
-void test_are_noeud_equal(test_info *info);
-void test_is_root_node(test_info *info);
-void test_is_fils_of_node_empty(test_info *info);
-void test_create_liste_noeud(test_info *info);
-void test_contains(test_info *info);
-void test_get(test_info *info);
-void test_append(test_info *info);
-void test_remove(test_info *info);
-void test_get_absolute_path_of_node(test_info *info);
+static void test_create_noeud(test_info *info);
+static void test_are_noeud_equal(test_info *info);
+static void test_is_root_node(test_info *info);
+static void test_is_fils_of_node_empty(test_info *info);
+static void test_create_liste_noeud(test_info *info);
+static void test_contains(test_info *info);
+static void test_get(test_info *info);
+static void test_append(test_info *info);
+static void test_remove(test_info *info);
+static void test_get_absolute_path_of_node(test_info *info);
 
 test_info *test_tree_dir_core()
 {
@@ -42,7 +42,7 @@ test_info *test_tree_dir_core()
     return info;
 }
 
-void test_create_noeud(test_info *info)
+static void test_create_noeud(test_info *info)
 {
     print_test_name("Testing to create a node");
 
@@ -76,7 +76,7 @@ void test_create_noeud(test_info *info)
     destroy_noeud(pere);
 }
 
-void test_are_noeud_equal(test_info *info)
+static void test_are_noeud_equal(test_info *info)
 {
     print_test_name("Testing if two nodes are equal");
 
@@ -102,7 +102,7 @@ void test_are_noeud_equal(test_info *info)
     destroy_noeud(root_node2);
 }
 
-void test_is_root_node(test_info *info)
+static void test_is_root_node(test_info *info)
 {
     print_test_name("Testing if a node is a root node");
 
@@ -120,7 +120,7 @@ void test_is_root_node(test_info *info)
     destroy_noeud(root_node);
 }
 
-void test_is_fils_of_node_empty(test_info *info)
+static void test_is_fils_of_node_empty(test_info *info)
 {
     print_test_name("Testing if fils of node is empty");
 
@@ -135,7 +135,7 @@ void test_is_fils_of_node_empty(test_info *info)
     destroy_noeud(root);
 }
 
-void test_create_liste_noeud(test_info *info)
+static void test_create_liste_noeud(test_info *info)
 {
     print_test_name("Testing to create a liste noeud");
 
@@ -157,7 +157,7 @@ void test_create_liste_noeud(test_info *info)
     destroy_noeud(root_node);
 }
 
-void test_contains(test_info *info)
+static void test_contains(test_info *info)
 {
     print_test_name("Testing contains liste noeud");
 
@@ -181,7 +181,7 @@ void test_contains(test_info *info)
     destroy_noeud(root_node);
 }
 
-void test_get(test_info *info)
+static void test_get(test_info *info)
 {
 
     print_test_name("Testing to get a node in a liste_noeud with name");
@@ -211,7 +211,7 @@ void test_get(test_info *info)
     destroy_noeud(root_node);
 }
 
-void test_append(test_info *info)
+static void test_append(test_info *info)
 {
 
     print_test_name("Testing to append a node in a liste_noeud");
@@ -243,7 +243,7 @@ void test_append(test_info *info)
     destroy_noeud(root_node);
 }
 
-void test_remove(test_info *info)
+static void test_remove(test_info *info)
 {
     print_test_name("Testing to remove a node in a liste_noeud");
 
@@ -290,7 +290,7 @@ void test_remove(test_info *info)
     destroy_noeud(node);
 }
 
-void test_get_absolute_path_of_node(test_info *info)
+static void test_get_absolute_path_of_node(test_info *info)
 {
     print_test_name("Test to get the absolute path of node");
     noeud *root = create_root_noeud();

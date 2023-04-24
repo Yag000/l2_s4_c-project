@@ -4,9 +4,9 @@
 #include "test_core.h"
 #include "../main/string_utils.h"
 
-void test_string_iterator_empty(test_info *info);
-void test_string_iterator_with_text(test_info *info);
-void test_concat_words_with_delimiter(test_info *info);
+static void test_string_iterator_empty(test_info *info);
+static void test_string_iterator_with_text(test_info *info);
+static void test_concat_words_with_delimiter(test_info *info);
 
 test_info *test_string_utils()
 {
@@ -28,7 +28,7 @@ test_info *test_string_utils()
     return info;
 }
 
-void test_string_iterator_empty(test_info *info)
+static void test_string_iterator_empty(test_info *info)
 {
     print_test_name("Testing string iterator with empty string");
 
@@ -49,7 +49,7 @@ void test_string_iterator_empty(test_info *info)
     destroy_string_iterator(iterator);
 }
 
-void test_string_iterator_with_text(test_info *info)
+static void test_string_iterator_with_text(test_info *info)
 {
     print_test_name("Testing string iterator with text");
 
@@ -94,7 +94,7 @@ void test_string_iterator_with_text(test_info *info)
     destroy_string_iterator(iterator);
 }
 
-void test_concat_words_with_delimiter(test_info *info)
+static void test_concat_words_with_delimiter(test_info *info)
 {
     print_test_name("Testing concat words with delimiter");
 
