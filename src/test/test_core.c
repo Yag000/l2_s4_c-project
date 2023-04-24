@@ -93,46 +93,40 @@ void print_test_name(const char *name)
 
 void handle_string_test(const char *expected, const char *actual, int line, const char *file, test_info *info)
 {
-    if (strcmp(expected, actual) != 0)
+    info->total++;
+    if (strcmp(expected, actual) == 0)
     {
         print_red();
         printf("Error: %s != %s at line %d in file %s\n", actual, expected, line, file);
         print_no_color();
         info->failed++;
+        return;
     }
-    else
+    if (debug)
     {
-        if (debug)
-        {
-            print_green();
-            printf("Passed: %s == %s at line %d in file %s\n", actual, expected, line, file);
-            print_no_color();
-        }
-        info->passed++;
+        print_green();
+        printf("Passed: %s == %s at line %d in file %s\n", actual, expected, line, file);
+        print_no_color();
     }
-
-    info->total++;
+    info->passed++;
 }
 
 void handle_boolean_test(bool expected, bool actual, int line, const char *file, test_info *info)
 {
+    info->total++;
     if (expected != actual)
     {
         print_red();
         printf("Error: %d != %d at line %d in file %s\n", actual, expected, line, file);
         print_no_color();
         info->failed++;
+        return;
     }
-    else
+    if (debug)
     {
-        if (debug)
-        {
-            print_green();
-            printf("Passed: %d == %d at line %d in file %s\n", actual, expected, line, file);
-            print_no_color();
-        }
-        info->passed++;
+        print_green();
+        printf("Passed: %d == %d at line %d in file %s\n", actual, expected, line, file);
+        print_no_color();
     }
-
-    info->total++;
+    info->passed++;
 }
