@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
     update_test_info(info, test_tree_dir_core());
     update_test_info(info, test_parser());
     update_test_info(info, test_pwd());
+    update_test_info(info, test_mkdir());
 
     // End of tests
 

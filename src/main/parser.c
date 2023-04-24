@@ -44,7 +44,7 @@ int parse_file(const char *path)
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
     {
         exit_code = parse_line(line);
-        if (exit_code != 0)
+        if (exit_code == FATAL_ERROR)
         {
             perror("Probleme parse line");
             break;
