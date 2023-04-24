@@ -72,6 +72,16 @@ void test_are_noeud_equal(test_info *info)
     // TODO
 }
 
+void test_is_root_node(test_info *info)
+{
+    noeud *root_node = create_root_noeud();
+    handle_boolean_test(true, is_root_node(root_node), __LINE__, __FILE__, info);
+
+    noeud *node = create_noeud(true, "test", root_node);
+    append_a_fils_to_noeud(root_node, node);
+    handle_boolean_test(false, is_root_node(node), __LINE__, __FILE__, info);
+}
+
 void test_is_fils_of_node_empty(test_info *info)
 {
     print_test_name("Testing if fils of node is empty");

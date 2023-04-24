@@ -1,12 +1,10 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "pwd.h"
 #include "tree_dir_core.h"
 #include "string_utils.h"
 #include "command.h"
 
-noeud *current_node;
 /**
  * Adds to the output the absolute path of the constant node
  */
@@ -28,7 +26,7 @@ int pwd(const command *cmd)
 /**
  * Returns the string containing the absolute path of the node
  */
-char *get_absolute_path_of_node(noeud *node)
+char *get_absolute_path_of_node(const noeud *node)
 {
     assert(node != NULL);
 

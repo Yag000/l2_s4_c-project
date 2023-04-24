@@ -1,6 +1,6 @@
 #include "test_core.h"
 
-#include "../main/pwd.h"
+#include "../main/command.h"
 #include "../main/tree_dir_core.h"
 
 void test_pwd_function(test_info *info);

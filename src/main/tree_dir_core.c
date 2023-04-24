@@ -80,7 +80,7 @@ void destroy_noeud(noeud *node)
 /*
 Return true (for the moment) if the nodes have the same name
 */
-bool are_noeuds_equal(noeud *node1, noeud *node2)
+bool are_noeuds_equal(const noeud *node1, const noeud *node2)
 {
     if (node1 == NULL && node2 == NULL)
     {
