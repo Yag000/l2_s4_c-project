@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "tree_dir_core.h"
+#include "pwd.h"
 
 noeud *create_empty_noeud()
 {
@@ -79,10 +80,8 @@ void destroy_noeud(noeud *node)
 /*
 Return true (for the moment) if the nodes have the same name
 */
-bool are_noeuds_equal(const noeud *node1, const noeud *node2)
+bool are_noeuds_equal(noeud *node1, noeud *node2)
 {
-    // TODO (should have the path)
-
     if (node1 == NULL && node2 == NULL)
     {
         return true;
@@ -93,7 +92,24 @@ bool are_noeuds_equal(const noeud *node1, const noeud *node2)
         return false;
     }
 
-    return (strcmp(node1->nom, node2->nom) == 0) && (node1->est_dossier == node2->est_dossier);
+    char *path1 = get_absolute_path_of_node(node1);
+    char *path2 = get_absolute_path_of_node(node2);
+
+    bool result = (strcmp(path1, path2) == 0) && (node1->est_dossier == node2->est_dossier);
+
+    free(path1);
+    free(path2);
+
+    return result;
+}
+
+bool is_root_node(noeud *node)
+{
+    if (node == NULL)
+    {
+        return NULL;
+    }
+    return (strcmp(node->nom, "") == 0) && node == node->pere && node == node->racine;
 }
 
 bool is_fils_of_noeud_empty(const noeud *node)
@@ -297,7 +313,7 @@ Otherwise, return false if the node already exists in node_list
 */
 bool append_liste_noeud(liste_noeud *node_list, noeud *node)
 {
-    if (node_list == NULL || are_noeuds_equal(node_list->no, node))
+    if (node_list == NULL || strcmp(node_list->no->nom, node->nom) == 0)
     {
         return false;
     }
