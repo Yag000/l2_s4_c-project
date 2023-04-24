@@ -3,7 +3,6 @@
 #include <assert.h>
 
 #include "tree_dir_core.h"
-#include "pwd.h"
 
 noeud *create_empty_noeud()
 {
