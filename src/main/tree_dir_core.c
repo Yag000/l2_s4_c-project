@@ -16,6 +16,8 @@ noeud *create_empty_noeud()
 
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
+    assert(strcmp(nom, "") != 0 && strcmp(nom, ".") != 0 && strcmp(nom, "..") != 0);
+
     noeud *node = create_empty_noeud();
 
     int length_nom = strlen(nom);
@@ -56,9 +58,13 @@ Create a node with pere and racine set to himself
 */
 noeud *create_root_noeud()
 {
-    noeud *node = create_noeud(true, "", NULL);
+    noeud *node = create_empty_noeud();
+
+    node->nom[0] = '\0';
     node->pere = node;
     node->racine = node;
+    node->est_dossier = true;
+    node->fils = NULL;
 
     return node;
 }
@@ -84,7 +90,7 @@ bool are_noeuds_equal(const noeud *node1, const noeud *node2)
 {
     if (node1 == NULL && node2 == NULL)
     {
-        return true;
+        return false;
     }
 
     if (node1 == NULL || node2 == NULL)

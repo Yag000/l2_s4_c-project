@@ -2,6 +2,8 @@
 #include "../main/tree_dir_core.h"
 
 void test_create_noeud(test_info *info);
+void test_are_noeud_equal(test_info *info);
+void test_is_root_node(test_info *info);
 void test_is_fils_of_node_empty(test_info *info);
 void test_create_liste_noeud(test_info *info);
 void test_contains(test_info *info);
@@ -19,6 +21,8 @@ test_info *test_tree_dir_core()
 
     // Add tests here
     test_create_noeud(info);
+    test_are_noeud_equal(info);
+    test_is_root_node(info);
     test_is_fils_of_node_empty(info);
     test_create_liste_noeud(info);
     test_contains(info);
@@ -69,17 +73,46 @@ void test_create_noeud(test_info *info)
 
 void test_are_noeud_equal(test_info *info)
 {
-    // TODO
+    print_test_name("Testing if two nodes are equal");
+
+    noeud *root_node1 = create_root_noeud();
+    noeud *root_node2 = create_root_noeud();
+
+    handle_boolean_test(false, are_noeuds_equal(NULL, NULL), __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(root_node1, NULL), __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(root_node1, root_node2), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(root_node1, root_node1), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(root_node2, root_node2), __LINE__, __FILE__, info);
+
+    noeud *node = create_noeud(false, "test", NULL);
+    append_a_fils_to_noeud(root_node1, node);
+    handle_boolean_test(true, are_noeuds_equal(node, node), __LINE__, __FILE__, info);
+
+    noeud *node2 = create_noeud(false, "test", NULL);
+    append_a_fils_to_noeud(root_node2, node2);
+    handle_boolean_test(true, are_noeuds_equal(node2, node2), __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(node, node2), __LINE__, __FILE__, info);
+
+    destroy_noeud(root_node1);
+    destroy_noeud(root_node2);
 }
 
 void test_is_root_node(test_info *info)
 {
+    print_test_name("Testing if a node is a root node");
+
     noeud *root_node = create_root_noeud();
     handle_boolean_test(true, is_root_node(root_node), __LINE__, __FILE__, info);
 
     noeud *node = create_noeud(true, "test", root_node);
     append_a_fils_to_noeud(root_node, node);
     handle_boolean_test(false, is_root_node(node), __LINE__, __FILE__, info);
+
+    node->pere = node;
+    node->racine = node;
+    handle_boolean_test(false, is_root_node(node), __LINE__, __FILE__, info);
+
+    destroy_noeud(root_node);
 }
 
 void test_is_fils_of_node_empty(test_info *info)
