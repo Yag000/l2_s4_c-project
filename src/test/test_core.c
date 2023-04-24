@@ -88,7 +88,7 @@ void handle_string_test(const char *expected, const char *actual, int line, cons
     if (strcmp(expected, actual) != 0)
     {
         print_red();
-        printf("\033[0;31m Error: %s != %s at line %d in file %s\n", actual, expected, line, file);
+        printf("\033[0;31m Error: %s != %s at line %d in file %s\n", expected, actual, line, file);
         print_no_color();
         info->failed++;
     }
@@ -97,7 +97,7 @@ void handle_string_test(const char *expected, const char *actual, int line, cons
         if (debug)
         {
             print_green();
-            printf("\033[0;32m Passed: %s == %s at line %d in file %s\n", actual, expected, line, file);
+            printf("\033[0;32m Passed: %s == %s at line %d in file %s\n", expected, actual, line, file);
             print_no_color();
         }
         info->passed++;
@@ -111,7 +111,7 @@ void handle_boolean_test(bool expected, bool actual, int line, const char *file,
     if (expected != actual)
     {
         print_red();
-        printf("Error: %d != %d at line %d in file %s\n", actual, expected, line, file);
+        printf("Error: %d != %d at line %d in file %s\n", expected, actual, line, file);
         print_no_color();
         info->failed++;
     }
@@ -120,7 +120,7 @@ void handle_boolean_test(bool expected, bool actual, int line, const char *file,
         if (debug)
         {
             print_green();
-            printf("\033[0;32m Passed: %d == %d at line %d in file %s\n", actual, expected, line, file);
+            printf("\033[0;32m Passed: %d == %d at line %d in file %s\n", expected, actual, line, file);
             print_no_color();
         }
         info->passed++;
@@ -134,7 +134,7 @@ void handle_int_test(int expected, int actual, int line, const char *file, test_
     if (expected != actual)
     {
         print_red();
-        printf("Error: %d != %d at line %d in file %s\n", actual, expected, line, file);
+        printf("Error: %d != %d at line %d in file %s\n", expected, actual, line, file);
         print_no_color();
         info->failed++;
     }
@@ -143,7 +143,7 @@ void handle_int_test(int expected, int actual, int line, const char *file, test_
         if (debug)
         {
             print_green();
-            printf("Passed: %d == %d at line %d in file %s\n", actual, expected, line, file);
+            printf("Passed: %d == %d at line %d in file %s\n", expected, actual, line, file);
             print_no_color();
         }
         info->passed++;
