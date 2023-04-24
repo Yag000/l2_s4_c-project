@@ -67,8 +67,16 @@ void print_test_header(const char *name)
     }
 }
 
-void print_test_footer(const char *name)
+void print_test_footer(const char *name, const test_info *info)
 {
+    if (debug)
+    {
+        puts("");
+    }
+
+    printf("Test %s: ", name);
+    print_test_info(info);
+
     if (debug)
     {
         printf("\n----------------------- End test %s -----------------------\n", name);

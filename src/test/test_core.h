@@ -23,7 +23,7 @@ void print_test_info(const test_info *);
 double clock_ticks_to_seconds(clock_t);
 
 void print_test_header(const char *name);
-void print_test_footer(const char *name);
+void print_test_footer(const char *name, const test_info *info);
 void print_test_name(const char *name);
 
 void handle_string_test(const char *expected, const char *actual, int line, const char *file, test_info *info);

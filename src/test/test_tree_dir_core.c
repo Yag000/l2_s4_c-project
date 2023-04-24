@@ -14,10 +14,9 @@ void test_remove(test_info *info);
 
 test_info *test_tree_dir_core()
 {
+    // Test setup
     print_test_header("tree dir core");
-
     clock_t before = clock();
-    // Create the test info
     test_info *info = create_test_info();
 
     // Add tests here
@@ -28,11 +27,10 @@ test_info *test_tree_dir_core()
     test_get(info);
     test_append(info);
     test_remove(info);
+
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
-    printf("Test tree dir core: ");
-    print_test_info(info);
-    print_test_footer("tree dir core");
+    print_test_footer("tree dir core", info);
     return info;
 }
 
