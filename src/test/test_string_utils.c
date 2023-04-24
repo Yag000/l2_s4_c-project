@@ -1,6 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "test_core.h"
 #include "../main/string_utils.h"
-#include "../main/constants.h"
 
 void test_string_iterator_empty(test_info *info);
 void test_string_iterator_with_text(test_info *info);
