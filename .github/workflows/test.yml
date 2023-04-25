@@ -16,5 +16,4 @@ jobs:
       - name: Run tests
         run: ./test.sh -v
       - name: Run valgrind for memory leaks
-        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./test &&
-        valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./main "src/test/test_main/input/main_test_1_verbose.txt" -v
+        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./test && valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./main "src/test/test_main/input/main_test_1_verbose.txt" -v
