@@ -31,7 +31,7 @@ void print_test_name(const char *name);
 
 void handle_string_test(const char *expected, const char *actual, int line, const char *file, test_info *info);
 void handle_boolean_test(bool expected, bool actual, int line, const char *file, test_info *info);
-void handle_int_test(int expected, int actual, int line, const char *file, test_info *info);
+void handle_int_test(int, int, int, const char *, test_info *);
 
 // All the tests
 test_info *test_string_utils();

@@ -7,15 +7,15 @@
 #include "../main/tree_dir_core.h"
 #include "../main/file_manager.h"
 
-static void test_mkdir_empty(test_info *info);
-static void test_mkdir_invalid_name(test_info *info);
-static void test_mkdir_valid_name(test_info *info);
-static void test_mkdir_already_exists(test_info *info);
+static void test_mkdir_empty(test_info *);
+static void test_mkdir_invalid_name(test_info *);
+static void test_mkdir_valid_name(test_info *);
+static void test_mkdir_already_exists(test_info *);
 
-static void invalid_name_format_test_handler(const char *name, test_info *info);
-static noeud *create_and_test_node_creation(const char *name, test_info *info);
+static void invalid_name_format_test_handler(const char *, test_info *);
+static noeud *create_and_test_node_creation(const char *, test_info *);
 
-static command *string_to_command(const char *name);
+static command *string_to_command(const char *);
 
 // TODO: add more tests when ls and cd are implemented
 

@@ -22,6 +22,6 @@ int write_result_command(char *result);
 int write_result_lines_command(size_t line_number, char **results);
 
 int pwd(const command *cmd);
-int mkdir(const command *cmd);
+int mkdir(const command *);
 
 #endif
