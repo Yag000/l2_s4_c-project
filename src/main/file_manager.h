@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 
-FILE *open_file(const char *path, const char *mode);
-int close_file(FILE *file, const char *path);
-int reset_file(const char *path);
+FILE *open_file(const char *, const char *);
+int close_file(FILE *, const char *);
+int reset_file(const char *);
 
 #endif

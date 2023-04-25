@@ -6,8 +6,7 @@
 #include "constants.h"
 #include "command.h"
 
-static int debug_command(int args_number, char **args);
-int write_result_command(char *result);
+static int debug_command(int, char **);
 
 command *create_command(char *name, int args_number, char **args)
 {

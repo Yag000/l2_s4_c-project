@@ -5,7 +5,7 @@
 #include "../main/command.h"
 #include "../main/tree_dir_core.h"
 
-static void test_pwd_function(test_info *info);
+static void test_pwd_function(test_info *);
 
 test_info *test_pwd()
 {
