@@ -79,7 +79,10 @@ static void test_create_noeud(test_info *info)
     handle_boolean_test(true, create_noeud(true, ".", NULL) == NULL, __LINE__, __FILE__, info);
     handle_boolean_test(true, create_noeud(true, "..", NULL) == NULL, __LINE__, __FILE__, info);
     handle_boolean_test(true, create_noeud(true, "/", NULL) == NULL, __LINE__, __FILE__, info);
+
+    node = create_noeud(true, "name1", NULL);
     handle_boolean_test(false, create_noeud(true, "name1", NULL) == NULL, __LINE__, __FILE__, info);
+    destroy_noeud(node);
 }
 
 static void test_handle_invalid_name_of_node(test_info *info)
