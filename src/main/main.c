@@ -3,8 +3,6 @@
 #include "parser.h"
 #include "constants.h"
 #include "tree_dir_core.h"
-#include "command.h"
-#include "file_manager.h"
 
 FILE *out_stream;
 
