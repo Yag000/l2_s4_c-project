@@ -5,7 +5,7 @@
 #include "tree_dir_core.h"
 #include "string_utils.h"
 
-static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator);
+static noeud *search_node_in_tree_with_iterator(noeud * string_iterator *);
 
 static noeud *create_empty_noeud()
 {
