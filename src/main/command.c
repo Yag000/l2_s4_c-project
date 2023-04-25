@@ -140,6 +140,9 @@ int debug_command(int args_number, char **args)
     return 0;
 }
 
+/*
+Returns true if the expected number of args is the same of actual
+*/
 bool handle_number_of_args(unsigned expected, unsigned actual)
 {
     // TODO
@@ -147,6 +150,9 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
     return expected == actual;
 }
 
+/*
+Writes the string of result in the out_stream
+*/
 int write_result_command(char *result)
 {
     fputs(result, out_stream);
@@ -155,11 +161,14 @@ int write_result_command(char *result)
     return 0;
 }
 
-int write_result_lines_command(size_t lines_number, char **result)
+/*
+Writes all string of results in the out_stream
+*/
+int write_result_lines_command(size_t lines_number, char **results)
 {
     for (int i = 0; i < lines_number; i++)
     {
-        fputs(result[i], out_stream);
+        fputs(results[i], out_stream);
         fputs("\n", out_stream);
     }
     return 0;
