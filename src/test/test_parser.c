@@ -2,9 +2,8 @@
 
 #include "../main/parser.h"
 #include "../main/constants.h"
+#include "../main/file_manager.h"
 #include "test_core.h"
-
-FILE *out_stream;
 
 static void test_parse_file(test_info *info);
 
@@ -26,21 +25,20 @@ test_info *test_parser()
 
 static void test_parse_file(test_info *info)
 {
-    out_stream = fopen("src/test/output/test_parser.txt", "w");
+    out_stream_path = "src/test/output/test_parser.txt";
     int error_code = -1;
 
-    if (out_stream != NULL)
+    out_stream = open_file(out_stream_path, "w");
+
+    if (out_stream == NULL)
     {
-        error_code = parse_file("src/test/input/test_parser.txt");
+        return;
     }
-    else
-    {
-        perror("Error while opening the file: src/test/output/test_parser.txt");
-    }
-    if (out_stream != NULL)
-    {
-        fclose(out_stream);
-    }
+
+    error_code = parse_file("src/test/input/test_parser.txt");
+
+    close_file(out_stream, out_stream_path);
+
     out_stream = stdout;
 
     handle_boolean_test(error_code == 0, true, __LINE__, __FILE__, info);

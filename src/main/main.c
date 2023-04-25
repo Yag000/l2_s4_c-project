@@ -5,12 +5,12 @@
 #include "tree_dir_core.h"
 
 FILE *out_stream;
+
 bool verbose = false;
 noeud *current_node;
 
 int main(int argc, char *argv[])
 {
-
     out_stream = stdout;
 
     if (argc != 2)

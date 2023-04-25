@@ -1,12 +1,13 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <assert.h>
 
 #include "constants.h"
 #include "command.h"
-#include "pwd.h"
 
 static int debug_command(int args_number, char **args);
+int write_result_command(char *result);
 
 command *create_command(char *name, int args_number, char **args)
 {
@@ -17,6 +18,7 @@ command *create_command(char *name, int args_number, char **args)
     cmd->args = args;
     return cmd;
 }
+
 /*
 Frees the memory allocated for a command.
 */
@@ -139,6 +141,9 @@ static int debug_command(int args_number, char **args)
     return 0;
 }
 
+/*
+Returns true if the expected number of args is the same of actual
+*/
 bool handle_number_of_args(unsigned expected, unsigned actual)
 {
     // TODO
@@ -146,16 +151,25 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
     return expected == actual;
 }
 
+/*
+Writes the string of result in the out_stream
+*/
 int write_result_command(char *result)
 {
-    // TODO
+    fputs(result, out_stream);
+    fputs("\n", out_stream);
 
     return 0;
 }
 
-int write_result_lines_command(size_t line_number, char **result)
+/*
+Writes all string of results in the out_stream
+*/
+int write_result_lines_command(size_t lines_number, char **results)
 {
-    // TODO
-
+    for (int i = 0; i < lines_number; i++)
+    {
+        write_result_command(results[i]);
+    }
     return 0;
 }

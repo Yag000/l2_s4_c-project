@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 extern bool debug;
+extern char *out_stream_path;
 
 /*
 Structure to hold test information.
@@ -36,6 +37,7 @@ void handle_int_test(int expected, int actual, int line, const char *file, test_
 test_info *test_string_utils();
 test_info *test_tree_dir_core();
 test_info *test_parser();
+test_info *test_command();
 test_info *test_pwd();
 test_info *test_mkdir();
 

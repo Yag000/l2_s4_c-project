@@ -5,6 +5,7 @@
 #include "../main/constants.h"
 #include "../main/command.h"
 #include "../main/tree_dir_core.h"
+#include "../main/file_manager.h"
 
 static void test_mkdir_empty(test_info *info);
 static void test_mkdir_invalid_name(test_info *info);
@@ -25,6 +26,9 @@ test_info *test_mkdir()
     clock_t before = clock();
     test_info *info = create_test_info();
 
+    out_stream_path = "src/test/output/mkdir_invalid_input.txt";
+    out_stream = open_file(out_stream_path, "w");
+
     // Add tests here
     test_mkdir_empty(info);
     test_mkdir_invalid_name(info);
@@ -32,6 +36,8 @@ test_info *test_mkdir()
     test_mkdir_already_exists(info);
 
     // End of tests
+    close_file(out_stream, out_stream_path);
+    out_stream = stdout;
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("mkdir", info);
     return info;

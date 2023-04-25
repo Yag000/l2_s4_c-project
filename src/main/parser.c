@@ -6,6 +6,7 @@
 #include "command.h"
 #include "constants.h"
 #include "string_utils.h"
+#include "file_manager.h"
 
 #define MAX_LINE_LENGTH 512
 /*
@@ -16,7 +17,6 @@ but for the purpose of this project, we will use a fixed size array of 2.
 #define MAX_COMMAND_ARGUMENTS 2
 
 static command *get_command_from_iterator(string_iterator *iterator);
-static void close_file(FILE *file);
 
 /*
 Parses a file containing commands.
@@ -25,15 +25,10 @@ It returns 0 if the execution of the commands is successful.
 */
 int parse_file(const char *path)
 {
-    FILE *file = fopen(path, "r");
+    FILE *file = open_file(path, "r");
+
     if (file == NULL)
     {
-        char *message = malloc(sizeof(char) * (strlen("Probleme ouverture fichier ") + strlen(path) + 1));
-        assert(message != NULL);
-        message = strcat(message, "Probleme ouverture fichier ");
-        message = strcat(message, path);
-        perror(message);
-        free(message);
         return -1;
     }
 
@@ -56,8 +51,7 @@ int parse_file(const char *path)
             break;
         }
     }
-
-    close_file(file);
+    close_file(file, path);
 
     return exit_code;
 }
@@ -72,7 +66,7 @@ int parse_line(char *line)
 
     if (iterator == NULL)
     {
-        perror("Probleme initialisation iterator");
+        perror("Problème initialisation iterator");
         return -1;
     }
 
@@ -80,7 +74,7 @@ int parse_line(char *line)
 
     if (command == NULL)
     {
-        perror("Probleme creation commande");
+        perror("Problème creation commande");
         return -1;
     }
 
@@ -99,7 +93,7 @@ static command *get_command_from_iterator(string_iterator *iterator)
 {
     if (!has_next_word(iterator))
     {
-        perror("Probleme iterator vide");
+        perror("Problème iterator vide");
         return NULL;
     }
 
@@ -129,13 +123,4 @@ static command *get_command_from_iterator(string_iterator *iterator)
     }
 
     return create_command(command_, args_number, args);
-}
-
-static void close_file(FILE *file)
-{
-    int r = fclose(file);
-    if (r != 0)
-    {
-        perror("Probleme fermeture de fichier");
-    }
 }
