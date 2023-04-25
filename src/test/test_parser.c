@@ -27,19 +27,16 @@ void test_parse_file(test_info *info)
     out_stream_path = "src/test/output/test_parser.txt";
     int error_code = -1;
 
-    if (reset_file(out_stream_path) == 0)
+    out_stream = open_file(out_stream_path, "w");
+
+    if (out_stream == NULL)
     {
-        out_stream = open_file(out_stream_path, "a");
-
-        if (out_stream == NULL)
-        {
-            return;
-        }
-
-        error_code = parse_file("src/test/input/test_parser.txt");
-
-        close_file(out_stream, out_stream_path);
+        return;
     }
+
+    error_code = parse_file("src/test/input/test_parser.txt");
+
+    close_file(out_stream, out_stream_path);
 
     out_stream = stdout;
 

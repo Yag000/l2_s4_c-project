@@ -7,6 +7,7 @@
 #include "command.h"
 
 int debug_command(int args_number, char **args);
+int write_result_command(char *result);
 
 command *create_command(char *name, int args_number, char **args)
 {
@@ -168,8 +169,7 @@ int write_result_lines_command(size_t lines_number, char **results)
 {
     for (int i = 0; i < lines_number; i++)
     {
-        fputs(results[i], out_stream);
-        fputs("\n", out_stream);
+        write_result_command(results[i]);
     }
     return 0;
 }

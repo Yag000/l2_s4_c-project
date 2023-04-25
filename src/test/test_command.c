@@ -33,34 +33,38 @@ static void test_write_result_command(test_info *info)
 {
     out_stream_path = "src/test/output/test_command_empty.txt";
 
-    reset_file(out_stream_path);
+    out_stream = open_file(out_stream_path, "w");
+
+    if (out_stream != NULL)
+    {
+        close_file(out_stream, out_stream_path);
+    }
 
     out_stream_path = "src/test/output/test_command_1.txt";
-    reset_file(out_stream_path);
+    out_stream = open_file(out_stream_path, "w");
 
-    out_stream = open_file(out_stream_path, "a");
     if (out_stream != NULL)
     {
         handle_boolean_test(true, write_result_command("test 1212 test") == 0, __LINE__, __FILE__, info);
+
+        close_file(out_stream, out_stream_path);
     }
-    close_file(out_stream, out_stream_path);
 
     out_stream_path = "src/test/output/test_command_2.txt";
-    reset_file(out_stream_path);
+    out_stream = open_file(out_stream_path, "w");
 
-    out_stream = open_file(out_stream_path, "a");
     if (out_stream != NULL)
     {
         handle_boolean_test(true, write_result_command("test 1212 test") == 0, __LINE__, __FILE__, info);
         handle_boolean_test(true, write_result_command("test 1313 test") == 0, __LINE__, __FILE__, info);
         handle_boolean_test(true, write_result_command("test 1414 test") == 0, __LINE__, __FILE__, info);
+
+        close_file(out_stream, out_stream_path);
     }
-    close_file(out_stream, out_stream_path);
 
     out_stream_path = "src/test/output/test_command_3.txt";
-    reset_file(out_stream_path);
+    out_stream = open_file(out_stream_path, "w");
 
-    out_stream = open_file(out_stream_path, "a");
     if (out_stream != NULL)
     {
         char **results = malloc(sizeof(char *) * N);
@@ -74,6 +78,9 @@ static void test_write_result_command(test_info *info)
         handle_boolean_test(true, write_result_lines_command(N, results) == 0, __LINE__, __FILE__, info);
 
         free(results);
+
+        close_file(out_stream, out_stream_path);
     }
-    close_file(out_stream, out_stream_path);
+
+    out_stream = stdout;
 }

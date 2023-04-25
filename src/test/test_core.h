@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 extern bool debug;
+extern char *out_stream_path;
 
 /*
 Structure to hold test information.
