@@ -25,7 +25,7 @@ test_info *test_command()
     info->time = clock_ticks_to_seconds(clock() - before);
     printf("Test command: ");
     print_test_info(info);
-    print_test_footer("command");
+    print_test_footer("command", info);
     return info;
 }
 

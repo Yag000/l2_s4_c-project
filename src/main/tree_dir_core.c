@@ -5,7 +5,7 @@
 #include "tree_dir_core.h"
 #include "string_utils.h"
 
-noeud *create_empty_noeud()
+static noeud *create_empty_noeud()
 {
     noeud *node = malloc(sizeof(noeud));
 

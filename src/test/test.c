@@ -12,7 +12,7 @@ FILE *out_stream;
 char *out_stream_path;
 noeud *current_node;
 
-void update_test_info(test_info *target_info, test_info *origin_info);
+static void update_test_info(test_info *target_info, test_info *origin_info);
 
 /*
 This is the main function for the test program.
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-void update_test_info(test_info *target_info, test_info *origin_info)
+static void update_test_info(test_info *target_info, test_info *origin_info)
 {
     target_info->passed += origin_info->passed;
     target_info->failed += origin_info->failed;

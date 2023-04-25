@@ -1,17 +1,17 @@
 CC=gcc
-CFLAGS=-I. -Wall -std=c99
+CFLAGS=-Wall -std=c99
+EXEC=main
+
 SRCDIR=src/main
 TESTDIR=src/test
-
-MAINFILE=main
 
 OBJDIR=obj
 OBJDIRMAIN=$(OBJDIR)/main
 OBJDIRTEST=$(OBJDIR)/test
 
 SRCFILES := $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/**/*.c)
-OBJFILES := $(filter-out $(OBJDIRMAIN)/$(MAINFILE).o, $(patsubst $(SRCDIR)/%.c,$(OBJDIRMAIN)/%.o,$(SRCFILES)))
-OBJFILESWITHMAIN := $(patsubst $(SRCDIR)/%.c,$(OBJDIRMAIN)/%.o,$(SRCFILES))
+OBJFILESWITHMAIN :=  $(patsubst $(SRCDIR)/%.c,$(OBJDIRMAIN)/%.o,$(SRCFILES))
+OBJFILES := $(filter-out $(OBJDIRMAIN)/$(EXEC).o, $(OBJFILESWITHMAIN) )
 
 TESTSRCFILES := $(wildcard $(TESTDIR)/*.c) $(wildcard $(TESTDIR)/**/*.c)
 TESTOBJFILES := $(patsubst $(TESTDIR)/%.c,$(OBJDIRTEST)/%.o,$(TESTSRCFILES))
@@ -27,15 +27,15 @@ $(OBJDIRTEST)/%.o: $(TESTDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 
+.PHONY:all, clean 
 
-main: $(OBJFILESWITHMAIN)
+all: main 
+
+main: $(OBJFILESWITHMAIN) 
 	$(CC) -o $@ $^ $(CFLAGS)
 	
-
 test: $(OBJFILES) $(TESTOBJFILES)
 	$(CC) -o $@ $^ $(CFLAGS)
-
-.PHONY: clean
 
 clean:
 	rm -rf $(OBJDIR) main test

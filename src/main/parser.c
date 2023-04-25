@@ -16,7 +16,7 @@ but for the purpose of this project, we will use a fixed size array of 2.
 */
 #define MAX_COMMAND_ARGUMENTS 2
 
-command *get_command_from_iterator(string_iterator *iterator);
+static command *get_command_from_iterator(string_iterator *iterator);
 
 /*
 Parses a file containing commands.
@@ -34,10 +34,14 @@ int parse_file(const char *path)
 
     char line[MAX_LINE_LENGTH];
     int exit_code = 0;
+
     if (verbose)
     {
-        printf("Parsing file %s ...\n", path);
+        fputs("Parsing file ", out_stream);
+        fputs(path, out_stream);
+        fputs(" ...\n", out_stream);
     }
+
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
     {
         exit_code = parse_line(line);
@@ -85,7 +89,7 @@ int parse_line(char *line)
 /*
 Returns a command from a string iterator.
 */
-command *get_command_from_iterator(string_iterator *iterator)
+static command *get_command_from_iterator(string_iterator *iterator)
 {
     if (!has_next_word(iterator))
     {
