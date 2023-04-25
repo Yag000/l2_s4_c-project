@@ -5,17 +5,17 @@
 
 #include "test_core.h"
 
-void print_green()
+static void print_green()
 {
     printf("\033[0;32m");
 }
 
-void print_red()
+static void print_red()
 {
     printf("\033[0;31m");
 }
 
-void print_no_color()
+static void print_no_color()
 {
     printf("\033[0m");
 }

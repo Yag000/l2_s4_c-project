@@ -15,8 +15,8 @@ but for the purpose of this project, we will use a fixed size array of 2.
 */
 #define MAX_COMMAND_ARGUMENTS 2
 
-command *get_command_from_iterator(string_iterator *iterator);
-void close_file(FILE *file);
+static command *get_command_from_iterator(string_iterator *iterator);
+static void close_file(FILE *file);
 
 /*
 Parses a file containing commands.
@@ -95,7 +95,7 @@ int parse_line(char *line)
 /*
 Returns a command from a string iterator.
 */
-command *get_command_from_iterator(string_iterator *iterator)
+static command *get_command_from_iterator(string_iterator *iterator)
 {
     if (!has_next_word(iterator))
     {
@@ -131,7 +131,7 @@ command *get_command_from_iterator(string_iterator *iterator)
     return create_command(command_, args_number, args);
 }
 
-void close_file(FILE *file)
+static void close_file(FILE *file)
 {
     int r = fclose(file);
     if (r != 0)

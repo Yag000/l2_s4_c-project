@@ -6,7 +6,7 @@
 #include "command.h"
 #include "pwd.h"
 
-int debug_command(int args_number, char **args);
+static int debug_command(int args_number, char **args);
 
 command *create_command(char *name, int args_number, char **args)
 {
@@ -34,7 +34,7 @@ void destroy_command(command *cmd)
 /*
 Prints a command if verbose mode is enabled.
 */
-void print_command(const command *cmd)
+static void print_command(const command *cmd)
 {
     if (!verbose)
     {
@@ -54,7 +54,7 @@ void print_command(const command *cmd)
 /*
 Returns true if the command name matches the given name.
 */
-bool is_command(const command *command, const char *name)
+static bool is_command(const command *command, const char *name)
 {
     return strcmp(command->name, name) == 0;
 }
@@ -125,7 +125,7 @@ int execute_command(const command *cmd)
 Prints the command to the output stream.
 This is used for debugging purposes.
 */
-int debug_command(int args_number, char **args)
+static int debug_command(int args_number, char **args)
 {
     for (int i = 0; i < args_number; i++)
     {
