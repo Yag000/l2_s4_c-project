@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <assert.h>
 
 #include "constants.h"
 #include "command.h"
-#include "pwd.h"
 
 int debug_command(int args_number, char **args);
 
@@ -17,6 +17,7 @@ command *create_command(char *name, int args_number, char **args)
     cmd->args = args;
     return cmd;
 }
+
 /*
 Frees the memory allocated for a command.
 */
@@ -148,14 +149,18 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
 
 int write_result_command(char *result)
 {
-    // TODO
+    fputs(result, out_stream);
+    fputs("\n", out_stream);
 
     return 0;
 }
 
-int write_result_lines_command(size_t line_number, char **result)
+int write_result_lines_command(size_t lines_number, char **result)
 {
-    // TODO
-
+    for (int i = 0; i < lines_number; i++)
+    {
+        fputs(result[i], out_stream);
+        fputs("\n", out_stream);
+    }
     return 0;
 }
