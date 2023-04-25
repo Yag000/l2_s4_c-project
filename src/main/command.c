@@ -6,8 +6,7 @@
 #include "constants.h"
 #include "command.h"
 
-static int debug_command(int args_number, char **args);
-int write_result_command(char *result);
+static int debug_command(int, char **);
 
 command *create_command(char *name, int args_number, char **args)
 {
@@ -146,9 +145,16 @@ Returns true if the expected number of args is the same of actual
 */
 bool handle_number_of_args(unsigned expected, unsigned actual)
 {
-    // TODO
+    if (expected != actual)
+    {
+        fprintf(out_stream,
+                "Vous avez donnez un nombre incorrect d'argument : %u au lieu de %u attendu.\n",
+                actual,
+                expected);
+        return false;
+    }
 
-    return expected == actual;
+    return true;
 }
 
 /*

@@ -6,7 +6,7 @@
 #include "file_manager.h"
 #include "constants.h"
 
-static void print_error_message(const char *error_message, const char *path);
+static void print_error_message(const char *, const char *);
 
 /*
 Opens the stream, send an error message if it fails

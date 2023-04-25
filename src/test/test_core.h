@@ -25,12 +25,12 @@ void print_test_info(const test_info *);
 // Test utils
 double clock_ticks_to_seconds(clock_t);
 
-void print_test_header(const char *name);
-void print_test_footer(const char *name, const test_info *info);
-void print_test_name(const char *name);
+void print_test_header(const char *);
+void print_test_footer(const char *, const test_info *);
+void print_test_name(const char *);
 
-void handle_string_test(const char *expected, const char *actual, int line, const char *file, test_info *info);
-void handle_boolean_test(bool expected, bool actual, int line, const char *file, test_info *info);
+void handle_string_test(const char *, const char *, int, const char *, test_info *);
+void handle_boolean_test(bool, bool, int, const char *, test_info *);
 void handle_int_test(int, int, int, const char *, test_info *);
 
 // All the tests

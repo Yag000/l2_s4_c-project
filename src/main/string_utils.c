@@ -5,7 +5,7 @@
 
 #include "string_utils.h"
 
-static void update_index_to_next_word(string_iterator *iterator);
+static void update_index_to_next_word(string_iterator *);
 
 string_iterator *create_string_iterator(char *string, char delimiter)
 {

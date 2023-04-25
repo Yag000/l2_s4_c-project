@@ -12,16 +12,16 @@ typedef struct command
 
 } command;
 
-command *create_command(char *name, int args_number, char **args);
-void destroy_command(command *cmd);
+command *create_command(char *, int, char **);
+void destroy_command(command *);
 
-int execute_command(const command *cmd);
+int execute_command(const command *);
 
-bool handle_number_of_args(unsigned expected, unsigned actual);
-int write_result_command(char *result);
-int write_result_lines_command(size_t line_number, char **results);
+bool handle_number_of_args(unsigned, unsigned);
+int write_result_command(char *);
+int write_result_lines_command(size_t, char **);
 
-int pwd(const command *cmd);
+int pwd(const command *);
 int mkdir(const command *);
 
 #endif

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "parser.h"
 #include "constants.h"
@@ -12,14 +13,23 @@ noeud *current_node;
 int main(int argc, char *argv[])
 {
     out_stream = stdout;
+    verbose = false;
 
     if (argc != 2)
     {
-        perror("Nombre d'arguments incorrect");
-        return EXIT_FAILURE;
+        if (argc == 3 && strcmp(argv[2], "-v") == 0)
+        {
+            verbose = true;
+        }
+        else
+        {
+            perror("Nombre d'arguments incorrect");
+            return EXIT_FAILURE;
+        }
     }
 
     current_node = create_root_noeud();
+
     int error_code = parse_file(argv[1]);
 
     destroy_root();

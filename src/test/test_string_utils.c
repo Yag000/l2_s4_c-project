@@ -4,9 +4,9 @@
 #include "test_core.h"
 #include "../main/string_utils.h"
 
-static void test_concat_words_with_delimiter(test_info *);
 static void test_string_iterator_empty(test_info *);
 static void test_string_iterator_with_text(test_info *);
+static void test_concat_words_with_delimiter(test_info *);
 static void test_is_alphanumeric(test_info *);
 
 test_info *test_string_utils()
