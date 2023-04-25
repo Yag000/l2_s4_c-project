@@ -411,13 +411,13 @@ noeud *search_node_in_tree(noeud *deb, char *path)
 
     noeud *result = search_node_in_tree_with_iterator(deb, iterator);
 
+    destroy_string_iterator(iterator);
+
     // The path is not valid if there is a '/' in the last char of path, and result is not a directory
     if (result == NULL || (path[len_path - 1] == '/' && !result->est_dossier))
     {
         return NULL;
     }
-
-    destroy_string_iterator(iterator);
 
     return result;
 }
