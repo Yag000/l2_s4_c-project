@@ -51,7 +51,7 @@ int reset_file(const char *path)
 }
 
 /*
-Print the error message and the path of the file where it happened an error
+Prints the error message and the path of the file where it happened an error
 */
 void print_error_message(const char *error_message, const char *path)
 {
