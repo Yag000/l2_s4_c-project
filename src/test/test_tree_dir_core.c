@@ -72,6 +72,15 @@ static void test_create_noeud(test_info *info)
 
     destroy_noeud(node2);
     destroy_noeud(pere);
+
+    handle_boolean_test(true, create_noeud(true, "", NULL) == NULL, __LINE__, __FILE__, info);
+    handle_boolean_test(true, create_noeud(true, ".", NULL) == NULL, __LINE__, __FILE__, info);
+    handle_boolean_test(true, create_noeud(true, "..", NULL) == NULL, __LINE__, __FILE__, info);
+    handle_boolean_test(false, create_noeud(true, "...", NULL) == NULL, __LINE__, __FILE__, info);
+    handle_boolean_test(true, create_noeud(true, "/", NULL) == NULL, __LINE__, __FILE__, info);
+    handle_boolean_test(true, create_noeud(true, "abc/", NULL) == NULL, __LINE__, __FILE__, info);
+    handle_boolean_test(true, create_noeud(true, "abc/efg", NULL) == NULL, __LINE__, __FILE__, info);
+    handle_boolean_test(true, create_noeud(true, "ab/cd/ef", NULL) == NULL, __LINE__, __FILE__, info);
 }
 
 static void test_are_noeud_equal(test_info *info)

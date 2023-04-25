@@ -5,6 +5,8 @@
 #include "tree_dir_core.h"
 #include "string_utils.h"
 
+bool handle_invalid_name_of_node(char *name);
+
 static noeud *create_empty_noeud()
 {
     noeud *node = malloc(sizeof(noeud));
@@ -59,7 +61,7 @@ Otherwise it returns true
 */
 bool handle_invalid_name_of_node(char *name)
 {
-    if (strcmp(name, ".") == 0 || strcmp(name, ".." == 0 || strcmp(name, "" == 0)))
+    if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0 || strcmp(name, "") == 0)
     {
         return false;
     }
