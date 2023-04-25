@@ -6,6 +6,7 @@
 #include "test_core.h"
 
 FILE *out_stream;
+char *out_stream_path = "src/test/output/test_parser.txt";
 
 void test_parse_file(test_info *info);
 
@@ -28,9 +29,9 @@ void test_parse_file(test_info *info)
 {
     int error_code = -1;
 
-    if (reset_file("src/test/output/test_parser.txt") == 0)
+    if (reset_file(out_stream_path) == 0)
     {
-        out_stream = open_file("src/test/output/test_parser.txt", "a");
+        out_stream = open_file(out_stream_path, "a");
 
         if (out_stream == NULL)
         {
@@ -39,7 +40,7 @@ void test_parse_file(test_info *info)
 
         error_code = parse_file("src/test/input/test_parser.txt");
 
-        close_file(out_stream, "src/test/output/test_parser.txt");
+        close_file(out_stream, out_stream_path);
     }
 
     out_stream = stdout;
