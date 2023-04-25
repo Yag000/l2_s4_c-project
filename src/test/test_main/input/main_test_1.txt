@@ -1,0 +1,7 @@
+debug
+debug one
+debug one two
+debug                             one two
+    debug one two  
+    debug     one   two  
+debug one two three

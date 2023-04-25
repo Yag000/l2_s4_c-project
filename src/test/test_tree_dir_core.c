@@ -4,17 +4,17 @@
 #include "test_core.h"
 #include "../main/tree_dir_core.h"
 
-static void test_create_noeud(test_info *info);
-static void test_are_noeud_equal(test_info *info);
-static void test_is_root_node(test_info *info);
-static void test_is_fils_of_node_empty(test_info *info);
-static void test_create_liste_noeud(test_info *info);
-static void test_contains(test_info *info);
-static void test_get(test_info *info);
-static void test_append(test_info *info);
-static void test_remove(test_info *info);
-static void test_get_absolute_path_of_node(test_info *info);
-static void test_search_node_in_tree(test_info *info);
+static void test_create_noeud(test_info *);
+static void test_are_noeud_equal(test_info *);
+static void test_is_root_node(test_info *);
+static void test_is_fils_of_node_empty(test_info *);
+static void test_create_liste_noeud(test_info *);
+static void test_contains(test_info *);
+static void test_get(test_info *);
+static void test_append(test_info *);
+static void test_remove(test_info *);
+static void test_get_absolute_path_of_node(test_info *);
+static void test_search_node_in_tree(test_info *);
 
 test_info *test_tree_dir_core()
 {
