@@ -10,6 +10,7 @@
 #define N 10
 
 static void test_write_result_command(test_info *info);
+static void test_handle_number_of_args(test_info *info);
 
 test_info *test_command()
 {
@@ -20,6 +21,7 @@ test_info *test_command()
 
     // Add tests here
     test_write_result_command(info);
+    test_handle_number_of_args(info);
 
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
@@ -29,7 +31,9 @@ test_info *test_command()
 
 static void test_write_result_command(test_info *info)
 {
-    out_stream_path = "src/test/output/test_command_empty.txt";
+    print_test_name("Testing to write result command in an output");
+
+    out_stream_path = "src/test/output/test_command_write_result_empty.txt";
 
     out_stream = open_file(out_stream_path, "w");
 
@@ -38,7 +42,7 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
-    out_stream_path = "src/test/output/test_command_1.txt";
+    out_stream_path = "src/test/output/test_command_write_result_1.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)
@@ -48,7 +52,7 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
-    out_stream_path = "src/test/output/test_command_2.txt";
+    out_stream_path = "src/test/output/test_command_write_result_2.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)
@@ -60,7 +64,7 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
-    out_stream_path = "src/test/output/test_command_3.txt";
+    out_stream_path = "src/test/output/test_command_write_result_3.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)
@@ -80,5 +84,23 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
+    out_stream = stdout;
+}
+
+static void test_handle_number_of_args(test_info *info)
+{
+    print_test_name("Testing to handle the number of arguments in an output");
+
+    out_stream_path = "src/test/output/test_command_handle_number_of_args.txt";
+    out_stream = open_file(out_stream_path, "w");
+
+    if (out_stream != NULL)
+    {
+        for (int i = 0; i < N + 1; ++i)
+        {
+            handle_boolean_test(i == (N - i), handle_number_of_args(i, N - i), __LINE__, __FILE__, info);
+        }
+        close_file(out_stream, out_stream_path);
+    }
     out_stream = stdout;
 }
