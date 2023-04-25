@@ -29,7 +29,7 @@ test_info *test_command()
 
 static void test_write_result_command(test_info *info)
 {
-    out_stream_path = "src/test/output/test_command_empty.txt";
+    out_stream_path = "src/test/output/test_command_write_result_empty.txt";
 
     out_stream = open_file(out_stream_path, "w");
 
@@ -38,7 +38,7 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
-    out_stream_path = "src/test/output/test_command_1.txt";
+    out_stream_path = "src/test/output/test_command_write_result_1.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)
@@ -48,7 +48,7 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
-    out_stream_path = "src/test/output/test_command_2.txt";
+    out_stream_path = "src/test/output/test_command_write_result_2.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)
@@ -60,7 +60,7 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
-    out_stream_path = "src/test/output/test_command_3.txt";
+    out_stream_path = "src/test/output/test_command_write_result_3.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)
