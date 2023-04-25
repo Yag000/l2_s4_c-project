@@ -65,3 +65,6 @@ src/test/output
 
 # VSCode
 .vscode/
+
+# PDF
+*.pdf
