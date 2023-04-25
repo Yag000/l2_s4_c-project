@@ -13,12 +13,15 @@ void test_write_result_command(test_info *info);
 
 test_info *test_command()
 {
+    // Test setup
     print_test_header("command");
     clock_t before = clock();
     test_info *info = create_test_info();
 
+    // Add tests here
     test_write_result_command(info);
 
+    // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     printf("Test command: ");
     print_test_info(info);
