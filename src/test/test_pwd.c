@@ -18,6 +18,7 @@ test_info *test_pwd()
     test_info *info = create_test_info();
 
     // Add tests here
+    // test_pwd_function(info);
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     printf("Test pwd: ");

@@ -2,12 +2,14 @@
 #include <stdlib.h>
 
 #include "test_core.h"
+#include "../main/constants.h"
 #include "../main/tree_dir_core.h"
 
 bool verbose = true;
 bool debug;
 
 noeud *current_node;
+char *out_stream_path;
 
 void update_test_info(test_info *target_info, test_info *origin_info);
 
