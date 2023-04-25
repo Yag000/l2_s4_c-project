@@ -1,5 +1,6 @@
 #include "constants.h"
 
+const int SUCCESS = 0;                // Error code that indicates that the program executed successfully
 const int FATAL_ERROR = -1;           // Error code that indicates that he program should stop
 const int INVALID_NAME = 1;           // Error code that indicates that the name of a node is invalid
 const int INVALID_PATH = 2;           // Error code that indicates that the path of a node is invalid

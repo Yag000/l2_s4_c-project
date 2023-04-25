@@ -29,7 +29,7 @@ int parse_file(const char *path)
 
     if (file == NULL)
     {
-        return -1;
+        return FATAL_ERROR;
     }
 
     char line[MAX_LINE_LENGTH];
@@ -67,7 +67,7 @@ int parse_line(char *line)
     if (iterator == NULL)
     {
         perror("Problème initialisation iterator");
-        return -1;
+        return FATAL_ERROR;
     }
 
     command *command = get_command_from_iterator(iterator);
@@ -75,7 +75,7 @@ int parse_line(char *line)
     if (command == NULL)
     {
         perror("Problème creation commande");
-        return -1;
+        return FATAL_ERROR;
     }
 
     int exit_code = execute_command(command);

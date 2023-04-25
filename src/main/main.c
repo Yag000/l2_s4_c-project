@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     if (argc != 2)
     {
         perror("Nombre d'arguments incorrect");
-        return -1;
+        return EXIT_FAILURE;
     }
 
     current_node = create_root_noeud();
@@ -24,5 +24,5 @@ int main(int argc, char *argv[])
 
     destroy_root();
 
-    return error_code == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
+    return error_code == SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE;
 }

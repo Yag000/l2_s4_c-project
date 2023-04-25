@@ -34,5 +34,5 @@ int mkdir(const command *cmd)
         return FATAL_ERROR;
     }
 
-    return 0;
+    return SUCCESS;
 }
