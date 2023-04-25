@@ -8,6 +8,8 @@
 bool verbose = true;
 bool debug;
 
+FILE *out_stream;
+char *out_stream_path;
 noeud *current_node;
 
 void update_test_info(test_info *target_info, test_info *origin_info);
@@ -33,6 +35,7 @@ int main(int argc, char *argv[])
     update_test_info(info, test_string_utils());
     update_test_info(info, test_tree_dir_core());
     update_test_info(info, test_parser());
+    update_test_info(info, test_command());
     update_test_info(info, test_pwd());
 
     // End of tests

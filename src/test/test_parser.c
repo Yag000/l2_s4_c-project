@@ -5,9 +5,6 @@
 #include "../main/file_manager.h"
 #include "test_core.h"
 
-FILE *out_stream;
-char *out_stream_path = "src/test/output/test_parser.txt";
-
 void test_parse_file(test_info *info);
 
 test_info *test_parser()
@@ -27,6 +24,7 @@ test_info *test_parser()
 
 void test_parse_file(test_info *info)
 {
+    out_stream_path = "src/test/output/test_parser.txt";
     int error_code = -1;
 
     if (reset_file(out_stream_path) == 0)
