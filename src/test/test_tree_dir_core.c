@@ -4,17 +4,17 @@
 #include "test_core.h"
 #include "../main/tree_dir_core.h"
 
-static void test_create_noeud(test_info *info);
-static void test_handle_invalid_name_of_node(test_info *);
-static void test_are_noeud_equal(test_info *info);
-static void test_is_root_node(test_info *info);
-static void test_is_fils_of_node_empty(test_info *info);
-static void test_create_liste_noeud(test_info *info);
-static void test_contains(test_info *info);
-static void test_get(test_info *info);
-static void test_append(test_info *info);
-static void test_remove(test_info *info);
-static void test_get_absolute_path_of_node(test_info *info);
+static void test_create_noeud(test_info *);
+static void test_is_valid_name_of_node(test_info *);
+static void test_are_noeud_equal(test_info *);
+static void test_is_root_node(test_info *);
+static void test_is_fils_of_node_empty(test_info *);
+static void test_create_liste_noeud(test_info *);
+static void test_contains(test_info *);
+static void test_get(test_info *);
+static void test_append(test_info *);
+static void test_remove(test_info *);
+static void test_get_absolute_path_of_node(test_info *);
 
 test_info *test_tree_dir_core()
 {
@@ -25,7 +25,7 @@ test_info *test_tree_dir_core()
 
     // Add tests here
     test_create_noeud(info);
-    test_handle_invalid_name_of_node(info);
+    test_is_valid_name_of_node(info);
     test_are_noeud_equal(info);
     test_is_root_node(info);
     test_is_fils_of_node_empty(info);
@@ -85,7 +85,7 @@ static void test_create_noeud(test_info *info)
     destroy_noeud(node);
 }
 
-static void test_handle_invalid_name_of_node(test_info *info)
+static void test_is_valid_name_of_node(test_info *info)
 {
     print_test_name("Testing to handle valid and invalid names of node");
 
