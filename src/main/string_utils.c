@@ -22,18 +22,18 @@ void destroy_string_iterator(string_iterator *iterator)
     free(iterator);
 }
 
-/**
- * Returns true if there is another word in the string.
- */
+/*
+Returns true if there is another word in the string.
+*/
 bool has_next_word(const string_iterator *iterator)
 {
     return iterator->string[iterator->index] != '\0';
 }
 
-/**
- * Returns the next word in the string. If there are no more words
- * in the string, NULL is returned.
- */
+/*
+Returns the next word in the string. If there are no more words
+in the string, NULL is returned.
+*/
 char *next_word(string_iterator *iterator)
 {
     if (!has_next_word(iterator))
@@ -59,9 +59,9 @@ char *next_word(string_iterator *iterator)
     return result;
 }
 
-/**
- * Updates the index to the next word in the string.
- */
+/*
+Updates the index to the next word in the string.
+*/
 static void update_index_to_next_word(string_iterator *iterator)
 {
     while (iterator->string[iterator->index] != '\0' && iterator->string[iterator->index] == iterator->delimiter)
@@ -70,9 +70,9 @@ static void update_index_to_next_word(string_iterator *iterator)
     }
 }
 
-/**
- * Strips the new line character from a string.
- */
+/*
+Strips the new line character from a string.
+*/
 char *strip_newline(char *str)
 {
     int i = 0;
@@ -90,9 +90,9 @@ char *strip_newline(char *str)
     return str;
 }
 
-/**
- * Return the number of char in an array of array of char
- */
+/*
+Returns the number of char in an array of arrays of char.
+*/
 unsigned get_number_of_char(size_t size, char **words)
 {
     if (words == NULL)
@@ -126,7 +126,7 @@ char *concat_two_words_with_delimiter(const char *word1, const char *word2, char
         return words_concat;
     }
 
-    words_concat = malloc(sizeof(char) * (len_word1 + len_word2) + 2);
+    words_concat = malloc(sizeof(char) * ((len_word1 + len_word2) + 2));
     assert(words_concat != NULL);
 
     memmove(words_concat, word1, len_word1);
@@ -137,9 +137,9 @@ char *concat_two_words_with_delimiter(const char *word1, const char *word2, char
     return words_concat;
 }
 
-/**
- * Return the string of all words concatenated, and delimited by delimiter
- */
+/*
+Returns the string of all words concatenated, and delimited by delimiter.
+*/
 char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
 {
     char *words_concat;

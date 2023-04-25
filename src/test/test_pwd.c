@@ -20,9 +20,7 @@ test_info *test_pwd()
 
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
-    printf("Test pwd: ");
-    print_test_info(info);
-    print_test_footer("pwd");
+    print_test_footer("pwd", info);
     return info;
 }
 

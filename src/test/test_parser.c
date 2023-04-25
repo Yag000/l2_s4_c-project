@@ -10,16 +10,17 @@ static void test_parse_file(test_info *info);
 
 test_info *test_parser()
 {
+    // Test setup
     print_test_header("parser");
     clock_t before = clock();
     test_info *info = create_test_info();
 
+    // Add tests here
     test_parse_file(info);
 
+    // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
-    printf("Test parser: ");
-    print_test_info(info);
-    print_test_footer("parser");
+    print_test_footer("parser", info);
     return info;
 }
 
