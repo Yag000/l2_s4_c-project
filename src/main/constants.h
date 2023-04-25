@@ -6,5 +6,6 @@
 
 extern FILE *out_stream;
 extern bool verbose;
+extern char *out_stream_path;
 
 #endif

@@ -17,7 +17,6 @@ test_info *test_pwd()
 
     // Add tests here
     test_pwd_function(info);
-
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("pwd", info);
