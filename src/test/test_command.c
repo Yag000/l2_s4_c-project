@@ -9,7 +9,7 @@
 
 #define N 10
 
-void test_write_result_command(test_info *info);
+static void test_write_result_command(test_info *info);
 
 test_info *test_command()
 {
@@ -29,7 +29,7 @@ test_info *test_command()
     return info;
 }
 
-void test_write_result_command(test_info *info)
+static void test_write_result_command(test_info *info)
 {
     out_stream_path = "src/test/output/test_command_empty.txt";
 
