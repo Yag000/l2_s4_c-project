@@ -40,10 +40,12 @@ liste_noeud *create_liste_noeud(noeud *node);
 void destroy_liste_noeud(liste_noeud *node_list);
 bool contains_liste_noeud(liste_noeud *node_list, noeud *node);
 unsigned size_liste_noeud(liste_noeud *node_list);
-noeud *get_liste_noeud(liste_noeud *node_list, const char *name);
+noeud *get_a_noeud_in_liste_noeud(liste_noeud *node_list, const char *name);
 bool append_liste_noeud(liste_noeud *node_list, noeud *node);
 liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node);
 
 char *get_absolute_path_of_node(const noeud *node);
+
+noeud *search_node_in_tree(noeud *, char *);
 
 #endif

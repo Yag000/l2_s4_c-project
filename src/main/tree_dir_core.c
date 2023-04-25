@@ -5,6 +5,8 @@
 #include "tree_dir_core.h"
 #include "string_utils.h"
 
+static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator);
+
 static noeud *create_empty_noeud()
 {
     noeud *node = malloc(sizeof(noeud));
@@ -149,7 +151,7 @@ noeud *get_a_fils_of_noeud(noeud *node, const char *name)
     {
         return NULL;
     }
-    return get_liste_noeud(node->fils, name);
+    return get_a_noeud_in_liste_noeud(node->fils, name);
 }
 
 /*
@@ -218,7 +220,7 @@ bool remove_a_fils_of_noeud(noeud *parent, const char *name)
     {
         return false;
     }
-    noeud *node = get_liste_noeud(parent->fils, name);
+    noeud *node = get_a_noeud_in_liste_noeud(parent->fils, name);
 
     if (node == NULL)
     {
@@ -290,7 +292,7 @@ unsigned size_liste_noeud(liste_noeud *node_list)
 Returns a node in node_list which has its nom equal to name.
 Return NULL otherwise.
 */
-noeud *get_liste_noeud(liste_noeud *node_list, const char *name)
+noeud *get_a_noeud_in_liste_noeud(liste_noeud *node_list, const char *name)
 {
     if (node_list == NULL)
     {
@@ -302,7 +304,7 @@ noeud *get_liste_noeud(liste_noeud *node_list, const char *name)
         return node_list->no;
     }
 
-    return get_liste_noeud(node_list->succ, name);
+    return get_a_noeud_in_liste_noeud(node_list->succ, name);
 }
 
 /*
@@ -387,4 +389,84 @@ char *get_absolute_path_of_node(const noeud *node)
     free(parent_absolute_path);
 
     return absolute_path;
+}
+
+/*
+Search a node in a tree, and if it is found, it is returned
+
+Otherwise the function returns NULL
+*/
+noeud *search_node_in_tree(noeud *deb, char *path)
+{
+    assert(deb != NULL);
+
+    unsigned len_path = strlen(path);
+
+    if (len_path == 0)
+    {
+        return NULL;
+    }
+
+    string_iterator *iterator = create_string_iterator(path, '/');
+
+    noeud *result = search_node_in_tree_with_iterator(deb, iterator);
+
+    // The path is not valid if there is a '/' in the last char of path, and result is not a directory
+    if (result == NULL || (path[len_path - 1] == '/' && !result->est_dossier))
+    {
+        return NULL;
+    }
+
+    destroy_string_iterator(iterator);
+
+    return result;
+}
+
+/*
+Search a node in a tree with the iteration of iterator until its end
+
+If the iteration is ".", applies the function to the same node
+If the iteration is "..", applies the function to the parent of node
+If the iteration is not found in fils of node, returns NULL
+Otherwise applies the function to the found child
+ */
+static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator)
+{
+    if (!has_next_word(iterator))
+    {
+        return node;
+    }
+    if (!node->est_dossier)
+    {
+        return NULL;
+    }
+
+    char *name = next_word(iterator);
+
+    if (strcmp(name, ".") == 0)
+    {
+        free(name);
+
+        return search_node_in_tree_with_iterator(node, iterator);
+    }
+
+    if (strcmp(name, "..") == 0)
+    {
+        free(name);
+
+        if (node->pere == NULL)
+        {
+            return NULL;
+        }
+        return search_node_in_tree_with_iterator(node->pere, iterator);
+    }
+
+    noeud *result = get_a_fils_of_noeud(node, name);
+    free(name);
+
+    if (result == NULL)
+    {
+        return NULL;
+    }
+    return search_node_in_tree_with_iterator(result, iterator);
 }
