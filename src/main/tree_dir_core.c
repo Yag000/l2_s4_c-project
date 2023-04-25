@@ -5,8 +5,6 @@
 #include "tree_dir_core.h"
 #include "string_utils.h"
 
-bool handle_invalid_name_of_node(char *name);
-
 static noeud *create_empty_noeud()
 {
     noeud *node = malloc(sizeof(noeud));
@@ -23,7 +21,7 @@ Otherwise it returns NULL
 */
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
-    if (!handle_invalid_name_of_node(nom))
+    if (!is_valid_name_node(nom))
     {
         return NULL;
     }
@@ -59,7 +57,7 @@ Returns false if a name is an empty string, is ".", is ".." or if it contains '/
 
 Otherwise it returns true
 */
-bool handle_invalid_name_of_node(char *name)
+bool is_valid_name_node(const char *name)
 {
     if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0 || strcmp(name, "") == 0)
     {

@@ -24,7 +24,7 @@ extern noeud *current_node;
 
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere);
 noeud *create_noeud_with_fils(bool est_dossier, const char *nom, noeud *pere, liste_noeud *fils);
-bool handle_invalid_name_of_node(char *);
+bool is_valid_name_node(const char *);
 noeud *create_root_noeud();
 void destroy_noeud(noeud *node);
 bool are_noeuds_equal(const noeud *node1, const noeud *node2);

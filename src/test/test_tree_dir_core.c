@@ -5,7 +5,7 @@
 #include "../main/tree_dir_core.h"
 
 static void test_create_noeud(test_info *info);
-static void test_handle_invalid_name_of_node(test_info *info);
+static void test_handle_invalid_name_of_node(test_info *);
 static void test_are_noeud_equal(test_info *info);
 static void test_is_root_node(test_info *info);
 static void test_is_fils_of_node_empty(test_info *info);
@@ -89,17 +89,17 @@ static void test_handle_invalid_name_of_node(test_info *info)
 {
     print_test_name("Testing to handle valid and invalid names of node");
 
-    handle_boolean_test(false, handle_invalid_name_of_node(""), __LINE__, __FILE__, info);
-    handle_boolean_test(false, handle_invalid_name_of_node("."), __LINE__, __FILE__, info);
-    handle_boolean_test(false, handle_invalid_name_of_node(".."), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_valid_name_node(""), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_valid_name_node("."), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_valid_name_node(".."), __LINE__, __FILE__, info);
 
-    handle_boolean_test(false, handle_invalid_name_of_node("/"), __LINE__, __FILE__, info);
-    handle_boolean_test(false, handle_invalid_name_of_node("/abcd"), __LINE__, __FILE__, info);
-    handle_boolean_test(false, handle_invalid_name_of_node("abcd/"), __LINE__, __FILE__, info);
-    handle_boolean_test(false, handle_invalid_name_of_node("abcd/efcg"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_valid_name_node("/"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_valid_name_node("/abcd"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_valid_name_node("abcd/"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, is_valid_name_node("abcd/efcg"), __LINE__, __FILE__, info);
 
-    handle_boolean_test(true, handle_invalid_name_of_node("name_1"), __LINE__, __FILE__, info);
-    handle_boolean_test(true, handle_invalid_name_of_node("name_1.txt"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_valid_name_node("name_1"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_valid_name_node("name_1.txt"), __LINE__, __FILE__, info);
 }
 
 static void test_are_noeud_equal(test_info *info)
