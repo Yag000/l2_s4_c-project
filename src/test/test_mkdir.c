@@ -33,9 +33,7 @@ test_info *test_mkdir()
 
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
-    printf("Test mkdir: ");
-    print_test_info(info);
-    print_test_footer("mkdir");
+    print_test_footer("mkdir", info);
     return info;
 }
 

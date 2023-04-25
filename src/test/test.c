@@ -9,13 +9,12 @@ bool debug;
 
 noeud *current_node;
 
-void update_test_info(test_info *target_info, test_info *origin_info);
+static void update_test_info(test_info *target_info, test_info *origin_info);
 
-/**
- * This is the main function for the test program.
- * Every test should be called from here and the results should be printed.
- *
- */
+/*
+This is the main function for the test program.
+Every test should be called from here and the results should be printed.
+*/
 int main(int argc, char *argv[])
 {
     if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'v')
@@ -49,7 +48,7 @@ int main(int argc, char *argv[])
     return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-void update_test_info(test_info *target_info, test_info *origin_info)
+static void update_test_info(test_info *target_info, test_info *origin_info)
 {
     target_info->passed += origin_info->passed;
     target_info->failed += origin_info->failed;

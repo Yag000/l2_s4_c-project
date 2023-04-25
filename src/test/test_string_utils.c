@@ -4,17 +4,16 @@
 #include "test_core.h"
 #include "../main/string_utils.h"
 
-void test_string_iterator_empty(test_info *info);
-void test_string_iterator_with_text(test_info *info);
-void test_concat_words_with_delimiter(test_info *info);
-static void test_is_alphanumeric(test_info *info);
+static void test_concat_words_with_delimiter(test_info *);
+static void test_string_iterator_empty(test_info *);
+static void test_string_iterator_with_text(test_info *);
+static void test_is_alphanumeric(test_info *);
 
 test_info *test_string_utils()
 {
+    // Test setup
     print_test_header("string utils");
-
     clock_t before = clock();
-    // Create the test info
     test_info *info = create_test_info();
 
     // Add tests here
@@ -25,13 +24,11 @@ test_info *test_string_utils()
 
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
-    printf("Test string utils: ");
-    print_test_info(info);
-    print_test_footer("string utils");
+    print_test_footer("string utils", info);
     return info;
 }
 
-void test_string_iterator_empty(test_info *info)
+static void test_string_iterator_empty(test_info *info)
 {
     print_test_name("Testing string iterator with empty string");
 
@@ -52,7 +49,7 @@ void test_string_iterator_empty(test_info *info)
     destroy_string_iterator(iterator);
 }
 
-void test_string_iterator_with_text(test_info *info)
+static void test_string_iterator_with_text(test_info *info)
 {
     print_test_name("Testing string iterator with text");
 
@@ -97,7 +94,7 @@ void test_string_iterator_with_text(test_info *info)
     destroy_string_iterator(iterator);
 }
 
-void test_concat_words_with_delimiter(test_info *info)
+static void test_concat_words_with_delimiter(test_info *info)
 {
     print_test_name("Testing concat words with delimiter");
 

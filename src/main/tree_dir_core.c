@@ -5,7 +5,7 @@
 #include "tree_dir_core.h"
 #include "string_utils.h"
 
-noeud *create_empty_noeud()
+static noeud *create_empty_noeud()
 {
     noeud *node = malloc(sizeof(noeud));
 
@@ -54,7 +54,7 @@ noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent
 }
 
 /*
-Create a node with pere and racine set to himself
+Creates a node with pere and racine set to himself. It will represent the root of our file system.
 */
 noeud *create_root_noeud()
 {
@@ -84,7 +84,7 @@ void destroy_noeud(noeud *node)
 }
 
 /*
-Return true (for the moment) if the nodes have the same name
+Returns true if the nodes are equal (same address).
 */
 bool are_noeuds_equal(const noeud *node1, const noeud *node2)
 {
@@ -120,7 +120,7 @@ bool is_fils_of_noeud_empty(const noeud *node)
 }
 
 /*
-Return true if the node pere contains node in these own fils
+Returns true if the node pere contains node in his own fils.
 */
 bool contains_noeud(noeud *parent, noeud *node)
 {
@@ -141,7 +141,7 @@ unsigned get_number_of_fils(noeud *node)
 }
 
 /*
-Return the node that has its nom equal to name
+Returns the node that has its nom equal to name.
 */
 noeud *get_a_fils_of_noeud(noeud *node, const char *name)
 {
@@ -153,9 +153,10 @@ noeud *get_a_fils_of_noeud(noeud *node, const char *name)
 }
 
 /*
-Return true if the child node has been appended to parent
-Otherwise, return false if the node parent already contains node
-or if it's not a directory
+Appends node to the fils of parent. If the append is successful,
+it will return true, otherwise it will return false.
+The append will be successful the parent is a directory and does
+not already contain node.
 */
 bool append_a_fils_to_noeud(noeud *parent, noeud *node)
 {
@@ -185,9 +186,9 @@ bool append_a_fils_to_noeud(noeud *parent, noeud *node)
 }
 
 /*
-Return true if node has been removed from the fils of parent
-Otherwise, return false if parent did not contain it or if
-it's not a directory
+Returns true if node has been removed from the fils of parent
+Otherwise, return false. If parent did not contain node or if
+the parent is not a directory it will fail.
 */
 bool remove_a_node_from_fils(noeud *parent, noeud *node)
 {
@@ -207,10 +208,9 @@ bool remove_a_node_from_fils(noeud *parent, noeud *node)
 }
 
 /*
-Return true if node has been removed from the fils of parent
-and has been destroyed
-Otherwise, return false if parent did not contain it or if
-it's not a directory
+Returns true if node has been removed from the fils of parent
+and has been destroyed. Otherwise, return false.
+If parent did not contain it or if the parent is not a directory it will fail.
 */
 bool remove_a_fils_of_noeud(noeud *parent, const char *name)
 {
@@ -256,7 +256,7 @@ void destroy_liste_noeud(liste_noeud *node_list)
 }
 
 /*
-Return true if the liste_noeud node_list contains node
+Returns true if the liste_noeud node_list contains node.
 */
 bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
 {
@@ -274,7 +274,7 @@ bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
 }
 
 /*
-Return the number of node in node_list
+Returns the number of noeuds in node_list.
 */
 unsigned size_liste_noeud(liste_noeud *node_list)
 {
@@ -287,8 +287,8 @@ unsigned size_liste_noeud(liste_noeud *node_list)
 }
 
 /*
-Return a node in node_list which has these nom equals to name
-Return NULL otherwise
+Returns a node in node_list which has its nom equal to name.
+Return NULL otherwise.
 */
 noeud *get_liste_noeud(liste_noeud *node_list, const char *name)
 {
@@ -306,8 +306,8 @@ noeud *get_liste_noeud(liste_noeud *node_list, const char *name)
 }
 
 /*
-Return true if the append of node in node_list succeeds
-Otherwise, return false if the node already exists in node_list
+Returns true if the append of node in node_list succeeds.
+Otherwise return false, this will happen if the node is already inside node_list.
 */
 bool append_liste_noeud(liste_noeud *node_list, noeud *node)
 {
@@ -326,8 +326,8 @@ bool append_liste_noeud(liste_noeud *node_list, noeud *node)
 }
 
 /*
-Return the new list without node if it founds node
-Free the list removed (but don't free the node)
+Returns the new list without node if it founds node.
+Free the list removed (but don't free the node).
 */
 liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
 {
@@ -340,7 +340,7 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
     {
         liste_noeud *acc = node_list->succ;
 
-        // !WARNING! here, just the list is free, the user must free the node himself
+        // !WARNING! here, just the list is freed, the user must free the node themselves
         free(node_list);
 
         return acc;
@@ -351,9 +351,9 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
     return node_list;
 }
 
-/**
- * Returns the string containing the absolute path of the node
- */
+/*
+Returns the string containing the absolute path of the node.
+*/
 char *get_absolute_path_of_node(const noeud *node)
 {
     assert(node != NULL);
