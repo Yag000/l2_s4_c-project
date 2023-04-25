@@ -10,21 +10,19 @@ void test_concat_words_with_delimiter(test_info *info);
 
 test_info *test_string_utils()
 {
+    // Test setup
     print_test_header("string utils");
-
     clock_t before = clock();
-    // Create the test info
     test_info *info = create_test_info();
 
     // Add tests here
     test_string_iterator_empty(info);
     test_string_iterator_with_text(info);
     test_concat_words_with_delimiter(info);
+
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
-    printf("Test string utils: ");
-    print_test_info(info);
-    print_test_footer("string utils");
+    print_test_footer("string utils", info);
     return info;
 }
 

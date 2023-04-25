@@ -39,10 +39,14 @@ int parse_file(const char *path)
 
     char line[MAX_LINE_LENGTH];
     int exit_code = 0;
+
     if (verbose)
     {
-        printf("Parsing file %s ...\n", path);
+        fputs("Parsing file ", out_stream);
+        fputs(path, out_stream);
+        fputs(" ...\n", out_stream);
     }
+
     while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
     {
         exit_code = parse_line(line);
