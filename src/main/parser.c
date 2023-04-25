@@ -16,7 +16,7 @@ but for the purpose of this project, we will use a fixed size array of 2.
 */
 #define MAX_COMMAND_ARGUMENTS 2
 
-static command *get_command_from_iterator(string_iterator *iterator);
+static command *get_command_from_iterator(string_iterator *);
 
 /*
 Parses a file containing commands.

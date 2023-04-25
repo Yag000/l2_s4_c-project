@@ -5,7 +5,7 @@
 #include "../main/file_manager.h"
 #include "test_core.h"
 
-static void test_parse_file(test_info *info);
+static void test_parse_file(test_info *);
 
 test_info *test_parser()
 {

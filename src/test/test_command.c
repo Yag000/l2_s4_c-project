@@ -9,8 +9,8 @@
 
 #define N 10
 
-static void test_write_result_command(test_info *info);
-static void test_handle_number_of_args(test_info *info);
+static void test_write_result_command(test_info *);
+static void test_handle_number_of_args(test_info *);
 
 test_info *test_command()
 {
