@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -56,7 +57,6 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 
 /*
 Returns false if a name is an empty string, is ".", is ".." or if it contains '/'
-
 Otherwise it returns true
 */
 bool is_valid_name_node(const char *name)
@@ -457,12 +457,11 @@ noeud *search_node_in_tree(noeud *deb, char *path)
 
 /*
 Search a node in a tree with the iteration of iterator until its end
-
 If the iteration is ".", applies the function to the same node
 If the iteration is "..", applies the function to the parent of node
 If the iteration is not found in fils of node, returns NULL
 Otherwise applies the function to the found child
- */
+*/
 static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator)
 {
     if (!has_next_word(iterator))
@@ -514,6 +513,7 @@ noeud *get_new_node_from_path(noeud *deb, char *path, bool is_dir)
         return NULL;
     }
 
+    bool is_absolut_path = path[0] == '/';
     char *new_path = "";
     char *name;
     string_iterator *iterator = create_string_iterator(path, '/');
@@ -531,7 +531,18 @@ noeud *get_new_node_from_path(noeud *deb, char *path, bool is_dir)
         }
     }
 
-    noeud *parent = search_node_in_tree(deb, new_path);
+    noeud *parent;
+    if (is_absolut_path)
+    {
+        char *absolute_path = malloc((strlen(new_path) + 2) * sizeof(char));
+        absolute_path[0] = '/';
+        strcat(absolute_path, new_path);
+        parent = search_node_in_tree(deb, absolute_path);
+    }
+    else
+    {
+        parent = search_node_in_tree(deb, new_path);
+    }
 
     return create_noeud(is_dir, name, parent);
 }
