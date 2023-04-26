@@ -39,39 +39,44 @@ static void print_with_depth(noeud *node, unsigned depth)
 
 static char *get_a_print_line(const char *nom, bool est_dossier, unsigned depth)
 {
-    char *start_with_name;
+    unsigned n_start_space = depth * 4;
+    unsigned n_name = strlen(nom);
 
-    if (depth == 0)
+    if (n_name == 0)
     {
-        start_with_name = get_alloc_pointer_of_string("/");
+        n_name += 1;
+    }
+
+    char *result = malloc(sizeof(char) * (n_start_space + n_name + 5));
+
+    for (unsigned i = 0; i < n_start_space; i++)
+    {
+        result[i] = ' ';
+    }
+
+    if (strcmp(nom, "") == 0)
+    {
+        result[n_start_space] = '/';
     }
     else
     {
-        char *space_start = repeat_char(' ', depth * 4 - 1);
-
-        start_with_name = concat_two_words_with_delimiter(space_start, nom, ' ');
-
-        free(space_start);
+        memmove(result + n_start_space, nom, n_name);
     }
 
-    if (start_with_name == NULL)
-    {
-        return NULL;
-    }
-
-    char *type_of_file;
+    result[n_start_space + n_name] = ' ';
+    result[n_start_space + n_name + 1] = '(';
 
     if (est_dossier)
     {
-        type_of_file = "(D)";
+        result[n_start_space + n_name + 2] = 'D';
     }
     else
     {
-        type_of_file = "(F)";
+        result[n_start_space + n_name + 2] = 'F';
     }
 
-    char *result = concat_two_words_with_delimiter(start_with_name, type_of_file, ' ');
-    free(start_with_name);
+    result[n_start_space + n_name + 3] = ')';
+    result[n_start_space + n_name + 4] = '\0';
 
     return result;
 }
