@@ -16,9 +16,17 @@ static noeud *create_empty_noeud()
     return node;
 }
 
+/*
+Returns the node if nom is valid name
+
+Otherwise it returns NULL
+*/
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
-    assert(strcmp(nom, "") != 0 && strcmp(nom, ".") != 0 && strcmp(nom, "..") != 0);
+    if (!is_valid_name_node(nom))
+    {
+        return NULL;
+    }
 
     noeud *node = create_empty_noeud();
 
@@ -44,6 +52,27 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
     node->pere = pere;
     node->racine = pere->racine;
     return node;
+}
+
+/*
+Returns false if a name is an empty string, is ".", is ".." or if it contains '/'
+
+Otherwise it returns true
+*/
+bool is_valid_name_node(const char *name)
+{
+    if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0 || strcmp(name, "") == 0)
+    {
+        return false;
+    }
+    for (unsigned i = 0; i < strlen(name); i++)
+    {
+        if (name[i] == '/')
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent, liste_noeud *children)
