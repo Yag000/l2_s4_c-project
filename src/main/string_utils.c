@@ -198,3 +198,17 @@ bool is_alphanumeric(const char *str)
     }
     return true;
 }
+
+/*
+Retuns a new pointer of string, allocated, and equal to the given string
+*/
+char *get_alloc_pointer_of_string(const char *s)
+{
+    unsigned len_s = strlen(s);
+    char *result = malloc(sizeof(char) * len_s + 1);
+
+    memmove(result, s, len_s);
+    result[len_s] = '\0';
+
+    return result;
+}

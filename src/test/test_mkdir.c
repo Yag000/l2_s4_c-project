@@ -58,7 +58,7 @@ static void test_mkdir_invalid_name(test_info *info)
 
     current_node = create_root_noeud();
 
-    invalid_name_format_test_handler("te/st", info);
+    invalid_name_format_test_handler("te|st", info);
     invalid_name_format_test_handler("te\\st", info);
     invalid_name_format_test_handler("te*st", info);
     invalid_name_format_test_handler("---", info);

@@ -29,5 +29,6 @@ char *concat_two_words_with_delimiter(const char *, const char *, char);
 char *concat_words_with_delimiter(size_t, char **, char);
 
 bool is_alphanumeric(const char *);
+char *get_alloc_pointer_of_string(const char *);
 
 #endif

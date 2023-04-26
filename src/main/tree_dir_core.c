@@ -9,52 +9,68 @@ static noeud *search_node_in_tree_with_iterator(noeud *, string_iterator *);
 
 static noeud *create_empty_noeud()
 {
-  noeud *node = malloc(sizeof(noeud));
+    noeud *node = malloc(sizeof(noeud));
 
-  assert(node != NULL);
+    assert(node != NULL);
 
-  return node;
+    return node;
 }
 
+/*
+Returns the node if nom is valid name
+
+Otherwise it returns NULL
+*/
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
-  assert(strcmp(nom, "") != 0 && strcmp(nom, ".") != 0 &&
-         strcmp(nom, "..") != 0);
+    if (!is_valid_name_node(nom))
+    {
+        return NULL;
+    }
 
-  noeud *node = create_empty_noeud();
+    noeud *node = create_empty_noeud();
 
-  int length_nom = strlen(nom);
+    int length_nom = strlen(nom);
 
-  if (length_nom > MAX_LENGTH_NOM - 1)
-  {
-    length_nom = MAX_LENGTH_NOM - 1;
-  }
+    if (length_nom > MAX_LENGTH_NOM - 1)
+    {
+        length_nom = MAX_LENGTH_NOM - 1;
+    }
 
-  memmove(node->nom, nom, length_nom);
-  node->nom[length_nom] = '\0';
+    memmove(node->nom, nom, length_nom);
+    node->nom[length_nom] = '\0';
 
-  node->est_dossier = est_dossier;
-  node->fils = NULL;
+    node->est_dossier = est_dossier;
+    node->fils = NULL;
 
-  if (pere == NULL)
-  {
-    node->pere = node;
-    node->racine = node;
+    if (pere == NULL)
+    {
+        node->pere = node;
+        node->racine = node;
+        return node;
+    }
+    node->pere = pere;
+    node->racine = pere->racine;
     return node;
-  }
-  node->pere = pere;
-  node->racine = pere->racine;
-  return node;
 }
 
-noeud *create_noeud_with_fils(bool is_directory, const char *name,
-                              noeud *parent, liste_noeud *children)
+/*
+Returns false if a name is an empty string, is ".", is ".." or if it contains '/'
+
+Otherwise it returns true
+*/
+bool is_valid_name_node(const char *name)
 {
-  noeud *node = create_noeud(is_directory, name, parent);
+    return is_alphanumeric(name);
+}
 
-  node->fils = children;
+noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent, liste_noeud *children)
+{
+    noeud *node = create_noeud(is_directory, name, parent);
 
-  return node;
+    node->fils = children;
+
+    return node;
 }
 
 /*
@@ -63,29 +79,29 @@ of our file system.
 */
 noeud *create_root_noeud()
 {
-  noeud *node = create_empty_noeud();
+    noeud *node = create_empty_noeud();
 
-  node->nom[0] = '\0';
-  node->pere = node;
-  node->racine = node;
-  node->est_dossier = true;
-  node->fils = NULL;
+    node->nom[0] = '\0';
+    node->pere = node;
+    node->racine = node;
+    node->est_dossier = true;
+    node->fils = NULL;
 
-  return node;
+    return node;
 }
 
 void destroy_noeud(noeud *node)
 {
-  if (node == NULL)
-  {
-    return;
-  }
+    if (node == NULL)
+    {
+        return;
+    }
 
-  if (node->est_dossier)
-  {
-    destroy_liste_noeud(node->fils);
-  }
-  free(node);
+    if (node->est_dossier)
+    {
+        destroy_liste_noeud(node->fils);
+    }
+    free(node);
 }
 
 /*
@@ -93,36 +109,35 @@ Returns true if the nodes are equal (same address).
 */
 bool are_noeuds_equal(const noeud *node1, const noeud *node2)
 {
-  if (node1 == NULL && node2 == NULL)
-  {
-    return true;
-  }
+    if (node1 == NULL && node2 == NULL)
+    {
+        return true;
+    }
 
-  if (node1 == NULL || node2 == NULL)
-  {
-    return false;
-  }
+    if (node1 == NULL || node2 == NULL)
+    {
+        return false;
+    }
 
-  return node1 == node2;
+    return node1 == node2;
 }
 
 bool is_root_node(const noeud *node)
 {
-  if (node == NULL)
-  {
-    return false;
-  }
-  return (strcmp(node->nom, "") == 0) && node == node->pere &&
-         node == node->racine;
+    if (node == NULL)
+    {
+        return false;
+    }
+    return (strcmp(node->nom, "") == 0) && node == node->pere && node == node->racine;
 }
 
 bool is_fils_of_noeud_empty(const noeud *node)
 {
-  if (node == NULL)
-  {
-    return true;
-  }
-  return node->fils == NULL;
+    if (node == NULL)
+    {
+        return true;
+    }
+    return node->fils == NULL;
 }
 
 /*
@@ -130,20 +145,20 @@ Returns true if the node pere contains node in his own fils.
 */
 bool contains_noeud(noeud *parent, noeud *node)
 {
-  if (parent == NULL)
-  {
-    return false;
-  }
-  return contains_liste_noeud(parent->fils, node);
+    if (parent == NULL)
+    {
+        return false;
+    }
+    return contains_liste_noeud(parent->fils, node);
 }
 
 unsigned get_number_of_fils(noeud *node)
 {
-  if (node == NULL)
-  {
-    return 0;
-  }
-  return size_liste_noeud(node->fils);
+    if (node == NULL)
+    {
+        return 0;
+    }
+    return size_liste_noeud(node->fils);
 }
 
 /*
@@ -151,11 +166,11 @@ Returns the node that has its nom equal to name.
 */
 noeud *get_a_fils_of_noeud(noeud *node, const char *name)
 {
-  if (node == NULL || !node->est_dossier)
-  {
-    return NULL;
-  }
-  return get_a_noeud_in_liste_noeud(node->fils, name);
+    if (node == NULL || !node->est_dossier)
+    {
+        return NULL;
+    }
+    return get_a_noeud_in_liste_noeud(node->fils, name);
 }
 
 /*
@@ -166,29 +181,29 @@ not already contain node.
 */
 bool append_a_fils_to_noeud(noeud *parent, noeud *node)
 {
-  if (parent == NULL || node == NULL || !parent->est_dossier)
-  {
-    return false;
-  }
+    if (parent == NULL || node == NULL || !parent->est_dossier)
+    {
+        return false;
+    }
 
-  bool append_success;
+    bool append_success;
 
-  if (parent->fils == NULL)
-  {
-    parent->fils = create_liste_noeud(node);
-    append_success = true;
-  }
-  else
-  {
-    append_success = append_liste_noeud(parent->fils, node);
-  }
+    if (parent->fils == NULL)
+    {
+        parent->fils = create_liste_noeud(node);
+        append_success = true;
+    }
+    else
+    {
+        append_success = append_liste_noeud(parent->fils, node);
+    }
 
-  if (append_success)
-  {
-    node->pere = parent;
-    node->racine = parent->racine;
-  }
-  return append_success;
+    if (append_success)
+    {
+        node->pere = parent;
+        node->racine = parent->racine;
+    }
+    return append_success;
 }
 
 /*
@@ -198,19 +213,19 @@ the parent is not a directory it will fail.
 */
 bool remove_a_node_from_fils(noeud *parent, noeud *node)
 {
-  if (parent == NULL || node == NULL || !parent->est_dossier)
-  {
-    return false;
-  }
+    if (parent == NULL || node == NULL || !parent->est_dossier)
+    {
+        return false;
+    }
 
-  if (!contains_liste_noeud(parent->fils, node))
-  {
-    return false;
-  }
+    if (!contains_liste_noeud(parent->fils, node))
+    {
+        return false;
+    }
 
-  parent->fils = remove_liste_noeud(parent->fils, node);
+    parent->fils = remove_liste_noeud(parent->fils, node);
 
-  return true;
+    return true;
 }
 
 /*
@@ -220,45 +235,45 @@ If parent did not contain it or if the parent is not a directory it will fail.
 */
 bool remove_a_fils_of_noeud(noeud *parent, const char *name)
 {
-  if (parent == NULL || !parent->est_dossier)
-  {
-    return false;
-  }
-  noeud *node = get_a_noeud_in_liste_noeud(parent->fils, name);
+    if (parent == NULL || !parent->est_dossier)
+    {
+        return false;
+    }
+    noeud *node = get_a_noeud_in_liste_noeud(parent->fils, name);
 
-  if (node == NULL)
-  {
-    return false;
-  }
-  parent->fils = remove_liste_noeud(parent->fils, node);
-  destroy_noeud(node);
+    if (node == NULL)
+    {
+        return false;
+    }
+    parent->fils = remove_liste_noeud(parent->fils, node);
+    destroy_noeud(node);
 
-  return true;
+    return true;
 }
 
 liste_noeud *create_liste_noeud(noeud *node)
 {
-  liste_noeud *node_list = malloc(sizeof(liste_noeud));
+    liste_noeud *node_list = malloc(sizeof(liste_noeud));
 
-  assert(node_list != NULL);
+    assert(node_list != NULL);
 
-  node_list->no = node;
-  node_list->succ = NULL;
+    node_list->no = node;
+    node_list->succ = NULL;
 
-  return node_list;
+    return node_list;
 }
 
 void destroy_liste_noeud(liste_noeud *node_list)
 {
-  if (node_list == NULL)
-  {
-    return;
-  }
+    if (node_list == NULL)
+    {
+        return;
+    }
 
-  destroy_liste_noeud(node_list->succ);
-  destroy_noeud(node_list->no);
+    destroy_liste_noeud(node_list->succ);
+    destroy_noeud(node_list->no);
 
-  free(node_list);
+    free(node_list);
 }
 
 /*
@@ -266,17 +281,17 @@ Returns true if the liste_noeud node_list contains node.
 */
 bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
 {
-  if (node_list == NULL)
-  {
-    return false;
-  }
+    if (node_list == NULL)
+    {
+        return false;
+    }
 
-  if (are_noeuds_equal(node_list->no, node))
-  {
-    return true;
-  }
+    if (are_noeuds_equal(node_list->no, node))
+    {
+        return true;
+    }
 
-  return contains_liste_noeud(node_list->succ, node);
+    return contains_liste_noeud(node_list->succ, node);
 }
 
 /*
@@ -284,12 +299,12 @@ Returns the number of noeuds in node_list.
 */
 unsigned size_liste_noeud(liste_noeud *node_list)
 {
-  if (node_list == NULL)
-  {
-    return 0;
-  }
+    if (node_list == NULL)
+    {
+        return 0;
+    }
 
-  return 1 + size_liste_noeud(node_list->succ);
+    return 1 + size_liste_noeud(node_list->succ);
 }
 
 /*
@@ -298,17 +313,17 @@ Return NULL otherwise.
 */
 noeud *get_a_noeud_in_liste_noeud(liste_noeud *node_list, const char *name)
 {
-  if (node_list == NULL)
-  {
-    return NULL;
-  }
+    if (node_list == NULL)
+    {
+        return NULL;
+    }
 
-  if (strcmp(node_list->no->nom, name) == 0)
-  {
-    return node_list->no;
-  }
+    if (strcmp(node_list->no->nom, name) == 0)
+    {
+        return node_list->no;
+    }
 
-  return get_a_noeud_in_liste_noeud(node_list->succ, name);
+    return get_a_noeud_in_liste_noeud(node_list->succ, name);
 }
 
 /*
@@ -318,18 +333,18 @@ node_list.
 */
 bool append_liste_noeud(liste_noeud *node_list, noeud *node)
 {
-  if (node_list == NULL || strcmp(node_list->no->nom, node->nom) == 0)
-  {
-    return false;
-  }
+    if (node_list == NULL || strcmp(node_list->no->nom, node->nom) == 0)
+    {
+        return false;
+    }
 
-  if (node_list->succ == NULL)
-  {
-    node_list->succ = create_liste_noeud(node);
-    return true;
-  }
+    if (node_list->succ == NULL)
+    {
+        node_list->succ = create_liste_noeud(node);
+        return true;
+    }
 
-  return append_liste_noeud(node_list->succ, node);
+    return append_liste_noeud(node_list->succ, node);
 }
 
 /*
@@ -338,108 +353,106 @@ Free the list removed (but don't free the node).
 */
 liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
 {
-  if (node_list == NULL)
-  {
-    return NULL;
-  }
+    if (node_list == NULL)
+    {
+        return NULL;
+    }
 
-  if (are_noeuds_equal(node_list->no, node))
-  {
-    liste_noeud *acc = node_list->succ;
+    if (are_noeuds_equal(node_list->no, node))
+    {
+        liste_noeud *acc = node_list->succ;
 
-    // !WARNING! here, just the list is freed, the user must free the node
-    // themselves
-    free(node_list);
+        // !WARNING! here, just the list is freed, the user must free the node
+        // themselves
+        free(node_list);
 
-    return acc;
-  }
+        return acc;
+    }
 
-  node_list->succ = remove_liste_noeud(node_list->succ, node);
+    node_list->succ = remove_liste_noeud(node_list->succ, node);
 
-  return node_list;
+    return node_list;
 }
 
 void destroy_root()
 {
-  assert(current_node != NULL);
-  assert(current_node->racine != NULL);
+    assert(current_node != NULL);
+    assert(current_node->racine != NULL);
 
-  destroy_noeud(current_node->racine);
+    destroy_noeud(current_node->racine);
 }
 /*
 Returns the string containing the absolute path of the node.
 */
 char *get_absolute_path_of_node(const noeud *node)
 {
-  assert(node != NULL);
+    assert(node != NULL);
 
-  char *absolute_path;
+    char *absolute_path;
 
-  if (is_root_node(node))
-  {
-    absolute_path = malloc(2 * sizeof(char));
-    absolute_path[0] = '/';
-    absolute_path[1] = '\0';
+    if (is_root_node(node))
+    {
+        absolute_path = malloc(2 * sizeof(char));
+        absolute_path[0] = '/';
+        absolute_path[1] = '\0';
+
+        return absolute_path;
+    }
+
+    if (is_root_node(node->pere))
+    {
+        char *root_path = malloc(sizeof(char));
+        root_path[0] = '\0';
+
+        absolute_path = concat_two_words_with_delimiter(root_path, node->nom, '/');
+
+        free(root_path);
+
+        return absolute_path;
+    }
+
+    char *parent_absolute_path = get_absolute_path_of_node(node->pere);
+    absolute_path =
+        concat_two_words_with_delimiter(parent_absolute_path, node->nom, '/');
+
+    free(parent_absolute_path);
 
     return absolute_path;
-  }
-
-  if (is_root_node(node->pere))
-  {
-    char *root_path = malloc(sizeof(char));
-    root_path[0] = '\0';
-
-    absolute_path = concat_two_words_with_delimiter(root_path, node->nom, '/');
-
-    free(root_path);
-
-    return absolute_path;
-  }
-
-  char *parent_absolute_path = get_absolute_path_of_node(node->pere);
-  absolute_path =
-      concat_two_words_with_delimiter(parent_absolute_path, node->nom, '/');
-
-  free(parent_absolute_path);
-
-  return absolute_path;
 }
 
 /*
 Search a node in a tree, and if it is found, it is returned
-
 Otherwise the function returns NULL
 */
 noeud *search_node_in_tree(noeud *deb, char *path)
 {
-  assert(deb != NULL);
+    assert(deb != NULL);
 
-  unsigned len_path = strlen(path);
+    unsigned len_path = strlen(path);
 
-  if (len_path == 0)
-  {
-    return NULL;
-  }
+    if (len_path == 0)
+    {
+        return NULL;
+    }
 
-  string_iterator *iterator = create_string_iterator(path, '/');
+    string_iterator *iterator = create_string_iterator(path, '/');
 
-  if (path[0] == '/')
-  {
-    deb = deb->racine;
-  }
+    if (path[0] == '\\')
+    {
+        deb = current_node->racine;
+    }
 
-  noeud *result = search_node_in_tree_with_iterator(deb, iterator);
+    noeud *result = search_node_in_tree_with_iterator(deb, iterator);
 
-  destroy_string_iterator(iterator);
+    destroy_string_iterator(iterator);
 
-  // The path is not valid if there is a '/' in the last char of path, and
-  // result is not a directory
-  if (result == NULL || (path[len_path - 1] == '/' && !result->est_dossier))
-  {
-    return NULL;
-  }
+    // The path is not valid if there is a '/' in the last char of path, and result is not a directory
+    if (result == NULL || (path[len_path - 1] == '/' && !result->est_dossier))
+    {
+        return NULL;
+    }
 
-  return result;
+    return result;
 }
 
 /*
@@ -450,57 +463,55 @@ If the iteration is "..", applies the function to the parent of node
 If the iteration is not found in fils of node, returns NULL
 Otherwise applies the function to the found child
  */
-static noeud *search_node_in_tree_with_iterator(noeud *node,
-                                                string_iterator *iterator)
+static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator)
 {
-  if (!has_next_word(iterator))
-  {
-    return node;
-  }
-  if (!node->est_dossier)
-  {
-    return NULL;
-  }
-
-  char *name = next_word(iterator);
-
-  if (strcmp(name, ".") == 0)
-  {
-    free(name);
-
-    return search_node_in_tree_with_iterator(node, iterator);
-  }
-
-  if (strcmp(name, "..") == 0)
-  {
-    free(name);
-
-    if (node->pere == NULL)
+    if (!has_next_word(iterator))
     {
-      return NULL;
+        return node;
     }
-    return search_node_in_tree_with_iterator(node->pere, iterator);
-  }
+    if (!node->est_dossier)
+    {
+        return NULL;
+    }
 
-  noeud *result = get_a_fils_of_noeud(node, name);
-  free(name);
+    char *name = next_word(iterator);
 
-  if (result == NULL)
-  {
-    return NULL;
-  }
-  return search_node_in_tree_with_iterator(result, iterator);
+    if (strcmp(name, ".") == 0)
+    {
+        free(name);
+
+        return search_node_in_tree_with_iterator(node, iterator);
+    }
+
+    if (strcmp(name, "..") == 0)
+    {
+        free(name);
+
+        if (node->pere == NULL)
+        {
+            return NULL;
+        }
+        return search_node_in_tree_with_iterator(node->pere, iterator);
+    }
+
+    noeud *result = get_a_fils_of_noeud(node, name);
+    free(name);
+
+    if (result == NULL)
+    {
+        return NULL;
+    }
+
+    return search_node_in_tree_with_iterator(result, iterator);
 }
 
-/*
-Returns a new node that has as name the last word of path, and as parent the
-node that has as relative path the path without the last word from node.
-*/
-noeud *get_new_node_from_path(noeud *node, char *path, bool is_directory)
+noeud *get_new_node_from_path(noeud *deb, char *path, bool is_dir)
 {
+    assert(deb != NULL);
 
-    if (strlen(path) == 0){
-        return  NULL;
+    if (strlen(path) == 0)
+    {
+        return NULL;
     }
 
     char *new_path = "";
@@ -509,30 +520,18 @@ noeud *get_new_node_from_path(noeud *node, char *path, bool is_directory)
 
     while (has_next_word(iterator))
     {
-        char *word = next_word(iterator);
-
+        name = next_word(iterator);
         if (has_next_word(iterator))
         {
-            new_path = concat_two_words_with_delimiter(new_path, word, '/');
+            new_path = concat_two_words_with_delimiter(new_path, name, '/');
         }
         else
         {
-            name = word;
+            break;
         }
     }
 
+    noeud *parent = search_node_in_tree(deb, new_path);
 
-    noeud *parent;
-
-    if (strcmp("", new_path) == 0)
-    {
-
-        parent = node;
-    }
-    else
-    {
-        parent = search_node_in_tree(node, new_path);
-    }
-
-    return create_noeud(is_directory, name, parent);
+    return create_noeud(is_dir, name, parent);
 }

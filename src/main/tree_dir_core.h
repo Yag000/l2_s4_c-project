@@ -24,6 +24,7 @@ extern noeud *current_node;
 
 noeud *create_noeud(bool, const char *, noeud *);
 noeud *create_noeud_with_fils(bool, const char *, noeud *, liste_noeud *);
+bool is_valid_name_node(const char *);
 noeud *create_root_noeud();
 void destroy_noeud(noeud *);
 bool are_noeuds_equal(const noeud *, const noeud *);
@@ -48,7 +49,5 @@ void destroy_root();
 
 char *get_absolute_path_of_node(const noeud *);
 noeud *search_node_in_tree(noeud *, char *);
-
-
-noeud *get_new_node_from_path(noeud *, char *, bool );
+noeud *get_new_node_from_path(noeud *, char *, bool);
 #endif
