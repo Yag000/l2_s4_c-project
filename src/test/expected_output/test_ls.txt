@@ -1,0 +1,38 @@
+$ ls
+$ ls
+test2 (F)
+$ ls
+test2 (F)
+test3 (D)
+$ ls
+test2 (F)
+test3 (D)
+test4 (F)
+$ ls
+test6 (F)
+test7 (D)
+test8 (F)
+$ ls
+test (D)
+test9 (F)
+test10 (D)
+test11 (D)
+$ ls
+test12 (F)
+$ ls test/test5/../../test11
+test12 (F)
+$ ls ../test/test5
+test6 (F)
+test7 (D)
+test8 (F)
+$ ls ../
+test (D)
+test9 (F)
+test10 (D)
+test11 (D)
+$ ls test4
+Vous avez donné un chemin non valide.
+$ ls test12
+La commande ls n'est pas appliquable à ce fichier : ce n'est pas un dossier.
+$ ls test test
+Vous avez donnez un nombre incorrect d'argument : 2 au lieu d'un nombre entre 0 et 1 attendu.
