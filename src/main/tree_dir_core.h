@@ -49,4 +49,6 @@ void destroy_root();
 char *get_absolute_path_of_node(const noeud *);
 noeud *search_node_in_tree(noeud *, char *);
 
+
+noeud *get_new_node_from_path(noeud *, char *, bool );
 #endif

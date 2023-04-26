@@ -16,16 +16,12 @@ int mkdir(const command *cmd)
         return INVALID_NUMBER_OF_ARGS;
     }
 
-    char *name = cmd->args[0];
+    noeud *new_node = get_new_node_from_path(current_node, cmd-> args[0], true);
 
-    if (!is_alphanumeric(name))
-    {
+    if (new_node == NULL){
         write_result_command("Invalid name for directory");
-        return INVALID_NAME;
+        return  INVALID_NAME;
     }
-
-    noeud *new_node = create_noeud(true, name, current_node);
-    assert(new_node != NULL);
 
     if (!append_a_fils_to_noeud(current_node, new_node))
     {
