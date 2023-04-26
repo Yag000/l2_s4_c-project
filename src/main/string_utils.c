@@ -177,3 +177,20 @@ char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
 
     return words_concat;
 }
+
+char *repeat_char(char c, unsigned n)
+{
+    char *result = malloc(sizeof(char) * n + 1);
+
+    if (result == NULL)
+    {
+        return NULL;
+    }
+
+    for (unsigned i = 0; i < n; i++)
+    {
+        result[i] = c;
+    }
+    result[n] = '\0';
+    return result;
+}

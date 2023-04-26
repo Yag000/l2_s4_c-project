@@ -28,4 +28,6 @@ unsigned get_number_of_char(size_t, char **);
 char *concat_two_words_with_delimiter(const char *, const char *, char);
 char *concat_words_with_delimiter(size_t, char **, char);
 
+char *repeat_char(char, unsigned);
+
 #endif
