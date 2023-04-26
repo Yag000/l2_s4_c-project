@@ -38,6 +38,8 @@ void test_print_function(test_info *info)
     noeud *root = create_root_noeud();
     current_node = root;
 
+    execute_command(c);
+
     noeud *node1 = create_noeud(true, "test", root);
     append_a_fils_to_noeud(root, node1);
 
@@ -47,6 +49,8 @@ void test_print_function(test_info *info)
 
     noeud *node2 = create_noeud(true, "test5", node1);
     append_a_fils_to_noeud(node1, node2);
+
+    execute_command(c);
 
     append_a_fils_to_noeud(node2, create_noeud(false, "test6", node2));
     append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
