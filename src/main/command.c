@@ -69,7 +69,7 @@ int execute_command(const command *cmd)
     print_command(cmd);
     if (is_command(cmd, "ls"))
     {
-        // ls command
+        return ls(cmd);
     }
     else if (is_command(cmd, "cd"))
     {
@@ -151,6 +151,24 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
                 "Vous avez donnez un nombre incorrect d'argument : %u au lieu de %u attendu.\n",
                 actual,
                 expected);
+        return false;
+    }
+
+    return true;
+}
+
+/*
+Returns true if the actual number of args is between under_limit and upper_limit
+*/
+bool handle_number_of_args_with_delimitation(unsigned under_limit, unsigned upper_limit, unsigned actual)
+{
+    if (actual < under_limit || actual > upper_limit)
+    {
+        fprintf(out_stream,
+                "Vous avez donnez un nombre incorrect d'argument : %u au lieu d'un nombre entre %u et %u attendu.\n",
+                actual,
+                under_limit,
+                upper_limit);
         return false;
     }
 

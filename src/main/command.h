@@ -17,9 +17,11 @@ void destroy_command(command *);
 int execute_command(const command *);
 
 bool handle_number_of_args(unsigned, unsigned);
+bool handle_number_of_args_with_delimitation(unsigned, unsigned, unsigned);
 int write_result_command(char *);
 int write_result_lines_command(size_t, char **);
 
 int pwd(const command *);
+int ls(const command *);
 
 #endif
