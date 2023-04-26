@@ -22,7 +22,7 @@ test_info *test_print()
     test_print_function(info);
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
-    print_test_footer("pwd", info);
+    print_test_footer("print", info);
     return info;
 }
 
@@ -38,7 +38,7 @@ void test_print_function(test_info *info)
     noeud *root = create_root_noeud();
     current_node = root;
 
-    execute_command(c);
+    handle_boolean_test(true, execute_command(c) == 0, __LINE__, __FILE__, info);
 
     noeud *node1 = create_noeud(true, "test", root);
     append_a_fils_to_noeud(root, node1);
@@ -50,7 +50,7 @@ void test_print_function(test_info *info)
     noeud *node2 = create_noeud(true, "test5", node1);
     append_a_fils_to_noeud(node1, node2);
 
-    execute_command(c);
+    handle_boolean_test(true, execute_command(c) == 0, __LINE__, __FILE__, info);
 
     append_a_fils_to_noeud(node2, create_noeud(false, "test6", node2));
     append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
@@ -64,8 +64,22 @@ void test_print_function(test_info *info)
 
     append_a_fils_to_noeud(node1, create_noeud(false, "test12", node1));
 
-    execute_command(c);
+    handle_boolean_test(true, execute_command(c) == 0, __LINE__, __FILE__, info);
 
     destroy_command(c);
+
+    char **tab_command = malloc(sizeof(char *));
+    tab_command[0] = get_alloc_pointer_of_string("test");
+    c = create_command(get_alloc_pointer_of_string("print"), 1, tab_command);
+    handle_boolean_test(true, execute_command(c) == 1, __LINE__, __FILE__, info);
+    destroy_command(c);
+
+    tab_command = malloc(sizeof(char *) * 2);
+    tab_command[0] = get_alloc_pointer_of_string("test");
+    tab_command[1] = get_alloc_pointer_of_string("test");
+    c = create_command(get_alloc_pointer_of_string("print"), 2, tab_command);
+    handle_boolean_test(true, execute_command(c) == 1, __LINE__, __FILE__, info);
+    destroy_command(c);
+
     destroy_noeud(root);
 }
