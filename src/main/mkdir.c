@@ -1,9 +1,9 @@
 #include <assert.h>
 
-#include "tree_dir_core.h"
 #include "command.h"
 #include "constants.h"
 #include "string_utils.h"
+#include "tree_dir_core.h"
 
 /*
 Creates a directory with the given name. For now it only handles
@@ -16,14 +16,15 @@ int mkdir(const command *cmd)
         return INVALID_NUMBER_OF_ARGS;
     }
 
-    noeud *new_node = get_new_node_from_path(current_node, cmd-> args[0], true);
+    noeud *new_node = search_node_in_tree_with_name(current_node, cmd->args[0], true);
 
-    if (new_node == NULL){
+    if (new_node == NULL)
+    {
         write_result_command("Invalid name for directory");
-        return  INVALID_NAME;
+        return INVALID_NAME;
     }
 
-    if (!append_a_fils_to_noeud(current_node, new_node))
+    if (!append_a_fils_to_noeud(new_node->pere, new_node))
     {
         write_result_command("Error while creating directory");
         destroy_noeud(new_node);

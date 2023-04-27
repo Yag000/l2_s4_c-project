@@ -6,7 +6,8 @@
 #include "string_utils.h"
 #include "tree_dir_core.h"
 
-static noeud *search_node_in_tree_with_iterator(noeud *, string_iterator *);
+static noeud *search_node(noeud *, char *, bool, bool);
+static noeud *search_node_in_tree_with_iterator(noeud *, string_iterator *, bool, bool);
 
 static noeud *create_empty_noeud()
 {
@@ -59,10 +60,7 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 Returns false if a name is an empty string, is ".", is ".." or if it contains '/'
 Otherwise it returns true
 */
-bool is_valid_name_node(const char *name)
-{
-    return is_alphanumeric(name);
-}
+bool is_valid_name_node(const char *name) { return is_alphanumeric(name); }
 
 noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent, liste_noeud *children)
 {
@@ -412,19 +410,24 @@ char *get_absolute_path_of_node(const noeud *node)
     }
 
     char *parent_absolute_path = get_absolute_path_of_node(node->pere);
-    absolute_path =
-        concat_two_words_with_delimiter(parent_absolute_path, node->nom, '/');
+    absolute_path = concat_two_words_with_delimiter(parent_absolute_path, node->nom, '/');
 
     free(parent_absolute_path);
 
     return absolute_path;
 }
-
+// TODO: add comments and better names
+noeud *search_node_in_tree(noeud *deb, char *path) { return search_node(deb, path, false, false); }
 /*
 Search a node in a tree, and if it is found, it is returned
 Otherwise the function returns NULL
 */
-noeud *search_node_in_tree(noeud *deb, char *path)
+noeud *search_node_in_tree_with_name(noeud *deb, char *path, bool is_directory)
+{
+    return search_node(deb, path, true, is_directory);
+}
+
+static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is_directory)
 {
     assert(deb != NULL);
 
@@ -437,12 +440,12 @@ noeud *search_node_in_tree(noeud *deb, char *path)
 
     string_iterator *iterator = create_string_iterator(path, '/');
 
-    if (path[0] == '\\')
+    if (path[0] == '/')
     {
         deb = current_node->racine;
     }
 
-    noeud *result = search_node_in_tree_with_iterator(deb, iterator);
+    noeud *result = search_node_in_tree_with_iterator(deb, iterator, is_name_included, is_directory);
 
     destroy_string_iterator(iterator);
 
@@ -451,7 +454,6 @@ noeud *search_node_in_tree(noeud *deb, char *path)
     {
         return NULL;
     }
-
     return result;
 }
 
@@ -462,7 +464,8 @@ If the iteration is "..", applies the function to the parent of node
 If the iteration is not found in fils of node, returns NULL
 Otherwise applies the function to the found child
 */
-static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator)
+static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator, bool is_name_included,
+                                                bool is_directory)
 {
     if (!has_next_word(iterator))
     {
@@ -479,7 +482,7 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
     {
         free(name);
 
-        return search_node_in_tree_with_iterator(node, iterator);
+        return search_node_in_tree_with_iterator(node, iterator, is_name_included, is_directory);
     }
 
     if (strcmp(name, "..") == 0)
@@ -490,59 +493,26 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
         {
             return NULL;
         }
-        return search_node_in_tree_with_iterator(node->pere, iterator);
+        return search_node_in_tree_with_iterator(node->pere, iterator, is_name_included, is_directory);
     }
 
-    noeud *result = get_a_fils_of_noeud(node, name);
+    if (!has_next_word(iterator) && is_name_included)
+    {
+
+        noeud *result = create_noeud(is_directory, name, node);
+
+        free(name);
+
+        return result;
+    }
+    noeud *next_node = get_a_fils_of_noeud(node, name);
+
     free(name);
 
-    if (result == NULL)
+    if (next_node == NULL)
     {
         return NULL;
     }
 
-    return search_node_in_tree_with_iterator(result, iterator);
-}
-
-noeud *get_new_node_from_path(noeud *deb, char *path, bool is_dir)
-{
-    assert(deb != NULL);
-
-    if (strlen(path) == 0)
-    {
-        return NULL;
-    }
-
-    bool is_absolut_path = path[0] == '/';
-    char *new_path = "";
-    char *name;
-    string_iterator *iterator = create_string_iterator(path, '/');
-
-    while (has_next_word(iterator))
-    {
-        name = next_word(iterator);
-        if (has_next_word(iterator))
-        {
-            new_path = concat_two_words_with_delimiter(new_path, name, '/');
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    noeud *parent;
-    if (is_absolut_path)
-    {
-        char *absolute_path = malloc((strlen(new_path) + 2) * sizeof(char));
-        absolute_path[0] = '/';
-        strcat(absolute_path, new_path);
-        parent = search_node_in_tree(deb, absolute_path);
-    }
-    else
-    {
-        parent = search_node_in_tree(deb, new_path);
-    }
-
-    return create_noeud(is_dir, name, parent);
+    return search_node_in_tree_with_iterator(next_node, iterator, is_name_included, is_directory);
 }

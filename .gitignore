@@ -66,6 +66,7 @@ src/test/test_main/output
 
 # VSCode
 .vscode/
+_clang-format
 
 # PDF
 *.pdf
