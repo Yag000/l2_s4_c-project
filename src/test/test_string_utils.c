@@ -1,8 +1,9 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "test_core.h"
 #include "../main/string_utils.h"
+#include "test_core.h"
 
 static void test_string_iterator_empty(test_info *);
 static void test_string_iterator_with_text(test_info *);
@@ -119,6 +120,7 @@ static void test_concat_words_with_delimiter(test_info *info)
     size_t size_words = 4;
 
     char **words = malloc(size_words * sizeof(char *));
+    assert(words != NULL);
     words[0] = "ab";
     words[1] = "bc";
     words[2] = "cd";

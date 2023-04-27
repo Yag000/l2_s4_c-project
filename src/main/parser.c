@@ -1,12 +1,12 @@
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
-#include "parser.h"
 #include "command.h"
 #include "constants.h"
-#include "string_utils.h"
 #include "file_manager.h"
+#include "parser.h"
+#include "string_utils.h"
 
 #define MAX_LINE_LENGTH 512
 /*
@@ -119,6 +119,7 @@ static command *get_command_from_iterator(string_iterator *iterator)
         else
         {
             args = realloc(args, sizeof(char *) * args_number);
+            assert(args != NULL);
         }
     }
 
