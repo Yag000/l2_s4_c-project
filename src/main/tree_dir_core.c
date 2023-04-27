@@ -417,16 +417,24 @@ char *get_absolute_path_of_node(const noeud *node)
     return absolute_path;
 }
 // TODO: add comments and better names
-noeud *search_node_in_tree(noeud *deb, char *path) { return search_node(deb, path, false, false); }
+
 /*
 Search a node in a tree, and if it is found, it is returned
 Otherwise the function returns NULL
+*/
+noeud *search_node_in_tree(noeud *deb, char *path) { return search_node(deb, path, false, false); }
+
+/*
+Returns a node in the position given by the path. The last word represents the node's name.
 */
 noeud *search_node_in_tree_with_name(noeud *deb, char *path, bool is_directory)
 {
     return search_node(deb, path, true, is_directory);
 }
 
+/*
+Utility method for search_node_in_tree_with_name and search_node_in_tree.
+*/
 static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is_directory)
 {
     assert(deb != NULL);
@@ -462,6 +470,8 @@ Search a node in a tree with the iteration of iterator until its end
 If the iteration is ".", applies the function to the same node
 If the iteration is "..", applies the function to the parent of node
 If the iteration is not found in fils of node, returns NULL
+If the name is included then it will stop before reaching the end of 
+the path an return a noeud with it's nom as the last word of the path.
 Otherwise applies the function to the found child
 */
 static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator, bool is_name_included,
