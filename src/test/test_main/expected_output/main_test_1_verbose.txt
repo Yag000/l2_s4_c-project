@@ -1,15 +1,15 @@
 Parsing file src/test/test_main/input/main_test_1_verbose.txt ...
-$ debug
+/$ debug
 
-$ debug one
+/$ debug one
 one
-$ debug one two
+/$ debug one two
 one two
-$ debug one two
+/$ debug one two
 one two
-$ debug one two
+/$ debug one two
 one two
-$ debug one two
+/$ debug one two
 one two
-$ debug one two
+/$ debug one two
 one two

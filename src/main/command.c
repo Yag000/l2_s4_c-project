@@ -5,6 +5,7 @@
 
 #include "constants.h"
 #include "command.h"
+#include "tree_dir_core.h"
 
 static int debug_command(int, char **);
 
@@ -42,7 +43,12 @@ static void print_command(const command *cmd)
         return;
     }
 
+    if (current_node != NULL){
+        fputs(get_absolute_path_of_node(current_node),out_stream);
+    }
+
     fputs("$ ", out_stream);
+    
     fputs(cmd->name, out_stream);
     for (int i = 0; i < cmd->args_number; i++)
     {
