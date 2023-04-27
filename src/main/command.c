@@ -44,7 +44,9 @@ static void print_command(const command *cmd)
     }
 
     if (current_node != NULL){
-        fputs(get_absolute_path_of_node(current_node),out_stream);
+        char * path = get_absolute_path_of_node(current_node);
+        fputs(path,out_stream);
+        free(path);
     }
 
     fputs("$ ", out_stream);
