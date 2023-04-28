@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <assert.h>
 
 #include "tree_dir_core.h"
 #include "command.h"
@@ -65,14 +66,15 @@ static char *get_line_ls(const char *nom, bool est_dossier, unsigned max_length_
     unsigned len_name = strlen(nom);
     unsigned len_transition = max_length_name - len_name + 1;
 
-    char *result = malloc(sizeof(char) * (len_name + 5));
+    char *result = malloc(sizeof(char) * (len_name + len_transition + 4));
+    assert(result != NULL);
 
     memmove(result, nom, len_name);
 
     add_transition_at_string(result, len_name, len_transition);
     add_file_type_at_string(result, len_name + len_transition, est_dossier);
 
-    result[len_name + len_transition + 4] = '\0';
+    result[len_name + len_transition + 3] = '\0';
 
     return result;
 }
