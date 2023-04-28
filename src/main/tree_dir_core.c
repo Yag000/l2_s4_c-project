@@ -1,9 +1,9 @@
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
-#include "tree_dir_core.h"
 #include "string_utils.h"
+#include "tree_dir_core.h"
 
 static noeud *search_node_in_tree_with_iterator(noeud *, string_iterator *);
 
@@ -38,6 +38,7 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
     }
 
     memmove(node->nom, nom, length_nom);
+    assert(node->nom != NULL);
     node->nom[length_nom] = '\0';
 
     node->est_dossier = est_dossier;
@@ -394,6 +395,7 @@ char *get_absolute_path_of_node(const noeud *node)
     if (is_root_node(node))
     {
         absolute_path = malloc(2 * sizeof(char));
+        assert(absolute_path != NULL);
         absolute_path[0] = '/';
         absolute_path[1] = '\0';
 
@@ -403,6 +405,7 @@ char *get_absolute_path_of_node(const noeud *node)
     if (is_root_node(node->pere))
     {
         char *root_path = malloc(sizeof(char));
+        assert(root_path != NULL);
         root_path[0] = '\0';
 
         absolute_path = concat_two_words_with_delimiter(root_path, node->nom, '/');
