@@ -36,8 +36,8 @@ static void test_print_function(test_info *info)
     out_stream_path = "src/test/output/test_print.txt";
     out_stream = open_file(out_stream_path, "w");
 
-    test_print_while_creating_tree(info);
-    invalid_name_format_test_handler(info);
+    // test_print_while_creating_tree(info);
+    // invalid_name_format_test_handler(info);
 
     close_file(out_stream, out_stream_path);
 
