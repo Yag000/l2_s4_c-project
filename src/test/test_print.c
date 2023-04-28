@@ -8,7 +8,7 @@
 #include "../main/file_manager.h"
 #include "../main/string_utils.h"
 
-void test_print_function(test_info *info);
+void test_print_function(test_info *);
 
 test_info *test_print()
 {
@@ -56,13 +56,16 @@ void test_print_function(test_info *info)
     append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
     append_a_fils_to_noeud(node2, create_noeud(false, "test8", node2));
 
-    append_a_fils_to_noeud(root, create_noeud(false, "test9", root));
-    append_a_fils_to_noeud(root, create_noeud(true, "test10", root));
+    append_a_fils_to_noeud(node1, create_noeud(false, "test9", node2));
+    append_a_fils_to_noeud(root, create_noeud(false, "test10", root));
+    append_a_fils_to_noeud(root, create_noeud(true, "test11", root));
 
-    node1 = create_noeud(true, "test11", root);
+    node1 = create_noeud(true, "test12", root);
+
     append_a_fils_to_noeud(root, node1);
-
-    append_a_fils_to_noeud(node1, create_noeud(false, "test12", node1));
+    append_a_fils_to_noeud(node1, create_noeud(false, "test13", node1));
+    append_a_fils_to_noeud(node1, create_noeud(false, "test14", node1));
+    append_a_fils_to_noeud(node1, create_noeud(false, "test15", node1));
 
     handle_boolean_test(true, execute_command(c) == 0, __LINE__, __FILE__, info);
 
@@ -82,4 +85,8 @@ void test_print_function(test_info *info)
     destroy_command(c);
 
     destroy_noeud(root);
+
+    close_file(out_stream, out_stream_path);
+
+    out_stream = stdin;
 }
