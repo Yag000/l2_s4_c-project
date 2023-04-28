@@ -430,7 +430,7 @@ noeud *search_node_in_tree(noeud *deb, char *path) { return search_node(deb, pat
 /*
 Returns a node in the position given by the path. The last word represents the node's name.
 */
-noeud *search_node_in_tree_with_name(noeud *deb, char *path, bool is_directory)
+noeud *search_node_in_tree_with_node_creation(noeud *deb, char *path, bool is_directory)
 {
     return search_node(deb, path, true, is_directory);
 }

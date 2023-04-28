@@ -16,7 +16,7 @@ int mkdir(const command *cmd)
         return INVALID_NUMBER_OF_ARGS;
     }
 
-    noeud *new_node = search_node_in_tree_with_name(current_node, cmd->args[0], true);
+    noeud *new_node = search_node_in_tree_with_node_creation(current_node, cmd->args[0], true);
 
     if (new_node == NULL)
     {
