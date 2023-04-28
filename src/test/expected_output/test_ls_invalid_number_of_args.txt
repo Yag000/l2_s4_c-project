@@ -1,0 +1,4 @@
+$ ls test test
+Vous avez donnez un nombre incorrect d'argument : 2 au lieu d'un nombre entre 0 et 1 attendu.
+$ ls test test test
+Vous avez donnez un nombre incorrect d'argument : 3 au lieu d'un nombre entre 0 et 1 attendu.
