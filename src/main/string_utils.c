@@ -1,6 +1,6 @@
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
 #include "string_utils.h"
 
@@ -17,18 +17,12 @@ string_iterator *create_string_iterator(char *string, char delimiter)
     return iterator;
 }
 
-void destroy_string_iterator(string_iterator *iterator)
-{
-    free(iterator);
-}
+void destroy_string_iterator(string_iterator *iterator) { free(iterator); }
 
 /*
 Returns true if there is another word in the string.
 */
-bool has_next_word(const string_iterator *iterator)
-{
-    return iterator->string[iterator->index] != '\0';
-}
+bool has_next_word(const string_iterator *iterator) { return iterator->string[iterator->index] != '\0'; }
 
 /*
 Returns the next word in the string. If there are no more words
@@ -54,6 +48,7 @@ char *next_word(string_iterator *iterator)
     char *result = malloc(sizeof(char) * (length + 1));
     assert(result != NULL);
     result = memmove(result, iterator->string + start, length);
+    assert(result != NULL);
     result[length] = '\0';
 
     return result;
@@ -87,6 +82,7 @@ char *strip_newline(char *str)
     }
     str[j] = '\0';
     str = realloc(str, sizeof(char) * (j + 1));
+    assert(str != NULL);
     return str;
 }
 
@@ -130,8 +126,10 @@ char *concat_two_words_with_delimiter(const char *word1, const char *word2, char
     assert(words_concat != NULL);
 
     memmove(words_concat, word1, len_word1);
+    assert(words_concat != NULL);
     words_concat[len_word1] = delimiter;
     memmove(words_concat + len_word1 + 1, word2, len_word2);
+    assert(words_concat != NULL);
     words_concat[len_word1 + len_word2 + 1] = '\0';
 
     return words_concat;
@@ -171,6 +169,7 @@ char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
     }
     len_word = strlen(words[size - 1]);
     memmove(words_concat + acc, words[size - 1], len_word);
+    assert(words_concat != NULL);
     acc += len_word;
 
     words_concat[acc] = '\0';
@@ -185,8 +184,10 @@ char *get_alloc_pointer_of_string(const char *s)
 {
     unsigned len_s = strlen(s);
     char *result = malloc(sizeof(char) * len_s + 1);
+    assert(result != NULL);
 
     memmove(result, s, len_s);
+    assert(result != NULL);
     result[len_s] = '\0';
 
     return result;

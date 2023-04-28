@@ -1,12 +1,13 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "test_core.h"
 #include "../main/command.h"
 #include "../main/constants.h"
-#include "../main/tree_dir_core.h"
 #include "../main/file_manager.h"
 #include "../main/string_utils.h"
+#include "../main/tree_dir_core.h"
+#include "test_core.h"
 
 static void test_pwd_function(test_info *);
 
@@ -33,7 +34,9 @@ static void test_pwd_function(test_info *info)
     out_stream_path = "src/test/output/test_pwd.txt";
     out_stream = open_file(out_stream_path, "w");
 
-    command *c = create_command(get_alloc_pointer_of_string("pwd"), 0, malloc(0));
+    char **tab_command = malloc(0);
+    assert(tab_command != NULL);
+    command *c = create_command(get_alloc_pointer_of_string("pwd"), 0, tab_command);
 
     noeud *root = create_root_noeud();
     current_node = root;
@@ -72,13 +75,15 @@ static void test_pwd_function(test_info *info)
 
     destroy_command(c);
 
-    char **tab_command = malloc(sizeof(char *));
+    tab_command = malloc(sizeof(char *));
+    assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
     c = create_command(get_alloc_pointer_of_string("pwd"), 1, tab_command);
     handle_boolean_test(true, execute_command(c) == 1, __LINE__, __FILE__, info);
     destroy_command(c);
 
     tab_command = malloc(sizeof(char *) * 2);
+    assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
     tab_command[1] = get_alloc_pointer_of_string("test");
     c = create_command(get_alloc_pointer_of_string("pwd"), 2, tab_command);
