@@ -78,6 +78,7 @@ static char *get_a_print_line(const char *nom, bool est_dossier, unsigned depth,
     }
 
     char *result = malloc(sizeof(char) * (len_start_transition + len_name + 5));
+    assert(result != NULL);
 
     add_start_transition_at_string(result, len_start_transition, is_last);
     add_file_name_at_string(result, nom, len_start_transition, len_name);
