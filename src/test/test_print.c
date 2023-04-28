@@ -9,7 +9,9 @@
 #include "../main/file_manager.h"
 #include "../main/string_utils.h"
 
-void test_print_function(test_info *);
+static void test_print_function(test_info *);
+static void *test_print_while_creating_tree(test_info *info);
+static void invalid_name_format_test_handler(test_info *info);
 
 test_info *test_print()
 {
@@ -27,21 +29,32 @@ test_info *test_print()
     return info;
 }
 
-void test_print_function(test_info *info)
+static void test_print_function(test_info *info)
 {
     print_test_name("Testing command print");
 
     out_stream_path = "src/test/output/test_print.txt";
     out_stream = open_file(out_stream_path, "w");
 
+    test_print_while_creating_tree(info);
+    invalid_name_format_test_handler(info);
+
+    close_file(out_stream, out_stream_path);
+
+    out_stream = stdin;
+    out_stream_path = NULL;
+}
+
+static void *test_print_while_creating_tree(test_info *info)
+{
     char **tab_command = malloc(0);
     assert(tab_command != NULL);
-    command *c = create_command(get_alloc_pointer_of_string("print"), 0, tab_command);
+    command *cmd = create_command(get_alloc_pointer_of_string("print"), 0, tab_command);
 
     noeud *root = create_root_noeud();
     current_node = root;
 
-    handle_boolean_test(true, execute_command(c) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
 
     noeud *node1 = create_noeud(true, "test", root);
     append_a_fils_to_noeud(root, node1);
@@ -53,7 +66,7 @@ void test_print_function(test_info *info)
     noeud *node2 = create_noeud(true, "test5", node1);
     append_a_fils_to_noeud(node1, node2);
 
-    handle_boolean_test(true, execute_command(c) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
 
     append_a_fils_to_noeud(node2, create_noeud(false, "test6", node2));
     append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
@@ -70,29 +83,25 @@ void test_print_function(test_info *info)
     append_a_fils_to_noeud(node1, create_noeud(false, "test14", node1));
     append_a_fils_to_noeud(node1, create_noeud(false, "test15", node1));
 
-    handle_boolean_test(true, execute_command(c) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
 
-    destroy_command(c);
+    destroy_noeud(root);
+}
 
-    tab_command = malloc(sizeof(char *));
+static void invalid_name_format_test_handler(test_info *info)
+{
+    char **tab_command = malloc(sizeof(char *));
     assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
-    c = create_command(get_alloc_pointer_of_string("print"), 1, tab_command);
-    handle_boolean_test(true, execute_command(c) == 1, __LINE__, __FILE__, info);
-    destroy_command(c);
+    command *cmd = create_command(get_alloc_pointer_of_string("print"), 1, tab_command);
+    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    destroy_command(cmd);
 
     tab_command = malloc(sizeof(char *) * 2);
     assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
     tab_command[1] = get_alloc_pointer_of_string("test");
-    c = create_command(get_alloc_pointer_of_string("print"), 2, tab_command);
-    handle_boolean_test(true, execute_command(c) == 1, __LINE__, __FILE__, info);
-    destroy_command(c);
-
-    destroy_noeud(root);
-
-    close_file(out_stream, out_stream_path);
-
-    out_stream = stdin;
-    out_stream_path = NULL;
+    cmd = create_command(get_alloc_pointer_of_string("print"), 2, tab_command);
+    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    destroy_command(cmd);
 }
