@@ -49,4 +49,6 @@ char *get_absolute_path_of_node(const noeud *);
 
 noeud *search_node_in_tree(noeud *, char *);
 
+unsigned get_max_number_of_char_of_node_fils_name(const noeud *);
+
 #endif
