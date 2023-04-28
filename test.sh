@@ -80,13 +80,11 @@ function run_tests(){
     if ./test $1; then
         has_passed=true
     else
-        echo "there is a bug"
         has_passed=false
     fi
 }
 
 function test_ouput(){
-    echo
     echo "|-=-=-=-=-=-=-=-=-| Testing output |-=-=-=-=-=-=-=-=-|"
     
     local has_test_output_failed=false
