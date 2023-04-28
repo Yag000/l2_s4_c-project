@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "command.h"
 #include "string_utils.h"
