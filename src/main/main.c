@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     int error_code = parse_file(argv[1]);
 
-    destroy_root();
+    destroy_tree();
 
     return error_code == SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE;
 }

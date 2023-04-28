@@ -373,7 +373,7 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
     return node_list;
 }
 
-void destroy_root()
+void destroy_tree()
 {
     assert(current_node != NULL);
     assert(current_node->racine != NULL);
