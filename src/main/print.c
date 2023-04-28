@@ -8,10 +8,15 @@
 #include "tree_dir_core.h"
 
 #define FILLER_SIZE 4
+#define ROOT_CHAR '/'
 #define FILLER_CHAR ' '
 #define UNION_CHAR '-'
 #define BORDER_CHAR '|'
 #define TRANSITION_CHAR '\\'
+#define START_CONTOUR_CHAR '('
+#define END_CONTOUR_CHAR ')'
+#define FILE_TYPE_CHAR 'F'
+#define DIRECTORY_TYPE_CHAR 'D'
 
 static void print_with_depth(noeud *, unsigned, bool);
 static char *get_a_print_line(const char *, bool, unsigned, bool);
@@ -141,7 +146,7 @@ static void add_file_name_at_string(char *string_to_fill, const char *nom, unsig
 {
     if (strcmp(nom, "") == 0)
     {
-        string_to_fill[start] = '/';
+        string_to_fill[start] = ROOT_CHAR;
     }
     else
     {
@@ -151,16 +156,16 @@ static void add_file_name_at_string(char *string_to_fill, const char *nom, unsig
 
 static void add_file_type_at_string(char *string_to_fill, unsigned start, bool est_dossier)
 {
-    string_to_fill[start] = '(';
+    string_to_fill[start] = START_CONTOUR_CHAR;
 
     if (est_dossier)
     {
-        string_to_fill[start + 1] = ')';
+        string_to_fill[start + 1] = DIRECTORY_TYPE_CHAR;
     }
     else
     {
-        string_to_fill[start + 1] = 'F';
+        string_to_fill[start + 1] = FILE_TYPE_CHAR;
     }
 
-    string_to_fill[start + 2] = 'D';
+    string_to_fill[start + 2] = END_CONTOUR_CHAR;
 }
