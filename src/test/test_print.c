@@ -11,7 +11,7 @@
 
 static void test_print_function(test_info *);
 static void test_print_while_creating_tree(test_info *);
-static void invalid_name_format_test_handler(test_info *);
+static void test_illegal_number_of_args_of_print(test_info *);
 
 test_info *test_print()
 {
@@ -37,7 +37,7 @@ static void test_print_function(test_info *info)
     out_stream = open_file(out_stream_path, "w");
 
     test_print_while_creating_tree(info);
-    invalid_name_format_test_handler(info);
+    test_illegal_number_of_args_of_print(info);
 
     close_file(out_stream, out_stream_path);
 
@@ -91,7 +91,7 @@ static void test_print_while_creating_tree(test_info *info)
     destroy_noeud(root);
 }
 
-static void invalid_name_format_test_handler(test_info *info)
+static void test_illegal_number_of_args_of_print(test_info *info)
 {
     char **tab_command = malloc(sizeof(char *));
     assert(tab_command != NULL);
