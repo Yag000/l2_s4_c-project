@@ -96,4 +96,6 @@ static void test_pwd_function(test_info *info)
 
     out_stream = stdin;
     out_stream_path = NULL;
+
+    current_node = NULL;
 }
