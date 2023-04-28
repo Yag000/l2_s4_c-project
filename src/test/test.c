@@ -20,6 +20,7 @@ Every test should be called from here and the results should be printed.
 */
 int main(int argc, char *argv[])
 {
+    printf("test\n");
     if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'v')
     {
         debug = true;
