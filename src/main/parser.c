@@ -1,6 +1,10 @@
+
+#define _GNU_SOURCE
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
 
 #include "command.h"
 #include "constants.h"
@@ -8,7 +12,6 @@
 #include "parser.h"
 #include "string_utils.h"
 
-#define MAX_LINE_LENGTH 512
 /*
 The maximum number of arguments for a command.
 We could also use a dynamic array to store the arguments,
@@ -32,7 +35,6 @@ int parse_file(const char *path)
         return -1;
     }
 
-    char line[MAX_LINE_LENGTH];
     int exit_code = 0;
 
     if (verbose)
@@ -42,7 +44,10 @@ int parse_file(const char *path)
         fputs(" ...\n", out_stream);
     }
 
-    while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    while ((read = getline(&line, &len, file)) != -1)
     {
         exit_code = parse_line(line);
         if (exit_code != 0)
@@ -51,6 +56,8 @@ int parse_file(const char *path)
             break;
         }
     }
+
+    free(line);
     close_file(file, path);
 
     return exit_code;
@@ -67,6 +74,7 @@ int parse_line(char *line)
     if (iterator == NULL)
     {
         perror("Problème initialisation iterator");
+        free(line);
         return -1;
     }
 
@@ -75,6 +83,7 @@ int parse_line(char *line)
     if (command == NULL)
     {
         perror("Problème creation commande");
+        free(line);
         return -1;
     }
 
