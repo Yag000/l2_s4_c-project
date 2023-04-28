@@ -1,17 +1,14 @@
-
-#define _GNU_SOURCE
-#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <assert.h>
 
-
+#include "parser.h"
 #include "command.h"
 #include "constants.h"
-#include "file_manager.h"
-#include "parser.h"
 #include "string_utils.h"
+#include "file_manager.h"
 
+#define MAX_LINE_LENGTH 512
 /*
 The maximum number of arguments for a command.
 We could also use a dynamic array to store the arguments,
@@ -32,9 +29,10 @@ int parse_file(const char *path)
 
     if (file == NULL)
     {
-        return -1;
+        return 1;
     }
 
+    char line[MAX_LINE_LENGTH];
     int exit_code = 0;
 
     if (verbose)
@@ -44,20 +42,15 @@ int parse_file(const char *path)
         fputs(" ...\n", out_stream);
     }
 
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
-    while ((read = getline(&line, &len, file)) != -1)
+    while (fgets(line, MAX_LINE_LENGTH, file) != NULL)
     {
         exit_code = parse_line(line);
-        if (exit_code != 0)
+        if (exit_code == 1)
         {
             perror("Probleme parse line");
             break;
         }
     }
-
-    free(line);
     close_file(file, path);
 
     return exit_code;
@@ -74,8 +67,7 @@ int parse_line(char *line)
     if (iterator == NULL)
     {
         perror("Problème initialisation iterator");
-        free(line);
-        return -1;
+        return 1;
     }
 
     command *command = get_command_from_iterator(iterator);
@@ -83,8 +75,7 @@ int parse_line(char *line)
     if (command == NULL)
     {
         perror("Problème creation commande");
-        free(line);
-        return -1;
+        return 1;
     }
 
     int exit_code = execute_command(command);
@@ -128,7 +119,6 @@ static command *get_command_from_iterator(string_iterator *iterator)
         else
         {
             args = realloc(args, sizeof(char *) * args_number);
-            assert(args != NULL);
         }
     }
 
