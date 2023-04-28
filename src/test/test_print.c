@@ -89,4 +89,5 @@ void test_print_function(test_info *info)
     close_file(out_stream, out_stream_path);
 
     out_stream = stdin;
+    out_stream_path = NULL;
 }
