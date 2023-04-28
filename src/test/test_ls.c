@@ -156,7 +156,7 @@ static void test_ls_error_with_path(test_info *info, noeud *root)
     tab_command[0] = "test1";
     handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
 
-    tab_command[0] = get_alloc_pointer_of_string("test11/test12");
+    tab_command[0] = "test11/test12";
     handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
 
     tab_command[0] = get_alloc_pointer_of_string("test/test2");
