@@ -9,7 +9,7 @@
 /test/test2/test3/test4$ pwd
 /test/test2/test3/test4
 /test5$ pwd
-/test5dfddf
+/test5
 /test5$ pwd test
 Vous avez donnez un nombre incorrect d'arguments : 1 au lieu de 0 attendu.
 /test5$ pwd test test
