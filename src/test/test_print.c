@@ -85,6 +85,7 @@ static void *test_print_while_creating_tree(test_info *info)
 
     handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
 
+    destroy_command(cmd);
     destroy_noeud(root);
 }
 
@@ -103,5 +104,6 @@ static void invalid_name_format_test_handler(test_info *info)
     tab_command[1] = get_alloc_pointer_of_string("test");
     cmd = create_command(get_alloc_pointer_of_string("print"), 2, tab_command);
     handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+
     destroy_command(cmd);
 }
