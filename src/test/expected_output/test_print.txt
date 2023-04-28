@@ -1,13 +1,13 @@
-$ print
+/$ print
 / (D)
-$ print
+/$ print
 / (D)
 \-- test (D)
     |-- test2 (F)
     |-- test3 (D)
     |-- test4 (F)
     \-- test5 (D)
-$ print
+/$ print
 / (D)
 |-- test (D)
 |   |-- test2 (F)
@@ -24,7 +24,7 @@ $ print
     |-- test13 (F)
     |-- test14 (F)
     \-- test15 (F)
-$ print test
+/$ print test
 Vous avez donnez un nombre incorrect d'argument : 1 au lieu de 0 attendu.
-$ print test test
+/$ print test test
 Vous avez donnez un nombre incorrect d'argument : 2 au lieu de 0 attendu.
