@@ -40,6 +40,7 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
     }
 
     memmove(node->nom, nom, length_nom);
+    assert(node->nom != NULL);
     node->nom[length_nom] = '\0';
 
     node->est_dossier = est_dossier;
@@ -391,6 +392,7 @@ char *get_absolute_path_of_node(const noeud *node)
     if (is_root_node(node))
     {
         absolute_path = malloc(2 * sizeof(char));
+        assert(absolute_path != NULL);
         absolute_path[0] = '/';
         absolute_path[1] = '\0';
 
@@ -400,6 +402,7 @@ char *get_absolute_path_of_node(const noeud *node)
     if (is_root_node(node->pere))
     {
         char *root_path = malloc(sizeof(char));
+        assert(root_path != NULL);
         root_path[0] = '\0';
 
         absolute_path = concat_two_words_with_delimiter(root_path, node->nom, '/');
@@ -470,7 +473,7 @@ Search a node in a tree with the iteration of iterator until its end
 If the iteration is ".", applies the function to the same node
 If the iteration is "..", applies the function to the parent of node
 If the iteration is not found in fils of node, returns NULL
-If the name is included then it will stop before reaching the end of 
+If the name is included then it will stop before reaching the end of
 the path an return a noeud with it's nom as the last word of the path.
 Otherwise applies the function to the found child
 */
