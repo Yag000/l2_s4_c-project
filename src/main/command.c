@@ -165,7 +165,7 @@ bool handle_number_of_args_with_delimitation(unsigned under_limit, unsigned uppe
     if (actual < under_limit || actual > upper_limit)
     {
         fprintf(out_stream,
-                "Vous avez donnez un nombre incorrect d'argument : %u au lieu d'un nombre entre %u et %u attendu.\n",
+                "Vous avez donnez un nombre incorrect d'arguments : %u au lieu d'un nombre entre %u et %u attendu.\n",
                 actual,
                 under_limit,
                 upper_limit);
