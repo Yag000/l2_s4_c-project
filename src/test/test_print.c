@@ -89,8 +89,6 @@ static void *test_print_while_creating_tree(test_info *info)
 
     destroy_command(cmd);
     destroy_noeud(root);
-
-    return root;
 }
 
 static void invalid_name_format_test_handler(test_info *info)
