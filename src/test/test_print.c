@@ -36,13 +36,19 @@ static void test_print_function(test_info *info)
     out_stream_path = "src/test/output/test_print.txt";
     out_stream = open_file(out_stream_path, "w");
 
+    current_node = create_root_noeud();
+
     test_print_while_creating_tree(info);
     invalid_name_format_test_handler(info);
+
+    destroy_noeud(current_node);
 
     close_file(out_stream, out_stream_path);
 
     out_stream = stdin;
     out_stream_path = NULL;
+
+    current_node = NULL;
 }
 
 static void *test_print_while_creating_tree(test_info *info)
