@@ -80,6 +80,7 @@ function run_tests(){
     if ./test $1; then
         has_passed=true
     else
+        echo "there is a bug"
         has_passed=false
     fi
 }
