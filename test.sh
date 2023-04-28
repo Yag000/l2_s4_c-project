@@ -85,6 +85,7 @@ function run_tests(){
 }
 
 function test_ouput(){
+    echo
     echo "|-=-=-=-=-=-=-=-=-| Testing output |-=-=-=-=-=-=-=-=-|"
     
     local has_test_output_failed=false
