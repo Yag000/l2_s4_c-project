@@ -25,6 +25,6 @@
     |-- test14 (F)
     \-- test15 (F)
 /$ print test
-Vous avez donnez un nombre incorrect d'argument : 1 au lieu de 0 attendu.
+Vous avez donnez un nombre incorrect d'arguments : 1 au lieu de 0 attendu.
 /$ print test test
-Vous avez donnez un nombre incorrect d'argument : 2 au lieu de 0 attendu.
+Vous avez donnez un nombre incorrect d'arguments : 2 au lieu de 0 attendu.
