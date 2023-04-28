@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "test_core.h"
 #include "../main/command.h"
@@ -9,7 +10,7 @@
 #include "../main/string_utils.h"
 
 void test_ls_function(test_info *);
-static noeud *create_tree_and_test_ls_while(test_info *);
+static noeud *create_tree_and_test_ls_without_path_while(test_info *);
 static void test_ls_with_path(test_info *, noeud *);
 static void test_ls_error_with_path(test_info *, noeud *);
 static void test_invalid_number_of_arg_of_ls(test_info *);
@@ -34,7 +35,8 @@ void test_ls_function(test_info *info)
 {
     print_test_name("Testing command ls");
 
-    noeud *root = create_tree_and_test_ls_while(info);
+    noeud *root = create_tree_and_test_ls_without_path_while(info);
+
     test_ls_with_path(info, root);
     test_ls_error_with_path(info, root);
     test_invalid_number_of_arg_of_ls(info);
@@ -47,12 +49,16 @@ void test_ls_function(test_info *info)
     current_node = NULL;
 }
 
-static noeud *create_tree_and_test_ls_while(test_info *info)
+static noeud *create_tree_and_test_ls_without_path_while(test_info *info)
 {
+    print_test_name("Testing command ls without path ");
+
     out_stream_path = "src/test/output/test_ls_without_path.txt";
     out_stream = open_file(out_stream_path, "w");
 
-    command *cmd = create_command(get_alloc_pointer_of_string("ls"), 0, malloc(0));
+    char **tab_command = malloc(0);
+    assert(tab_command != NULL);
+    command *cmd = create_command(get_alloc_pointer_of_string("ls"), 0, tab_command);
 
     noeud *root = create_root_noeud();
     current_node = root;
@@ -104,12 +110,15 @@ static noeud *create_tree_and_test_ls_while(test_info *info)
 
 static void test_ls_with_path(test_info *info, noeud *root)
 {
+    print_test_name("Testing command ls with path ");
+
     out_stream_path = "src/test/output/test_ls_with_path.txt";
     out_stream = open_file(out_stream_path, "w");
 
     current_node = root;
 
     char **tab_command = malloc(sizeof(char *));
+    assert(tab_command != NULL);
     command *cmd = create_command(get_alloc_pointer_of_string("ls"), 1, tab_command);
 
     tab_command[0] = "test/test5/../../test11";
@@ -130,10 +139,13 @@ static void test_ls_with_path(test_info *info, noeud *root)
 
 static void test_ls_error_with_path(test_info *info, noeud *root)
 {
+    print_test_name("Testing command ls errors with path ");
+
     out_stream_path = "src/test/output/test_ls_error_with_path.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(sizeof(char *));
+    assert(tab_command != NULL);
     command *cmd = create_command(get_alloc_pointer_of_string("ls"), 1, tab_command);
 
     current_node = root;
@@ -157,10 +169,13 @@ static void test_ls_error_with_path(test_info *info, noeud *root)
 
 static void test_invalid_number_of_arg_of_ls(test_info *info)
 {
+    print_test_name("Testing command ls errors of invalid number of args ");
+
     out_stream_path = "src/test/output/test_ls_invalid_number_of_args.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(sizeof(char *) * 2);
+    assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
     tab_command[1] = get_alloc_pointer_of_string("test");
     command *cmd = create_command(get_alloc_pointer_of_string("ls"), 2, tab_command);
@@ -169,6 +184,7 @@ static void test_invalid_number_of_arg_of_ls(test_info *info)
     destroy_command(cmd);
 
     tab_command = malloc(sizeof(char *) * 3);
+    assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
     tab_command[1] = get_alloc_pointer_of_string("test");
     tab_command[2] = get_alloc_pointer_of_string("test");
