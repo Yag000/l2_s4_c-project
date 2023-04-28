@@ -453,7 +453,7 @@ static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is
 
     if (path[0] == '/')
     {
-        deb = current_node->racine;
+        deb = deb->racine;
     }
 
     noeud *result = search_node_in_tree_with_iterator(deb, iterator, is_name_included, is_directory);
