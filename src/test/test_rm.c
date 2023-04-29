@@ -11,8 +11,8 @@
 
 static void test_rm_function(test_info *);
 static noeud *create_tree_to_test_for_rm();
-static void test_command_rm_with_tree(test_info *info);
-static void test_error_of_rm(test_info *info);
+static void test_command_rm_with_tree(test_info *);
+static void test_error_of_rm(test_info *);
 
 test_info *test_rm()
 {
