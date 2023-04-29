@@ -43,14 +43,15 @@ static void print_command(const command *cmd)
         return;
     }
 
-    if (current_node != NULL){
-        char * path = get_absolute_path_of_node(current_node);
-        fputs(path,out_stream);
+    if (current_node != NULL)
+    {
+        char *path = get_absolute_path_of_node(current_node);
+        fputs(path, out_stream);
         free(path);
     }
 
     fputs("$ ", out_stream);
-    
+
     fputs(cmd->name, out_stream);
     for (int i = 0; i < cmd->args_number; i++)
     {
@@ -173,7 +174,7 @@ bool handle_number_of_args_with_delimitation(unsigned under_limit, unsigned uppe
     if (actual < under_limit || actual > upper_limit)
     {
         fprintf(out_stream,
-                "Vous avez donnez un nombre incorrect d'arguments : %u au lieu d'un nombre entre %u et %u attendu.\n",
+                "An incorrect number of arguments was given: %u instead of a number between %u and %u expected.\n",
                 actual,
                 under_limit,
                 upper_limit);

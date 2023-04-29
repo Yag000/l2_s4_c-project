@@ -1,4 +1,4 @@
 /$ ls test test
-Vous avez donnez un nombre incorrect d'arguments : 2 au lieu d'un nombre entre 0 et 1 attendu.
+An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
 /$ ls test test test
-Vous avez donnez un nombre incorrect d'arguments : 3 au lieu d'un nombre entre 0 et 1 attendu.
+An incorrect number of arguments was given: 3 instead of a number between 0 and 1 expected.

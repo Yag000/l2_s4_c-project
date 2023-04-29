@@ -1,8 +1,8 @@
 /$ ls test4
-Vous avez donné un chemin non valide.
+Invalid path of directory.
 /$ ls test1
-Vous avez donné un chemin non valide.
+Invalid path of directory.
 /$ ls test11/test12
-La commande ls n'est pas appliquable à ce fichier : ce n'est pas un dossier.
+Invalid path of directory : the path of a file has been given.
 /$ ls test/test2
-La commande ls n'est pas appliquable à ce fichier : ce n'est pas un dossier.
+Invalid path of directory : the path of a file has been given.

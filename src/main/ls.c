@@ -33,12 +33,12 @@ int ls(const command *cmd)
 
         if (node == NULL)
         {
-            write_result_command("Vous avez donné un chemin non valide.");
+            write_result_command("Invalid path of directory.");
             return 1;
         }
         if (!node->est_dossier)
         {
-            write_result_command("La commande ls n'est pas appliquable à ce fichier : ce n'est pas un dossier.");
+            write_result_command("Invalid path of directory : the path of a file has been given.");
             return 1;
         }
 
