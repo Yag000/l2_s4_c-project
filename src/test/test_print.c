@@ -37,7 +37,7 @@ static void test_print_function(test_info *info)
     out_stream = open_file(out_stream_path, "w");
 
     test_print_while_creating_tree(info);
-    // test_illegal_number_of_args_of_print(info);
+    test_illegal_number_of_args_of_print(info);
 
     close_file(out_stream, out_stream_path);
 
