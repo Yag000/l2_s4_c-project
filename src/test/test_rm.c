@@ -93,35 +93,35 @@ static void test_command_rm_with_tree(test_info *info)
     execute_command(cmd_print);
 
     tab_command[0] = "test12/test15";
-    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
     tab_command[0] = "test12";
-    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
     tab_command[0] = "test/test2";
-    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
     tab_command[0] = "test/test3";
-    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
     current_node = search_node_in_tree(current_node, "test");
 
     tab_command[0] = "../test10";
-    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
     tab_command[0] = "../test11";
-    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
     current_node = current_node->racine;
 
     tab_command[0] = get_alloc_pointer_of_string("test");
-    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
     destroy_command(cmd_rm);
