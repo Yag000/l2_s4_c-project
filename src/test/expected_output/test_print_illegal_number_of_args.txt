@@ -1,4 +1,4 @@
 /$ print test
-Vous avez donné un nombre incorrect d'arguments : 1 au lieu de 0 attendu.
+An incorrect number of arguments was given: 1 instead of 0 expected.
 /$ print test test
-Vous avez donné un nombre incorrect d'arguments : 2 au lieu de 0 attendu.
+An incorrect number of arguments was given: 2 instead of 0 expected.
