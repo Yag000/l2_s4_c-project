@@ -54,7 +54,7 @@ static void test_print_while_creating_tree(test_info *info)
     noeud *root = create_root_noeud();
     current_node = root;
 
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     noeud *node1 = create_noeud(true, "test", root);
     append_a_fils_to_noeud(root, node1);
@@ -66,7 +66,7 @@ static void test_print_while_creating_tree(test_info *info)
     noeud *node2 = create_noeud(true, "test5", node1);
     append_a_fils_to_noeud(node1, node2);
 
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     append_a_fils_to_noeud(node2, create_noeud(false, "test6", node2));
     append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
@@ -83,7 +83,7 @@ static void test_print_while_creating_tree(test_info *info)
     append_a_fils_to_noeud(node1, create_noeud(false, "test14", node1));
     append_a_fils_to_noeud(node1, create_noeud(false, "test15", node1));
 
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
     destroy_noeud(root);
@@ -101,7 +101,7 @@ static void test_illegal_number_of_args_of_print(test_info *info)
     assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
     command *cmd = create_command(get_alloc_pointer_of_string("print"), 1, tab_command);
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
     destroy_command(cmd);
 
     tab_command = malloc(sizeof(char *) * 2);
@@ -109,7 +109,7 @@ static void test_illegal_number_of_args_of_print(test_info *info)
     tab_command[0] = get_alloc_pointer_of_string("test");
     tab_command[1] = get_alloc_pointer_of_string("test");
     cmd = create_command(get_alloc_pointer_of_string("print"), 2, tab_command);
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
     destroy_noeud(current_node);

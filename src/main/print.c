@@ -6,6 +6,7 @@
 #include "command.h"
 #include "string_utils.h"
 #include "tree_dir_core.h"
+#include "constants.h"
 
 #define FILLER_SIZE 4
 #define ROOT_CHAR '/'
@@ -30,13 +31,13 @@ int print(const command *cmd)
 {
     if (!handle_number_of_args(0, cmd->args_number))
     {
-        return 1;
+        return INVALID_NUMBER_OF_ARGS;
     }
     print_with_depth(current_node->racine, 0, false);
 
     free(last_line);
     last_line = NULL;
-    return 0;
+    return SUCCESS;
 }
 
 static void print_with_depth(noeud *node, unsigned depth, bool is_last)
