@@ -44,7 +44,7 @@ static void test_print_function(test_info *info)
 
 static void test_print_while_creating_tree(test_info *info)
 {
-    out_stream_path = "src/test/output/test_print.txt";
+    out_stream_path = "src/test/output/test_print_display.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(0);
@@ -93,6 +93,7 @@ static void test_print_while_creating_tree(test_info *info)
 
 static void test_illegal_number_of_args_of_print(test_info *info)
 {
+    current_node = create_root_noeud();
     out_stream_path = "src/test/output/test_print_illegal_number_of_args.txt";
     out_stream = open_file(out_stream_path, "w");
 
@@ -100,7 +101,7 @@ static void test_illegal_number_of_args_of_print(test_info *info)
     assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
     command *cmd = create_command(get_alloc_pointer_of_string("print"), 1, tab_command);
-    // handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
     destroy_command(cmd);
 
     tab_command = malloc(sizeof(char *) * 2);
@@ -108,9 +109,10 @@ static void test_illegal_number_of_args_of_print(test_info *info)
     tab_command[0] = get_alloc_pointer_of_string("test");
     tab_command[1] = get_alloc_pointer_of_string("test");
     cmd = create_command(get_alloc_pointer_of_string("print"), 2, tab_command);
-    // handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
+    destroy_noeud(current_node);
 
     close_file(out_stream, out_stream_path);
 }
