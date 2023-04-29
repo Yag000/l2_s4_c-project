@@ -63,7 +63,7 @@ static noeud *create_tree_and_test_ls_without_path_while(test_info *info)
     noeud *root = create_root_noeud();
     current_node = root;
 
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     noeud *node1 = create_noeud(true, "test", root);
     append_a_fils_to_noeud(root, node1);
@@ -71,13 +71,13 @@ static noeud *create_tree_and_test_ls_without_path_while(test_info *info)
     current_node = node1;
 
     append_a_fils_to_noeud(node1, create_noeud(false, "test2", node1));
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     append_a_fils_to_noeud(node1, create_noeud(true, "test3", node1));
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     append_a_fils_to_noeud(node1, create_noeud(false, "test4", node1));
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     noeud *node2 = create_noeud(true, "test5", node1);
     append_a_fils_to_noeud(node1, node2);
@@ -86,7 +86,7 @@ static noeud *create_tree_and_test_ls_without_path_while(test_info *info)
     append_a_fils_to_noeud(node2, create_noeud(false, "test8", node2));
 
     current_node = node2;
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     append_a_fils_to_noeud(root, create_noeud(false, "test9", root));
     append_a_fils_to_noeud(root, create_noeud(true, "test10", root));
@@ -96,10 +96,10 @@ static noeud *create_tree_and_test_ls_without_path_while(test_info *info)
     append_a_fils_to_noeud(node1, create_noeud(false, "test12", node1));
 
     current_node = root;
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     current_node = node1;
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
 
@@ -122,24 +122,24 @@ static void test_ls_with_path(test_info *info, noeud *root)
     command *cmd = create_command(get_alloc_pointer_of_string("ls"), 1, tab_command);
 
     tab_command[0] = "test/test5/../../test11";
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     current_node = search_node_in_tree(root, "test11/");
 
     tab_command[0] = "../test/test5";
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     tab_command[0] = "../";
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     tab_command[0] = "/";
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     tab_command[0] = "/test10/";
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     tab_command[0] = get_alloc_pointer_of_string("/test/test5");
-    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
 
@@ -160,22 +160,28 @@ static void test_ls_error_with_path(test_info *info, noeud *root)
     current_node = root;
 
     tab_command[0] = "/test11/test9/";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
 
     tab_command[0] = "/test5/test6/";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
 
     tab_command[0] = "test4";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
 
     tab_command[0] = "test1";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
 
     tab_command[0] = "test11/test12";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
-    tab_command[0] = get_alloc_pointer_of_string("test/test2");
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    tab_command[0] = "test/test4";
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
+
+    tab_command[0] = "/test9";
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
+
+    tab_command[0] = get_alloc_pointer_of_string("/test/test5/test6");
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
 
@@ -194,7 +200,7 @@ static void test_invalid_number_of_arg_of_ls(test_info *info)
     tab_command[0] = get_alloc_pointer_of_string("test");
     tab_command[1] = get_alloc_pointer_of_string("test");
     command *cmd = create_command(get_alloc_pointer_of_string("ls"), 2, tab_command);
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
 
@@ -205,7 +211,7 @@ static void test_invalid_number_of_arg_of_ls(test_info *info)
     tab_command[2] = get_alloc_pointer_of_string("test");
 
     cmd = create_command(get_alloc_pointer_of_string("ls"), 3, tab_command);
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
 

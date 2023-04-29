@@ -1,8 +1,16 @@
+/$ ls /test11/test9/
+Invalid path of directory.
+/$ ls /test5/test6/
+Invalid path of directory.
 /$ ls test4
 Invalid path of directory.
 /$ ls test1
 Invalid path of directory.
 /$ ls test11/test12
 Invalid path of directory : the path of a file has been given.
-/$ ls test/test2
+/$ ls test/test4
+Invalid path of directory : the path of a file has been given.
+/$ ls /test9
+Invalid path of directory : the path of a file has been given.
+/$ ls /test/test5/test6
 Invalid path of directory : the path of a file has been given.

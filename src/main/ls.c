@@ -5,6 +5,7 @@
 
 #include "tree_dir_core.h"
 #include "command.h"
+#include "constants.h"
 
 #define FILLER_CHAR ' '
 #define START_CONTOUR_CHAR '['
@@ -21,7 +22,7 @@ int ls(const command *cmd)
 {
     if (!handle_number_of_args_with_delimitation(0, 1, cmd->args_number))
     {
-        return 1;
+        return INVALID_NUMBER_OF_ARGS;
     }
     if (cmd->args_number == 0)
     {
@@ -34,18 +35,18 @@ int ls(const command *cmd)
         if (node == NULL)
         {
             write_result_command("Invalid path of directory.");
-            return 1;
+            return INVALID_PATH;
         }
         if (!node->est_dossier)
         {
             write_result_command("Invalid path of directory : the path of a file has been given.");
-            return 1;
+            return INVALID_SELECTION;
         }
 
         print_ls(node);
     }
 
-    return 0;
+    return SUCCESS;
 }
 
 static void print_ls(noeud *noeud)
