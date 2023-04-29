@@ -32,8 +32,6 @@ test_info *test_rm()
 
 static void test_rm_function(test_info *info)
 {
-    current_node = create_tree_to_test_for_rm();
-
     test_command_rm_with_tree(info);
     test_error_of_rm(info);
 
@@ -172,6 +170,8 @@ static void test_error_of_rm(test_info *info)
     assert(tab_command != NULL);
     cmd = create_command(get_alloc_pointer_of_string("rm"), 0, tab_command);
     handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+
+    destroy_command(cmd);
 
     tab_command = malloc(sizeof(char *) * 2);
     assert(tab_command != NULL);
