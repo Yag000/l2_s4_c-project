@@ -37,8 +37,6 @@ static void test_rm_function(test_info *info)
     test_command_rm_with_tree(info);
     test_error_of_rm(info);
 
-    destroy_noeud(current_node->racine);
-
     out_stream = stdin;
     out_stream_path = NULL;
 
@@ -80,11 +78,67 @@ static noeud *create_tree_to_test_for_rm()
 static void test_command_rm_with_tree(test_info *info)
 {
     print_test_name("Testing rm with a tree");
+
+    current_node = create_tree_to_test_for_rm();
+
+    out_stream_path = "src/test/output/test_rm.txt";
+    out_stream = open_file(out_stream_path, "w");
+
+    char **tab_command = malloc(0);
+    assert(tab_command != NULL);
+    command *cmd_print = create_command(get_alloc_pointer_of_string("print"), 0, tab_command);
+
+    tab_command = malloc(sizeof(char *));
+    assert(tab_command != NULL);
+    command *cmd_rm = create_command(get_alloc_pointer_of_string("rm"), 1, tab_command);
+
+    execute_command(cmd_print);
+
+    tab_command[0] = "test12/test15";
+    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    tab_command[0] = "test12";
+    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    tab_command[0] = "test/test2";
+    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    tab_command[0] = "test/test3";
+    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    current_node = search_node_in_tree(current_node, "test");
+
+    tab_command[0] = "../test10";
+    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    tab_command[0] = "../test11";
+    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    current_node = current_node->racine;
+
+    tab_command[0] = get_alloc_pointer_of_string("test");
+    handle_boolean_test(true, execute_command(cmd_rm) == 0, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    destroy_command(cmd_rm);
+    destroy_command(cmd_print);
+
+    destroy_noeud(current_node);
+
+    close_file(out_stream, out_stream_path);
 }
 
 static void test_error_of_rm(test_info *info)
 {
     print_test_name("Testing rm errors");
+
+    current_node = create_tree_to_test_for_rm();
 
     out_stream_path = "src/test/output/test_rm_error.txt";
     out_stream = open_file(out_stream_path, "w");
