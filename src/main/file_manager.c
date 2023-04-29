@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "file_manager.h"
+#include "constants.h"
 
 static void print_error_message(const char *, const char *);
 
@@ -30,9 +31,9 @@ int close_file(FILE *file, const char *path)
     if (exit_code != 0)
     {
         print_error_message("Problème fermeture fichier ", path);
-        return -1;
+        return FATAL_ERROR;
     }
-    return 0;
+    return SUCCESS;
 }
 
 /*
