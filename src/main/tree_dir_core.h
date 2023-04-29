@@ -48,6 +48,6 @@ liste_noeud *remove_liste_noeud(liste_noeud *, noeud *);
 char *get_absolute_path_of_node(const noeud *);
 
 noeud *search_node_in_tree(noeud *, char *);
-bool isNoeudInside(const noeud *, const noeud *);
+bool is_noeud_inside(const noeud *, const noeud *);
 
 #endif

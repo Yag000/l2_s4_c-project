@@ -506,7 +506,7 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
 /*
 Returns true if the node2 is a parent of node1
  */
-bool isNoeudInside(const noeud *node1, const noeud *node2)
+bool is_noeud_inside(const noeud *node1, const noeud *node2)
 {
     if (node1 == NULL || node2 == NULL)
     {

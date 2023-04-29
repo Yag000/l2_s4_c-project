@@ -17,7 +17,7 @@ int rm(const command *cmd)
         write_result_command("Invalid path given.");
         return 1;
     }
-    if (isNoeudInside(current_node, node))
+    if (is_noeud_inside(current_node, node))
     {
         write_result_command("A directory that contains the current folder cannot be deleted.");
         return 1;
