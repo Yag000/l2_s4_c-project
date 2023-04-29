@@ -1,10 +1,10 @@
-Vous avez donnez un nombre incorrect d'arguments : 10 au lieu de 0 attendu.
-Vous avez donnez un nombre incorrect d'arguments : 9 au lieu de 1 attendu.
-Vous avez donnez un nombre incorrect d'arguments : 8 au lieu de 2 attendu.
-Vous avez donnez un nombre incorrect d'arguments : 7 au lieu de 3 attendu.
-Vous avez donnez un nombre incorrect d'arguments : 6 au lieu de 4 attendu.
-Vous avez donnez un nombre incorrect d'arguments : 4 au lieu de 6 attendu.
-Vous avez donnez un nombre incorrect d'arguments : 3 au lieu de 7 attendu.
-Vous avez donnez un nombre incorrect d'arguments : 2 au lieu de 8 attendu.
-Vous avez donnez un nombre incorrect d'arguments : 1 au lieu de 9 attendu.
-Vous avez donnez un nombre incorrect d'arguments : 0 au lieu de 10 attendu.
+An incorrect number of arguments was given: 10 instead of 0 expected.
+An incorrect number of arguments was given: 9 instead of 1 expected.
+An incorrect number of arguments was given: 8 instead of 2 expected.
+An incorrect number of arguments was given: 7 instead of 3 expected.
+An incorrect number of arguments was given: 6 instead of 4 expected.
+An incorrect number of arguments was given: 4 instead of 6 expected.
+An incorrect number of arguments was given: 3 instead of 7 expected.
+An incorrect number of arguments was given: 2 instead of 8 expected.
+An incorrect number of arguments was given: 1 instead of 9 expected.
+An incorrect number of arguments was given: 0 instead of 10 expected.

@@ -11,6 +11,6 @@
 /test5$ pwd
 /test5
 /test5$ pwd test
-Vous avez donnez un nombre incorrect d'arguments : 1 au lieu de 0 attendu.
+An incorrect number of arguments was given: 1 instead of 0 expected.
 /test5$ pwd test test
-Vous avez donnez un nombre incorrect d'arguments : 2 au lieu de 0 attendu.
+An incorrect number of arguments was given: 2 instead of 0 expected.

@@ -20,13 +20,13 @@ int mkdir(const command *cmd)
 
     if (new_node == NULL)
     {
-        write_result_command("Invalid name for directory");
+        write_result_command("Invalid path of directory.");
         return INVALID_NAME;
     }
 
     if (!append_a_fils_to_noeud(new_node->pere, new_node))
     {
-        write_result_command("Error while creating directory");
+        write_result_command("Error while creating directory.");
         destroy_noeud(new_node);
         return FATAL_ERROR;
     }
