@@ -43,14 +43,15 @@ static void print_command(const command *cmd)
         return;
     }
 
-    if (current_node != NULL){
-        char * path = get_absolute_path_of_node(current_node);
-        fputs(path,out_stream);
+    if (current_node != NULL)
+    {
+        char *path = get_absolute_path_of_node(current_node);
+        fputs(path, out_stream);
         free(path);
     }
 
     fputs("$ ", out_stream);
-    
+
     fputs(cmd->name, out_stream);
     for (int i = 0; i < cmd->args_number; i++)
     {
@@ -91,10 +92,6 @@ int execute_command(const command *cmd)
     {
         // mkdir command
     }
-    else if (is_command(cmd, "rmdir"))
-    {
-        // rmdir command
-    }
     else if (is_command(cmd, "touch"))
     {
         // touch command
@@ -109,7 +106,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "rm"))
     {
-        // rm command
+        return rm(cmd);
     }
     else if (is_command(cmd, "cp"))
     {

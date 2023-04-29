@@ -21,5 +21,6 @@ int write_result_command(char *);
 int write_result_lines_command(size_t, char **);
 
 int pwd(const command *);
+int rm(const command *cmd);
 
 #endif

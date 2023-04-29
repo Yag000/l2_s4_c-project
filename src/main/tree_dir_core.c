@@ -502,3 +502,27 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
     }
     return search_node_in_tree_with_iterator(result, iterator);
 }
+
+bool isNoeudInside(const noeud *noeud1, const noeud *noeud2)
+{
+    if (noeud1 == NULL || noeud2 == NULL)
+    {
+        return false;
+    }
+
+    while (!is_root_node(noeud1))
+    {
+        if (are_noeuds_equal(noeud1, noeud2))
+        {
+            return true;
+        }
+        noeud1 = noeud1->pere;
+    }
+
+    if (is_root_node(noeud2))
+    {
+        return true;
+    }
+
+    return false;
+}
