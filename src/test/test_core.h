@@ -40,5 +40,6 @@ test_info *test_parser();
 test_info *test_command();
 test_info *test_pwd();
 test_info *test_mkdir();
+test_info *test_print();
 
 #endif
