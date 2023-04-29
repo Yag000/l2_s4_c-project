@@ -14,17 +14,17 @@ int rm(const command *cmd)
 
     if (node == NULL)
     {
-        write_result_command("Vous avez donné un chemin non valide.");
+        write_result_command("Invalid path given.");
         return 1;
     }
     if (isNoeudInside(current_node, node))
     {
-        write_result_command("Vous ne pouvez pas supprimer un dossier qui est dans le même répertoire que le dossier courant.");
+        write_result_command("A directory that contains the current folder cannot be deleted.");
         return 1;
     }
     if (!remove_a_fils_of_noeud(node->pere, node->nom))
     {
-        write_result_command("Il y a eu un problème lors de la destruction de l'élément.");
+        write_result_command("There was a problem during the destruction of the element.");
         return 1;
     }
     return 0;
