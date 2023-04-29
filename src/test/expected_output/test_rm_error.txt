@@ -1,0 +1,16 @@
+/$ rm ./
+Vous ne pouvez pas supprimez un dossier qui est dans le même répertoire que le dossier courant.
+/test/test5$ rm ./
+Vous ne pouvez pas supprimez un dossier qui est dans le même répertoire que le dossier courant.
+/test/test5$ rm ../
+Vous ne pouvez pas supprimez un dossier qui est dans le même répertoire que le dossier courant.
+/test/test5$ rm ../../
+Vous ne pouvez pas supprimez un dossier qui est dans le même répertoire que le dossier courant.
+/test/test5$ rm test
+Vous avez donné un chemin non valide.
+/test/test5$ rm ../test4/
+Vous avez donné un chemin non valide.
+/test/test5$ rm
+Vous avez donnez un nombre incorrect d'argument : 0 au lieu de 1 attendu.
+/test/test5$ rm test test
+Vous avez donnez un nombre incorrect d'argument : 2 au lieu de 1 attendu.
