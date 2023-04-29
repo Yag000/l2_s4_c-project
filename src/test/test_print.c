@@ -22,7 +22,7 @@ test_info *test_print()
     test_info *info = create_test_info();
 
     // Add tests here
-    // test_print_function(info);
+    test_print_function(info);
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("print", info);
@@ -36,8 +36,8 @@ static void test_print_function(test_info *info)
     out_stream_path = "src/test/output/test_print.txt";
     out_stream = open_file(out_stream_path, "w");
 
-    test_print_while_creating_tree(info);
-    test_illegal_number_of_args_of_print(info);
+    // test_print_while_creating_tree(info);
+    // test_illegal_number_of_args_of_print(info);
 
     close_file(out_stream, out_stream_path);
 
