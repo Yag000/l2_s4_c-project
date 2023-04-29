@@ -146,30 +146,30 @@ static void test_error_of_rm(test_info *info)
     command *cmd = create_command(get_alloc_pointer_of_string("rm"), 1, tab_command);
 
     tab_command[0] = "./";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
     current_node = search_node_in_tree(current_node, "test/test5");
     tab_command[0] = "./";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
     tab_command[0] = "../";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
     tab_command[0] = "../../";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
     tab_command[0] = "test";
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
 
     tab_command[0] = get_alloc_pointer_of_string("../test4/");
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
 
     tab_command = malloc(0);
     assert(tab_command != NULL);
     cmd = create_command(get_alloc_pointer_of_string("rm"), 0, tab_command);
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
 
@@ -178,7 +178,7 @@ static void test_error_of_rm(test_info *info)
     tab_command[0] = get_alloc_pointer_of_string("test");
     tab_command[1] = get_alloc_pointer_of_string("test");
     cmd = create_command(get_alloc_pointer_of_string("rm"), 2, tab_command);
-    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
     destroy_noeud(current_node->racine);

@@ -11,6 +11,6 @@ Invalid path given.
 /test/test5$ rm ../test4/
 Invalid path given.
 /test/test5$ rm
-Vous avez donnez un nombre incorrect d'arguments : 0 au lieu de 1 attendu.
+An incorrect number of arguments was given: 0 instead of 1 expected.
 /test/test5$ rm test test
-Vous avez donnez un nombre incorrect d'arguments : 2 au lieu de 1 attendu.
+An incorrect number of arguments was given: 2 instead of 1 expected.
