@@ -114,7 +114,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "print"))
     {
-        // print command
+        return print(cmd);
     }
     else if (is_command(cmd, "debug"))
     {
@@ -153,7 +153,7 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
     if (expected != actual)
     {
         fprintf(out_stream,
-                "Vous avez donnez un nombre incorrect d'argument : %u au lieu de %u attendu.\n",
+                "Vous avez donnez un nombre incorrect d'arguments : %u au lieu de %u attendu.\n",
                 actual,
                 expected);
         return false;
