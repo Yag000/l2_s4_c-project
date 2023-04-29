@@ -5,7 +5,9 @@
 #include "command.h"
 #include "constants.h"
 
-int cp(command *cmd)
+static void copy_content_of(noeud *node1, noeud *node2);
+
+int cp(const command *cmd)
 {
     if (!handle_number_of_args(2, cmd->args_number))
     {
@@ -15,25 +17,26 @@ int cp(command *cmd)
 
     if (node_to_copy == NULL)
     {
-        write_result_command("Invalid path to copy");
-        return INVALID_NAME;
+        write_result_command("Invalid path to copy.");
+        return INVALID_PATH;
     }
 
-    noeud *node_to_append = search_node_in_tree_with_node_creation(current_node, cmd->args[2], node_to_copy->est_dossier);
+    noeud *node_to_append = search_node_in_tree_with_node_creation(current_node, cmd->args[1], node_to_copy->est_dossier);
 
     if (node_to_append == NULL)
     {
-        write_result_command("Invalid path to create a copy");
-        return INVALID_NAME;
+        write_result_command("Invalid path to create a copy.");
+        return INVALID_PATH;
     }
 
     if (!append_a_fils_to_noeud(node_to_append->pere, node_to_append))
     {
         write_result_command("Error while creating directory");
         destroy_noeud(node_to_append);
-        return FATAL_ERROR;
+        return INVALID_NAME;
     }
-
+    printf("%s, %s\n", node_to_copy, node_to_append);
+    copy_content_of(node_to_append, node_to_copy);
     return SUCCESS;
 }
 
@@ -44,7 +47,7 @@ The node1 should be empty to avoid problem of same name in append
 */
 static void copy_content_of(noeud *node1, noeud *node2)
 {
-    if (!node1->est_dossier || node1->est_dossier)
+    if (!node1->est_dossier || !node2->est_dossier)
     {
         return;
     }

@@ -114,7 +114,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "cp"))
     {
-        // cp command
+        return cp(cmd);
     }
     else if (is_command(cmd, "print"))
     {

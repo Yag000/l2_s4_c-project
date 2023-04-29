@@ -515,7 +515,6 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
         noeud *result = create_noeud(is_directory, name, node);
 
         free(name);
-
         return result;
     }
     noeud *next_node = get_a_fils_of_noeud(node, name);
