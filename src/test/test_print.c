@@ -33,13 +33,8 @@ static void test_print_function(test_info *info)
 {
     print_test_name("Testing command print");
 
-    out_stream_path = "src/test/output/test_print.txt";
-    out_stream = open_file(out_stream_path, "w");
-
     test_print_while_creating_tree(info);
     test_illegal_number_of_args_of_print(info);
-
-    close_file(out_stream, out_stream_path);
 
     out_stream = stdin;
     out_stream_path = NULL;
@@ -49,6 +44,9 @@ static void test_print_function(test_info *info)
 
 static void test_print_while_creating_tree(test_info *info)
 {
+    out_stream_path = "src/test/output/test_print.txt";
+    out_stream = open_file(out_stream_path, "w");
+
     char **tab_command = malloc(0);
     assert(tab_command != NULL);
     command *cmd = create_command(get_alloc_pointer_of_string("print"), 0, tab_command);
@@ -89,24 +87,30 @@ static void test_print_while_creating_tree(test_info *info)
 
     destroy_command(cmd);
     destroy_noeud(root);
+
+    close_file(out_stream, out_stream_path);
 }
 
 static void test_illegal_number_of_args_of_print(test_info *info)
 {
-    /*char **tab_command = malloc(sizeof(char *));
+    out_stream_path = "src/test/output/test_print_illegal_number_of_args.txt";
+    out_stream = open_file(out_stream_path, "w");
+
+    char **tab_command = malloc(sizeof(char *));
     assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
     command *cmd = create_command(get_alloc_pointer_of_string("print"), 1, tab_command);
     handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
     destroy_command(cmd);
 
-    **/
-    char **tab_command = malloc(sizeof(char *) * 2);
+    tab_command = malloc(sizeof(char *) * 2);
     assert(tab_command != NULL);
     tab_command[0] = get_alloc_pointer_of_string("test");
     tab_command[1] = get_alloc_pointer_of_string("test");
-    command *cmd = create_command(get_alloc_pointer_of_string("print"), 2, tab_command);
+    cmd = create_command(get_alloc_pointer_of_string("print"), 2, tab_command);
     handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
+
+    close_file(out_stream, out_stream_path);
 }
