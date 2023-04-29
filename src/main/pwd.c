@@ -16,9 +16,9 @@ int pwd(const command *cmd)
     }
 
     char *path = get_absolute_path_of_node(current_node);
-    int error_value = write_result_command(path);
+    write_result_command(path);
 
     free(path);
 
-    return error_value;
+    return SUCCESS;
 }

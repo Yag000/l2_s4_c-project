@@ -118,7 +118,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "print"))
     {
-        // print command
+        return print(cmd);
     }
     else if (is_command(cmd, "debug"))
     {

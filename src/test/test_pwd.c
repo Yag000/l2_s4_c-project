@@ -91,5 +91,11 @@ static void test_pwd_function(test_info *info)
     destroy_command(c);
 
     destroy_noeud(root);
+
     close_file(out_stream, out_stream_path);
+
+    out_stream = stdin;
+    out_stream_path = NULL;
+
+    current_node = NULL;
 }
