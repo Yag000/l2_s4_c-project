@@ -77,8 +77,6 @@ static void test_command_rm_with_tree(test_info *info)
 {
     print_test_name("Testing rm with a tree");
 
-    current_node = create_tree_to_test_for_rm();
-
     out_stream_path = "src/test/output/test_rm.txt";
     out_stream = open_file(out_stream_path, "w");
 
@@ -89,6 +87,27 @@ static void test_command_rm_with_tree(test_info *info)
     tab_command = malloc(sizeof(char *));
     assert(tab_command != NULL);
     command *cmd_rm = create_command(get_alloc_pointer_of_string("rm"), 1, tab_command);
+
+    current_node = create_tree_to_test_for_rm();
+    current_node = search_node_in_tree(current_node, "test11");
+
+    execute_command(cmd_print);
+
+    tab_command[0] = "/test/test5";
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    tab_command[0] = "/test/";
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    tab_command[0] = "/test12/";
+    handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    destroy_tree();
+
+    current_node = create_tree_to_test_for_rm();
 
     execute_command(cmd_print);
 
@@ -127,7 +146,7 @@ static void test_command_rm_with_tree(test_info *info)
     destroy_command(cmd_rm);
     destroy_command(cmd_print);
 
-    destroy_noeud(current_node->racine);
+    destroy_tree();
 
     close_file(out_stream, out_stream_path);
 }
@@ -145,10 +164,20 @@ static void test_error_of_rm(test_info *info)
     assert(tab_command != NULL);
     command *cmd = create_command(get_alloc_pointer_of_string("rm"), 1, tab_command);
 
+    tab_command[0] = "/";
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
+
     tab_command[0] = "./";
     handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
     current_node = search_node_in_tree(current_node, "test/test5");
+
+    tab_command[0] = "/test/test5";
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
+
+    tab_command[0] = "/test/";
+    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
+
     tab_command[0] = "./";
     handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
