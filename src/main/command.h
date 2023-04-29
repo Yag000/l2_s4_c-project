@@ -2,6 +2,7 @@
 #define COMMAND_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 typedef struct command
 {
@@ -21,5 +22,6 @@ int write_result_command(char *);
 int write_result_lines_command(size_t, char **);
 
 int pwd(const command *);
+int mkdir(const command *);
 
 #endif
