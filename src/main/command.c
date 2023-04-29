@@ -118,7 +118,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "print"))
     {
-        // print command
+        return print(cmd);
     }
     else if (is_command(cmd, "debug"))
     {
@@ -128,7 +128,7 @@ int execute_command(const command *cmd)
     {
         // command not found
     }
-    return 0;
+    return SUCCESS;
 }
 
 /*
@@ -146,7 +146,7 @@ static int debug_command(int args_number, char **args)
         }
     }
     fputs("\n", out_stream);
-    return 0;
+    return SUCCESS;
 }
 
 /*
@@ -157,7 +157,7 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
     if (expected != actual)
     {
         fprintf(out_stream,
-                "Vous avez donnez un nombre incorrect d'argument : %u au lieu de %u attendu.\n",
+                "An incorrect number of arguments was given: %u instead of %u expected.\n",
                 actual,
                 expected);
         return false;
@@ -192,7 +192,7 @@ int write_result_command(char *result)
     fputs(result, out_stream);
     fputs("\n", out_stream);
 
-    return 0;
+    return SUCCESS;
 }
 
 /*
@@ -204,5 +204,5 @@ int write_result_lines_command(size_t lines_number, char **results)
     {
         write_result_command(results[i]);
     }
-    return 0;
+    return SUCCESS;
 }

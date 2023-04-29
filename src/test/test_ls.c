@@ -43,7 +43,7 @@ void test_ls_function(test_info *info)
 
     destroy_noeud(root);
 
-    out_stream = stdin;
+    out_stream = stdout;
     out_stream_path = NULL;
 
     current_node = NULL;

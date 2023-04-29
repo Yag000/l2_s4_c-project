@@ -27,9 +27,9 @@ $(OBJDIRTEST)/%.o: $(TESTDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 
-.PHONY:all, clean 
+.PHONY: all, clean 
 
-all: main 
+all: $(EXEC)
 
 main: $(OBJFILESWITHMAIN) 
 	$(CC) -o $@ $^ $(CFLAGS)
@@ -38,4 +38,4 @@ test: $(OBJFILES) $(TESTOBJFILES)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
-	rm -rf $(OBJDIR) main test
+	rm -rf $(OBJDIR) $(EXEC) test

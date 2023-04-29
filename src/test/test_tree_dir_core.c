@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "test_core.h"
 #include "../main/tree_dir_core.h"
+#include "test_core.h"
 
 static void test_create_noeud(test_info *);
 static void test_is_valid_name_of_node(test_info *);
@@ -100,8 +100,9 @@ static void test_is_valid_name_of_node(test_info *info)
     handle_boolean_test(false, is_valid_name_node("abcd/"), __LINE__, __FILE__, info);
     handle_boolean_test(false, is_valid_name_node("abcd/efcg"), __LINE__, __FILE__, info);
 
-    handle_boolean_test(true, is_valid_name_node("name_1"), __LINE__, __FILE__, info);
-    handle_boolean_test(true, is_valid_name_node("name_1.txt"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_valid_name_node("na2me1"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_valid_name_node("21na2me1"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, is_valid_name_node("12345678900987654321"), __LINE__, __FILE__, info);
 }
 
 static void test_are_noeud_equal(test_info *info)
@@ -230,7 +231,8 @@ static void test_get(test_info *info)
     append_a_fils_to_noeud(root_node, create_noeud(false, "test2", NULL));
     append_a_fils_to_noeud(root_node, node);
     append_a_fils_to_noeud(root_node, create_noeud(false, "test4", NULL));
-    handle_boolean_test(true, are_noeuds_equal(get_a_fils_of_noeud(root_node, "test3"), node), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(get_a_fils_of_noeud(root_node, "test3"), node), __LINE__, __FILE__,
+                        info);
 
     remove_a_node_from_fils(root_node, node);
     handle_boolean_test(true, get_a_fils_of_noeud(root_node, "test3") == NULL, __LINE__, __FILE__, info);
@@ -368,27 +370,40 @@ static void test_search_node_in_tree(test_info *info)
     handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, ".")), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "..")), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "././.")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "../../../..")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "./../.././.././..")), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "../../../..")), __LINE__, __FILE__,
+                        info);
+    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "./../.././.././..")), __LINE__,
+                        __FILE__, info);
 
     noeud *node1 = create_noeud(true, "test", root);
     append_a_fils_to_noeud(root, node1);
     handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "./test")), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "./test/")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "./../test/.././test")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "../test/./../test/.")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "./../test/./../test/..")), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "./../test/.././test")), __LINE__,
+                        __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "../test/./../test/.")), __LINE__,
+                        __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "./../test/./../test/..")), __LINE__,
+                        __FILE__, info);
 
     noeud *node2 = create_noeud(true, "test2", node1);
     append_a_fils_to_noeud(node1, node2);
     noeud *node3 = create_noeud(true, "test3", root);
     append_a_fils_to_noeud(root, node3);
 
-    handle_boolean_test(true, are_noeuds_equal(node3, search_node_in_tree(root, "./test/../test3/")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(node2, search_node_in_tree(root, "./test/test2")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "./../test/.././test3/../test/test2/..")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(node3, search_node_in_tree(root, "../test/./../test/test2/./../../test3")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "./../test/./../test/test2/../../test3/../")), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(node3, search_node_in_tree(root, "./test/../test3/")), __LINE__,
+                        __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(node2, search_node_in_tree(root, "./test/test2")), __LINE__, __FILE__,
+                        info);
+    handle_boolean_test(true,
+                        are_noeuds_equal(node1, search_node_in_tree(root, "./../test/.././test3/../test/test2/..")),
+                        __LINE__, __FILE__, info);
+    handle_boolean_test(true,
+                        are_noeuds_equal(node3, search_node_in_tree(root, "../test/./../test/test2/./../../test3")),
+                        __LINE__, __FILE__, info);
+    handle_boolean_test(true,
+                        are_noeuds_equal(root, search_node_in_tree(root, "./../test/./../test/test2/../../test3/../")),
+                        __LINE__, __FILE__, info);
 
     noeud *node4 = create_noeud(false, "test4", node1);
     append_a_fils_to_noeud(node1, node4);

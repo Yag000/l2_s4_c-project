@@ -31,6 +31,7 @@ void print_test_name(const char *);
 
 void handle_string_test(const char *, const char *, int, const char *, test_info *);
 void handle_boolean_test(bool, bool, int, const char *, test_info *);
+void handle_int_test(int, int, int, const char *, test_info *);
 
 // All the tests
 test_info *test_string_utils();
@@ -38,6 +39,9 @@ test_info *test_tree_dir_core();
 test_info *test_parser();
 test_info *test_pwd();
 test_info *test_ls();
+test_info *test_print();
 test_info *test_command();
+test_info *test_pwd();
+test_info *test_mkdir();
 
 #endif
