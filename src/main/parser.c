@@ -31,7 +31,7 @@ int parse_file(const char *path)
 
     if (file == NULL)
     {
-        return -1;
+        return FATAL_ERROR;
     }
 
     int exit_code = 0;
@@ -49,7 +49,7 @@ int parse_file(const char *path)
     while ((read = getline(&line, &len, file)) != -1)
     {
         exit_code = parse_line(line);
-        if (exit_code != 0)
+        if (exit_code == FATAL_ERROR)
         {
             perror("Probleme parse line");
             break;
@@ -73,8 +73,9 @@ int parse_line(char *line)
     if (iterator == NULL)
     {
         perror("Problème initialisation iterator");
+
         free(line);
-        return -1;
+        return FATAL_ERROR;
     }
 
     command *command = get_command_from_iterator(iterator);
@@ -82,8 +83,9 @@ int parse_line(char *line)
     if (command == NULL)
     {
         perror("Problème creation commande");
+
         free(line);
-        return -1;
+        return FATAL_ERROR;
     }
 
     int exit_code = execute_command(command);

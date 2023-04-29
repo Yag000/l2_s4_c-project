@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
         else
         {
             perror("Nombre d'arguments incorrect");
-            return -1;
+            return EXIT_FAILURE;
         }
     }
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     int error_code = parse_file(argv[1]);
 
-    destroy_noeud(current_node->racine);
+    destroy_tree();
 
-    return error_code == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
+    return error_code == SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE;
 }

@@ -1,11 +1,13 @@
 #include <assert.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "string_utils.h"
 #include "tree_dir_core.h"
 
-static noeud *search_node_in_tree_with_iterator(noeud *, string_iterator *);
+static noeud *search_node(noeud *, char *, bool, bool);
+static noeud *search_node_in_tree_with_iterator(noeud *, string_iterator *, bool, bool);
 
 static noeud *create_empty_noeud()
 {
@@ -57,24 +59,9 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 
 /*
 Returns false if a name is an empty string, is ".", is ".." or if it contains '/'
-
 Otherwise it returns true
 */
-bool is_valid_name_node(const char *name)
-{
-    if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0 || strcmp(name, "") == 0)
-    {
-        return false;
-    }
-    for (unsigned i = 0; i < strlen(name); i++)
-    {
-        if (name[i] == '/')
-        {
-            return false;
-        }
-    }
-    return true;
-}
+bool is_valid_name_node(const char *name) { return is_alphanumeric(name); }
 
 noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent, liste_noeud *children)
 {
@@ -86,7 +73,8 @@ noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent
 }
 
 /*
-Creates a node with pere and racine set to himself. It will represent the root of our file system.
+Creates a node with pere and racine set to himself. It will represent the root
+of our file system.
 */
 noeud *create_root_noeud()
 {
@@ -339,7 +327,8 @@ noeud *get_a_noeud_in_liste_noeud(liste_noeud *node_list, const char *name)
 
 /*
 Returns true if the append of node in node_list succeeds.
-Otherwise return false, this will happen if the node is already inside node_list.
+Otherwise return false, this will happen if the node is already inside
+node_list.
 */
 bool append_liste_noeud(liste_noeud *node_list, noeud *node)
 {
@@ -372,7 +361,8 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
     {
         liste_noeud *acc = node_list->succ;
 
-        // !WARNING! here, just the list is freed, the user must free the node themselves
+        // !WARNING! here, just the list is freed, the user must free the node
+        // themselves
         free(node_list);
 
         return acc;
@@ -383,6 +373,13 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
     return node_list;
 }
 
+void destroy_tree()
+{
+    assert(current_node != NULL);
+    assert(current_node->racine != NULL);
+
+    destroy_noeud(current_node->racine);
+}
 /*
 Returns the string containing the absolute path of the node.
 */
@@ -422,13 +419,26 @@ char *get_absolute_path_of_node(const noeud *node)
 
     return absolute_path;
 }
+// TODO: add comments and better names
 
 /*
 Search a node in a tree, and if it is found, it is returned
-
 Otherwise the function returns NULL
 */
-noeud *search_node_in_tree(noeud *deb, char *path)
+noeud *search_node_in_tree(noeud *deb, char *path) { return search_node(deb, path, false, false); }
+
+/*
+Returns a node in the position given by the path. The last word represents the node's name.
+*/
+noeud *search_node_in_tree_with_node_creation(noeud *deb, char *path, bool is_directory)
+{
+    return search_node(deb, path, true, is_directory);
+}
+
+/*
+Utility method for search_node_in_tree_with_name and search_node_in_tree.
+*/
+static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is_directory)
 {
     assert(deb != NULL);
 
@@ -441,7 +451,12 @@ noeud *search_node_in_tree(noeud *deb, char *path)
 
     string_iterator *iterator = create_string_iterator(path, '/');
 
-    noeud *result = search_node_in_tree_with_iterator(deb, iterator);
+    if (path[0] == '/')
+    {
+        deb = deb->racine;
+    }
+
+    noeud *result = search_node_in_tree_with_iterator(deb, iterator, is_name_included, is_directory);
 
     destroy_string_iterator(iterator);
 
@@ -450,19 +465,20 @@ noeud *search_node_in_tree(noeud *deb, char *path)
     {
         return NULL;
     }
-
     return result;
 }
 
 /*
 Search a node in a tree with the iteration of iterator until its end
-
 If the iteration is ".", applies the function to the same node
 If the iteration is "..", applies the function to the parent of node
 If the iteration is not found in fils of node, returns NULL
+If the name is included then it will stop before reaching the end of
+the path an return a noeud with it's nom as the last word of the path.
 Otherwise applies the function to the found child
- */
-static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator)
+*/
+static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator, bool is_name_included,
+                                                bool is_directory)
 {
     if (!has_next_word(iterator))
     {
@@ -479,7 +495,7 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
     {
         free(name);
 
-        return search_node_in_tree_with_iterator(node, iterator);
+        return search_node_in_tree_with_iterator(node, iterator, is_name_included, is_directory);
     }
 
     if (strcmp(name, "..") == 0)
@@ -490,17 +506,28 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
         {
             return NULL;
         }
-        return search_node_in_tree_with_iterator(node->pere, iterator);
+        return search_node_in_tree_with_iterator(node->pere, iterator, is_name_included, is_directory);
     }
 
-    noeud *result = get_a_fils_of_noeud(node, name);
+    if (!has_next_word(iterator) && is_name_included)
+    {
+
+        noeud *result = create_noeud(is_directory, name, node);
+
+        free(name);
+
+        return result;
+    }
+    noeud *next_node = get_a_fils_of_noeud(node, name);
+
     free(name);
 
-    if (result == NULL)
+    if (next_node == NULL)
     {
         return NULL;
     }
-    return search_node_in_tree_with_iterator(result, iterator);
+
+    return search_node_in_tree_with_iterator(next_node, iterator, is_name_included, is_directory);
 }
 
 /*
