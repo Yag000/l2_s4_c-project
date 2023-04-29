@@ -159,6 +159,12 @@ static void test_ls_error_with_path(test_info *info, noeud *root)
 
     current_node = root;
 
+    tab_command[0] = "/test11/test9/";
+    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+
+    tab_command[0] = "/test5/test6/";
+    handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
+
     tab_command[0] = "test4";
     handle_boolean_test(true, execute_command(cmd) == 1, __LINE__, __FILE__, info);
 
