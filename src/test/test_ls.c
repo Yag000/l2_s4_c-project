@@ -129,7 +129,16 @@ static void test_ls_with_path(test_info *info, noeud *root)
     tab_command[0] = "../test/test5";
     handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
 
-    tab_command[0] = get_alloc_pointer_of_string("../");
+    tab_command[0] = "../";
+    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+
+    tab_command[0] = "/";
+    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+
+    tab_command[0] = "/test10/";
+    handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
+
+    tab_command[0] = get_alloc_pointer_of_string("/test/test5");
     handle_boolean_test(true, execute_command(cmd) == 0, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
