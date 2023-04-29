@@ -157,7 +157,7 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
     if (expected != actual)
     {
         fprintf(out_stream,
-                "Vous avez donnez un nombre incorrect d'arguments : %u au lieu de %u attendu.\n",
+                "Vous avez donné un nombre incorrect d'arguments : %u au lieu de %u attendu.\n",
                 actual,
                 expected);
         return false;
