@@ -19,7 +19,7 @@ int rm(const command *cmd)
     }
     if (isNoeudInside(current_node, node))
     {
-        write_result_command("Vous ne pouvez pas supprimez un dossier qui est dans le même répertoire que le dossier courant.");
+        write_result_command("Vous ne pouvez pas supprimer un dossier qui est dans le même répertoire que le dossier courant.");
         return 1;
     }
     if (!remove_a_fils_of_noeud(node->pere, node->nom))
