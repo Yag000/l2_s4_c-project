@@ -51,7 +51,7 @@ int ls(const command *cmd)
 
 static void print_ls(noeud *noeud)
 {
-    unsigned max_length_name = get_longest_legth_of_node_fils(noeud);
+    unsigned max_length_name = get_longest_length_of_node_fils(noeud);
 
     for (liste_noeud *lst = noeud->fils; lst != NULL; lst = lst->succ)
     {
