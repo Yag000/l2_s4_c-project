@@ -556,3 +556,23 @@ bool is_noeud_inside(const noeud *node1, const noeud *node2)
 
     return false;
 }
+
+unsigned get_longest_length_of_node_fils(const noeud *node)
+{
+    if (node == NULL || !node->est_dossier)
+    {
+        return 0;
+    }
+    unsigned max_len = 0;
+
+    for (liste_noeud *lst = node->fils; lst != NULL; lst = lst->succ)
+    {
+        unsigned len_name = strlen(lst->no->nom);
+
+        if (len_name > max_len)
+        {
+            max_len = len_name;
+        }
+    }
+    return max_len;
+}
