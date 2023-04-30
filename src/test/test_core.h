@@ -42,6 +42,8 @@ test_info *test_ls();
 test_info *test_print();
 test_info *test_command();
 test_info *test_pwd();
+test_info *test_print();
+test_info *test_rm();
 test_info *test_mkdir();
 
 #endif

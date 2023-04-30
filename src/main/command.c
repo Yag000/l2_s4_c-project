@@ -92,10 +92,6 @@ int execute_command(const command *cmd)
     {
         // mkdir command
     }
-    else if (is_command(cmd, "rmdir"))
-    {
-        // rmdir command
-    }
     else if (is_command(cmd, "touch"))
     {
         // touch command
@@ -110,7 +106,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "rm"))
     {
-        // rm command
+        return rm(cmd);
     }
     else if (is_command(cmd, "cp"))
     {
