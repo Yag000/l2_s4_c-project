@@ -35,7 +35,6 @@ int cp(const command *cmd)
         destroy_noeud(node_to_append);
         return INVALID_NAME;
     }
-    printf("%s, %s\n", node_to_copy, node_to_append);
     copy_content_of(node_to_append, node_to_copy);
     return SUCCESS;
 }
