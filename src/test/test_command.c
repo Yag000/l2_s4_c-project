@@ -196,6 +196,15 @@ static void test_search_with_create(test_info *info)
     node = search_node_in_tree_with_node_creation(current_node, "./", false);
     handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
 
+    node = search_node_in_tree_with_node_creation(current_node, "../", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, ".", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, "..", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
     node = search_node_in_tree_with_node_creation(current_node, "./.././..", false);
     handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
 
