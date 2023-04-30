@@ -428,7 +428,8 @@ Otherwise the function returns NULL
 noeud *search_node_in_tree(noeud *deb, char *path) { return search_node(deb, path, false, false); }
 
 /*
-Returns a node in the position given by the path. The last word represents the node's name.
+Returns a new node in the position given by the path if it exists.
+The last word represents the node's name.
 */
 noeud *search_node_in_tree_with_node_creation(noeud *deb, char *path, bool is_directory)
 {
@@ -474,7 +475,7 @@ If the iteration is ".", applies the function to the same node
 If the iteration is "..", applies the function to the parent of node
 If the iteration is not found in fils of node, returns NULL
 If the name is included then it will stop before reaching the end of
-the path an return a noeud with it's nom as the last word of the path.
+the path and return a noeud with it's nom as the last word of the path.
 Otherwise applies the function to the found child
 */
 static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator, bool is_name_included,
