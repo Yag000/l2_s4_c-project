@@ -118,7 +118,8 @@ test_main
 
 # Compile and run the tests
 compile_test
-run_tests
+
+run_tests $1
 
 # Test the output
 test_ouput

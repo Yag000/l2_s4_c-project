@@ -1,0 +1,4 @@
+/$ print test
+An incorrect number of arguments was given: 1 instead of 0 expected.
+/$ print test test
+An incorrect number of arguments was given: 2 instead of 0 expected.

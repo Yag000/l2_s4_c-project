@@ -5,6 +5,7 @@
 
 #include "constants.h"
 #include "command.h"
+#include "tree_dir_core.h"
 
 static int debug_command(int, char **);
 
@@ -42,7 +43,15 @@ static void print_command(const command *cmd)
         return;
     }
 
+    if (current_node != NULL)
+    {
+        char *path = get_absolute_path_of_node(current_node);
+        fputs(path, out_stream);
+        free(path);
+    }
+
     fputs("$ ", out_stream);
+
     fputs(cmd->name, out_stream);
     for (int i = 0; i < cmd->args_number; i++)
     {
@@ -69,7 +78,7 @@ int execute_command(const command *cmd)
     print_command(cmd);
     if (is_command(cmd, "ls"))
     {
-        // ls command
+        return ls(cmd);
     }
     else if (is_command(cmd, "cd"))
     {
@@ -82,10 +91,6 @@ int execute_command(const command *cmd)
     else if (is_command(cmd, "mkdir"))
     {
         // mkdir command
-    }
-    else if (is_command(cmd, "rmdir"))
-    {
-        // rmdir command
     }
     else if (is_command(cmd, "touch"))
     {
@@ -101,7 +106,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "rm"))
     {
-        // rm command
+        return rm(cmd);
     }
     else if (is_command(cmd, "cp"))
     {
@@ -109,7 +114,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "print"))
     {
-        // print command
+        return print(cmd);
     }
     else if (is_command(cmd, "debug"))
     {
@@ -119,7 +124,7 @@ int execute_command(const command *cmd)
     {
         // command not found
     }
-    return 0;
+    return SUCCESS;
 }
 
 /*
@@ -137,7 +142,7 @@ static int debug_command(int args_number, char **args)
         }
     }
     fputs("\n", out_stream);
-    return 0;
+    return SUCCESS;
 }
 
 /*
@@ -148,9 +153,27 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
     if (expected != actual)
     {
         fprintf(out_stream,
-                "Vous avez donnez un nombre incorrect d'argument : %u au lieu de %u attendu.\n",
+                "An incorrect number of arguments was given: %u instead of %u expected.\n",
                 actual,
                 expected);
+        return false;
+    }
+
+    return true;
+}
+
+/*
+Returns true if the actual number of args is between under_limit and upper_limit
+*/
+bool handle_number_of_args_with_delimitation(unsigned under_limit, unsigned upper_limit, unsigned actual)
+{
+    if (actual < under_limit || actual > upper_limit)
+    {
+        fprintf(out_stream,
+                "An incorrect number of arguments was given: %u instead of a number between %u and %u expected.\n",
+                actual,
+                under_limit,
+                upper_limit);
         return false;
     }
 
@@ -165,7 +188,7 @@ int write_result_command(char *result)
     fputs(result, out_stream);
     fputs("\n", out_stream);
 
-    return 0;
+    return SUCCESS;
 }
 
 /*
@@ -177,5 +200,5 @@ int write_result_lines_command(size_t lines_number, char **results)
     {
         write_result_command(results[i]);
     }
-    return 0;
+    return SUCCESS;
 }
