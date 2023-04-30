@@ -480,7 +480,7 @@ Otherwise applies the function to the found child
 static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator, bool is_name_included,
                                                 bool is_directory)
 {
-    if (!has_next_word(iterator))
+    if (!has_next_word(iterator) && !is_name_included)
     {
         return node;
     }
@@ -490,6 +490,11 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
     }
 
     char *name = next_word(iterator);
+
+    if (name == NULL)
+    {
+        return NULL;
+    }
 
     if (strcmp(name, ".") == 0)
     {
