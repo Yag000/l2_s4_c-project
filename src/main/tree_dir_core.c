@@ -529,3 +529,30 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
 
     return search_node_in_tree_with_iterator(next_node, iterator, is_name_included, is_directory);
 }
+
+/*
+Returns true if the node2 is a parent of node1
+ */
+bool is_noeud_inside(const noeud *node1, const noeud *node2)
+{
+    if (node1 == NULL || node2 == NULL)
+    {
+        return false;
+    }
+
+    while (!is_root_node(node1))
+    {
+        if (are_noeuds_equal(node1, node2))
+        {
+            return true;
+        }
+        node1 = node1->pere;
+    }
+
+    if (is_root_node(node2))
+    {
+        return true;
+    }
+
+    return false;
+}
