@@ -30,14 +30,21 @@ int cp(const command *cmd)
         return INVALID_PATH;
     }
 
-    copy_content_of(node_to_append, node_to_copy);
+    if (is_noeud_inside(node_to_append->pere, node_to_copy))
+    {
+        write_result_command("An element cannot be copied contained in the copy.");
+        return INVALID_SELECTION;
+    }
 
     if (!append_a_fils_to_noeud(node_to_append->pere, node_to_append))
     {
-        write_result_command("Error while creating directory");
+        write_result_command("Error while creating directory.");
         destroy_noeud(node_to_append);
         return FATAL_ERROR;
     }
+
+    copy_content_of(node_to_append, node_to_copy);
+
     return SUCCESS;
 }
 
