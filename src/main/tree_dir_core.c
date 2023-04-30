@@ -529,3 +529,23 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
 
     return search_node_in_tree_with_iterator(next_node, iterator, is_name_included, is_directory);
 }
+
+unsigned get_longest_length_of_node_fils(const noeud *node)
+{
+    if (node == NULL || !node->est_dossier)
+    {
+        return 0;
+    }
+    unsigned max_len = 0;
+
+    for (liste_noeud *lst = node->fils; lst != NULL; lst = lst->succ)
+    {
+        unsigned len_name = strlen(lst->no->nom);
+
+        if (len_name > max_len)
+        {
+            max_len = len_name;
+        }
+    }
+    return max_len;
+}
