@@ -9,7 +9,7 @@
 #include "../main/file_manager.h"
 #include "../main/string_utils.h"
 
-void test_ls_function(test_info *);
+static void test_ls_function(test_info *);
 static noeud *create_tree_and_test_ls_without_path_while(test_info *);
 static void test_ls_with_path(test_info *, noeud *);
 static void test_ls_error_with_path(test_info *, noeud *);
@@ -17,12 +17,10 @@ static void test_invalid_number_of_arg_of_ls(test_info *);
 
 test_info *test_ls()
 {
-    print_test_header("ls");
-
-    clock_t before = clock();
     // Create the test info
+    print_test_header("ls");
+    clock_t before = clock();
     test_info *info = create_test_info();
-
     // Add tests here
     test_ls_function(info);
     // End of tests
@@ -31,7 +29,7 @@ test_info *test_ls()
     return info;
 }
 
-void test_ls_function(test_info *info)
+static void test_ls_function(test_info *info)
 {
     print_test_name("Testing command ls");
 

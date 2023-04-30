@@ -24,34 +24,34 @@ int ls(const command *cmd)
     {
         return INVALID_NUMBER_OF_ARGS;
     }
+
     if (cmd->args_number == 0)
     {
         print_ls(current_node);
+        return SUCCESS;
     }
-    else
+
+    noeud *node = search_node_in_tree(current_node, cmd->args[0]);
+
+    if (node == NULL)
     {
-        noeud *node = search_node_in_tree(current_node, cmd->args[0]);
-
-        if (node == NULL)
-        {
-            write_result_command("Invalid path of directory.");
-            return INVALID_PATH;
-        }
-        if (!node->est_dossier)
-        {
-            write_result_command("Invalid path of directory : the path of a file has been given.");
-            return INVALID_SELECTION;
-        }
-
-        print_ls(node);
+        write_result_command("Invalid path of directory.");
+        return INVALID_PATH;
     }
+    if (!node->est_dossier)
+    {
+        write_result_command("Invalid path of directory : the path of a file has been given.");
+        return INVALID_SELECTION;
+    }
+
+    print_ls(node);
 
     return SUCCESS;
 }
 
 static void print_ls(noeud *noeud)
 {
-    unsigned max_length_name = get_max_number_of_char_of_node_fils_name(noeud);
+    unsigned max_length_name = get_longest_legth_of_node_fils(noeud);
 
     for (liste_noeud *lst = noeud->fils; lst != NULL; lst = lst->succ)
     {
