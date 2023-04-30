@@ -368,33 +368,52 @@ static void test_search_without_create(test_info *info)
 {
     print_test_name("Testing to search nodes with path without creating new nodes");
     current_node = create_tree_to_test();
+    char *absolute_path;
 
     noeud *node = search_node_in_tree(current_node, "test/test2");
-    handle_string_test("/test/test2", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test2", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     node = search_node_in_tree(current_node, "test12/../test/../test12/././test13");
-    handle_string_test("/test12/test13", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test12/test13", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     node = search_node_in_tree(current_node, "test/.././../test/./.");
-    handle_string_test("/test", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     current_node = search_node_in_tree(current_node, "test/test5/test7");
-    handle_string_test("/test/test5/test7", get_absolute_path_of_node(current_node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(current_node);
+    handle_string_test("/test/test5/test7", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     node = search_node_in_tree(current_node, "..");
-    handle_string_test("/test/test5", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test5", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     node = search_node_in_tree(current_node, "../..");
-    handle_string_test("/test", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     node = search_node_in_tree(current_node, "/test12/test15");
-    handle_string_test("/test12/test15", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test12/test15", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     node = search_node_in_tree(current_node, "/test");
-    handle_string_test("/test", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     node = search_node_in_tree(current_node, "/test/test5/.");
-    handle_string_test("/test/test5", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test5", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     node = search_node_in_tree(current_node, "");
     handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
@@ -429,24 +448,31 @@ static void test_search_with_create(test_info *info)
 {
     print_test_name("Testing to search nodes with path with creating new nodes");
     current_node = create_tree_to_test();
+    char *absolute_path;
 
     noeud *node = search_node_in_tree_with_node_creation(current_node, "test/test2", false);
-    handle_string_test("/test/test2", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test2", absolute_path, __LINE__, __FILE__, info);
     handle_boolean_test(false, are_noeuds_equal(node, search_node_in_tree(current_node, "test/test2")), __LINE__, __FILE__, info);
+    free(absolute_path);
 
     destroy_noeud(node);
 
     node = search_node_in_tree_with_node_creation(current_node, "test12/test42", false);
-    handle_string_test("/test12/test42", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test12/test42", absolute_path, __LINE__, __FILE__, info);
     handle_boolean_test(false, are_noeuds_equal(node, search_node_in_tree(current_node, "test12/test42")), __LINE__, __FILE__, info);
     handle_boolean_test(true, search_node_in_tree(current_node, "test12/test42") == NULL, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     destroy_noeud(node);
 
     node = search_node_in_tree_with_node_creation(current_node, "test/test", true);
-    handle_string_test("/test/test", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test", absolute_path, __LINE__, __FILE__, info);
     handle_boolean_test(false, are_noeuds_equal(node, search_node_in_tree(current_node, "test")), __LINE__, __FILE__, info);
     handle_boolean_test(true, search_node_in_tree(current_node, "test/test") == NULL, __LINE__, __FILE__, info);
+    free(absolute_path);
 
     destroy_noeud(node);
 
