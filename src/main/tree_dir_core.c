@@ -477,6 +477,16 @@ static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is
         return NULL;
     }
 
+    if (path[len_path - 1] == '/')
+    {
+        // absolute path of root
+        if (len_path == 1)
+        {
+            return deb->racine;
+        }
+        return NULL;
+    }
+
     string_iterator *iterator = create_string_iterator(path, '/');
 
     if (path[0] == '/')
@@ -488,11 +498,6 @@ static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is
 
     destroy_string_iterator(iterator);
 
-    // The path is not valid if there is a '/' in the last char of path, and result is not a directory
-    if (result == NULL || (path[len_path - 1] == '/' && !result->est_dossier))
-    {
-        return NULL;
-    }
     return result;
 }
 
