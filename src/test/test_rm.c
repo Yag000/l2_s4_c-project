@@ -16,10 +16,9 @@ static void test_error_of_rm(test_info *);
 
 test_info *test_rm()
 {
-    print_test_header("rm");
-
-    clock_t before = clock();
     // Create the test info
+    print_test_header("rm");
+    clock_t before = clock();
     test_info *info = create_test_info();
 
     // Add tests here

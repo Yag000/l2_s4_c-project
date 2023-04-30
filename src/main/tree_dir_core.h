@@ -45,8 +45,6 @@ noeud *get_a_noeud_in_liste_noeud(liste_noeud *, const char *);
 bool append_liste_noeud(liste_noeud *, noeud *);
 liste_noeud *remove_liste_noeud(liste_noeud *, noeud *);
 
-char *get_absolute_path_of_node(const noeud *);
-
 noeud *search_node_in_tree(noeud *, char *);
 bool is_noeud_inside(const noeud *, const noeud *);
 void destroy_tree();

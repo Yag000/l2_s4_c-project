@@ -540,6 +540,11 @@ bool is_noeud_inside(const noeud *node1, const noeud *node2)
         return false;
     }
 
+    if (is_root_node(node2))
+    {
+        return true;
+    }
+
     while (!is_root_node(node1))
     {
         if (are_noeuds_equal(node1, node2))
@@ -547,11 +552,6 @@ bool is_noeud_inside(const noeud *node1, const noeud *node2)
             return true;
         }
         node1 = node1->pere;
-    }
-
-    if (is_root_node(node2))
-    {
-        return true;
     }
 
     return false;
