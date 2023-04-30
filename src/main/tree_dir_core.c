@@ -151,6 +151,18 @@ bool contains_noeud(noeud *parent, noeud *node)
     return contains_liste_noeud(parent->fils, node);
 }
 
+/*
+Returns true if the node pere contains node with the same name of name in his own fils.
+*/
+bool contains_noeud_with_name(noeud *parent, const char *name)
+{
+    if (parent == NULL || name == NULL)
+    {
+        return false;
+    }
+    return contains_liste_noeud_with_name(parent->fils, name);
+}
+
 unsigned get_number_of_fils(noeud *node)
 {
     if (node == NULL)
@@ -291,6 +303,22 @@ bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
     }
 
     return contains_liste_noeud(node_list->succ, node);
+}
+
+/*
+Returns true if the liste_noeud node_list contains node.
+*/
+bool contains_liste_noeud_with_name(liste_noeud *node_list, const char *name)
+{
+    if (node_list == NULL)
+    {
+        return false;
+    }
+    if (strcmp(name, node_list->no->nom) == 0)
+    {
+        return true;
+    }
+    return contains_liste_noeud_with_name(node_list->succ, name);
 }
 
 /*

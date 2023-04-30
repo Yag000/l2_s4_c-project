@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include "tree_dir_core.h"
 #include "command.h"
 #include "constants.h"
 
-static void copy_content_of(noeud *node1, noeud *node2);
+static void copy_content_of(noeud *, noeud *);
 
 int cp(const command *cmd)
 {
@@ -29,13 +30,20 @@ int cp(const command *cmd)
         return INVALID_PATH;
     }
 
+    if (contains_noeud_with_name(node_to_append->pere, node_to_append->nom))
+    {
+        write_result_command("Invalid name of element to create a copy.");
+        return INVALID_SELECTION;
+    }
+
+    copy_content_of(node_to_append, node_to_copy);
+
     if (!append_a_fils_to_noeud(node_to_append->pere, node_to_append))
     {
         write_result_command("Error while creating directory");
         destroy_noeud(node_to_append);
-        return INVALID_NAME;
+        return FATAL_ERROR;
     }
-    copy_content_of(node_to_append, node_to_copy);
     return SUCCESS;
 }
 

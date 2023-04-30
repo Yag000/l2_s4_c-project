@@ -58,7 +58,21 @@ static void test_command_cp_with_tree(test_info *info)
     handle_boolean_test(true, execute_command(cmd_cp) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
-    handle_boolean_test(true, execute_command(cmd_print) == SUCCESS, __LINE__, __FILE__, info);
+    tab_command[0] = get_alloc_pointer_of_string("/test/test5/test6");
+    tab_command[1] = get_alloc_pointer_of_string("./test12");
+    handle_boolean_test(true, execute_command(cmd_cp) == SUCCESS, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    tab_command[0] = get_alloc_pointer_of_string("/test12");
+    tab_command[1] = get_alloc_pointer_of_string("../test/test5/check");
+    handle_boolean_test(true, execute_command(cmd_cp) == SUCCESS, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
+    tab_command[0] = get_alloc_pointer_of_string("/");
+    tab_command[1] = get_alloc_pointer_of_string("/test/test5/root2");
+    handle_boolean_test(true, execute_command(cmd_cp) == SUCCESS, __LINE__, __FILE__, info);
+    execute_command(cmd_print);
+
     destroy_command(cmd_print);
     destroy_command(cmd_cp);
 
