@@ -97,11 +97,11 @@ static void test_command_rm_with_tree(test_info *info)
     handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
-    tab_command[0] = "/test/";
+    tab_command[0] = "/test";
     handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
-    tab_command[0] = "/test12/";
+    tab_command[0] = "/test12";
     handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
@@ -164,10 +164,7 @@ static void test_error_of_rm(test_info *info)
     assert(tab_command != NULL);
     command *cmd = create_command(get_alloc_pointer_of_string("rm"), 1, tab_command);
 
-    tab_command[0] = "/";
-    handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
-
-    tab_command[0] = "./";
+    tab_command[0] = ".";
     handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
     current_node = search_node_in_tree(current_node, "test/test5");
@@ -175,19 +172,22 @@ static void test_error_of_rm(test_info *info)
     tab_command[0] = "/test/test5";
     handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
-    tab_command[0] = "/test/";
+    tab_command[0] = "/test";
     handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
-    tab_command[0] = "./";
+    tab_command[0] = ".";
     handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
-    tab_command[0] = "../";
+    tab_command[0] = "..";
     handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
-    tab_command[0] = "../../";
+    tab_command[0] = "../..";
     handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
     tab_command[0] = "test";
+    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
+
+    tab_command[0] = "/";
     handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
 
     tab_command[0] = get_alloc_pointer_of_string("../test4/");

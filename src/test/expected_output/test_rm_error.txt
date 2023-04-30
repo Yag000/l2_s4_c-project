@@ -1,18 +1,18 @@
-/$ rm /
-A directory that contains the current folder cannot be deleted.
-/$ rm ./
+/$ rm .
 A directory that contains the current folder cannot be deleted.
 /test/test5$ rm /test/test5
 A directory that contains the current folder cannot be deleted.
-/test/test5$ rm /test/
+/test/test5$ rm /test
 A directory that contains the current folder cannot be deleted.
-/test/test5$ rm ./
+/test/test5$ rm .
 A directory that contains the current folder cannot be deleted.
-/test/test5$ rm ../
+/test/test5$ rm ..
 A directory that contains the current folder cannot be deleted.
-/test/test5$ rm ../../
+/test/test5$ rm ../..
 A directory that contains the current folder cannot be deleted.
 /test/test5$ rm test
+Invalid path given.
+/test/test5$ rm /
 Invalid path given.
 /test/test5$ rm ../test4/
 Invalid path given.
