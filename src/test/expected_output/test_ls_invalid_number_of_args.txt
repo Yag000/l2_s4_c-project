@@ -1,0 +1,4 @@
+/$ ls test test
+An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
+/$ ls test test test
+An incorrect number of arguments was given: 3 instead of a number between 0 and 1 expected.

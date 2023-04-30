@@ -28,5 +28,5 @@ int rm(const command *cmd)
         write_result_command("There was a problem during the destruction of the element.");
         return FATAL_ERROR;
     }
-    return 0;
+    return SUCCESS;
 }

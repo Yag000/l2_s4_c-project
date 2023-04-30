@@ -540,6 +540,11 @@ bool is_noeud_inside(const noeud *node1, const noeud *node2)
         return false;
     }
 
+    if (is_root_node(node2))
+    {
+        return true;
+    }
+
     while (!is_root_node(node1))
     {
         if (are_noeuds_equal(node1, node2))
@@ -549,10 +554,25 @@ bool is_noeud_inside(const noeud *node1, const noeud *node2)
         node1 = node1->pere;
     }
 
-    if (is_root_node(node2))
-    {
-        return true;
-    }
-
     return false;
+}
+
+unsigned get_longest_length_of_node_fils(const noeud *node)
+{
+    if (node == NULL || !node->est_dossier)
+    {
+        return 0;
+    }
+    unsigned max_len = 0;
+
+    for (liste_noeud *lst = node->fils; lst != NULL; lst = lst->succ)
+    {
+        unsigned len_name = strlen(lst->no->nom);
+
+        if (len_name > max_len)
+        {
+            max_len = len_name;
+        }
+    }
+    return max_len;
 }

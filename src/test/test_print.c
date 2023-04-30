@@ -36,7 +36,7 @@ static void test_print_function(test_info *info)
     test_print_while_creating_tree(info);
     test_illegal_number_of_args_of_print(info);
 
-    out_stream = stdin;
+    out_stream = stdout;
     out_stream_path = NULL;
 
     current_node = NULL;

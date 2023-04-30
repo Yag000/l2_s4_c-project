@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
     update_test_info(info, test_command());
     update_test_info(info, test_pwd());
     update_test_info(info, test_rm());
+    update_test_info(info, test_ls());
     update_test_info(info, test_print());
     update_test_info(info, test_mkdir());
     update_test_info(info, test_cp());

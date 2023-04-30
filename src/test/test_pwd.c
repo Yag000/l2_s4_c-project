@@ -94,7 +94,7 @@ static void test_pwd_function(test_info *info)
 
     close_file(out_stream, out_stream_path);
 
-    out_stream = stdin;
+    out_stream = stdout;
     out_stream_path = NULL;
 
     current_node = NULL;
