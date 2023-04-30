@@ -396,6 +396,9 @@ static void test_search_without_create(test_info *info)
     node = search_node_in_tree(current_node, "/test/test5/.");
     handle_string_test("/test/test5", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
 
+    node = search_node_in_tree(current_node, "");
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
     node = search_node_in_tree(current_node, "test");
     handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
 

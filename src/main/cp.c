@@ -32,7 +32,7 @@ int cp(const command *cmd)
 
     if (is_noeud_inside(node_to_append->pere, node_to_copy))
     {
-        write_result_command("An element cannot be copied contained in the copy.");
+        write_result_command("An element cannot be copied inside a directory contained in the copy.");
         return INVALID_SELECTION;
     }
 
