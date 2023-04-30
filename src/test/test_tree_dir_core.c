@@ -369,10 +369,7 @@ static void test_search_without_create(test_info *info)
     print_test_name("Testing to search nodes with path without creating new nodes");
     current_node = create_tree_to_test();
 
-    noeud *node = search_node_in_tree(current_node, "/");
-    handle_string_test("/", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
-
-    node = search_node_in_tree(current_node, "test/test2");
+    noeud *node = search_node_in_tree(current_node, "test/test2");
     handle_string_test("/test/test2", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
 
     node = search_node_in_tree(current_node, "test12/../test/../test12/././test13");
@@ -383,9 +380,6 @@ static void test_search_without_create(test_info *info)
 
     current_node = search_node_in_tree(current_node, "test/test5/test7");
     handle_string_test("/test/test5/test7", get_absolute_path_of_node(current_node), __LINE__, __FILE__, info);
-
-    node = search_node_in_tree(current_node, "/");
-    handle_string_test("/", get_absolute_path_of_node(node), __LINE__, __FILE__, info);
 
     node = search_node_in_tree(current_node, "..");
     handle_string_test("/test/test5", get_absolute_path_of_node(node), __LINE__, __FILE__, info);

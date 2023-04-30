@@ -151,18 +151,6 @@ bool contains_noeud(noeud *parent, noeud *node)
     return contains_liste_noeud(parent->fils, node);
 }
 
-/*
-Returns true if the node pere contains node with the same name of name in his own fils.
-*/
-bool contains_noeud_with_name(noeud *parent, const char *name)
-{
-    if (parent == NULL || name == NULL)
-    {
-        return false;
-    }
-    return contains_liste_noeud_with_name(parent->fils, name);
-}
-
 unsigned get_number_of_fils(noeud *node)
 {
     if (node == NULL)
@@ -303,22 +291,6 @@ bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
     }
 
     return contains_liste_noeud(node_list->succ, node);
-}
-
-/*
-Returns true if the liste_noeud node_list contains node.
-*/
-bool contains_liste_noeud_with_name(liste_noeud *node_list, const char *name)
-{
-    if (node_list == NULL)
-    {
-        return false;
-    }
-    if (strcmp(name, node_list->no->nom) == 0)
-    {
-        return true;
-    }
-    return contains_liste_noeud_with_name(node_list->succ, name);
 }
 
 /*
@@ -479,11 +451,6 @@ static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is
 
     if (path[len_path - 1] == '/')
     {
-        // absolute path of root
-        if (len_path == 1)
-        {
-            return deb->racine;
-        }
         return NULL;
     }
 
@@ -524,9 +491,13 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
 
     char *name = next_word(iterator);
 
-    if (name == NULL)
+    if (!has_next_word(iterator) && is_name_included)
     {
-        return NULL;
+
+        noeud *result = create_noeud(is_directory, name, node);
+
+        free(name);
+        return result;
     }
 
     if (strcmp(name, ".") == 0)
@@ -547,14 +518,6 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
         return search_node_in_tree_with_iterator(node->pere, iterator, is_name_included, is_directory);
     }
 
-    if (!has_next_word(iterator) && is_name_included)
-    {
-
-        noeud *result = create_noeud(is_directory, name, node);
-
-        free(name);
-        return result;
-    }
     noeud *next_node = get_a_fils_of_noeud(node, name);
 
     free(name);

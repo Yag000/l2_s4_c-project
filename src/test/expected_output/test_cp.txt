@@ -87,7 +87,7 @@
     |-- test13 (F)
     |-- test14 (F)
     \-- test15 (F)
-/test11$ cp / /test/test5/root2
+/test11$ cp .. /test/test5/root2
 /test11$ print
 / (D)
 |-- test (D)

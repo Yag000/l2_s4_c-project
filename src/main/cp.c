@@ -30,12 +30,6 @@ int cp(const command *cmd)
         return INVALID_PATH;
     }
 
-    if (contains_noeud_with_name(node_to_append->pere, node_to_append->nom))
-    {
-        write_result_command("Invalid name of element to create a copy.");
-        return INVALID_SELECTION;
-    }
-
     copy_content_of(node_to_append, node_to_copy);
 
     if (!append_a_fils_to_noeud(node_to_append->pere, node_to_append))
