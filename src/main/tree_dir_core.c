@@ -530,7 +530,7 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
     return search_node_in_tree_with_iterator(next_node, iterator, is_name_included, is_directory);
 }
 
-unsigned get_longest_legth_of_node_fils(const noeud *node)
+unsigned get_longest_length_of_node_fils(const noeud *node)
 {
     if (node == NULL || !node->est_dossier)
     {
