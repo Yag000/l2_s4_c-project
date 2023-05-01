@@ -122,18 +122,15 @@ static void test_ls_with_path(test_info *info, noeud *root)
     tab_command[0] = "test/test5/../../test11";
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    current_node = search_node_in_tree(root, "test11/");
+    current_node = search_node_in_tree(root, "test11");
 
     tab_command[0] = "../test/test5";
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    tab_command[0] = "../";
+    tab_command[0] = "..";
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    tab_command[0] = "/";
-    handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
-
-    tab_command[0] = "/test10/";
+    tab_command[0] = "/test10";
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     tab_command[0] = get_alloc_pointer_of_string("/test/test5");
@@ -157,10 +154,13 @@ static void test_ls_error_with_path(test_info *info, noeud *root)
 
     current_node = root;
 
-    tab_command[0] = "/test11/test9/";
+    tab_command[0] = "/test/";
     handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
 
-    tab_command[0] = "/test5/test6/";
+    tab_command[0] = "/test11/test9";
+    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
+
+    tab_command[0] = "/test5/test6";
     handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
 
     tab_command[0] = "test4";

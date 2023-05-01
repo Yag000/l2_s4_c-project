@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
     update_test_info(info, test_ls());
     update_test_info(info, test_print());
     update_test_info(info, test_mkdir());
+    update_test_info(info, test_cp());
 
     // End of tests
 

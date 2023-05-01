@@ -15,7 +15,8 @@ static void test_get(test_info *);
 static void test_append(test_info *);
 static void test_remove(test_info *);
 static void test_get_absolute_path_of_node(test_info *);
-static void test_search_node_in_tree(test_info *);
+static void test_search_without_create(test_info *);
+static void test_search_with_create(test_info *);
 
 test_info *test_tree_dir_core()
 {
@@ -36,7 +37,8 @@ test_info *test_tree_dir_core()
     test_append(info);
     test_remove(info);
     test_get_absolute_path_of_node(info);
-    test_search_node_in_tree(info);
+    test_search_without_create(info);
+    test_search_with_create(info);
 
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
@@ -362,58 +364,149 @@ static void test_get_absolute_path_of_node(test_info *info)
     destroy_noeud(root);
 }
 
-static void test_search_node_in_tree(test_info *info)
+static void test_search_without_create(test_info *info)
 {
-    print_test_name("Test to search node in a tree");
+    print_test_name("Testing to search nodes with path without creating new nodes");
+    current_node = create_basic_testing_tree();
+    char *absolute_path;
 
-    noeud *root = create_root_noeud();
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, ".")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "..")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "././.")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "../../../..")), __LINE__, __FILE__,
-                        info);
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "./../.././.././..")), __LINE__,
-                        __FILE__, info);
+    noeud *node = search_node_in_tree(current_node, "test/test2");
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test2", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
-    noeud *node1 = create_noeud(true, "test", root);
-    append_a_fils_to_noeud(root, node1);
-    handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "./test")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "./test/")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "./../test/.././test")), __LINE__,
-                        __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(node1, search_node_in_tree(root, "../test/./../test/.")), __LINE__,
-                        __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(root, search_node_in_tree(root, "./../test/./../test/..")), __LINE__,
-                        __FILE__, info);
+    node = search_node_in_tree(current_node, "test12/../test/../test12/././test13");
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test12/test13", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
-    noeud *node2 = create_noeud(true, "test2", node1);
-    append_a_fils_to_noeud(node1, node2);
-    noeud *node3 = create_noeud(true, "test3", root);
-    append_a_fils_to_noeud(root, node3);
+    node = search_node_in_tree(current_node, "test/.././../test/./.");
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
-    handle_boolean_test(true, are_noeuds_equal(node3, search_node_in_tree(root, "./test/../test3/")), __LINE__,
-                        __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(node2, search_node_in_tree(root, "./test/test2")), __LINE__, __FILE__,
-                        info);
-    handle_boolean_test(true,
-                        are_noeuds_equal(node1, search_node_in_tree(root, "./../test/.././test3/../test/test2/..")),
-                        __LINE__, __FILE__, info);
-    handle_boolean_test(true,
-                        are_noeuds_equal(node3, search_node_in_tree(root, "../test/./../test/test2/./../../test3")),
-                        __LINE__, __FILE__, info);
-    handle_boolean_test(true,
-                        are_noeuds_equal(root, search_node_in_tree(root, "./../test/./../test/test2/../../test3/../")),
-                        __LINE__, __FILE__, info);
+    current_node = search_node_in_tree(current_node, "test/test5/test7");
+    absolute_path = get_absolute_path_of_node(current_node);
+    handle_string_test("/test/test5/test7", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
-    noeud *node4 = create_noeud(false, "test4", node1);
-    append_a_fils_to_noeud(node1, node4);
+    node = search_node_in_tree(current_node, "..");
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test5", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
-    handle_boolean_test(true, are_noeuds_equal(node4, search_node_in_tree(node1, "./test4")), __LINE__, __FILE__, info);
-    handle_boolean_test(true, search_node_in_tree(node1, "./test4/") == NULL, __LINE__, __FILE__, info);
-    handle_boolean_test(true, search_node_in_tree(node1, "./test4/../../test/test2") == NULL, __LINE__, __FILE__, info);
-    handle_boolean_test(true, search_node_in_tree(node1, "../test3/./test1") == NULL, __LINE__, __FILE__, info);
-    handle_boolean_test(true, search_node_in_tree(root, "../test3/./test1/") == NULL, __LINE__, __FILE__, info);
-    handle_boolean_test(true, search_node_in_tree(root, "../test1/./test2/./test2") == NULL, __LINE__, __FILE__, info);
+    node = search_node_in_tree(current_node, "../..");
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
 
-    destroy_noeud(root);
+    node = search_node_in_tree(current_node, "/test12/test15");
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test12/test15", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
+
+    node = search_node_in_tree(current_node, "/test");
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
+
+    node = search_node_in_tree(current_node, "/test/test5/.");
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test5", absolute_path, __LINE__, __FILE__, info);
+    free(absolute_path);
+
+    node = search_node_in_tree(current_node, "");
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree(current_node, "test");
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree(current_node, ".../test5");
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree(current_node, "/test5");
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree(current_node, "/test/test12");
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree(current_node, "../test4/");
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree(current_node, "/test12/test13/");
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree(current_node, "/test12/test13/..");
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    destroy_tree();
+
+    current_node = NULL;
+}
+
+static void test_search_with_create(test_info *info)
+{
+    print_test_name("Testing to search nodes with path with creating new nodes");
+    current_node = create_basic_testing_tree();
+    char *absolute_path;
+
+    noeud *node = search_node_in_tree_with_node_creation(current_node, "test/test2", false);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test2", absolute_path, __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(node, search_node_in_tree(current_node, "test/test2")), __LINE__, __FILE__, info);
+    free(absolute_path);
+
+    destroy_noeud(node);
+
+    node = search_node_in_tree_with_node_creation(current_node, "test12/test42", false);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test12/test42", absolute_path, __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(node, search_node_in_tree(current_node, "test12/test42")), __LINE__, __FILE__, info);
+    handle_boolean_test(true, search_node_in_tree(current_node, "test12/test42") == NULL, __LINE__, __FILE__, info);
+    free(absolute_path);
+
+    destroy_noeud(node);
+
+    node = search_node_in_tree_with_node_creation(current_node, "test/test", true);
+    absolute_path = get_absolute_path_of_node(node);
+    handle_string_test("/test/test", absolute_path, __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(node, search_node_in_tree(current_node, "test")), __LINE__, __FILE__, info);
+    handle_boolean_test(true, search_node_in_tree(current_node, "test/test") == NULL, __LINE__, __FILE__, info);
+    free(absolute_path);
+
+    destroy_noeud(node);
+
+    node = search_node_in_tree_with_node_creation(current_node, "./", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, "../", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, ".", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, "..", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, "./.././..", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, "./.././../test/.", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, "./.././../test/./abc_efg", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, "./.././../test/", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, "test/test/", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    node = search_node_in_tree_with_node_creation(current_node, "./.././../test/new/test", false);
+    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+
+    destroy_tree();
+
+    current_node = NULL;
 }

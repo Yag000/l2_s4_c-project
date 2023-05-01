@@ -1,0 +1,28 @@
+/$ cp /test/test /test/nouveau
+Invalid path to copy.
+/$ cp /test/test5/tes4 /test/nouveau
+Invalid path to copy.
+/$ cp /test .
+Invalid path to create a copy.
+/$ cp /test ../../.
+Invalid path to create a copy.
+/$ cp /test test12/test3/test
+Invalid path to create a copy.
+/$ cp /test /test/nouveau
+An element cannot be copied inside a directory contained in the copy.
+/$ cp /test12 /test12/test
+An element cannot be copied inside a directory contained in the copy.
+/$ cp /test/test5/test7 /test/test5/test7/nouveau
+An element cannot be copied inside a directory contained in the copy.
+/$ cp . test12/nouveau
+An element cannot be copied inside a directory contained in the copy.
+/$ cp /test/test5 /test
+Error while creating directory.
+/$ cp /test12/test13 /test/test2
+Error while creating directory.
+/$ cp /test/test5/test6 /test12
+Error while creating directory.
+/$ rm
+An incorrect number of arguments was given: 0 instead of 1 expected.
+/$ cp test test test
+An incorrect number of arguments was given: 3 instead of 2 expected.

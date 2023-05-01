@@ -6,8 +6,6 @@
 #include "../main/parser.h"
 #include "../main/tree_dir_core.h"
 
-static void init_folder_struture();
-
 static void test_error_codes(test_info *);
 static void test_go_to_root(test_info *);
 static void test_go_to_previous_directory(test_info *);
@@ -25,7 +23,7 @@ test_info *test_cd()
     test_info *info = create_test_info();
 
     // Add tests here
-    init_folder_struture();
+    current_node = create_basic_testing_tree();
     test_error_codes(info);
     test_invalid_invalid_number_args(info);
     test_invalid_path(info);
@@ -35,41 +33,11 @@ test_info *test_cd()
 
     // End of tests
     destroy_tree();
+    current_node = NULL;
 
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("cd", info);
     return info;
-}
-
-static void init_folder_struture()
-{
-    noeud *root = create_root_noeud();
-    current_node = root;
-
-    noeud *node1 = create_noeud(true, "test", root);
-    append_a_fils_to_noeud(root, node1);
-
-    append_a_fils_to_noeud(node1, create_noeud(false, "test2", node1));
-    append_a_fils_to_noeud(node1, create_noeud(true, "test3", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test4", node1));
-
-    noeud *node2 = create_noeud(true, "test5", node1);
-    append_a_fils_to_noeud(node1, node2);
-
-    append_a_fils_to_noeud(node2, create_noeud(false, "test6", node2));
-    append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
-    append_a_fils_to_noeud(node2, create_noeud(false, "test8", node2));
-
-    append_a_fils_to_noeud(node1, create_noeud(false, "test9", node2));
-    append_a_fils_to_noeud(root, create_noeud(false, "test10", root));
-    append_a_fils_to_noeud(root, create_noeud(true, "test11", root));
-
-    node1 = create_noeud(true, "test12", root);
-
-    append_a_fils_to_noeud(root, node1);
-    append_a_fils_to_noeud(node1, create_noeud(false, "test13", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test14", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test15", node1));
 }
 
 static void test_error_codes(test_info *info)
