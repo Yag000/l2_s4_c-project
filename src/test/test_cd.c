@@ -6,14 +6,16 @@
 #include "../main/parser.h"
 #include "../main/tree_dir_core.h"
 #include <stdio.h>
+#include <unistd.h>
 
 static void init_folder_struture();
 
-void test_go_to_root(test_info *);
-void test_go_to_previous_directory(test_info *);
-void test_invalid_invalid_number_args(test_info *);
-void test_invalid_path(test_info *);
-void test_valid_paths(test_info *);
+static void test_error_codes(test_info *);
+static void test_go_to_root(test_info *);
+static void test_go_to_previous_directory(test_info *);
+static void test_invalid_invalid_number_args(test_info *);
+static void test_invalid_path(test_info *);
+static void test_valid_paths(test_info *);
 
 // TODO: Factorize tests
 
@@ -26,6 +28,7 @@ test_info *test_cd()
 
     // Add tests here
     init_folder_struture();
+    test_error_codes(info);
     test_invalid_invalid_number_args(info);
     test_invalid_path(info);
     test_go_to_root(info);
@@ -71,7 +74,40 @@ static void init_folder_struture()
     append_a_fils_to_noeud(node1, create_noeud(false, "test15", node1));
 }
 
-void test_invalid_invalid_number_args(test_info *info)
+static void test_error_codes(test_info *info)
+{
+
+    print_test_name("Testing return values of cd");
+
+    out_stream_path = "src/test/output/test_cd_return_values.txt";
+    out_stream = open_file(out_stream_path, "w");
+
+    // Invalid number of arguments
+    command *cmd = create_command("cd", 2, NULL);
+    handle_int_test(INVALID_NUMBER_OF_ARGS, cd(cmd), __LINE__, __FILE__, info);
+    free(cmd);
+
+    // Invalid path
+    char **args = malloc(sizeof(char *));
+    args[0] = "/testt";
+    cmd = create_command("cd", 1, args);
+    handle_int_test(INVALID_PATH, cd(cmd), __LINE__, __FILE__, info);
+    free(cmd);
+    free(args);
+
+    // Valid input
+    args = malloc(sizeof(char *));
+    args[0] = "/test";
+    cmd = create_command("cd", 1, args);
+    handle_int_test(SUCCESS, cd(cmd), __LINE__, __FILE__, info);
+    free(cmd);
+    free(args);
+
+    current_node = current_node->racine;
+    close_file(out_stream, out_stream_path);
+}
+
+static void test_invalid_invalid_number_args(test_info *info)
 {
 
     print_test_name("Testing cd with an invalid number of args");
@@ -85,16 +121,12 @@ void test_invalid_invalid_number_args(test_info *info)
 
     handle_int_test(SUCCESS, output, __LINE__, __FILE__, info);
 
-    command *cmd = create_command("cd", 2, NULL);
-    handle_int_test(INVALID_NUMBER_OF_ARGS, cd(cmd), __LINE__, __FILE__, info);
-    free(cmd);
-
     current_node = current_node->racine;
 
     close_file(out_stream, out_stream_path);
 }
 
-void test_invalid_path(test_info *info)
+static void test_invalid_path(test_info *info)
 {
     print_test_name("Testing cd with an invalid path");
 
@@ -107,16 +139,12 @@ void test_invalid_path(test_info *info)
 
     handle_int_test(SUCCESS, output, __LINE__, __FILE__, info);
 
-    char **args = malloc(sizeof(char *));
-    args[0] = "/testt";
-    command *cmd = create_command("cd", 1, args);
-    handle_int_test(INVALID_PATH, cd(cmd), __LINE__, __FILE__, info);
-    free(cmd);
-    free(args);
+    current_node = current_node->racine;
 
     close_file(out_stream, out_stream_path);
 }
-void test_go_to_root(test_info *info)
+
+static void test_go_to_root(test_info *info)
 {
     print_test_name("Testing cd to root");
 
@@ -134,7 +162,7 @@ void test_go_to_root(test_info *info)
     close_file(out_stream, out_stream_path);
 }
 
-void test_go_to_previous_directory(test_info *info)
+static void test_go_to_previous_directory(test_info *info)
 {
 
     print_test_name("Testing cd to previous directory");
@@ -152,7 +180,7 @@ void test_go_to_previous_directory(test_info *info)
     close_file(out_stream, out_stream_path);
 }
 
-void test_valid_paths(test_info *info)
+static void test_valid_paths(test_info *info)
 {
     print_test_name("Testing cd with valid paths");
 
@@ -164,13 +192,6 @@ void test_valid_paths(test_info *info)
     int output = parse_file(in_stream_path);
 
     handle_int_test(SUCCESS, output, __LINE__, __FILE__, info);
-
-    char **args = malloc(sizeof(char *));
-    args[0] = "/test";
-    command *cmd = create_command("cd", 1, args);
-    handle_int_test(SUCCESS, cd(cmd), __LINE__, __FILE__, info);
-    free(cmd);
-    free(args);
 
     current_node = current_node->racine;
     close_file(out_stream, out_stream_path);

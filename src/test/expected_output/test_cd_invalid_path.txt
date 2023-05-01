@@ -44,4 +44,3 @@ Invalid path.
 Invalid path.
 /test$ cd test/../test/test4
 Invalid path.
-Invalid path.

@@ -36,4 +36,3 @@ Parsing file src/test/input/test_cd_valid_paths.txt ...
 
 /test12$ pwd
 /test12
-

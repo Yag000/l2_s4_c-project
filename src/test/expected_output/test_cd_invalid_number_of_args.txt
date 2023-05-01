@@ -9,4 +9,3 @@ An incorrect number of arguments was given: 2 instead of a number between 0 and 
 An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
 /$ cd gerf efqwe
 An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
-An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
