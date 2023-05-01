@@ -34,8 +34,6 @@ int parse_file(const char *path)
         return FATAL_ERROR;
     }
 
-    int exit_code = 0;
-
     if (verbose)
     {
         fputs("Parsing file ", out_stream);
@@ -43,8 +41,10 @@ int parse_file(const char *path)
         fputs(" ...\n", out_stream);
     }
 
+    int exit_code = SUCCESS;
+
     char *line = NULL;
-    size_t len = SUCCESS;
+    size_t len = 0;
     ssize_t read;
     while ((read = getline(&line, &len, file)) != -1)
     {
