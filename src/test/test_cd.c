@@ -5,8 +5,6 @@
 #include "../main/file_manager.h"
 #include "../main/parser.h"
 #include "../main/tree_dir_core.h"
-#include <stdio.h>
-#include <unistd.h>
 
 static void init_folder_struture();
 
@@ -17,7 +15,7 @@ static void test_invalid_invalid_number_args(test_info *);
 static void test_invalid_path(test_info *);
 static void test_valid_paths(test_info *);
 
-// TODO: Factorize tests
+static void execute_test(test_info *, char *, char *);
 
 test_info *test_cd()
 {
@@ -109,39 +107,15 @@ static void test_error_codes(test_info *info)
 
 static void test_invalid_invalid_number_args(test_info *info)
 {
-
     print_test_name("Testing cd with an invalid number of args");
-
-    out_stream_path = "src/test/output/test_cd_invalid_number_of_args.txt";
-    out_stream = open_file(out_stream_path, "w");
-
-    char *in_stream_path = "src/test/input/test_cd_invalid_number_of_args.txt";
-
-    int output = parse_file(in_stream_path);
-
-    handle_int_test(SUCCESS, output, __LINE__, __FILE__, info);
-
-    current_node = current_node->racine;
-
-    close_file(out_stream, out_stream_path);
+    execute_test(info, "src/test/input/test_cd_invalid_number_of_args.txt",
+                 "src/test/output/test_cd_invalid_number_of_args.txt");
 }
 
 static void test_invalid_path(test_info *info)
 {
     print_test_name("Testing cd with an invalid path");
-
-    out_stream_path = "src/test/output/test_cd_invalid_path.txt";
-    out_stream = open_file(out_stream_path, "w");
-
-    char *in_stream_path = "src/test/input/test_cd_invalid_path.txt";
-
-    int output = parse_file(in_stream_path);
-
-    handle_int_test(SUCCESS, output, __LINE__, __FILE__, info);
-
-    current_node = current_node->racine;
-
-    close_file(out_stream, out_stream_path);
+    execute_test(info, "src/test/input/test_cd_invalid_path.txt", "src/test/output/test_cd_invalid_path.txt");
 }
 
 static void test_go_to_root(test_info *info)
@@ -164,34 +138,25 @@ static void test_go_to_root(test_info *info)
 
 static void test_go_to_previous_directory(test_info *info)
 {
-
     print_test_name("Testing cd to previous directory");
-
-    out_stream_path = "src/test/output/test_cd_go_to_previous_directory.txt";
-    out_stream = open_file(out_stream_path, "w");
-
-    char *in_stream_path =
-        "src/test/input/test_cd_go_to_previous_directory.txt";
-
-    int output = parse_file(in_stream_path);
-
-    handle_int_test(SUCCESS, output, __LINE__, __FILE__, info);
-    current_node = current_node->racine;
-    close_file(out_stream, out_stream_path);
+    execute_test(info, "src/test/input/test_cd_go_to_previous_directory.txt",
+                 "src/test/output/test_cd_go_to_previous_directory.txt");
 }
 
 static void test_valid_paths(test_info *info)
 {
     print_test_name("Testing cd with valid paths");
+    execute_test(info, "src/test/input/test_cd_valid_paths.txt", "src/test/output/test_valid_paths.txt");
+}
 
-    out_stream_path = "src/test/output/test_cd_valid_paths.txt";
+static void execute_test(test_info *info, char *input, char *output)
+{
+    out_stream_path = output;
     out_stream = open_file(out_stream_path, "w");
 
-    char *in_stream_path = "src/test/input/test_cd_valid_paths.txt";
+    int result = parse_file(input);
 
-    int output = parse_file(in_stream_path);
-
-    handle_int_test(SUCCESS, output, __LINE__, __FILE__, info);
+    handle_int_test(SUCCESS, result, __LINE__, __FILE__, info);
 
     current_node = current_node->racine;
     close_file(out_stream, out_stream_path);
