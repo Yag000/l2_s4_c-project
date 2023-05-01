@@ -184,7 +184,7 @@ Writes all string of results in the out_stream
 */
 int write_result_lines_command(size_t lines_number, char **results)
 {
-    for (int i = 0; i < lines_number; i++)
+    for (unsigned i = 0; i < lines_number; i++)
     {
         write_result_command(results[i]);
     }
