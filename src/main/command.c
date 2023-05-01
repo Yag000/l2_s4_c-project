@@ -62,8 +62,8 @@ void print_command_header()
         char *path = get_absolute_path_of_node(current_node);
         fputs(path, out_stream);
         free(path);
-        fputs("$ ", out_stream);
     }
+    fputs("$ ", out_stream);
 }
 /*
 Returns true if the command name matches the given name.
