@@ -146,7 +146,7 @@ static void test_go_to_previous_directory(test_info *info)
 static void test_valid_paths(test_info *info)
 {
     print_test_name("Testing cd with valid paths");
-    execute_test(info, "src/test/input/test_cd_valid_paths.txt", "src/test/output/test_valid_paths.txt");
+    execute_test(info, "src/test/input/test_cd_valid_paths.txt", "src/test/output/test_cd_valid_paths.txt");
 }
 
 static void execute_test(test_info *info, char *input, char *output)
