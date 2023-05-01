@@ -155,3 +155,4 @@ void handle_int_test(int expected, int actual, int line, const char *file, test_
     }
     info->passed++;
 }
+
