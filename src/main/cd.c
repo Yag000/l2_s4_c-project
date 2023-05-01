@@ -23,8 +23,7 @@ int cd(const command *cmd)
 
     if (tmp == NULL || !tmp-> est_dossier)
     {
-        // TODO: improve this error message
-        write_result_command("Invalid path.");
+        write_result_command("No such file or directory.");
         return INVALID_PATH;
     }
 

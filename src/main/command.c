@@ -64,10 +64,7 @@ static void print_command(const command *cmd)
 /*
 Returns true if the command name matches the given name.
 */
-static bool is_command(const command *command, const char *name)
-{
-    return strcmp(command->name, name) == 0;
-}
+static bool is_command(const command *command, const char *name) { return strcmp(command->name, name) == 0; }
 
 /*
 Executes a command and returns the exit code.
@@ -147,10 +144,8 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
 {
     if (expected != actual)
     {
-        fprintf(out_stream,
-                "An incorrect number of arguments was given: %u instead of %u "
-                "expected.\n",
-                actual, expected);
+        fprintf(out_stream, "An incorrect number of arguments was given: %u instead of %u expected.\n", actual,
+                expected);
         return false;
     }
 
@@ -160,15 +155,12 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
 /*
 Returns true if the actual number of args is between under_limit and upper_limit
 */
-bool handle_number_of_args_with_delimitation(unsigned under_limit,
-                                             unsigned upper_limit,
-                                             unsigned actual)
+bool handle_number_of_args_with_delimitation(unsigned under_limit, unsigned upper_limit, unsigned actual)
 {
     if (actual < under_limit || actual > upper_limit)
     {
         fprintf(out_stream,
-                "An incorrect number of arguments was given: %u instead of a "
-                "number between %u and %u expected.\n",
+                "An incorrect number of arguments was given: %u instead of a number between %u and %u expected.\n",
                 actual, under_limit, upper_limit);
         return false;
     }
