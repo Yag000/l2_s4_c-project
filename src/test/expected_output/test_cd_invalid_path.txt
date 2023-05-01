@@ -1,0 +1,46 @@
+Parsing file src/test/input/test_cd_invalid_path.txt ...
+/$ print
+/ (D)
+|-- test (D)
+|   |-- test2 (F)
+|   |-- test3 (D)
+|   |-- test4 (F)
+|   |-- test5 (D)
+|   |   |-- test6 (F)
+|   |   |-- test7 (D)
+|   |   \-- test8 (F)
+|   \-- test9 (F)
+|-- test10 (F)
+|-- test11 (D)
+\-- test12 (D)
+    |-- test13 (F)
+    |-- test14 (F)
+    \-- test15 (F)
+/$ cd
+
+/$ pwd
+/
+/$ cd testt
+No such file or directory.
+/$ cd test/test2
+No such file or directory.
+/$ cd test/test2/test3
+No such file or directory.
+/$ cd test/test3/../test2
+No such file or directory.
+/$ cd ././././././test15
+No such file or directory.
+/$ cd test/10
+No such file or directory.
+/$ cd test
+
+/test$ pwd
+/test
+/test$ cd /test10
+No such file or directory.
+/test$ cd /test12/test
+No such file or directory.
+/test$ cd /test12/test13
+No such file or directory.
+/test$ cd test/../test/test4
+No such file or directory.

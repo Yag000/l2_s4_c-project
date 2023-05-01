@@ -6,6 +6,7 @@
 #include "../main/command.h"
 #include "../main/constants.h"
 #include "../main/file_manager.h"
+#include "../main/tree_dir_core.h"
 
 #define N 10
 

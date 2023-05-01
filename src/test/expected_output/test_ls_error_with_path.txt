@@ -1,6 +1,8 @@
-/$ ls /test11/test9/
+/$ ls /test/
 Invalid path of directory.
-/$ ls /test5/test6/
+/$ ls /test11/test9
+Invalid path of directory.
+/$ ls /test5/test6
 Invalid path of directory.
 /$ ls test4
 Invalid path of directory.

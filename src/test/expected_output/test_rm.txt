@@ -29,7 +29,7 @@
     |-- test13 (F)
     |-- test14 (F)
     \-- test15 (F)
-/test11$ rm /test/
+/test11$ rm /test
 /test11$ print
 / (D)
 |-- test10 (F)
@@ -38,7 +38,7 @@
     |-- test13 (F)
     |-- test14 (F)
     \-- test15 (F)
-/test11$ rm /test12/
+/test11$ rm /test12
 /test11$ print
 / (D)
 |-- test10 (F)
