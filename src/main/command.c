@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -36,21 +37,14 @@ void destroy_command(command *cmd)
 /*
 Prints a command if verbose mode is enabled.
 */
-static void print_command(const command *cmd)
+void print_command(const command *cmd)
 {
-    if (!verbose)
+    if (!verbose || interactive)
     {
         return;
     }
 
-    if (current_node != NULL)
-    {
-        char *path = get_absolute_path_of_node(current_node);
-        fputs(path, out_stream);
-        free(path);
-    }
-
-    fputs("$ ", out_stream);
+    print_command_header();
 
     fputs(cmd->name, out_stream);
     for (int i = 0; i < cmd->args_number; i++)
@@ -61,6 +55,16 @@ static void print_command(const command *cmd)
     fputs("\n", out_stream);
 }
 
+void print_command_header()
+{
+    if (current_node != NULL)
+    {
+        char *path = get_absolute_path_of_node(current_node);
+        fputs(path, out_stream);
+        free(path);
+    }
+    fputs("$ ", out_stream);
+}
 /*
 Returns true if the command name matches the given name.
 */
@@ -114,6 +118,12 @@ int execute_command(const command *cmd)
     {
         return debug_command(cmd->args_number, cmd->args);
     }
+    if (is_command(cmd, "exit"))
+    {
+        // TODO: implement this properly (another PR)
+        return EXIT_PROGRAM_SUCCESS;
+    }
+
     write_result_command("Command not found");
     write_result_command(cmd->name);
     return EXIT_FAILURE;
