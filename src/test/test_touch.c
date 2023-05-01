@@ -15,25 +15,16 @@ static void test_touch_valid_name(test_info *);
 static void test_touch_already_exists(test_info *);
 static void test_touch_long_path(test_info *);
 
-static void invalid_name_format_test_handler(const char *, test_info *);
-static noeud *create_and_test_node_creation_without_path(const char *, test_info *);
-
-static command *string_to_command(const char *);
-
-static void execute_test(test_info *, char *, char *);
-
-// TODO: add more tests when ls and cd are implemented
+static void invalid_name_format_test_handler(char *, test_info *);
+static void execute_test(test_info *, char *, char *, int);
 
 test_info *test_touch()
 {
-    // Create the test info
+    // Test setup
     print_test_header("touch");
     clock_t before = clock();
     test_info *info = create_test_info();
 
-    out_stream_path = "src/test/output/touch_invalid_input.txt";
-    out_stream = open_file(out_stream_path, "w");
- 
     // Add tests here
     test_touch_empty(info);
     test_touch_invalid_name(info);
@@ -42,8 +33,6 @@ test_info *test_touch()
     test_touch_long_path(info);
 
     // End of tests
-    close_file(out_stream, out_stream_path);
-    out_stream = stdout;
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("touch", info);
     return info;
@@ -52,15 +41,21 @@ test_info *test_touch()
 static void test_touch_empty(test_info *info)
 {
     print_test_name("Testing touch with empty name");
+    out_stream_path = "src/test/output/test_touch_empty.txt";
+    out_stream = open_file(out_stream_path, "w");
 
     current_node = create_root_noeud();
     invalid_name_format_test_handler("", info);
     destroy_tree();
+
+    close_file(out_stream, out_stream_path);
 }
 
 static void test_touch_invalid_name(test_info *info)
 {
     print_test_name("Testing touch with invalid name");
+    out_stream_path = "src/test/output/test_touch_invalid_name.txt";
+    out_stream = open_file(out_stream_path, "w");
 
     current_node = create_root_noeud();
 
@@ -73,19 +68,24 @@ static void test_touch_invalid_name(test_info *info)
     invalid_name_format_test_handler("it_is_a_shame_that_this_does_not_work", info);
 
     destroy_tree();
+
+    close_file(out_stream, out_stream_path);
 }
 
 /*
 Executes a touch command with the given name.
-It will test if the output matches an invalide name format.
+It will test if the output matches an invalid name format.
 */
-static void invalid_name_format_test_handler(const char *name, test_info *info)
+static void invalid_name_format_test_handler(char *name, test_info *info)
 {
-    command *cmd = string_to_command(name);
+    char **args = malloc(sizeof(char *));
+    args[0] = name;
+
+    command *cmd = create_command("touch", 1, args);
     handle_int_test(INVALID_NAME, touch(cmd), __LINE__, __FILE__, info);
-    destroy_command(cmd);
 
-
+    free(args);
+    free(cmd);
 }
 
 static void test_touch_valid_name(test_info *info)
@@ -93,13 +93,8 @@ static void test_touch_valid_name(test_info *info)
     print_test_name("Testing touch with valid name");
 
     current_node = create_root_noeud();
-
-    create_and_test_node_creation_without_path("test", info);
-    current_node = create_and_test_node_creation_without_path("test1", info);
-
-    // Testing the creation of a folder inside a folder, with the same name
-    create_and_test_node_creation_without_path("test1", info);
-
+    execute_test(info, "src/test/input/test_touch_valid_path.txt", "src/test/output/test_touch_valid_path.txt",
+                 SUCCESS);
     destroy_tree();
 }
 
@@ -108,98 +103,29 @@ static void test_touch_already_exists(test_info *info)
     print_test_name("Testing touch with already existing name");
 
     current_node = create_root_noeud();
-
-    noeud *created_node = create_and_test_node_creation_without_path("test", info);
-
-    char *name = "test";
-    command *cmd = string_to_command(name);
-    handle_int_test(FATAL_ERROR, touch(cmd), __LINE__, __FILE__, info);
-    destroy_command(cmd);
-
-    // Testing inside a folder different from the root
-    current_node = created_node;
-    create_and_test_node_creation_without_path("testSon", info);
-
-    name = "testSon";
-    cmd = string_to_command(name);
-    handle_int_test(FATAL_ERROR, touch(cmd), __LINE__, __FILE__, info);
-    destroy_command(cmd);
-
+    execute_test(info, "src/test/input/test_touch_already_exists.txt", "src/test/output/test_touch_already_exists.txt",
+                 FATAL_ERROR);
     destroy_tree();
 }
 
 static void test_touch_long_path(test_info *info)
 {
-
     print_test_name("Testing touch with long paths");
     current_node = create_root_noeud();
 
-    current_node = create_and_test_node_creation_without_path("test1", info);
-    current_node = create_and_test_node_creation_without_path("test2", info);
-    current_node = create_and_test_node_creation_without_path("test3", info);
-    current_node = create_and_test_node_creation_without_path("test4", info);
-
-    char *name = "../../test5";
-    command *cmd = string_to_command(name);
-    handle_int_test(0, touch(cmd), __LINE__, __FILE__, info);
-    current_node = get_a_fils_of_noeud(current_node->pere->pere, "test5");
-    assert(current_node != NULL);
-    handle_boolean_test(false, current_node->est_dossier, __LINE__, __FILE__, info);
-    destroy_command(cmd);
-    char *path = get_absolute_path_of_node(current_node);
-    handle_string_test("/test1/test2/test5", path, __LINE__, __FILE__, info);
-    free(path);
-
-    current_node = create_and_test_node_creation_without_path("test6", info);
-    current_node = create_and_test_node_creation_without_path("test7", info);
-
-    name = "/test";
-    cmd = string_to_command(name);
-    handle_int_test(0, touch(cmd), __LINE__, __FILE__, info);
-    current_node = get_a_fils_of_noeud(current_node->racine, "test");
-    assert(current_node != NULL);
-    handle_boolean_test(true, current_node->est_dossier, __LINE__, __FILE__, info);
-    handle_string_test("test", current_node->nom, __LINE__, __FILE__, info);
-    handle_boolean_test(true, current_node->racine == current_node->pere, __LINE__, __FILE__, info);
-    destroy_command(cmd);
+    execute_test(info, "src/test/input/test_touch_long_path.txt", "src/test/output/test_touch_long_path.txt", SUCCESS);
 
     destroy_tree();
 }
 
-static noeud *create_and_test_node_creation_without_path(const char *name, test_info *info)
-{
-    command *cmd = string_to_command(name);
-    handle_int_test(0, touch(cmd), __LINE__, __FILE__, info);
-    noeud *created_node = get_a_fils_of_noeud(current_node, name);
-    assert(created_node != NULL);
-    handle_boolean_test(true, created_node->est_dossier, __LINE__, __FILE__, info);
-    handle_boolean_test(true, created_node->pere == current_node, __LINE__, __FILE__, info);
-    destroy_command(cmd);
-
-    return created_node;
-}
-
-static command *string_to_command(const char *name)
-{
-    char **args = malloc(sizeof(char *));
-    args[0] = malloc(sizeof(char) * (strlen(name) + 1));
-    strcpy(args[0], name);
-
-    char *cmd_name = malloc(sizeof(char) * 6);
-    strcpy(cmd_name, "touch");
-
-    command *cmd = create_command(cmd_name, 1, args);
-    return cmd;
-}
-
-static void execute_test(test_info *info, char *input, char *output)
+static void execute_test(test_info *info, char *input, char *output, int expected_result)
 {
     out_stream_path = output;
     out_stream = open_file(out_stream_path, "w");
 
     int result = parse_file(input);
 
-    handle_int_test(SUCCESS, result, __LINE__, __FILE__, info);
+    handle_int_test(expected_result, result, __LINE__, __FILE__, info);
 
     current_node = current_node->racine;
     close_file(out_stream, out_stream_path);

@@ -51,7 +51,6 @@ int parse_file(const char *path)
         exit_code = parse_line(line);
         if (exit_code == FATAL_ERROR)
         {
-            perror("Probleme parse line");
             break;
         }
         exit_code = SUCCESS;
