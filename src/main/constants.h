@@ -1,13 +1,16 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 extern FILE *out_stream;
 extern bool verbose;
 extern char *out_stream_path;
+extern bool interactive;
 
+extern const int EXIT_PROGRAM_SUCCESS;   // Error code that indicates that the program executed successfully and that it
+                                         // should be terminated
 extern const int SUCCESS;                // Error code that indicates that the program executed successfully
 extern const int FATAL_ERROR;            // Error code that indicates that he program should stop
 extern const int INVALID_NAME;           // Error code that indicates that the name of a node is invalid
