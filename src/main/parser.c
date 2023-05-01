@@ -34,14 +34,14 @@ int parse_file(const char *path)
         return FATAL_ERROR;
     }
 
-    int exit_code = 0;
-
     if (verbose)
     {
         fputs("Parsing file ", out_stream);
         fputs(path, out_stream);
         fputs(" ...\n", out_stream);
     }
+
+    int exit_code = SUCCESS;
 
     char *line = NULL;
     size_t len = 0;
@@ -54,6 +54,7 @@ int parse_file(const char *path)
             perror("Probleme parse line");
             break;
         }
+        exit_code = SUCCESS;
     }
 
     free(line);
@@ -133,5 +134,5 @@ static command *get_command_from_iterator(string_iterator *iterator)
         }
     }
 
-    return create_command(command_, args_number, args);
+    return create_command(strip_newline(command_), args_number, args);
 }

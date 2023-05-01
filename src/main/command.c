@@ -1,10 +1,10 @@
+#include <assert.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
-#include <assert.h>
 
-#include "constants.h"
 #include "command.h"
+#include "constants.h"
 #include "tree_dir_core.h"
 
 static int debug_command(int, char **);
@@ -64,10 +64,7 @@ static void print_command(const command *cmd)
 /*
 Returns true if the command name matches the given name.
 */
-static bool is_command(const command *command, const char *name)
-{
-    return strcmp(command->name, name) == 0;
-}
+static bool is_command(const command *command, const char *name) { return strcmp(command->name, name) == 0; }
 
 /*
 Executes a command and returns the exit code.
@@ -76,55 +73,50 @@ int execute_command(const command *cmd)
 {
     // TODO we need to implement the commands and their return value
     print_command(cmd);
+
     if (is_command(cmd, "ls"))
     {
         return ls(cmd);
     }
-    else if (is_command(cmd, "cd"))
+    if (is_command(cmd, "cd"))
     {
-        // cd command
+        return cd(cmd);
     }
-    else if (is_command(cmd, "pwd"))
+    if (is_command(cmd, "pwd"))
     {
         return pwd(cmd);
     }
-    else if (is_command(cmd, "mkdir"))
+    if (is_command(cmd, "mkdir"))
     {
-        // mkdir command
+        return mkdir(cmd);
     }
-    else if (is_command(cmd, "touch"))
+    if (is_command(cmd, "touch"))
     {
         // touch command
     }
-    else if (is_command(cmd, "cat"))
-    {
-        // cat command
-    }
-    else if (is_command(cmd, "mv"))
+    if (is_command(cmd, "mv"))
     {
         // mv command
     }
-    else if (is_command(cmd, "rm"))
+    if (is_command(cmd, "rm"))
     {
         return rm(cmd);
     }
-    else if (is_command(cmd, "cp"))
+    if (is_command(cmd, "cp"))
     {
         return cp(cmd);
     }
-    else if (is_command(cmd, "print"))
+    if (is_command(cmd, "print"))
     {
         return print(cmd);
     }
-    else if (is_command(cmd, "debug"))
+    if (is_command(cmd, "debug"))
     {
         return debug_command(cmd->args_number, cmd->args);
     }
-    else
-    {
-        // command not found
-    }
-    return SUCCESS;
+    write_result_command("Command not found");
+    write_result_command(cmd->name);
+    return EXIT_FAILURE;
 }
 
 /*
@@ -152,9 +144,7 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
 {
     if (expected != actual)
     {
-        fprintf(out_stream,
-                "An incorrect number of arguments was given: %u instead of %u expected.\n",
-                actual,
+        fprintf(out_stream, "An incorrect number of arguments was given: %u instead of %u expected.\n", actual,
                 expected);
         return false;
     }
@@ -171,9 +161,7 @@ bool handle_number_of_args_with_delimitation(unsigned under_limit, unsigned uppe
     {
         fprintf(out_stream,
                 "An incorrect number of arguments was given: %u instead of a number between %u and %u expected.\n",
-                actual,
-                under_limit,
-                upper_limit);
+                actual, under_limit, upper_limit);
         return false;
     }
 
@@ -196,7 +184,7 @@ Writes all string of results in the out_stream
 */
 int write_result_lines_command(size_t lines_number, char **results)
 {
-    for (int i = 0; i < lines_number; i++)
+    for (unsigned i = 0; i < lines_number; i++)
     {
         write_result_command(results[i]);
     }

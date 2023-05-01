@@ -28,5 +28,6 @@ int ls(const command *);
 int print(const command *);
 int mkdir(const command *);
 int cp(const command *);
+int cd(const command *);
 
 #endif
