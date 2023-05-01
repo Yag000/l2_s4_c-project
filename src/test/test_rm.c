@@ -54,7 +54,7 @@ static void test_command_rm_with_tree(test_info *info)
     assert(tab_command != NULL);
     command *cmd_rm = create_command(get_alloc_pointer_of_string("rm"), 1, tab_command);
 
-    current_node = create_tree_to_test();
+    current_node = create_basic_testing_tree();
     current_node = search_node_in_tree(current_node, "test11");
 
     execute_command(cmd_print);
@@ -73,7 +73,7 @@ static void test_command_rm_with_tree(test_info *info)
 
     destroy_tree();
 
-    current_node = create_tree_to_test();
+    current_node = create_basic_testing_tree();
 
     execute_command(cmd_print);
 
@@ -121,7 +121,7 @@ static void test_error_of_rm(test_info *info)
 {
     print_test_name("Testing rm errors");
 
-    current_node = create_tree_to_test();
+    current_node = create_basic_testing_tree();
 
     out_stream_path = "src/test/output/test_rm_error.txt";
     out_stream = open_file(out_stream_path, "w");

@@ -15,10 +15,9 @@ static void test_error_of_cp(test_info *);
 
 test_info *test_cp()
 {
-    print_test_header("cp");
-
-    clock_t before = clock();
     // Create the test info
+    print_test_header("cp");
+    clock_t before = clock();
     test_info *info = create_test_info();
 
     // Add tests here
@@ -55,7 +54,7 @@ static void test_command_cp_with_tree(test_info *info)
     assert(tab_command != NULL);
     command *cmd_cp = create_command(get_alloc_pointer_of_string("cp"), 2, tab_command);
 
-    current_node = create_tree_to_test();
+    current_node = create_basic_testing_tree();
     current_node = search_node_in_tree(current_node, "test11");
 
     execute_command(cmd_print);
@@ -100,7 +99,7 @@ static void test_error_of_cp(test_info *info)
     out_stream_path = "src/test/output/test_cp_error.txt";
     out_stream = open_file(out_stream_path, "w");
 
-    current_node = create_tree_to_test();
+    current_node = create_basic_testing_tree();
 
     char **tab_command = malloc(2 * (sizeof(char *)));
     assert(tab_command != NULL);

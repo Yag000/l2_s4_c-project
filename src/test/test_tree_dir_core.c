@@ -367,7 +367,7 @@ static void test_get_absolute_path_of_node(test_info *info)
 static void test_search_without_create(test_info *info)
 {
     print_test_name("Testing to search nodes with path without creating new nodes");
-    current_node = create_tree_to_test();
+    current_node = create_basic_testing_tree();
     char *absolute_path;
 
     noeud *node = search_node_in_tree(current_node, "test/test2");
@@ -447,7 +447,7 @@ static void test_search_without_create(test_info *info)
 static void test_search_with_create(test_info *info)
 {
     print_test_name("Testing to search nodes with path with creating new nodes");
-    current_node = create_tree_to_test();
+    current_node = create_basic_testing_tree();
     char *absolute_path;
 
     noeud *node = search_node_in_tree_with_node_creation(current_node, "test/test2", false);

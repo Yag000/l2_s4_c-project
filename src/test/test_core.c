@@ -157,7 +157,7 @@ void handle_int_test(int expected, int actual, int line, const char *file, test_
     info->passed++;
 }
 
-noeud *create_tree_to_test()
+noeud *create_basic_testing_tree()
 {
     noeud *root = create_root_noeud();
 

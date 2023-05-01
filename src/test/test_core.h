@@ -35,7 +35,7 @@ void handle_string_test(const char *, const char *, int, const char *, test_info
 void handle_boolean_test(bool, bool, int, const char *, test_info *);
 void handle_int_test(int, int, int, const char *, test_info *);
 
-noeud *create_tree_to_test();
+noeud *create_basic_testing_tree();
 
 // All the tests
 test_info *test_string_utils();
