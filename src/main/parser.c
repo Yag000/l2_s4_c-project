@@ -44,7 +44,7 @@ int parse_file(const char *path)
     }
 
     char *line = NULL;
-    size_t len = 0;
+    size_t len = SUCCESS;
     ssize_t read;
     while ((read = getline(&line, &len, file)) != -1)
     {
@@ -54,6 +54,7 @@ int parse_file(const char *path)
             perror("Probleme parse line");
             break;
         }
+        exit_code = SUCCESS;
     }
 
     free(line);
@@ -133,5 +134,5 @@ static command *get_command_from_iterator(string_iterator *iterator)
         }
     }
 
-    return create_command(command_, args_number, args);
+    return create_command(strip_newline(command_), args_number, args);
 }
