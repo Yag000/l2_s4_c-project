@@ -1,0 +1,12 @@
+Parsing file src/test/input/test_cd_invalid_number_of_args.txt ...
+/$ cd fwef fwefwe
+An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
+/$ cd gerf efqwe
+An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
+/$ cd gerf efqwe
+An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
+/$ cd gerf efqwe
+An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
+/$ cd gerf efqwe
+An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
+An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
