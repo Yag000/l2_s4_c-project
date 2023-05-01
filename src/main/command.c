@@ -90,11 +90,11 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "mkdir"))
     {
-        // mkdir command
+        return mkdir(cmd);
     }
     else if (is_command(cmd, "touch"))
     {
-        // touch command
+        return touch(cmd);
     }
     else if (is_command(cmd, "cat"))
     {
