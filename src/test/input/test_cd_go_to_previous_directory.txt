@@ -1,0 +1,10 @@
+pwd
+print
+cd test
+cd ..
+cd test/test3
+cd ..
+cd .
+cd test5/test7
+cd ../..
+pwd

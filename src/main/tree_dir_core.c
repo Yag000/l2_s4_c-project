@@ -428,7 +428,8 @@ Otherwise the function returns NULL
 noeud *search_node_in_tree(noeud *deb, char *path) { return search_node(deb, path, false, false); }
 
 /*
-Returns a node in the position given by the path. The last word represents the node's name.
+Returns a new node in the position given by the path if it exists.
+The last word represents the node's name.
 */
 noeud *search_node_in_tree_with_node_creation(noeud *deb, char *path, bool is_directory)
 {
@@ -449,6 +450,11 @@ static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is
         return NULL;
     }
 
+    if (path[len_path - 1] == '/')
+    {
+        return NULL;
+    }
+
     string_iterator *iterator = create_string_iterator(path, '/');
 
     if (path[0] == '/')
@@ -460,11 +466,6 @@ static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is
 
     destroy_string_iterator(iterator);
 
-    // The path is not valid if there is a '/' in the last char of path, and result is not a directory
-    if (result == NULL || (path[len_path - 1] == '/' && !result->est_dossier))
-    {
-        return NULL;
-    }
     return result;
 }
 
@@ -474,13 +475,13 @@ If the iteration is ".", applies the function to the same node
 If the iteration is "..", applies the function to the parent of node
 If the iteration is not found in fils of node, returns NULL
 If the name is included then it will stop before reaching the end of
-the path an return a noeud with it's nom as the last word of the path.
+the path and return a noeud with it's nom as the last word of the path.
 Otherwise applies the function to the found child
 */
 static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator, bool is_name_included,
                                                 bool is_directory)
 {
-    if (!has_next_word(iterator))
+    if (!has_next_word(iterator) && !is_name_included)
     {
         return node;
     }
@@ -490,6 +491,15 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
     }
 
     char *name = next_word(iterator);
+
+    if (!has_next_word(iterator) && is_name_included)
+    {
+
+        noeud *result = create_noeud(is_directory, name, node);
+
+        free(name);
+        return result;
+    }
 
     if (strcmp(name, ".") == 0)
     {
@@ -509,15 +519,6 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
         return search_node_in_tree_with_iterator(node->pere, iterator, is_name_included, is_directory);
     }
 
-    if (!has_next_word(iterator) && is_name_included)
-    {
-
-        noeud *result = create_noeud(is_directory, name, node);
-
-        free(name);
-
-        return result;
-    }
     noeud *next_node = get_a_fils_of_noeud(node, name);
 
     free(name);

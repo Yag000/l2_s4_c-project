@@ -77,60 +77,56 @@ int execute_command(const command *cmd)
 {
     // TODO we need to implement the commands and their return value
     print_command(cmd);
+
     if (is_command(cmd, "ls"))
     {
         return ls(cmd);
     }
-    else if (is_command(cmd, "cd"))
+    if (is_command(cmd, "cd"))
     {
-        // cd command
+        return cd(cmd);
     }
-    else if (is_command(cmd, "pwd"))
+    if (is_command(cmd, "pwd"))
     {
         return pwd(cmd);
     }
-    else if (is_command(cmd, "mkdir"))
+    if (is_command(cmd, "mkdir"))
     {
         return mkdir(cmd);
     }
-    else if (is_command(cmd, "touch"))
+    if (is_command(cmd, "touch"))
     {
         // touch command
     }
-    else if (is_command(cmd, "cat"))
-    {
-        // cat command
-    }
-    else if (is_command(cmd, "mv"))
+    if (is_command(cmd, "mv"))
     {
         // mv command
     }
-    else if (is_command(cmd, "rm"))
+    if (is_command(cmd, "rm"))
     {
         return rm(cmd);
     }
-    else if (is_command(cmd, "cp"))
+    if (is_command(cmd, "cp"))
     {
-        // cp command
+        return cp(cmd);
     }
-    else if (is_command(cmd, "print"))
+    if (is_command(cmd, "print"))
     {
         return print(cmd);
     }
-    else if (is_command(cmd, "debug"))
+    if (is_command(cmd, "debug"))
     {
         return debug_command(cmd->args_number, cmd->args);
     }
-    else if (is_command(cmd, "exit"))
+    if (is_command(cmd, "exit"))
     {
-        //TODO: implement this properly (another PR)
-        return  EXIT_PROGRAM_SUCCESS;
+        // TODO: implement this properly (another PR)
+        return EXIT_PROGRAM_SUCCESS;
     }
-    else
-    {
-        // command not found
-    }
-    return SUCCESS;
+
+    write_result_command("Command not found");
+    write_result_command(cmd->name);
+    return EXIT_FAILURE;
 }
 
 /*
@@ -198,7 +194,7 @@ Writes all string of results in the out_stream
 */
 int write_result_lines_command(size_t lines_number, char **results)
 {
-    for (int i = 0; i < lines_number; i++)
+    for (unsigned i = 0; i < lines_number; i++)
     {
         write_result_command(results[i]);
     }

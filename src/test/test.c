@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "test_core.h"
 #include "../main/constants.h"
 #include "../main/tree_dir_core.h"
+#include "test_core.h"
 
 bool verbose = true;
 bool debug;
@@ -37,10 +37,12 @@ int main(int argc, char *argv[])
     update_test_info(info, test_parser());
     update_test_info(info, test_command());
     update_test_info(info, test_pwd());
+    update_test_info(info, test_cd());
     update_test_info(info, test_rm());
     update_test_info(info, test_ls());
     update_test_info(info, test_print());
     update_test_info(info, test_mkdir());
+    update_test_info(info, test_cp());
 
     // End of tests
 

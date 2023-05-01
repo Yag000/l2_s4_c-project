@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -std=c99
+CFLAGS=-Wall -Wextra -std=c99
 EXEC=main
 
 SRCDIR=src/main

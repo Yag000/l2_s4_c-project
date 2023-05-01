@@ -50,12 +50,13 @@ int parse_file(const char *path)
         return FATAL_ERROR;
     }
 
-    int exit_code = 0;
 
     if (interactive)
     {
         print_command_header();
     }
+
+    int exit_code = SUCCESS;
 
     char *line = NULL;
     size_t len = 0;
@@ -72,6 +73,7 @@ int parse_file(const char *path)
         {
             print_command_header();
         }
+        exit_code = SUCCESS;
     }
 
     free(line);

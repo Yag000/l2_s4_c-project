@@ -4,17 +4,12 @@ test12 [F]
 test6 [F]
 test7 [D]
 test8 [F]
-/test11$ ls ../
+/test11$ ls ..
 test   [D]
 test9  [F]
 test10 [D]
 test11 [D]
-/test11$ ls /
-test   [D]
-test9  [F]
-test10 [D]
-test11 [D]
-/test11$ ls /test10/
+/test11$ ls /test10
 /test11$ ls /test/test5
 test6 [F]
 test7 [D]
