@@ -1,10 +1,11 @@
+#include <assert.h>
+#include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
-#include <assert.h>
 
-#include "constants.h"
 #include "command.h"
+#include "constants.h"
 #include "tree_dir_core.h"
 
 static int debug_command(int, char **);
@@ -36,21 +37,14 @@ void destroy_command(command *cmd)
 /*
 Prints a command if verbose mode is enabled.
 */
-static void print_command(const command *cmd)
+void print_command(const command *cmd)
 {
-    if (!verbose)
+    if (!verbose || interactive)
     {
         return;
     }
 
-    if (current_node != NULL)
-    {
-        char *path = get_absolute_path_of_node(current_node);
-        fputs(path, out_stream);
-        free(path);
-    }
-
-    fputs("$ ", out_stream);
+    print_command_header();
 
     fputs(cmd->name, out_stream);
     for (int i = 0; i < cmd->args_number; i++)
@@ -61,13 +55,20 @@ static void print_command(const command *cmd)
     fputs("\n", out_stream);
 }
 
+void print_command_header()
+{
+    if (current_node != NULL)
+    {
+        char *path = get_absolute_path_of_node(current_node);
+        fputs(path, out_stream);
+        free(path);
+        fputs("$ ", out_stream);
+    }
+}
 /*
 Returns true if the command name matches the given name.
 */
-static bool is_command(const command *command, const char *name)
-{
-    return strcmp(command->name, name) == 0;
-}
+static bool is_command(const command *command, const char *name) { return strcmp(command->name, name) == 0; }
 
 /*
 Executes a command and returns the exit code.
@@ -90,7 +91,7 @@ int execute_command(const command *cmd)
     }
     else if (is_command(cmd, "mkdir"))
     {
-        // mkdir command
+        return mkdir(cmd);
     }
     else if (is_command(cmd, "touch"))
     {
@@ -119,6 +120,11 @@ int execute_command(const command *cmd)
     else if (is_command(cmd, "debug"))
     {
         return debug_command(cmd->args_number, cmd->args);
+    }
+    else if (is_command(cmd, "exit"))
+    {
+        //TODO: implement this properly (another PR)
+        return  EXIT_PROGRAM_SUCCESS;
     }
     else
     {
@@ -152,9 +158,7 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
 {
     if (expected != actual)
     {
-        fprintf(out_stream,
-                "An incorrect number of arguments was given: %u instead of %u expected.\n",
-                actual,
+        fprintf(out_stream, "An incorrect number of arguments was given: %u instead of %u expected.\n", actual,
                 expected);
         return false;
     }
@@ -171,9 +175,7 @@ bool handle_number_of_args_with_delimitation(unsigned under_limit, unsigned uppe
     {
         fprintf(out_stream,
                 "An incorrect number of arguments was given: %u instead of a number between %u and %u expected.\n",
-                actual,
-                under_limit,
-                upper_limit);
+                actual, under_limit, upper_limit);
         return false;
     }
 
