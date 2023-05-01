@@ -21,26 +21,26 @@ Parsing file src/test/input/test_cd_invalid_path.txt ...
 /$ pwd
 /
 /$ cd testt
-Invalid path.
+No such file or directory.
 /$ cd test/test2
-Invalid path.
+No such file or directory.
 /$ cd test/test2/test3
-Invalid path.
+No such file or directory.
 /$ cd test/test3/../test2
-Invalid path.
+No such file or directory.
 /$ cd ././././././test15
-Invalid path.
+No such file or directory.
 /$ cd test/10
-Invalid path.
+No such file or directory.
 /$ cd test
 
 /test$ pwd
 /test
 /test$ cd /test10
-Invalid path.
+No such file or directory.
 /test$ cd /test12/test
-Invalid path.
+No such file or directory.
 /test$ cd /test12/test13
-Invalid path.
+No such file or directory.
 /test$ cd test/../test/test4
-Invalid path.
+No such file or directory.
