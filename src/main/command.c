@@ -96,7 +96,7 @@ int execute_command(const command *cmd)
     }
     if (is_command(cmd, "touch"))
     {
-        // touch command
+        return touch(cmd);
     }
     if (is_command(cmd, "mv"))
     {
