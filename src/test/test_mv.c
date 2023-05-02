@@ -58,8 +58,8 @@ static void test_command_mv_with_tree(test_info *info)
 
     execute_command(cmd_print);
 
-    tab_command[0] = get_alloc_pointer_of_string("/test/test5");
-    tab_command[1] = get_alloc_pointer_of_string("/test11/test5");
+    tab_command[0] = "/test/test5";
+    tab_command[1] = "/test11/test5";
 
     handle_boolean_test(true, execute_command(cmd_mv) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
