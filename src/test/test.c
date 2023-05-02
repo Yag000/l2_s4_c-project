@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
     update_test_info(info, test_mkdir());
     update_test_info(info, test_touch());
     update_test_info(info, test_cp());
+    update_test_info(info, test_mv());
 
     // End of tests
 

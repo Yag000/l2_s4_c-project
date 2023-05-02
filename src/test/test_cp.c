@@ -157,7 +157,7 @@ static void test_error_of_cp(test_info *info)
 
     tab_command = malloc(0);
     assert(tab_command != NULL);
-    cmd = create_command(get_alloc_pointer_of_string("rm"), 0, tab_command);
+    cmd = create_command(get_alloc_pointer_of_string("cp"), 0, tab_command);
     handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
