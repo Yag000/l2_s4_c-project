@@ -61,7 +61,7 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 Returns false if a name is an empty string, is ".", is ".." or if it contains '/'
 Otherwise it returns true
 */
-bool is_valid_name_node(const char *name) { return is_alphanumeric(name); }
+bool is_valid_name_node(const char *name) { return is_alphanumeric(name) && strlen(name) <= 99; }
 
 noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent, liste_noeud *children)
 {
@@ -558,7 +558,7 @@ bool is_noeud_inside(const noeud *node1, const noeud *node2)
     return false;
 }
 
-unsigned get_longest_length_of_node_fils(const noeud *node)
+unsigned get_longest_name_length_of_node_fils(const noeud *node)
 {
     if (node == NULL || !node->est_dossier)
     {
@@ -576,4 +576,23 @@ unsigned get_longest_length_of_node_fils(const noeud *node)
         }
     }
     return max_len;
+}
+
+/*
+Move the fils of node to a new node and destroy node
+*/
+void move_fils_of_node_to_a_new_node(noeud *node, noeud *new_node)
+{
+    if (node == NULL || new_node == NULL)
+    {
+        return;
+    }
+
+    new_node->fils = node->fils;
+
+    for (liste_noeud *lst = node->fils; lst != NULL; lst = lst->succ)
+    {
+        lst->no->pere = new_node;
+    }
+    free(node);
 }
