@@ -583,7 +583,7 @@ Move the fils of node to a new node and destroy node
 */
 void move_fils_of_node_to_a_new_node(noeud *node, noeud *new_node)
 {
-    if (node == NULL || new_node == NULL)
+    if (node == NULL || new_node == NULL || new_node->fils != NULL)
     {
         return;
     }
