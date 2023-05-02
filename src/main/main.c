@@ -10,7 +10,6 @@ FILE *out_stream;
 
 bool verbose = false;
 noeud *current_node;
-bool interactive;
 
 int main(int argc, char *argv[])
 {
