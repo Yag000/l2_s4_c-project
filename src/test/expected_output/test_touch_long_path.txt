@@ -1,0 +1,11 @@
+Parsing file src/test/input/test_touch_long_path.txt ...
+/$ mkdir Test
+/$ mkdir Test/Test1
+/$ mkdir Test/Test1/Test2
+/$ touch ../../.././Test/../Test/../Test/Test1/Test2/file
+/$ print
+/ (D)
+\-- Test (D)
+    \-- Test1 (D)
+        \-- Test2 (D)
+            \-- file (F)

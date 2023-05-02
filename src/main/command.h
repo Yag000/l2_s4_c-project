@@ -16,6 +16,7 @@ command *create_command(char *, int, char **);
 void destroy_command(command *);
 
 int execute_command(const command *);
+void print_command_header();
 
 bool handle_number_of_args(unsigned, unsigned);
 bool handle_number_of_args_with_delimitation(unsigned, unsigned, unsigned);
@@ -27,6 +28,7 @@ int rm(const command *);
 int ls(const command *);
 int print(const command *);
 int mkdir(const command *);
+int touch(const command *);
 int cp(const command *);
 int cd(const command *);
 

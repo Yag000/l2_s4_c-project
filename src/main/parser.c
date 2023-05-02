@@ -1,6 +1,6 @@
-
 #define _GNU_SOURCE
 #include <assert.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -27,18 +27,33 @@ It returns 0 if the execution of the commands is successful.
 */
 int parse_file(const char *path)
 {
-    FILE *file = open_file(path, "r");
+    if (verbose && !interactive)
+    {
+        fputs("Parsing file ", out_stream);
+        fputs(path, out_stream);
+        fputs(" ...\n", out_stream);
+    }
+
+    FILE *file;
+    if (interactive)
+    {
+
+        file = stdin;
+    }
+    else
+    {
+        file = open_file(path, "r");
+    }
 
     if (file == NULL)
     {
         return FATAL_ERROR;
     }
 
-    if (verbose)
+
+    if (interactive)
     {
-        fputs("Parsing file ", out_stream);
-        fputs(path, out_stream);
-        fputs(" ...\n", out_stream);
+        print_command_header();
     }
 
     int exit_code = SUCCESS;
@@ -49,16 +64,21 @@ int parse_file(const char *path)
     while ((read = getline(&line, &len, file)) != -1)
     {
         exit_code = parse_line(line);
-        if (exit_code == FATAL_ERROR)
+        if (exit_code == FATAL_ERROR || exit_code == EXIT_PROGRAM_SUCCESS)
         {
-            perror("Probleme parse line");
             break;
+        }
+
+        if (interactive)
+        {
+            print_command_header();
         }
         exit_code = SUCCESS;
     }
 
     free(line);
-    close_file(file, path);
+
+    fclose(file);
 
     return exit_code;
 }
@@ -69,6 +89,7 @@ It returns 0 if the command execution is successful.
 */
 int parse_line(char *line)
 {
+
     string_iterator *iterator = create_string_iterator(line, ' ');
 
     if (iterator == NULL)
