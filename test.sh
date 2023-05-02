@@ -44,7 +44,8 @@ function test_main(){
     local expected_output_dir="src/test/test_main/expected_output"
     local output_dir="src/test/test_main/output"
     local input_dir="src/test/test_main/input"
-    
+    [ ! -d "$output_dir" ] && mkdir "$output_dir"
+ 
     # Get a list of output file names (excluding directories)
     local expected_output_files=$(find $expected_output_dir -type f -name "*.txt" -printf "%f\n")
     # Loop through the input files
@@ -55,7 +56,7 @@ function test_main(){
         local flags=""
         
         echo $file | grep "verbose.txt$" > /dev/null && flags="-v"
-        ./main  "$input_file"  $flags > "$output_dir/$file"
+        ./main  "$input_file"  $flags > "$output_file"
         
         # if the test fails then set has_test_output_failed to true
         test_one_output $expected_output_dir $output_dir $file || has_main_test_failed=true
@@ -107,8 +108,8 @@ function test_ouput(){
 }
 
 
+[ ! -d "$output_dir" ] && mkdir "$output_dir"
 
-[ ! -d "${output_dir}" ] && mkdir "${output_dir}"
 
 # Clean up before running the tests
 clean
@@ -133,3 +134,7 @@ $has_passed && exit 0
 
 # Exit with a zero status if all the tests passed
 exit 1
+
+    
+    
+
