@@ -61,7 +61,7 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 Returns false if a name is an empty string, is ".", is ".." or if it contains '/'
 Otherwise it returns true
 */
-bool is_valid_name_node(const char *name) { return is_alphanumeric(name) && strlen(name) <= 99; }
+bool is_valid_name_node(const char *name) { return is_alphanumeric(name); }
 
 noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent, liste_noeud *children)
 {
@@ -579,9 +579,9 @@ unsigned get_longest_name_length_of_node_fils(const noeud *node)
 }
 
 /*
-Move the fils of node to a new node and destroy node
+Move the fils of node to a new node and frees node
 */
-void move_fils_of_node_to_a_new_node(noeud *node, noeud *new_node)
+void move_fils_of_node_to_new_node(noeud *node, noeud *new_node)
 {
     if (node == NULL || new_node == NULL || new_node->fils != NULL)
     {

@@ -53,7 +53,7 @@ int mv(const command *cmd)
         return FATAL_ERROR;
     }
 
-    move_fils_of_node_to_a_new_node(node_to_move, node_to_append);
+    move_fils_of_node_to_new_node(node_to_move, node_to_append);
 
     return SUCCESS;
 }

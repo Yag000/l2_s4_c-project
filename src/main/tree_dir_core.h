@@ -54,6 +54,6 @@ char *get_absolute_path_of_node(const noeud *);
 noeud *search_node_in_tree(noeud *, char *);
 noeud *search_node_in_tree_with_node_creation(noeud *, char *, bool);
 
-void move_fils_of_node_to_a_new_node(noeud *, noeud *);
+void move_fils_of_node_to_new_node(noeud *, noeud *);
 
 #endif
