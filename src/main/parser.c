@@ -19,6 +19,7 @@ but for the purpose of this project, we will use a fixed size array of 2.
 #define MAX_COMMAND_ARGUMENTS 2
 
 static command *get_command_from_iterator(string_iterator *);
+static bool shouldProgramStop(int);
 
 /*
 Parses a file containing commands.
@@ -69,7 +70,7 @@ int parse_file(const char *path)
 
         exit_code = parse_line(line);
 
-        if (exit_code != SUCCESS && error_occurs_stop)
+        if (shouldProgramStop(exit_code))
         {
             break;
         }
@@ -85,6 +86,19 @@ int parse_file(const char *path)
     }
 
     return exit_code;
+}
+
+static bool shouldProgramStop(int exit_code)
+{
+    if (error_occurs_stop && exit_code != SUCCESS)
+    {
+        return true;
+    }
+    if (exit_code == EXIT_PROGRAM_SUCCESS || exit_code == FATAL_ERROR)
+    {
+        return true;
+    }
+    return false;
 }
 
 /*
