@@ -22,7 +22,7 @@ Error while creating directory.
 Error while creating directory.
 /$ cp /test/test5/test6 /test12
 Error while creating directory.
-/$ rm
-An incorrect number of arguments was given: 0 instead of 1 expected.
+/$ cp
+An incorrect number of arguments was given: 0 instead of 2 expected.
 /$ cp test test test
 An incorrect number of arguments was given: 3 instead of 2 expected.

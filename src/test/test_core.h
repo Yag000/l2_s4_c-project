@@ -50,7 +50,7 @@ test_info *test_mkdir();
 test_info *test_touch();
 test_info *test_cd();
 test_info *test_cp();
+test_info *test_mv();
 test_info *test_print();
-
 
 #endif
