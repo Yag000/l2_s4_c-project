@@ -28,7 +28,7 @@ test_info *test_mkdir()
     clock_t before = clock();
     test_info *info = create_test_info();
 
-    out_stream_path = "src/test/output/mkdir_invalid_input.txt";
+    out_stream_path = "src/test/output/test_mkdir_invalid_input.txt";
     out_stream = open_file(out_stream_path, "w");
 
     // Add tests here
@@ -108,7 +108,7 @@ static void test_mkdir_already_exists(test_info *info)
 
     char *name = "test";
     command *cmd = string_to_command(name);
-    handle_int_test(FATAL_ERROR, mkdir(cmd), __LINE__, __FILE__, info);
+    handle_int_test(INVALID_NAME, mkdir(cmd), __LINE__, __FILE__, info);
     destroy_command(cmd);
 
     // Testing inside a folder different from the root
@@ -117,7 +117,7 @@ static void test_mkdir_already_exists(test_info *info)
 
     name = "testSon";
     cmd = string_to_command(name);
-    handle_int_test(FATAL_ERROR, mkdir(cmd), __LINE__, __FILE__, info);
+    handle_int_test(INVALID_NAME, mkdir(cmd), __LINE__, __FILE__, info);
     destroy_command(cmd);
 
     destroy_tree();

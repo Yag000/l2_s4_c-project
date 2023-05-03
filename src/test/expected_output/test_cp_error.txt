@@ -17,11 +17,11 @@ An element cannot be copied inside a directory contained in the copy.
 /$ cp . test12/nouveau
 An element cannot be copied inside a directory contained in the copy.
 /$ cp /test/test5 /test
-Error while creating directory.
+Invalid name : an element with the same name already exists.
 /$ cp /test12/test13 /test/test2
-Error while creating directory.
+Invalid name : an element with the same name already exists.
 /$ cp /test/test5/test6 /test12
-Error while creating directory.
+Invalid name : an element with the same name already exists.
 /$ cp
 An incorrect number of arguments was given: 0 instead of 2 expected.
 /$ cp test test test

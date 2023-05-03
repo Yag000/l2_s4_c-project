@@ -27,9 +27,9 @@ An directory containing the current node cannot be moved.
 /test/test5$ mv /test/test5 /test/test11/New
 An directory containing the current node cannot be moved.
 /$ mv /test/test5 /test/test5
-Error while creating directory.
+Invalid name : an element with the same name already exists.
 /$ mv /test/test5 /test
-Error while creating directory.
+Invalid name : an element with the same name already exists.
 /$ mv
 An incorrect number of arguments was given: 0 instead of 2 expected.
 /$ mv test test test

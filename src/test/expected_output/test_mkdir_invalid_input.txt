@@ -6,5 +6,5 @@ Invalid path of directory.
 Invalid path of directory.
 Invalid path of directory.
 Invalid path of directory.
-Error while creating directory.
-Error while creating directory.
+Invalid name : an element with the same name already exists.
+Invalid name : an element with the same name already exists.
