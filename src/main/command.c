@@ -75,7 +75,6 @@ Executes a command and returns the exit code.
 */
 int execute_command(const command *cmd)
 {
-    // TODO we need to implement the commands and their return value
     print_command(cmd);
 
     if (is_command(cmd, "ls"))
@@ -120,7 +119,6 @@ int execute_command(const command *cmd)
     }
     if (is_command(cmd, "exit"))
     {
-        // TODO: implement this properly (another PR)
         return EXIT_PROGRAM_SUCCESS;
     }
 

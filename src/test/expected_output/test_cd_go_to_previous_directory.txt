@@ -19,18 +19,11 @@ Parsing file src/test/input/test_cd_go_to_previous_directory.txt ...
     |-- test14 (F)
     \-- test15 (F)
 /$ cd test
-
 /test$ cd ..
-
 /$ cd test/test3
-
 /test/test3$ cd ..
-
 /test$ cd .
-
 /test$ cd test5/test7
-
 /test/test5/test7$ cd ../..
-
 /test$ pwd
 /test

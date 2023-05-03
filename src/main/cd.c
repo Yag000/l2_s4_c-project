@@ -11,23 +11,20 @@ int cd(const command *cmd)
         return INVALID_NUMBER_OF_ARGS;
     }
 
-
     if (cmd->args_number == 0)
     {
         current_node = current_node->racine;
-        write_result_command("");
         return SUCCESS;
     }
 
     noeud *tmp = search_node_in_tree(current_node, cmd->args[0]);
 
-    if (tmp == NULL || !tmp-> est_dossier)
+    if (tmp == NULL || !tmp->est_dossier)
     {
         write_result_command("No such file or directory.");
         return INVALID_PATH;
     }
 
     current_node = tmp;
-    write_result_command("");
     return SUCCESS;
 }

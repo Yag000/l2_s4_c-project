@@ -21,14 +21,16 @@ Every test should be called from here and the results should be printed.
 */
 int main(int argc, char *argv[])
 {
-    if (argc > 1 &&  strcmp(argv[1], "-v") == 0)
-    {   debug = true;
+    if (argc > 1 && strcmp(argv[1], "-v") == 0)
+    {
+        debug = true;
         puts("Debug mode enabled");
     }
 
     // Create the test info
     test_info *info = create_test_info();
     clock_t before = clock();
+    error_occurs_stop = false;
 
     // Add tests here
 

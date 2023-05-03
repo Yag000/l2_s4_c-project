@@ -17,7 +17,6 @@ Parsing file src/test/input/test_cd_invalid_path.txt ...
     |-- test14 (F)
     \-- test15 (F)
 /$ cd
-
 /$ pwd
 /
 /$ cd testt
@@ -33,7 +32,6 @@ No such file or directory.
 /$ cd test/10
 No such file or directory.
 /$ cd test
-
 /test$ pwd
 /test
 /test$ cd /test10
