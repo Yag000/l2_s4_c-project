@@ -15,10 +15,11 @@ typedef struct flags
 {
     bool verbose;
     bool interactive;
+    bool error_occurs_stop
 } flags;
 
 static flags *parse_flags(int, char *[]);
-static void activate_flags(flags *); 
+static void activate_flags(flags *);
 
 int main(int argc, char *argv[])
 {
@@ -41,6 +42,7 @@ static flags *parse_flags(int argc, char *argv[])
     flags *flag = malloc(sizeof(flags));
     flag->verbose = false;
     flag->interactive = false;
+    flag->error_occurs_stop = true;
 
     for (int i = 1; i < argc; i++)
     {
@@ -52,6 +54,10 @@ static flags *parse_flags(int argc, char *argv[])
         {
             flag->interactive = true;
         }
+        else if (strcmp(argv[i], "-c") == 0)
+        {
+            flag->error_occurs_stop = false;
+        }
     }
     return flag;
 }
@@ -60,7 +66,7 @@ static void activate_flags(flags *flag)
 {
     verbose = flag->verbose;
     interactive = flag->interactive;
-    
+    error_occurs_stop = flag->error_occurs_stop;
+
     free(flag);
 }
-

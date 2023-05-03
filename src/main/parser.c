@@ -50,7 +50,6 @@ int parse_file(const char *path)
         return FATAL_ERROR;
     }
 
-
     if (interactive)
     {
         print_command_header();
@@ -63,22 +62,27 @@ int parse_file(const char *path)
     ssize_t read;
     while ((read = getline(&line, &len, file)) != -1)
     {
-        exit_code = parse_line(line);
-        if (exit_code == FATAL_ERROR || exit_code == EXIT_PROGRAM_SUCCESS)
-        {
-            break;
-        }
-
         if (interactive)
         {
             print_command_header();
         }
-        exit_code = SUCCESS;
+
+        exit_code = parse_line(line);
+
+        if (exit_code != SUCCESS && error_occurs_stop)
+        {
+            break;
+        }
     }
 
     free(line);
 
     fclose(file);
+
+    if (!error_occurs_stop)
+    {
+        return SUCCESS;
+    }
 
     return exit_code;
 }
@@ -107,6 +111,8 @@ int parse_line(char *line)
         perror("Problème creation commande");
 
         free(line);
+        destroy_string_iterator(iterator);
+
         return FATAL_ERROR;
     }
 

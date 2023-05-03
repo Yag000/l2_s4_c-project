@@ -431,7 +431,6 @@ char *get_absolute_path_of_node(const noeud *node)
 
     return absolute_path;
 }
-// TODO: add comments and better names
 
 /*
 Search a node in a tree, and if it is found, it is returned
