@@ -31,6 +31,14 @@ int touch(const command *cmd)
     {
         write_result_command("Invalid name : an element with the same name already exists.");
         destroy_noeud(new_node);
+        return INVALID_NAME;
+    }
+
+    if (append_error_value != SUCCESS)
+    {
+        write_result_command("Error while creating directory.");
+        destroy_noeud(new_node);
+        return FATAL_ERROR;
     }
 
     return append_error_value;

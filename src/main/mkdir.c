@@ -30,7 +30,15 @@ int mkdir(const command *cmd)
     {
         write_result_command("Invalid name : an element with the same name already exists.");
         destroy_noeud(new_node);
+        return INVALID_NAME;
     }
 
-    return append_error_value;
+    if (append_error_value != SUCCESS)
+    {
+        write_result_command("Error while creating directory.");
+        destroy_noeud(new_node);
+        return FATAL_ERROR;
+    }
+
+    return SUCCESS;
 }

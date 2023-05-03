@@ -26,7 +26,7 @@ Otherwise it returns NULL
 */
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
-    assert(nom != NULL && pere != NULL);
+    assert(pere != NULL);
 
     if (!is_valid_name_node(nom))
     {
@@ -180,7 +180,12 @@ not already contain node.
 */
 int append_a_fils_to_noeud(noeud *parent, noeud *node)
 {
-    assert(parent != NULL && node != NULL && parent->est_dossier);
+    assert(parent != NULL && node != NULL);
+
+    if (!parent->est_dossier)
+    {
+        return INVALID_SELECTION;
+    }
 
     int append_error_value;
 
@@ -210,7 +215,12 @@ the parent is not a directory it will fail.
 */
 int remove_a_node_from_fils(noeud *parent, noeud *node)
 {
-    assert(parent != NULL && node != NULL && parent->est_dossier);
+    assert(parent != NULL && node != NULL);
+
+    if (!parent->est_dossier)
+    {
+        return INVALID_SELECTION;
+    }
 
     if (!contains_liste_noeud(parent->fils, node))
     {
@@ -229,7 +239,12 @@ If parent did not contain it or if the parent is not a directory it will fail.
 */
 int remove_a_fils_of_noeud(noeud *parent, const char *name)
 {
-    assert(parent != NULL && parent->est_dossier && name != NULL);
+    assert(parent != NULL);
+
+    if (!parent->est_dossier)
+    {
+        return INVALID_SELECTION;
+    }
 
     noeud *node = get_a_noeud_in_liste_noeud(parent->fils, name);
 
@@ -438,7 +453,7 @@ Utility method for search_node_in_tree_with_name and search_node_in_tree.
 */
 static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is_directory)
 {
-    assert(deb != NULL && path != NULL);
+    assert(deb != NULL);
 
     unsigned len_path = strlen(path);
 

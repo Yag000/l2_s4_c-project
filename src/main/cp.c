@@ -42,7 +42,14 @@ int cp(const command *cmd)
     {
         write_result_command("Invalid name : an element with the same name already exists.");
         destroy_noeud(node_to_append);
-        return append_error_value;
+        return INVALID_NAME;
+    }
+
+    if (append_error_value != SUCCESS)
+    {
+        write_result_command("Error while creating directory.");
+        destroy_noeud(node_to_append);
+        return FATAL_ERROR;
     }
 
     copy_content_of(node_to_append, node_to_copy);

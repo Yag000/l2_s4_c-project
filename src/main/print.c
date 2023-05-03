@@ -37,6 +37,7 @@ int print(const command *cmd)
 
     free(last_line);
     last_line = NULL;
+
     return SUCCESS;
 }
 

@@ -46,7 +46,14 @@ int mv(const command *cmd)
     {
         write_result_command("Invalid name : an element with the same name already exists.");
         destroy_noeud(node_to_append);
-        return append_error_value;
+        return INVALID_NAME;
+    }
+
+    if (append_error_value != SUCCESS)
+    {
+        write_result_command("Error while creating directory.");
+        destroy_noeud(node_to_append);
+        return FATAL_ERROR;
     }
 
     int remove_error_value = remove_a_node_from_fils(node_to_move->pere, node_to_move);
