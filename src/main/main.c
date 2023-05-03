@@ -12,28 +12,22 @@ bool verbose = false;
 noeud *current_node;
 bool interactive;
 
+typedef struct flags
+{
+    bool verbose;
+    bool interactive;
+} flags;
+
+static flags *parse_flags(int, char *[]);
+
 int main(int argc, char *argv[])
 {
     out_stream = stdout;
-    verbose = false;
 
-    if (argc != 2)
-    {
-        if (argc == 3 && strcmp(argv[2], "-v") == 0)
-        {
-            verbose = true;
-        }
-        else
-        {
-            perror("Nombre d'arguments incorrect");
-            return EXIT_FAILURE;
-        }
-    }
-
-    if (strcmp(argv[1], "-i") == 0)
-    {
-        interactive = true;
-    }
+    flags *flag = parse_flags(argc, argv);
+    verbose = flag->verbose;
+    interactive = flag->interactive;
+    free(flag);
 
     current_node = create_root_noeud();
 
@@ -42,4 +36,24 @@ int main(int argc, char *argv[])
     destroy_tree();
 
     return error_code == SUCCESS || error_code == EXIT_PROGRAM_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+
+static flags *parse_flags(int argc, char *argv[])
+{
+    flags *flag = malloc(sizeof(flags));
+    flag->verbose = false;
+    flag->interactive = false;
+
+    for (int i = 1; i < argc; i++)
+    {
+        if (strcmp(argv[i], "-v") == 0)
+        {
+            flag->verbose = true;
+        }
+        else if (strcmp(argv[i], "-i") == 0)
+        {
+            flag->interactive = true;
+        }
+    }
+    return flag;
 }
