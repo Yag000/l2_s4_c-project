@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "../main/constants.h"
 #include "../main/tree_dir_core.h"
@@ -20,9 +21,8 @@ Every test should be called from here and the results should be printed.
 */
 int main(int argc, char *argv[])
 {
-    if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'v')
-    {
-        debug = true;
+    if (argc > 1 &&  strcmp(argv[1], "-v") == 0)
+    {   debug = true;
         puts("Debug mode enabled");
     }
 
