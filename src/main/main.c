@@ -15,7 +15,7 @@ typedef struct flags
 {
     bool verbose;
     bool interactive;
-    bool error_occurs_stop
+    bool error_occurs_stop;
 } flags;
 
 static flags *parse_flags(int, char *[]);
