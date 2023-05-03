@@ -51,7 +51,7 @@ int mv(const command *cmd)
 
     if (append_error_value != SUCCESS)
     {
-        write_result_command("Error while creating directory.");
+        write_result_command("Error while moving the element.");
         destroy_noeud(node_to_append);
         return FATAL_ERROR;
     }
@@ -60,7 +60,7 @@ int mv(const command *cmd)
 
     if (remove_error_value != SUCCESS)
     {
-        write_result_command("Error while moving directory.");
+        write_result_command("Error while moving the element.");
         return FATAL_ERROR;
     }
 

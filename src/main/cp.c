@@ -47,7 +47,7 @@ int cp(const command *cmd)
 
     if (append_error_value != SUCCESS)
     {
-        write_result_command("Error while creating directory.");
+        write_result_command("Error while creating the element.");
         destroy_noeud(node_to_append);
         return FATAL_ERROR;
     }

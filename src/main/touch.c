@@ -36,7 +36,7 @@ int touch(const command *cmd)
 
     if (append_error_value != SUCCESS)
     {
-        write_result_command("Error while creating directory.");
+        write_result_command("Error while creating file.");
         destroy_noeud(new_node);
         return FATAL_ERROR;
     }
