@@ -63,16 +63,15 @@ int parse_file(const char *path)
     ssize_t read;
     while ((read = getline(&line, &len, file)) != -1)
     {
-        if (interactive)
-        {
-            print_command_header();
-        }
-
         exit_code = parse_line(line);
 
         if (shouldProgramStop(exit_code))
         {
             break;
+        }
+        if (interactive)
+        {
+            print_command_header();
         }
     }
 
