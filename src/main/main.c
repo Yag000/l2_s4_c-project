@@ -25,6 +25,12 @@ int main(int argc, char *argv[])
 {
     out_stream = stdout;
 
+    if (argc <= 1)
+    {
+        perror("An incorrect number of arguments was given ");
+        return EXIT_FAILURE;
+    }
+
     flags *flag = parse_flags(argc, argv);
     activate_flags(flag);
 
