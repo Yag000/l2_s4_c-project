@@ -41,5 +41,5 @@ int touch(const command *cmd)
         return FATAL_ERROR;
     }
 
-    return append_error_value;
+    return SUCCESS;
 }
