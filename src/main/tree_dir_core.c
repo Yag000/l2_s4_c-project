@@ -5,6 +5,7 @@
 
 #include "string_utils.h"
 #include "tree_dir_core.h"
+#include "constants.h"
 
 static noeud *search_node(noeud *, char *, bool, bool);
 static noeud *search_node_in_tree_with_iterator(noeud *, string_iterator *, bool, bool);
@@ -25,6 +26,8 @@ Otherwise it returns NULL
 */
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
+    assert(nom != NULL && pere != NULL);
+
     if (!is_valid_name_node(nom))
     {
         return NULL;
@@ -91,10 +94,7 @@ noeud *create_root_noeud()
 
 void destroy_noeud(noeud *node)
 {
-    if (node == NULL)
-    {
-        return;
-    }
+    assert(node != NULL);
 
     if (node->est_dossier)
     {
@@ -153,10 +153,8 @@ bool contains_noeud(noeud *parent, noeud *node)
 
 unsigned get_number_of_fils(noeud *node)
 {
-    if (node == NULL)
-    {
-        return 0;
-    }
+    assert(node != NULL);
+
     return size_liste_noeud(node->fils);
 }
 
@@ -165,7 +163,9 @@ Returns the node that has its nom equal to name.
 */
 noeud *get_a_fils_of_noeud(noeud *node, const char *name)
 {
-    if (node == NULL || !node->est_dossier)
+    assert(node != NULL && name != NULL);
+
+    if (!node->est_dossier)
     {
         return NULL;
     }
@@ -178,31 +178,29 @@ it will return true, otherwise it will return false.
 The append will be successful the parent is a directory and does
 not already contain node.
 */
-bool append_a_fils_to_noeud(noeud *parent, noeud *node)
+int append_a_fils_to_noeud(noeud *parent, noeud *node)
 {
-    if (parent == NULL || node == NULL || !parent->est_dossier)
-    {
-        return false;
-    }
+    assert(parent != NULL && node != NULL && parent->est_dossier);
 
-    bool append_success;
+    int append_error_value;
 
     if (parent->fils == NULL)
     {
         parent->fils = create_liste_noeud(node);
-        append_success = true;
+
+        append_error_value = SUCCESS;
     }
     else
     {
-        append_success = append_liste_noeud(parent->fils, node);
+        append_error_value = append_liste_noeud(parent->fils, node);
     }
 
-    if (append_success)
+    if (append_error_value == SUCCESS)
     {
         node->pere = parent;
         node->racine = parent->racine;
     }
-    return append_success;
+    return append_error_value;
 }
 
 /*
@@ -210,21 +208,18 @@ Returns true if node has been removed from the fils of parent
 Otherwise, return false. If parent did not contain node or if
 the parent is not a directory it will fail.
 */
-bool remove_a_node_from_fils(noeud *parent, noeud *node)
+int remove_a_node_from_fils(noeud *parent, noeud *node)
 {
-    if (parent == NULL || node == NULL || !parent->est_dossier)
-    {
-        return false;
-    }
+    assert(parent != NULL && node != NULL && parent->est_dossier);
 
     if (!contains_liste_noeud(parent->fils, node))
     {
-        return false;
+        return INVALID_SELECTION;
     }
 
     parent->fils = remove_liste_noeud(parent->fils, node);
 
-    return true;
+    return SUCCESS;
 }
 
 /*
@@ -232,26 +227,26 @@ Returns true if node has been removed from the fils of parent
 and has been destroyed. Otherwise, return false.
 If parent did not contain it or if the parent is not a directory it will fail.
 */
-bool remove_a_fils_of_noeud(noeud *parent, const char *name)
+int remove_a_fils_of_noeud(noeud *parent, const char *name)
 {
-    if (parent == NULL || !parent->est_dossier)
-    {
-        return false;
-    }
+    assert(parent != NULL && parent->est_dossier && name != NULL);
+
     noeud *node = get_a_noeud_in_liste_noeud(parent->fils, name);
 
     if (node == NULL)
     {
-        return false;
+        return INVALID_SELECTION;
     }
     parent->fils = remove_liste_noeud(parent->fils, node);
     destroy_noeud(node);
 
-    return true;
+    return SUCCESS;
 }
 
 liste_noeud *create_liste_noeud(noeud *node)
 {
+    assert(node != NULL);
+
     liste_noeud *node_list = malloc(sizeof(liste_noeud));
 
     assert(node_list != NULL);
@@ -330,17 +325,19 @@ Returns true if the append of node in node_list succeeds.
 Otherwise return false, this will happen if the node is already inside
 node_list.
 */
-bool append_liste_noeud(liste_noeud *node_list, noeud *node)
+int append_liste_noeud(liste_noeud *node_list, noeud *node)
 {
-    if (node_list == NULL || strcmp(node_list->no->nom, node->nom) == 0)
+    assert(node_list != NULL);
+
+    if (strcmp(node_list->no->nom, node->nom) == 0)
     {
-        return false;
+        return INVALID_NAME;
     }
 
     if (node_list->succ == NULL)
     {
         node_list->succ = create_liste_noeud(node);
-        return true;
+        return SUCCESS;
     }
 
     return append_liste_noeud(node_list->succ, node);
@@ -441,7 +438,7 @@ Utility method for search_node_in_tree_with_name and search_node_in_tree.
 */
 static noeud *search_node(noeud *deb, char *path, bool is_name_included, bool is_directory)
 {
-    assert(deb != NULL);
+    assert(deb != NULL && path != NULL);
 
     unsigned len_path = strlen(path);
 
@@ -560,7 +557,9 @@ bool is_noeud_inside(const noeud *node1, const noeud *node2)
 
 unsigned get_longest_name_length_of_node_fils(const noeud *node)
 {
-    if (node == NULL || !node->est_dossier)
+    assert(node != NULL);
+
+    if (!node->est_dossier)
     {
         return 0;
     }
@@ -583,7 +582,9 @@ Move the fils of node to a new node and frees node
 */
 void move_fils_of_node_to_new_node(noeud *node, noeud *new_node)
 {
-    if (node == NULL || new_node == NULL || new_node->fils != NULL)
+    assert(node != NULL && new_node != NULL);
+
+    if (new_node->fils != NULL)
     {
         return;
     }

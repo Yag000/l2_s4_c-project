@@ -24,12 +24,13 @@ int mkdir(const command *cmd)
         return INVALID_NAME;
     }
 
-    if (!append_a_fils_to_noeud(new_node->pere, new_node))
+    int append_error_value = append_a_fils_to_noeud(new_node->pere, new_node);
+
+    if (append_error_value == INVALID_NAME)
     {
-        write_result_command("Error while creating directory.");
+        write_result_command("Invalid name : an element with the same name already exists.");
         destroy_noeud(new_node);
-        return FATAL_ERROR;
     }
 
-    return SUCCESS;
+    return append_error_value;
 }

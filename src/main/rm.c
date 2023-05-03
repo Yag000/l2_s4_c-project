@@ -23,10 +23,13 @@ int rm(const command *cmd)
         write_result_command("A directory that contains the current folder cannot be deleted.");
         return INVALID_SELECTION;
     }
-    if (!remove_a_fils_of_noeud(node->pere, node->nom))
+
+    int remove_error_value = remove_a_fils_of_noeud(node->pere, node->nom);
+
+    if (remove_error_value != SUCCESS)
     {
         write_result_command("There was a problem during the destruction of the element.");
         return FATAL_ERROR;
     }
-    return SUCCESS;
+    return remove_error_value;
 }
