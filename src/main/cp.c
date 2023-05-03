@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h>
 
 #include "tree_dir_core.h"
 #include "command.h"
@@ -37,9 +36,18 @@ int cp(const command *cmd)
         return INVALID_SELECTION;
     }
 
-    if (!append_a_fils_to_noeud(node_to_append->pere, node_to_append))
+    int append_error_value = append_a_fils_to_noeud(node_to_append->pere, node_to_append);
+
+    if (append_error_value == INVALID_NAME)
     {
-        write_result_command("Error while creating directory.");
+        write_result_command("Invalid name : an element with the same name already exists.");
+        destroy_noeud(node_to_append);
+        return INVALID_NAME;
+    }
+
+    if (append_error_value != SUCCESS)
+    {
+        write_result_command("Error while copying the element.");
         destroy_noeud(node_to_append);
         return FATAL_ERROR;
     }

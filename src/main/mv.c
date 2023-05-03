@@ -40,16 +40,27 @@ int mv(const command *cmd)
         return INVALID_SELECTION;
     }
 
-    if (!append_a_fils_to_noeud(node_to_append->pere, node_to_append))
+    int append_error_value = append_a_fils_to_noeud(node_to_append->pere, node_to_append);
+
+    if (append_error_value == INVALID_NAME)
     {
-        write_result_command("Error while creating directory.");
+        write_result_command("Invalid name : an element with the same name already exists.");
+        destroy_noeud(node_to_append);
+        return INVALID_NAME;
+    }
+
+    if (append_error_value != SUCCESS)
+    {
+        write_result_command("Error while moving the element.");
         destroy_noeud(node_to_append);
         return FATAL_ERROR;
     }
 
-    if (!remove_a_node_from_fils(node_to_move->pere, node_to_move))
+    int remove_error_value = remove_a_node_from_fils(node_to_move->pere, node_to_move);
+
+    if (remove_error_value != SUCCESS)
     {
-        write_result_command("Error while moving directory.");
+        write_result_command("Error while moving the element.");
         return FATAL_ERROR;
     }
 

@@ -33,16 +33,16 @@ bool is_fils_of_noeud_empty(const noeud *);
 bool contains_noeud(noeud *, noeud *);
 unsigned get_number_of_fils(noeud *);
 noeud *get_a_fils_of_noeud(noeud *, const char *);
-bool append_a_fils_to_noeud(noeud *, noeud *);
-bool remove_a_node_from_fils(noeud *, noeud *);
-bool remove_a_fils_of_noeud(noeud *, const char *);
+int append_a_fils_to_noeud(noeud *, noeud *);
+int remove_a_node_from_fils(noeud *, noeud *);
+int remove_a_fils_of_noeud(noeud *, const char *);
 
 liste_noeud *create_liste_noeud(noeud *);
 void destroy_liste_noeud(liste_noeud *);
 bool contains_liste_noeud(liste_noeud *, noeud *);
 unsigned size_liste_noeud(liste_noeud *);
 noeud *get_a_noeud_in_liste_noeud(liste_noeud *, const char *);
-bool append_liste_noeud(liste_noeud *, noeud *);
+int append_liste_noeud(liste_noeud *, noeud *);
 liste_noeud *remove_liste_noeud(liste_noeud *, noeud *);
 
 noeud *search_node_in_tree(noeud *, char *);

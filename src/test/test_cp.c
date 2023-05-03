@@ -143,15 +143,15 @@ static void test_error_of_cp(test_info *info)
 
     tab_command[0] = "/test/test5";
     tab_command[1] = "/test";
-    handle_boolean_test(true, execute_command(cmd) == FATAL_ERROR, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NAME, __LINE__, __FILE__, info);
 
     tab_command[0] = "/test12/test13";
     tab_command[1] = "/test/test2";
-    handle_boolean_test(true, execute_command(cmd) == FATAL_ERROR, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NAME, __LINE__, __FILE__, info);
 
     tab_command[0] = get_alloc_pointer_of_string("/test/test5/test6");
     tab_command[1] = get_alloc_pointer_of_string("/test12");
-    handle_boolean_test(true, execute_command(cmd) == FATAL_ERROR, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NAME, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
 
