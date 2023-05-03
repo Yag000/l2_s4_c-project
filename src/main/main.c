@@ -19,15 +19,14 @@ typedef struct flags
 } flags;
 
 static flags *parse_flags(int, char *[]);
+static void activate_flags(flags *); 
 
 int main(int argc, char *argv[])
 {
     out_stream = stdout;
 
     flags *flag = parse_flags(argc, argv);
-    verbose = flag->verbose;
-    interactive = flag->interactive;
-    free(flag);
+    activate_flags(flag);
 
     current_node = create_root_noeud();
 
@@ -57,3 +56,12 @@ static flags *parse_flags(int argc, char *argv[])
     }
     return flag;
 }
+
+static void activate_flags(flags *flag)
+{
+    verbose = flag->verbose;
+    interactive = flag->interactive;
+    
+    free(flag);
+}
+
