@@ -107,6 +107,13 @@ It returns 0 if the command execution is successful.
 int parse_line(char *line)
 {
 
+    strip_newline(line);
+
+    if (strlen(line) == 0)
+    {
+        return EMPTY_COMMAND;
+    }
+
     string_iterator *iterator = create_string_iterator(line, ' ');
 
     if (iterator == NULL)
@@ -156,7 +163,7 @@ static command *get_command_from_iterator(string_iterator *iterator)
     int args_number = 0;
     while (has_next_word(iterator) && args_number < MAX_COMMAND_ARGUMENTS)
     {
-        args[args_number] = strip_newline(next_word(iterator));
+        args[args_number] = next_word(iterator);
         args_number++;
     }
 
@@ -174,5 +181,5 @@ static command *get_command_from_iterator(string_iterator *iterator)
         }
     }
 
-    return create_command(strip_newline(command_), args_number, args);
+    return create_command(command_, args_number, args);
 }
