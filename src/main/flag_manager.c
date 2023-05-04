@@ -88,6 +88,7 @@ static void activate_flags(flags *flag)
         out_stream = open_file(out_stream_path, "w");
         if (out_stream == NULL)
         {
+            perror("Could not open output file");
             exit(EXIT_FAILURE);
         }
     }
