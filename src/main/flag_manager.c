@@ -7,9 +7,8 @@
 #include "flag_manager.h"
 #include "string_utils.h"
 
-char *out_stream_path ;
-FILE *out_stream ;
-
+char *out_stream_path;
+FILE *out_stream;
 
 typedef struct flags
 {
@@ -38,6 +37,9 @@ static flags *parse_flags(int argc, char *argv[])
     if (strcmp(argv[1], "-i") == 0)
     {
         flag->interactive = true;
+
+        // By default interactive implies verbose
+        flag->verbose = true;
     }
 
     for (int i = 2; i < argc; i++)

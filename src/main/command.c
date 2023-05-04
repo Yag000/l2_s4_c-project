@@ -6,6 +6,7 @@
 
 #include "command.h"
 #include "constants.h"
+#include "string_utils.h"
 #include "tree_dir_core.h"
 
 static int debug_command(int, char **);
@@ -39,8 +40,9 @@ Prints a command if verbose mode is enabled.
 */
 void print_command(const command *cmd)
 {
-    if (!verbose || interactive)
+    if ((out_stream == stdout && interactive) || !verbose)
     {
+        printf("yeah");
         return;
     }
 
@@ -55,16 +57,19 @@ void print_command(const command *cmd)
     fputs("\n", out_stream);
 }
 
-void print_command_header()
+void print_command_header() { print_command_header_with_stream(out_stream); }
+
+void print_command_header_with_stream(FILE *stream)
 {
     if (current_node != NULL)
     {
         char *path = get_absolute_path_of_node(current_node);
-        fputs(path, out_stream);
+        fputs(path, stream);
         free(path);
     }
-    fputs("$ ", out_stream);
+    fputs("$ ", stream);
 }
+
 /*
 Returns true if the command name matches the given name.
 */
@@ -115,6 +120,7 @@ int execute_command(const command *cmd)
     }
     if (is_command(cmd, "debug"))
     {
+        // TODO: rename debug -> echo and implement it properly
         return debug_command(cmd->args_number, cmd->args);
     }
     if (is_command(cmd, "exit"))
@@ -133,15 +139,10 @@ This is used for debugging purposes.
 */
 static int debug_command(int args_number, char **args)
 {
-    for (int i = 0; i < args_number; i++)
-    {
-        fputs(args[i], out_stream);
-        if (i < args_number - 1)
-        {
-            fputs(" ", out_stream);
-        }
-    }
-    fputs("\n", out_stream);
+    char *result = concat_words_with_delimiter(args_number, args, ' ');
+    write_result_command(result);
+    free(result);
+
     return SUCCESS;
 }
 
@@ -152,8 +153,11 @@ bool handle_number_of_args(unsigned expected, unsigned actual)
 {
     if (expected != actual)
     {
-        fprintf(out_stream, "An incorrect number of arguments was given: %u instead of %u expected.\n", actual,
-                expected);
+        char *error_message = malloc(sizeof(char) * 100);
+        snprintf(error_message, 100, "An incorrect number of arguments was given: %u instead of %u expected.", actual,
+                 expected);
+        write_result_command(error_message);
+        free(error_message);
         return false;
     }
 
@@ -167,9 +171,12 @@ bool handle_number_of_args_with_delimitation(unsigned under_limit, unsigned uppe
 {
     if (actual < under_limit || actual > upper_limit)
     {
-        fprintf(out_stream,
-                "An incorrect number of arguments was given: %u instead of a number between %u and %u expected.\n",
-                actual, under_limit, upper_limit);
+        char *error_message = malloc(sizeof(char) * 100);
+        snprintf(error_message, 100,
+                 "An incorrect number of arguments was given: %u instead of a number between %u and %u expected.",
+                 actual, under_limit, upper_limit);
+        write_result_command(error_message);
+        free(error_message);
         return false;
     }
 
@@ -181,6 +188,12 @@ Writes the string of result in the out_stream
 */
 int write_result_command(char *result)
 {
+    if (interactive && out_stream != stdout)
+    {
+        fputs(result, stdout);
+        fputs("\n", stdout);
+    }
+
     fputs(result, out_stream);
     fputs("\n", out_stream);
 
