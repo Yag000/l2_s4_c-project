@@ -25,9 +25,10 @@ int main(int argc, char *argv[])
 {
     out_stream = stdout;
 
+    // Hnadle 0 arguments
     if (argc <= 1)
     {
-        perror("An incorrect number of arguments was given ");
+        perror("No argument was given");
         return EXIT_FAILURE;
     }
 
@@ -50,20 +51,31 @@ static flags *parse_flags(int argc, char *argv[])
     flag->interactive = false;
     flag->error_occurs_stop = true;
 
-    for (int i = 1; i < argc; i++)
+    if (strcmp(argv[1], "-i") == 0)
+    {
+        flag->interactive = true;
+    }
+
+    for (int i = 2; i < argc; i++)
     {
         if (strcmp(argv[i], "-v") == 0)
         {
             flag->verbose = true;
+            continue;
         }
-        else if (strcmp(argv[i], "-i") == 0)
-        {
-            flag->interactive = true;
-        }
-        else if (strcmp(argv[i], "-c") == 0)
+        if (strcmp(argv[i], "-c") == 0)
         {
             flag->error_occurs_stop = false;
+            continue;
         }
+        if (strcmp(argv[i], "-i") == 0)
+        {
+            // The -i flag is already handled but we want to allow duplicate flags
+            continue;
+        }
+
+        perror("An unknown flag was given");
+        exit(EXIT_FAILURE);
     }
     return flag;
 }
