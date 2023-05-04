@@ -1,4 +1,5 @@
 #define _GNU_SOURCE
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,7 +54,7 @@ int parse_file(const char *path)
 
     if (interactive)
     {
-        print_command_header();
+        print_command_header_with_stream(stdout);
     }
 
     int exit_code = SUCCESS;
@@ -71,7 +72,7 @@ int parse_file(const char *path)
         }
         if (interactive)
         {
-            print_command_header();
+            print_command_header_with_stream(stdout);
         }
     }
 

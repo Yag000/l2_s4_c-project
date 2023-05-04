@@ -2,6 +2,7 @@
 #define COMMAND_H
 
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct command
@@ -16,6 +17,7 @@ command *create_command(char *, int, char **);
 void destroy_command(command *);
 
 int execute_command(const command *);
+void print_command_header_with_stream(FILE *);
 void print_command_header();
 
 bool handle_number_of_args(unsigned, unsigned);
