@@ -12,8 +12,6 @@
 char *out_stram_path;
 FILE *out_stream;
 
-bool verbose = false;
-
 noeud *current_node;
 
 int main(int argc, char *argv[])

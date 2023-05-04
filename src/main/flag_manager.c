@@ -10,6 +10,10 @@
 char *out_stream_path;
 FILE *out_stream;
 
+bool verbose;
+bool interactive;
+bool error_occurs_stop;
+
 typedef struct flags
 {
     bool verbose;
@@ -33,6 +37,7 @@ static flags *parse_flags(int argc, char *argv[])
     flag->verbose = false;
     flag->interactive = false;
     flag->error_occurs_stop = true;
+    flag->output_file = NULL;
 
     if (strcmp(argv[1], "-i") == 0)
     {

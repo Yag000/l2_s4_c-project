@@ -42,7 +42,6 @@ void print_command(const command *cmd)
 {
     if ((out_stream == stdout && interactive) || !verbose)
     {
-        printf("yeah");
         return;
     }
 
