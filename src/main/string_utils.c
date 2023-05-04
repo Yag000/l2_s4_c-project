@@ -1,8 +1,7 @@
 #include <assert.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include <assert.h>
 
 #include "string_utils.h"
 
@@ -70,22 +69,21 @@ static void update_index_to_next_word(string_iterator *iterator)
 /*
 Strips the new line character from a string.
 */
-char *strip_newline(char *str)
+void strip_newline(char *str)
 {
-    int i = 0;
-    int j = 0;
-    while (str[i] != '\0')
+    assert(str != NULL);
+
+    int i, j;
+    int len = strlen(str);
+    for (i = j = 0; i < len; i++)
     {
         if (str[i] != '\n')
         {
-            str[j++] = str[i];
+            str[j] = str[i];
+            j++;
         }
-        i++;
     }
     str[j] = '\0';
-    str = realloc(str, sizeof(char) * (j + 1));
-    assert(str != NULL);
-    return str;
 }
 
 /*
