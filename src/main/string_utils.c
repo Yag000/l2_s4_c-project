@@ -1,8 +1,7 @@
 #include <assert.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include <assert.h>
 
 #include "string_utils.h"
 
@@ -213,4 +212,30 @@ char *get_alloc_pointer_of_string(const char *s)
     result[len_s] = '\0';
 
     return result;
+}
+
+bool starts_with(const char *str, const char *prefix)
+{
+    if (str == NULL || prefix == NULL)
+    {
+        return false;
+    }
+
+    unsigned len_str = strlen(str);
+    unsigned len_prefix = strlen(prefix);
+
+    if (len_str < len_prefix)
+    {
+        return false;
+    }
+
+    for (unsigned i = 0; i < len_prefix; ++i)
+    {
+        if (str[i] != prefix[i])
+        {
+            return false;
+        }
+    }
+
+    return true;
 }

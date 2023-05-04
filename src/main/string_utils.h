@@ -31,4 +31,6 @@ char *concat_words_with_delimiter(size_t, char **, char);
 bool is_alphanumeric(const char *);
 char *get_alloc_pointer_of_string(const char *);
 
+bool starts_with(const char *, const char *);
+
 #endif
