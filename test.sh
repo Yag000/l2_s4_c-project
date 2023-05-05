@@ -170,27 +170,23 @@ function help(){
 while [[ $# -gt 0 ]]; do
     case $1 in
         -v)
-            echo "Verbose mode"
             verbose=true
         ;;
         --valgrind)
-            echo "Using valgrind"
             use_valgrind=true
         ;;
         --only-main)
-            echo "Only testing main"
             only_main=true
         ;;
         --only-unit)
-            echo "Only testing unit tests"
             only_unit=true
         ;;
         -h|--help)
             help
             exit 0
         ;;
-        \?)
-            echo "Invalid option: -$OPTARG" >&2
+        *)
+            echo "Invalid option: $1"
             exit 1
         ;;
     esac
