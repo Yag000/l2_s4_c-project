@@ -9,6 +9,7 @@ static void test_string_iterator_empty(test_info *);
 static void test_string_iterator_with_text(test_info *);
 static void test_concat_words_with_delimiter(test_info *);
 static void test_is_alphanumeric(test_info *);
+static void test_starts_with(test_info *);
 
 test_info *test_string_utils()
 {
@@ -22,6 +23,7 @@ test_info *test_string_utils()
     test_string_iterator_with_text(info);
     test_concat_words_with_delimiter(info);
     test_is_alphanumeric(info);
+    test_starts_with(info);
 
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
@@ -180,4 +182,32 @@ static void test_is_alphanumeric(test_info *info)
     handle_boolean_test(false, is_alphanumeric("-3"), __LINE__, __FILE__, info);
     handle_boolean_test(false, is_alphanumeric("das123das\\"), __LINE__, __FILE__, info);
     handle_boolean_test(false, is_alphanumeric(".123-"), __LINE__, __FILE__, info);
+}
+
+static void test_starts_with(test_info *info)
+{
+    print_test_name("Testing starts with");
+
+    // NULL cases
+    handle_boolean_test(false, starts_with(NULL, "b"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, starts_with("b", NULL), __LINE__, __FILE__, info);
+    handle_boolean_test(false, starts_with(NULL, NULL), __LINE__, __FILE__, info);
+
+    // Empty cases
+    handle_boolean_test(true, starts_with("", ""), __LINE__, __FILE__, info);
+    handle_boolean_test(false, starts_with("", "a"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, starts_with("a", ""), __LINE__, __FILE__, info);
+
+    // Positive cases
+    handle_boolean_test(true, starts_with("abc", "a"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, starts_with("abc", "ab"), __LINE__, __FILE__, info);
+    handle_boolean_test(true, starts_with("abc", "abc"), __LINE__, __FILE__, info);
+
+    // Negative cases
+    handle_boolean_test(false, starts_with("abc", "abcd"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, starts_with("abc", "bc"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, starts_with("abc", "c"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, starts_with("abc", "b"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, starts_with("abc", "ac"), __LINE__, __FILE__, info);
+    handle_boolean_test(false, starts_with("abc", "abdc"), __LINE__, __FILE__, info);
 }

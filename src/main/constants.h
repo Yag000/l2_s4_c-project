@@ -18,5 +18,6 @@ extern const int INVALID_NAME;           // Error code that indicates that the n
 extern const int INVALID_PATH;           // Error code that indicates that the path of a node is invalid
 extern const int INVALID_NUMBER_OF_ARGS; // Error code that indicates that the number of arguments is invalid
 extern const int INVALID_SELECTION;      // Error code that indicates that the element selected by the user is invalid
+extern const int EMPTY_COMMAND;          // Error code that indicates that the command entered by the user is empty
 
 #endif
