@@ -1,0 +1,7 @@
+mkdir t
+cd t
+pwd
+cd ..
+ls 
+mkdir t/tt
+print
