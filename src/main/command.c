@@ -9,8 +9,6 @@
 #include "string_utils.h"
 #include "tree_dir_core.h"
 
-static int debug_command(int, char **);
-
 command *create_command(char *name, int args_number, char **args)
 {
     command *cmd = malloc(sizeof(command));
@@ -135,10 +133,9 @@ int execute_command(const command *cmd)
     {
         return print(cmd);
     }
-    if (is_command(cmd, "debug"))
+    if (is_command(cmd, "echo"))
     {
-        // TODO: rename debug -> echo and implement it properly
-        return debug_command(cmd->args_number, cmd->args);
+        return echo(cmd);
     }
     if (is_command(cmd, "exit"))
     {
@@ -148,19 +145,6 @@ int execute_command(const command *cmd)
     write_result_command("Command not found :");
     write_result_command(cmd->name);
     return EXIT_FAILURE;
-}
-
-/*
-Prints the command to the output stream.
-This is used for debugging purposes.
-*/
-static int debug_command(int args_number, char **args)
-{
-    char *result = concat_words_with_delimiter(args_number, args, ' ');
-    write_result_command(result);
-    free(result);
-
-    return SUCCESS;
 }
 
 /*

@@ -1,7 +1,7 @@
-debug
-debug one
-debug one two
-debug                             one two
-    debug one two  
-    debug     one   two  
-debug one two three
+echo
+echo one
+echo one two
+echo                             one two
+    echo one two  
+    echo     one   two  
+echo one two three
