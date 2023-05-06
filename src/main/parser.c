@@ -12,13 +12,6 @@
 #include "parser.h"
 #include "string_utils.h"
 
-/*
-The maximum number of arguments for a command.
-We could also use a dynamic array to store the arguments,
-but for the purpose of this project, we will use a fixed size array of 2.
-*/
-#define MAX_COMMAND_ARGUMENTS 2
-
 static bool should_program_stop(int);
 
 /*
