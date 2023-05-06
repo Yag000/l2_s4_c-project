@@ -12,6 +12,8 @@ bool debug;
 FILE *out_stream;
 char *out_stream_path;
 noeud *current_node;
+FILE *command_record_stream;
+char *command_record_path;
 
 static void update_test_info(test_info *, test_info *);
 
@@ -31,6 +33,8 @@ int main(int argc, char *argv[])
     test_info *info = create_test_info();
     clock_t before = clock();
     error_occurs_stop = false;
+    command_record_path = NULL;
+    command_record_stream = NULL;
 
     // Add tests here
 

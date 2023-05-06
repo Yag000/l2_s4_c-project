@@ -24,6 +24,7 @@ bool handle_number_of_args(unsigned, unsigned);
 bool handle_number_of_args_with_delimitation(unsigned, unsigned, unsigned);
 int write_result_command(char *);
 int write_result_lines_command(size_t, char **);
+int write_command_in_record_file(command *);
 
 int pwd(const command *);
 int rm(const command *);
