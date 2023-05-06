@@ -88,7 +88,7 @@ function test_main_output_flag(){
         local flag="-o=$output_file"
         
         if $use_valgrind; then
-            run_with_valgrind "./main" $input_file $flag has_test_output_failed=true
+            run_with_valgrind "./main" $input_file $flag && has_test_output_failed=true
         else
             ./main $input_file $flag || has_test_output_failed=true
         fi
