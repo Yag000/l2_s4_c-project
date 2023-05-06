@@ -1,6 +1,7 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
+#include "string_utils.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,6 +16,7 @@ typedef struct command
 
 command *create_command(char *, int, char **);
 void destroy_command(command *);
+command *get_command_from_string_iterator(string_iterator *);
 
 int execute_command(const command *);
 void print_command_header_with_stream(FILE *);

@@ -2,6 +2,7 @@
 #define STRING_UTILS_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 /*
 A string iterator that can be used to iterate over a string

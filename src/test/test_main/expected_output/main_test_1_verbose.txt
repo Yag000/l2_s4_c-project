@@ -10,5 +10,5 @@ one two
 one two
 /$ echo one two
 one two
-/$ echo one two
-one two
+/$ echo one two three
+one two three
