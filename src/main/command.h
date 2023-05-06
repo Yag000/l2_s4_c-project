@@ -35,5 +35,6 @@ int touch(const command *);
 int cp(const command *);
 int cd(const command *);
 int mv(const command *);
+int echo(const command *);
 
 #endif
