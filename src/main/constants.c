@@ -1,8 +1,5 @@
 #include "constants.h"
 
-bool interactive = false;
-bool error_occurs_stop = true; // True if the parsing of the file should stop when an error occurs
-
 const int EXIT_PROGRAM_SUCCESS = -2;  // Error code that indicates that the program executed successfully and that
                                       // it should be terminated
 const int SUCCESS = 0;                // Error code that indicates that the program executed successfully
