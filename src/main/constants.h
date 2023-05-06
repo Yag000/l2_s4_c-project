@@ -9,6 +9,8 @@ extern bool verbose;
 extern char *out_stream_path;
 extern bool interactive;
 extern bool error_occurs_stop; // True if the parsing of the file should stop when an error occurs
+extern char *command_record_path;
+extern FILE *command_record_stream;
 
 extern const int EXIT_PROGRAM_SUCCESS;   // Error code that indicates that the program executed successfully and that it
                                          // should be terminated

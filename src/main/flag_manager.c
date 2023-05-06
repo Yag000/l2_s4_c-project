@@ -11,6 +11,9 @@
 char *out_stream_path;
 FILE *out_stream;
 
+char *command_record_path;
+FILE *command_record_stream;
+
 bool verbose;
 bool interactive;
 bool error_occurs_stop;
@@ -21,6 +24,7 @@ typedef struct flags
     bool interactive;
     bool error_occurs_stop;
     char *output_file;
+    char *command_record_file;
 } flags;
 
 static flags *parse_flags(int, char *[]);
@@ -39,6 +43,7 @@ static flags *parse_flags(int argc, char *argv[])
     flag->interactive = false;
     flag->error_occurs_stop = true;
     flag->output_file = NULL;
+    flag->command_record_file = NULL;
 
     if (strcmp(argv[1], "-i") == 0)
     {
@@ -70,8 +75,13 @@ static flags *parse_flags(int argc, char *argv[])
             flag->output_file = argv[i] + 3;
             continue;
         }
+        if (starts_with(argv[i], "-r="))
+        {
+            flag->command_record_file = argv[i] + 3;
+            continue;
+        }
 
-        char * error_message = malloc(sizeof(char) * (strlen(argv[i]) + 50));    
+        char *error_message = malloc(sizeof(char) * (strlen(argv[i]) + 50));
         sprintf(error_message, "Unknown flag: %s", argv[i]);
         perror(error_message);
         free(error_message);
@@ -93,6 +103,19 @@ static void activate_flags(flags *flag)
         if (out_stream == NULL)
         {
             perror("Could not open output file");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    if (flag->command_record_file != NULL)
+    {
+        command_record_path = flag->command_record_file;
+        command_record_stream = open_file(command_record_path, "w");
+        if (command_record_stream == NULL)
+        {
+            perror("Could not open record command file");
+
+            close_file(out_stream, out_stream_path);
             exit(EXIT_FAILURE);
         }
     }

@@ -119,7 +119,7 @@ int parse_line(char *line)
 
     if (iterator == NULL)
     {
-        perror("Problème initialisation iterator");
+        perror("Initialization iterator problem");
 
         free(line);
         return FATAL_ERROR;
@@ -129,7 +129,7 @@ int parse_line(char *line)
 
     if (command == NULL)
     {
-        perror("Problème creation commande");
+        perror("Command creation problem");
 
         free(line);
         destroy_string_iterator(iterator);
@@ -137,6 +137,7 @@ int parse_line(char *line)
         return FATAL_ERROR;
     }
 
+    print_command_in_record_file(command);
     int exit_code = execute_command(command);
 
     destroy_string_iterator(iterator);
@@ -152,7 +153,7 @@ static command *get_command_from_iterator(string_iterator *iterator)
 {
     if (!has_next_word(iterator))
     {
-        perror("Problème iterator vide");
+        perror("Empty iterator problem");
         return NULL;
     }
 
