@@ -9,17 +9,14 @@
 #include "string_utils.h"
 #include "tree_dir_core.h"
 
-char *out_stram_path;
-FILE *out_stream;
-
 noeud *current_node;
 
 int main(int argc, char *argv[])
 {
 
     out_stream = stdout;
-    out_stram_path = NULL;
- 
+    out_stream_path = NULL;
+
     // Hnadle 0 arguments
     if (argc <= 1)
     {

@@ -6,11 +6,7 @@
 #include "../main/tree_dir_core.h"
 #include "test_core.h"
 
-bool verbose = true;
 bool debug;
-
-FILE *out_stream;
-char *out_stream_path;
 noeud *current_node;
 
 static void update_test_info(test_info *, test_info *);
@@ -31,6 +27,8 @@ int main(int argc, char *argv[])
     test_info *info = create_test_info();
     clock_t before = clock();
     error_occurs_stop = false;
+    verbose = true;
+    interactive = false;
 
     // Add tests here
 
