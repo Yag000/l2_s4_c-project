@@ -1,8 +1,8 @@
-ls 
+ls
 cd
 print
 mkdir t
 mv t tt
-ls 
+ls
 mkdir tt/t
 print

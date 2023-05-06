@@ -144,7 +144,7 @@ function test_flags(){
     test_main_output_flag || has_test_flags_failed=1
     test_main_record_flag || has_test_flags_failed=1
 
-    return has_test_flags_failed
+    return $has_test_flags_failed
 }
 
 function test_main(){
@@ -185,7 +185,7 @@ function test_main(){
     done
     
     clean_temp_files
-    test_main_output_flag || has_main_test_failed=true
+    test_flags|| has_main_test_failed=true
     $has_main_test_failed && has_passed=false
     
     echo
