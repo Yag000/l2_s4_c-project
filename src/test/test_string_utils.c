@@ -7,6 +7,7 @@
 
 static void test_string_iterator_empty(test_info *);
 static void test_string_iterator_with_text(test_info *);
+static void test_get_number_of_words_left(test_info *);
 static void test_concat_words_with_delimiter(test_info *);
 static void test_is_alphanumeric(test_info *);
 static void test_starts_with(test_info *);
@@ -21,6 +22,7 @@ test_info *test_string_utils()
     // Add tests here
     test_string_iterator_empty(info);
     test_string_iterator_with_text(info);
+    test_get_number_of_words_left(info);
     test_concat_words_with_delimiter(info);
     test_is_alphanumeric(info);
     test_starts_with(info);
@@ -94,6 +96,35 @@ static void test_string_iterator_with_text(test_info *info)
 
     handle_boolean_test(false, has_next_word(iterator), __LINE__, __FILE__, info);
 
+    destroy_string_iterator(iterator);
+}
+
+static void test_get_number_of_words_left(test_info *info)
+{
+
+    print_test_name("Testing concat words with delimiter");
+
+    char *str = "";
+    string_iterator *iterator = create_string_iterator(str, ' ');
+    handle_int_test(0, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
+    destroy_string_iterator(iterator);
+
+    str = "        ";
+    iterator = create_string_iterator(str, ' ');
+    handle_int_test(0, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
+    destroy_string_iterator(iterator);
+
+    str = "   this    is   a test  ";
+    iterator = create_string_iterator(str, ' ');
+    handle_int_test(4, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
+    free(next_word(iterator));
+    handle_int_test(3, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
+    free(next_word(iterator));
+    handle_int_test(2, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
+    free(next_word(iterator));
+    handle_int_test(1, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
+    free(next_word(iterator));
+    handle_int_test(0, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
     destroy_string_iterator(iterator);
 }
 

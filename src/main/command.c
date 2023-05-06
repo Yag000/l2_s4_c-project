@@ -36,7 +36,7 @@ void destroy_command(command *cmd)
 /*
 Prints a command if verbose mode is enabled.
 */
-void print_command(const command *cmd)
+static void print_command(const command *cmd)
 {
     if ((out_stream == stdout && interactive) || !verbose)
     {
@@ -85,6 +85,33 @@ int print_command_in_record_file(command *cmd)
     return SUCCESS;
 }
 
+/*
+Returns a command from a string iterator.
+*/
+command *get_command_from_string_iterator(string_iterator *iterator)
+{
+    if (!has_next_word(iterator))
+    {
+        perror("Empty iterator problem");
+        return NULL;
+    }
+
+    char *command_ = next_word(iterator);
+
+    int args_number = get_number_of_words_left(iterator);
+
+    char **args = malloc(sizeof(char *) * args_number);
+    assert(args != NULL);
+
+    int i =0;
+    while (has_next_word(iterator))
+    {
+        args[i] = next_word(iterator);
+        i++;
+    }
+
+    return create_command(command_, args_number, args);
+}
 /*
 Returns true if the command name matches the given name.
 */
