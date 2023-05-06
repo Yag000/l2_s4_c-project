@@ -50,6 +50,6 @@ Pour les autres ajouts :
 Dans les inputs donnés, les chemins doivent respecter la forme donnée dans les consignes de projet.
 Il est possible néanmoins d'utiliser, autant de fois que possible, les noms "." qui permet de sélectionner le noeud courant, et ".." qui permet de sélectionner le parent du noeud courant.
 
-Nous avons implémenté une commande de plus, `echo`, qui permet d'afficher un message dans le terminal courant. Comme nous avons limité le nombre maximal de arguments à 2, seulement les deux premiers arguments seront pris en compte.
+Nous avons implémenté une commande de plus, `echo`, qui permet d'afficher un message dans le terminal courant. Cette commande peut prendre un nombre indéfini d'arguments, et affichera alors tous les arguments donnés, séparés par un espace.
 
 Enfin, pour les commandes suivantes : "ls", "mkdir` et "touch", il est possible, en plus des demandes du projet, de leur donner des chemins complets en argument.
