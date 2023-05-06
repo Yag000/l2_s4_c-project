@@ -21,6 +21,7 @@ string_iterator *create_string_iterator(char *, char);
 void destroy_string_iterator(string_iterator *);
 bool has_next_word(const string_iterator *);
 char *next_word(string_iterator *);
+int get_number_of_words_left(const string_iterator *);
 
 void strip_newline(char *);
 

@@ -66,9 +66,33 @@ static void update_index_to_next_word(string_iterator *iterator)
     }
 }
 
+static string_iterator *copy_string_iterator(const string_iterator *iterator)
+{
+    string_iterator *copy = malloc(sizeof(string_iterator));
+    assert(copy != NULL);
+    copy->string = iterator->string;
+    copy->index = iterator->index;
+    copy->delimiter = iterator->delimiter;
+    return copy;
+}
+
+int get_number_of_words_left(const string_iterator *iterator)
+{
+    int count = 0;
+
+    string_iterator *copy = copy_string_iterator(iterator);
+
+    while (has_next_word(copy))
+    {
+        next_word(copy);
+        count++;
+    }
+    return count;
+}
+
 /*
 Strips the new line character from a string.
-It assumes that there is only a single new line 
+It assumes that there is only a single new line
 character at the end of the string.
 */
 void strip_newline(char *str)
