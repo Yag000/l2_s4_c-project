@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     }
 
     initialize_flags(argc, argv);
-
+   
     current_node = create_root_noeud();
 
     int error_code = parse_file(argv[1]);
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     if (out_stream != stdout)
     {
-        close_file(out_stream, out_stram_path);
+        close_file(out_stream, out_stream_path);
     }
 
     destroy_tree();
