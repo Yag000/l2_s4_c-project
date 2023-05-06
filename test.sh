@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#TODO: remove output dirs before running tests
-
 has_passed=true
 use_valgrind=false
 verbose=false
