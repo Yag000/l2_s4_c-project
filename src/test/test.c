@@ -27,6 +27,8 @@ int main(int argc, char *argv[])
     test_info *info = create_test_info();
     clock_t before = clock();
     error_occurs_stop = false;
+    command_record_path = NULL;
+    command_record_stream = NULL;
     verbose = true;
     interactive = false;
 

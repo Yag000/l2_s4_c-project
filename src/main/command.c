@@ -69,6 +69,24 @@ void print_command_header_with_stream(FILE *stream)
     fputs("$ ", stream);
 }
 
+int print_command_in_record_file(command *cmd)
+{
+    if (cmd == NULL || command_record_stream == NULL)
+    {
+        return EXIT_PROGRAM_SUCCESS;
+    }
+    fputs(cmd->name, command_record_stream);
+
+    for (int i = 0; i < cmd->args_number; i++)
+    {
+        fputs(" ", command_record_stream);
+        fputs(cmd->args[i], command_record_stream);
+    }
+    fputs("\n", command_record_stream);
+
+    return SUCCESS;
+}
+
 /*
 Returns true if the command name matches the given name.
 */
@@ -127,7 +145,7 @@ int execute_command(const command *cmd)
         return EXIT_PROGRAM_SUCCESS;
     }
 
-    write_result_command("Command not found");
+    write_result_command("Command not found :");
     write_result_command(cmd->name);
     return EXIT_FAILURE;
 }
