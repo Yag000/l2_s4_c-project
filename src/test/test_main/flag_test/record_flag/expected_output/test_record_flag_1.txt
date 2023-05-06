@@ -1,0 +1,8 @@
+ls
+cd
+print
+mkdir t
+mv t tt
+ls
+mkdir tt/t
+print

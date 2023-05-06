@@ -85,8 +85,10 @@ static flags *parse_flags(int argc, char *argv[])
         sprintf(error_message, "Unknown flag: %s", argv[i]);
         perror(error_message);
         free(error_message);
+        free(flag);
         exit(EXIT_FAILURE);
-    }
+ 
+        }
     return flag;
 }
 
