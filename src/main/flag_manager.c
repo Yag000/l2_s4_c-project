@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -70,7 +71,10 @@ static flags *parse_flags(int argc, char *argv[])
             continue;
         }
 
-        perror("An unknown flag was given");
+        char * error_message = malloc(sizeof(char) * (strlen(argv[i]) + 50));    
+        sprintf(error_message, "Unknown flag: %s", argv[i]);
+        perror(error_message);
+        free(error_message);
         exit(EXIT_FAILURE);
     }
     return flag;

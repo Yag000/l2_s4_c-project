@@ -1,6 +1,10 @@
 #!/bin/bash
 
 has_passed=true
+use_valgrind=false
+verbose=false
+only_main=false
+only_unit=false
 output_dir="src/test/output"
 
 COLOR_OFF="$(tput sgr0)"
@@ -8,9 +12,10 @@ RED="$(tput setaf 1)"
 GREEN="$(tput setaf 2)"
 
 TEMP_DIFF_FILE=".diff_tmp"
+TEMP_VALGRIND_FILE=".valgrind_tmp"
 
 
-function clean(){
+function clean_before(){
     echo "|-=-=-=-=-=-=-=-=-| Cleaning up before tests |-=-=-=-=-=-=-=-=-|"
     make clean
 }
@@ -32,6 +37,23 @@ function test_one_output(){
     return 0
 }
 
+function run_with_valgrind(){
+    local executable=$1
+    shift
+    local input_file=$1
+    shift
+    local flags=("$@")
+    echo "Running valgrind on $executable $input_file ${flags[@]}"
+    if ! valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=1 --log-file="$TEMP_VALGRIND_FILE" -q $executable  $input_file "${flags[@]}" ;
+    then
+        printf "%s%s%s\n" $RED "Valgrind FAIL: $input_file" $COLOR_OFF
+        cat $TEMP_VALGRIND_FILE
+        echo "----------------------------------------------"
+        return 1
+    fi
+    return 0
+}
+
 function test_main(){
     echo
     echo "|-=-=-=-=-=-=-=-=-| Testing compiling main |-=-=-=-=-=-=-=-=-|"
@@ -45,7 +67,7 @@ function test_main(){
     local output_dir="src/test/test_main/output"
     local input_dir="src/test/test_main/input"
     [ ! -d "$output_dir" ] && mkdir "$output_dir"
- 
+    
     # Get a list of output file names (excluding directories)
     local expected_output_files=$(find $expected_output_dir -type f -name "*.txt" -printf "%f\n")
     # Loop through the input files
@@ -53,15 +75,23 @@ function test_main(){
         # Create the corresponding output file name
         local output_file="$output_dir/$file"
         local input_file="$input_dir/$file"
-        local flags=""
+        local flags=()
         
-        echo $file | grep "verbose.txt$" > /dev/null && flags="-v"
-        ./main  "$input_file"  $flags > "$output_file"
+        flags+=("-o=$output_file")
+        echo $file | grep "verbose" > /dev/null && flags+=("-v")
+        
+        if $use_valgrind; then
+            run_with_valgrind "./main" $input_file  "${flags[@]}" || has_main_test_failed=true
+        else
+            ./main $input_file "${flags[@]}" || has_main_test_failed=true
+        fi
         
         # if the test fails then set has_test_output_failed to true
         test_one_output $expected_output_dir $output_dir $file || has_main_test_failed=true
     done
     
+    
+    $use_valgrind && rm $TEMP_VALGRIND_FILE
     rm $TEMP_DIFF_FILE
     $has_main_test_failed && has_passed=false
     ($has_main_test_failed && printf "%s%s%s\n" $RED "There is at least one problem with the main function" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The main function works" $COLOR_OFF
@@ -76,13 +106,19 @@ function compile_test(){
 
 function run_tests(){
     echo
-    echo "|-=-=-=-=-=-=-=-=-| Running tests |-=-=-=-=-=-=-=-=-|"
     
-    if ./test $1; then
-        has_passed=true
+    local flag=""
+    $verbose && flag="-v"
+    
+    if $use_valgrind ; then
+        echo "|-=-=-=-=-=-=-=-=-| Running tests with valgrind |-=-=-=-=-=-=-=-=-|"
+        run_with_valgrind   "./test" "" $flag || has_passed=false
     else
-        has_passed=false
+        echo "|-=-=-=-=-=-=-=-=-| Running tests |-=-=-=-=-=-=-=-=-|"
+        ./test $flag || has_passed=false
     fi
+    
+    $use_valgrind && rm $TEMP_VALGRIND_FILE
 }
 
 function test_ouput(){
@@ -108,22 +144,66 @@ function test_ouput(){
 }
 
 
+function unit_tests(){
+    # Compile and run the tests
+    compile_test
+    
+    # Run tests
+    run_tests
+    
+    # Test the output
+    test_ouput
+}
+
+function help(){
+    echo "Usage: $0 [options]"
+    echo "Options:"
+    echo "  -v: verbose mode"
+    echo "  --valgrind: run tests with valgrind"
+    echo "  --only-main: only test the main function"
+    echo "  --only-unit: only test the unit tests"
+    echo "  -h|--help: display this help message"
+}
+
 [ ! -d "$output_dir" ] && mkdir "$output_dir"
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -v)
+            verbose=true
+        ;;
+        --valgrind)
+            use_valgrind=true
+        ;;
+        --only-main)
+            only_main=true
+        ;;
+        --only-unit)
+            only_unit=true
+        ;;
+        -h|--help)
+            help
+            exit 0
+        ;;
+        *)
+            echo "Invalid option: $1"
+            exit 1
+        ;;
+    esac
+    shift
+done
+
+
 
 
 # Clean up before running the tests
-clean
+clean_before
 
 # Test the main function
-test_main
+$only_unit || test_main
 
-# Compile and run the tests
-compile_test
-
-run_tests $1
-
-# Test the output
-test_ouput
+# Run the unit run_test
+$only_main || unit_tests
 
 echo
 echo "|-=-=-=-=-=-=-=-=-| Results |-=-=-=-=-=-=-=-=-|"
@@ -134,7 +214,3 @@ $has_passed && exit 0
 
 # Exit with a zero status if all the tests passed
 exit 1
-
-    
-    
-
