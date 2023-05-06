@@ -4,7 +4,7 @@ Tout d'abord, pour compiler le projet, il faut utiliser la commande :
 
 $make main
 
-Puis pour run le programme, il faut utiliser la commande :
+Puis pour lancer le programme, il faut utiliser la commande :
 
 $./main text.txt
 
@@ -16,8 +16,8 @@ On met à disposition aussi plusieurs flags pour l'execution du main :
 "-i" qui permet de prendre en entrée le terminal courant au lieu d'un fichier texte (si un fichier texte est donné en première position, ce flag est ignoré, et vous pouvez utiliser la commande "exit" pour en sortir).
 "-v" qui permet d'afficher la commande, en plus de l'affichage de base (couplé avec le "-i", ce flag est ignoré).
 "-c" qui permet de continuer la lecture du texte, même après une erreur qui ne nécéssite pas l'arrêt du programme (une erreur de chemin par exemple).
-"-o=output.txt" qui permet en remplaçant "output.txt" par un fichier de sortie, d'afficher les résultats des commandes dans ce fichier au lieu du terminal courant (si le fichier n'existe pas, il est alors créer si c'est possible)
-"-r=input.txt" qui permet en remplaçant "input.txt" par un fichier de sortie, d'afficher les entrées des commandes dans cet output, enregistrant donc l'input.
+"-o=output.txt" qui permet, en remplaçant "output.txt" par un fichier de sortie, d'afficher les résultats des commandes dans ce fichier au lieu du terminal courant (si le fichier n'existe pas, il est alors créé si c'est possible)
+"-r=input.txt" qui permet, en remplaçant "input.txt" par un fichier de sortie, d'afficher les entrées de commandes dans cet output, enregistrant donc un nouvel input (si le fichier n'existe pas, il est alors créé si c'est possible).
 
 
 Vous pouvez lancer une batterie de tests, qui va vérifier si le code compile bien, si les tests unitaires réussissent, et si tout les résultats (outputs) des entrées donnés (inputs) correspondent à ceux attendus (expected_output) (Il n'est pas nécessaire de compiler les tests unitaires, le programme le fera seul).
@@ -27,7 +27,7 @@ $./test.sh
 
 On met aussi à disposition plusieurs flags pour l'execution de ces tests :
 
-"-v" qui comme affiche plus de détails sur les tests unitaires.
+"-v" qui affiche plus de détails sur les tests unitaires.
 "--valgrind" qui lance les test avec valgrind.
 "--only-main" qui lance seulement les tests de main.
 "--only-unit" qui lance seulement les tests unitaires.
@@ -47,7 +47,7 @@ $make clean
 
 Pour les autres ajouts :
 
-Dans les inputs donnés, les chemins doivent respecter la forme donnés dans les consignes de projet.
+Dans les inputs donnés, les chemins doivent respecter la forme donnée dans les consignes de projet.
 Il est possible néanmoins d'utiliser, autant de fois que possible, les noms "." qui permet de sélectionner le noeud courant, et ".." qui permet de sélectionner le parent du noeud courant.
 
 Enfin, pour les commandes suivantes : "ls", "mkdir` et "touch", il est possible, en plus des demandes du projet, de leur donner des chemins complets en argument.

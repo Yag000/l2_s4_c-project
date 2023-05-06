@@ -26,9 +26,9 @@ On met à disposition aussi plusieurs flags pour l'exécution du main _(le fichi
 
 - `-c` qui permet de continuer la lecture du texte, même après une erreur qui ne nécéssite pas l'arrêt du programme _(une erreur de chemin par exemple)_.
 
-- `-o=output.txt` qui permet, en remplaçant "output.txt" par un fichier de sortie, d'afficher les résultats des commandes dans ce fichier au lieu du terminal courant _(si le fichier n'existe pas, il est alors créer si c'est possible)_.
+- `-o=output.txt` qui permet, en remplaçant "output.txt" par un fichier de sortie, d'afficher les résultats des commandes dans ce fichier au lieu du terminal courant _(si le fichier n'existe pas, il est alors créé si c'est possible)_.
 
-- `-r=input.txt` qui permet, en remplaçant "input.txt" par un fichier de sortie, d'afficher les entrées de commandes dans cet output, enregistrant donc un nouvel input _(si le fichier n'existe pas, il est alors créer si c'est possible)_.
+- `-r=input.txt` qui permet, en remplaçant "input.txt" par un fichier de sortie, d'afficher les entrées de commandes dans cet output, enregistrant donc un nouvel input _(si le fichier n'existe pas, il est alors créé si c'est possible)_.
 
 ## Compilation et lancement des tests
 
