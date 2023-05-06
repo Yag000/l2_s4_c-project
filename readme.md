@@ -1,4 +1,5 @@
-#Projet de C du S4 de la licence d'informatique
+# Projet de C du S4 de la licence d'informatique
+
 **(par Yago Iglesias Vazquez et Gabin Dudillieu)**
 
 ## Compilation et lancement du main
@@ -19,19 +20,21 @@ Le résultat s'affichera alors dans le terminal courant.
 
 On met à disposition aussi plusieurs flags pour l'exécution du main _(le fichier texte doit toujours rester en 1ère position si le main en requiert un)_ :
 
-`-i` qui permet de prendre en entrée le terminal courant au lieu d'un fichier texte _(si un fichier texte est donné en première position, ce flag est ignoré, et vous pouvez utiliser la commande `exit` pour en sortir)_.
+- `-i` qui permet de prendre en entrée le terminal courant au lieu d'un fichier texte _(si un fichier texte est donné en première position, ce flag est ignoré, et vous pouvez utiliser la commande `exit` pour en sortir)_.
 
-`-v` qui permet d'afficher la commande, en plus de l'affichage de base donnés par la commande _(couplé avec le le flag `-i`, ce flag est ignoré)_.
+- `-v` qui permet d'afficher la commande, en plus de l'affichage de base donnés par la commande _(couplé avec le le flag `-i`, ce flag est ignoré)_.
 
-`-c` qui permet de continuer la lecture du texte, même après une erreur qui ne nécéssite pas l'arrêt du programme _(une erreur de chemin par exemple)_.
+- `-c` qui permet de continuer la lecture du texte, même après une erreur qui ne nécéssite pas l'arrêt du programme _(une erreur de chemin par exemple)_.
 
-`-o=output.txt` qui permet, en remplaçant "output.txt" par un fichier de sortie, d'afficher les résultats des commandes dans cet output au lieu du terminal courant _(si le fichier n'existe pas, il est alors créer si c'est possible)_.
+- `-o=output.txt` qui permet, en remplaçant "output.txt" par un fichier de sortie, d'afficher les résultats des commandes dans ce fichier au lieu du terminal courant _(si le fichier n'existe pas, il est alors créer si c'est possible)_.
 
-`-r=input.txt` qui permet, en remplaçant "input.txt" par un fichier de sortie, d'afficher les entrées de commandes dans cet output, enregistrant donc un nouvel input _(si le fichier n'existe pas, il est alors créer si c'est possible)_.
+- `-r=input.txt` qui permet, en remplaçant "input.txt" par un fichier de sortie, d'afficher les entrées de commandes dans cet output, enregistrant donc un nouvel input _(si le fichier n'existe pas, il est alors créer si c'est possible)_.
 
 ## Compilation et lancement des tests
 
-Vous pouvez lancer une batterie de tests, qui vont vérifier si le code compile bien, si les tests unitaires réussissent, et si tout les résultats _(outputs)_ des entrées donnés _(inputs)_ correspondent à ceux attendus _(expected_output)_ _(Il n'est pas nécessaire de compiler les tests unitaires, le programme le fera seul)_ :
+Vous pouvez lancer une batterie de tests, qui va vérifier si le code compile bien, si les tests unitaires réussissent, et si tout les résultats _(outputs)_ des entrées donnés _(inputs)_ correspondent à ceux attendus _(expected_output)_ _(Il n'est pas nécessaire de compiler les tests unitaires, le programme le fera seul)_.
+
+Pour cela, il est possible d'utiliser la commande :
 
 ```bash
 $./test.sh
@@ -39,13 +42,13 @@ $./test.sh
 
 On met aussi à disposition plusieurs flags pour l'execution de cette batterie de tests :
 
-"-v" qui affiche plus de détails sur les tests unitaires donnés.
-"--valgrind" qui lance les test avec valgrind.
-"--only-main" qui lance seulement les tests de main.
-"--only-unit" qui lance seulement les tests unitaires.
-"--help" ou "-h" qui affiche une explication des options.
+- `-v` qui affiche plus de détails sur les tests unitaires donnés.
+- `--valgrind` qui lance les test avec valgrind.
+- `--only-main` qui lance seulement les tests de main.
+- `--only-unit` qui lance seulement les tests unitaires.
+- `--help` ou `-h` qui affiche une explication des options.
 
-Vous pouvez aussi compiler et run seulement les tests unitaires, en utilisant la commande :
+Vous pouvez aussi compiler et lancer seulement les tests unitaires, en utilisant la commande :
 
 ```bash
 $make test && ./test
@@ -63,7 +66,7 @@ $make clean
 
 ## Autres ajouts
 
-Dans les inputs donnés, les path doivent respectés la forme donnée dans les consignes de projet.
+Dans les inputs donnés, les chemins doivent respecter la forme donnée dans les consignes de projet.
 
 Néanmoins, dans notre projet, il est possible d'utiliser, autant de fois que possible, les noms `.`, qui permet de sélectionner le noeud courant, et `..`, qui permet de sélectionner le parent du noeud courant.
 
