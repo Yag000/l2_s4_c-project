@@ -8,8 +8,6 @@
 
 bool debug;
 noeud *current_node;
-FILE *command_record_stream;
-char *command_record_path;
 
 static void update_test_info(test_info *, test_info *);
 
