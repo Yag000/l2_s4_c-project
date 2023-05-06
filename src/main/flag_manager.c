@@ -81,7 +81,7 @@ static flags *parse_flags(int argc, char *argv[])
             continue;
         }
 
-        char * error_message = malloc(sizeof(char) * (strlen(argv[i]) + 50));    
+        char *error_message = malloc(sizeof(char) * (strlen(argv[i]) + 50));
         sprintf(error_message, "Unknown flag: %s", argv[i]);
         perror(error_message);
         free(error_message);
@@ -114,6 +114,8 @@ static void activate_flags(flags *flag)
         if (command_record_stream == NULL)
         {
             perror("Could not open record command file");
+
+            close_file(out_stream, out_stream_path);
             exit(EXIT_FAILURE);
         }
     }
