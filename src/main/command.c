@@ -69,6 +69,22 @@ void print_command_header_with_stream(FILE *stream)
     fputs("$ ", stream);
 }
 
+int print_command_in_record_file(command *cmd)
+{
+    if (cmd == NULL || command_record_stream == NULL)
+    {
+        return EXIT_PROGRAM_SUCCESS;
+    }
+    fputs(cmd->name, command_record_stream);
+
+    for (unsigned i = 0; i < cmd->args_number; i++)
+    {
+        fputs(" ", command_record_stream);
+        fputc(cmd->args[i], command_record_stream);
+    }
+    fputs("\n", command_record_stream);
+}
+
 /*
 Returns true if the command name matches the given name.
 */
@@ -209,20 +225,4 @@ int write_result_lines_command(size_t lines_number, char **results)
         write_result_command(results[i]);
     }
     return SUCCESS;
-}
-
-int write_command_in_record_file(command *cmd)
-{
-    if (cmd == NULL || command_record_stream == NULL)
-    {
-        return EXIT_PROGRAM_SUCCESS;
-    }
-    fputs(cmd->name, command_record_stream);
-
-    for (unsigned i = 0; i < cmd->args_number; i++)
-    {
-        fputs(" ", command_record_stream);
-        fputc(cmd->args[i], command_record_stream);
-    }
-    fputs("\n", command_record_stream);
 }

@@ -137,7 +137,7 @@ int parse_line(char *line)
         return FATAL_ERROR;
     }
 
-    write_command_in_record_file(command);
+    print_command_in_record_file(command);
     int exit_code = execute_command(command);
 
     destroy_string_iterator(iterator);
