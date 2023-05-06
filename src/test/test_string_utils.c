@@ -117,13 +117,13 @@ static void test_get_number_of_words_left(test_info *info)
     str = "   this    is   a test  ";
     iterator = create_string_iterator(str, ' ');
     handle_int_test(4, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
-    next_word(iterator);
+    free(next_word(iterator));
     handle_int_test(3, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
-    next_word(iterator);
+    free(next_word(iterator));
     handle_int_test(2, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
-    next_word(iterator);
+    free(next_word(iterator));
     handle_int_test(1, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
-    next_word(iterator);
+    free(next_word(iterator));
     handle_int_test(0, get_number_of_words_left(iterator), __LINE__, __FILE__, info);
     destroy_string_iterator(iterator);
 }

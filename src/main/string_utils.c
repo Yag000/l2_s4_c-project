@@ -84,9 +84,11 @@ int get_number_of_words_left(const string_iterator *iterator)
 
     while (has_next_word(copy))
     {
-        next_word(copy);
+        free(next_word(copy));
         count++;
     }
+
+    free(copy);
     return count;
 }
 
