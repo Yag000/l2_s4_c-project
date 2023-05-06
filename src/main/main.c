@@ -6,11 +6,7 @@
 #include "file_manager.h"
 #include "flag_manager.h"
 #include "parser.h"
-#include "string_utils.h"
 #include "tree_dir_core.h"
-
-char *out_stram_path;
-FILE *out_stream;
 
 noeud *current_node;
 
@@ -18,8 +14,8 @@ int main(int argc, char *argv[])
 {
 
     out_stream = stdout;
-    out_stram_path = NULL;
- 
+    out_stream_path = NULL;
+
     // Hnadle 0 arguments
     if (argc <= 1)
     {
@@ -28,10 +24,16 @@ int main(int argc, char *argv[])
     }
 
     initialize_flags(argc, argv);
-
+   
     current_node = create_root_noeud();
 
     int error_code = parse_file(argv[1]);
+
+
+    if (out_stream != stdout)
+    {
+        close_file(out_stream, out_stream_path);
+    }
 
     destroy_tree();
 

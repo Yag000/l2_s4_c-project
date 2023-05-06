@@ -13,9 +13,7 @@ jobs:
         run: make
       - name: Compile tests
         run: make test
-      - name: Run tests
-        run: ./test.sh -v
-      - name: Run valgrind for memory leaks on main
-        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./main "src/test/test_main/input/main_test_1_verbose.txt" -v
-      - name: Run valgrind for memory leaks on tests 
-        run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./test
+      - name: Run tests of the main funtion
+        run: ./test.sh -v --valgrind --only-main
+      - name: Run unit tests
+        run: ./test.sh -v --valgrind --only-unit

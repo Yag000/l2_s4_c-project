@@ -6,11 +6,7 @@
 #include "../main/tree_dir_core.h"
 #include "test_core.h"
 
-bool verbose = true;
 bool debug;
-
-FILE *out_stream;
-char *out_stream_path;
 noeud *current_node;
 FILE *command_record_stream;
 char *command_record_path;
@@ -35,6 +31,8 @@ int main(int argc, char *argv[])
     error_occurs_stop = false;
     command_record_path = NULL;
     command_record_stream = NULL;
+    verbose = true;
+    interactive = false;
 
     // Add tests here
 
