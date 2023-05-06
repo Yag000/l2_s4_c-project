@@ -68,22 +68,25 @@ static void update_index_to_next_word(string_iterator *iterator)
 
 /*
 Strips the new line character from a string.
+It assumes that there is only a single new line 
+character at the end of the string.
 */
 void strip_newline(char *str)
 {
     assert(str != NULL);
 
-    int i, j;
-    int len = strlen(str);
-    for (i = j = 0; i < len; i++)
+    unsigned len = strlen(str);
+    if (len == 0)
     {
-        if (str[i] != '\n')
-        {
-            str[j] = str[i];
-            j++;
-        }
+        return;
     }
-    str[j] = '\0';
+
+    if (str[len - 1] == '\n')
+    {
+        str[len - 1] = '\0';
+    }
+
+    return;
 }
 
 /*
