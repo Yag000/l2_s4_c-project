@@ -1,0 +1,7 @@
+mkdir t
+cd t
+cp . /j
+print
+touch yes
+print
+exit

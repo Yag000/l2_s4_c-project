@@ -1,0 +1,5 @@
+Parsing file src/test/test_main/input/test_cp_duplicate_name_fail_verbose.txt ...
+/$ mkdir t
+/$ mkdir k
+/$ cp k t
+Invalid name : an element with the same name already exists.

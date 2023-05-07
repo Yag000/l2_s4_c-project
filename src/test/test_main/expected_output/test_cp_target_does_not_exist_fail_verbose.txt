@@ -1,0 +1,4 @@
+Parsing file src/test/test_main/input/test_cp_target_does_not_exist_fail_verbose.txt ...
+/$ mkdir t
+/$ cp t tt/k
+Invalid path to create a copy.
