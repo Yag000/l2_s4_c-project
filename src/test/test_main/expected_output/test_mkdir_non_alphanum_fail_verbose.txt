@@ -1,0 +1,3 @@
+Parsing file src/test/test_main/input/test_mkdir_non_alphanum_fail_verbose.txt ...
+/$ mkdir thida=foes.not-=e
+Invalid path of directory.
