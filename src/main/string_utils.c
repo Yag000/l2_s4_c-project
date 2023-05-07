@@ -155,10 +155,8 @@ char *concat_two_words_with_delimiter(const char *word1, const char *word2, char
     assert(words_concat != NULL);
 
     memmove(words_concat, word1, len_word1);
-    assert(words_concat != NULL);
     words_concat[len_word1] = delimiter;
     memmove(words_concat + len_word1 + 1, word2, len_word2);
-    assert(words_concat != NULL);
     words_concat[len_word1 + len_word2 + 1] = '\0';
 
     return words_concat;
@@ -171,7 +169,7 @@ char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
 {
     char *words_concat;
 
-    if (size <= 0 || words == NULL)
+    if (size == 0 || words == NULL)
     {
         words_concat = malloc(sizeof(char));
         assert(words_concat != NULL);
@@ -198,7 +196,6 @@ char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
     }
     len_word = strlen(words[size - 1]);
     memmove(words_concat + acc, words[size - 1], len_word);
-    assert(words_concat != NULL);
     acc += len_word;
 
     words_concat[acc] = '\0';
@@ -236,7 +233,6 @@ char *get_alloc_pointer_of_string(const char *s)
     assert(result != NULL);
 
     memmove(result, s, len_s);
-    assert(result != NULL);
     result[len_s] = '\0';
 
     return result;
