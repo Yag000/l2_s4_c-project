@@ -1,0 +1,31 @@
+mkdir /t
+mkdir /t/tt
+mkdir /t/tt/ttt
+mkdir /t/tt/ttt/tttt
+mkdir /t/tt/ttt/tttt/ttttt
+mkdir /t/tt/ttt/tttt/ttttt/tttttt
+mkdir /t/tt/ttt/tttt/ttttt/tttttt/ttttttt
+mkdir /t/tt/ttt/tttt/ttttt/tttttt/ttttttt/tttttttt
+cd /t/tt/ttt/tttt/ttttt/tttttt/ttttttt/tttttttt
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+cd ..
+pwd
+mv /t /tests
+cd /tests
+pwd
