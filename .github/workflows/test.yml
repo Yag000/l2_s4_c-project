@@ -13,7 +13,7 @@ jobs:
         run: make
       - name: Compile tests
         run: make test
-      - name: Run tests of the main funtion
+      - name: Run tests of the main function
         run: ./test.sh -v --valgrind --only-main
       - name: Run unit tests
         run: ./test.sh -v --valgrind --only-unit
