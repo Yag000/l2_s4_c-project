@@ -1,0 +1,4 @@
+Parsing file src/test/test_main/input/test_invalid_command_fails_verbose.txt ...
+/$ mkdirr
+Command not found :
+mkdirr
