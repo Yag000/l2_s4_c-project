@@ -14,6 +14,11 @@ valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --e
 # This is needed because the interactive mode does not print the input file name (because there is none)
 sed -i '1s,^,Parsing file '"$input_file"' ...\n,' $expected_output_file
 
+
+
+echo
+echo "------------------------------"
+echo 
 echo "Do you wish to keep this test?"
 select yn in "Yes" "No"; do
     case $yn in
