@@ -1,0 +1,3 @@
+touch target
+touch l
+cp l target/k
