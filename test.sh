@@ -13,6 +13,10 @@ GREEN="$(tput setaf 2)"
 TEMP_DIFF_FILE=".diff_tmp"
 TEMP_VALGRIND_FILE=".valgrind_tmp"
 
+CURRENT_TESTING_DIR=""
+CURRENT_TESTING_FILE=""
+CURRENT_FLAGS=()
+
 
 function clean_before(){
     echo "|-=-=-=-=-=-=-=-=-| Cleaning up before tests |-=-=-=-=-=-=-=-=-|"
@@ -43,13 +47,12 @@ function test_one_output(){
 function run_with_valgrind(){
     local executable=$1
     shift
-    local input_file=$1
+    local should_fail=$1
     shift
-    local flags=("$@")
-    echo "Running valgrind on $executable $input_file ${flags[@]}"
-    if ! valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=1 --log-file="$TEMP_VALGRIND_FILE" -q $executable  $input_file "${flags[@]}" ;
+    if ! valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=1 --log-file="$TEMP_VALGRIND_FILE" -q $executable  $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]} ;
     then
-        printf "%s%s%s\n" $RED "Valgrind FAIL: $input_file" $COLOR_OFF
+        [ -z $(cat $TEMP_VALGRIND_FILE) ] && $should_fail  && return 0
+        printf "%s%s%s\n" $RED "The program failed unexpectedly while testing $CURRENT_TESTING_FILE" $COLOR_OFF
         cat $TEMP_VALGRIND_FILE
         echo "----------------------------------------------"
         return 1
@@ -57,10 +60,31 @@ function run_with_valgrind(){
     return 0
 }
 
+function run_program(){
+
+    local exec=$1
+    local should_fail=$(echo $CURRENT_TESTING_FILE | grep "fail" > /dev/null && echo true || echo false)
+    shift 1
+
+    $verbose && echo "Running $exec $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]}, should fail : $should_fail"
+
+    if $use_valgrind; then
+        run_with_valgrind "./main" $should_fail ||  return 1
+    else
+        ./main $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]} || ( $should_fail && return 0 ) || ( printf "%s%s%s\n" $RED "The program failed unexpectedly while testing $CURRENT_TESTING_FILE" $COLOR_OFF
+        return 1)
+    fi
+}
 
 function clean_temp_files(){
     rm -f $TEMP_DIFF_FILE
     rm -f $TEMP_VALGRIND_FILE
+}
+
+function clean_output_dir(){
+    output_dir=$1
+    [  -d "$output_dir" ] && rm -rf "$output_dir"
+    mkdir "$output_dir"
 }
 #----------------------------------------------#
 #----------------- Test Main ------------------#
@@ -71,26 +95,21 @@ function test_main_output_flag(){
     echo "-> Testing output flag"
 
     local has_test_output_failed=false
-    local expected_output_dir="src/test/test_main/flag_test/output_flag/expected_output"
-    local output_dir="src/test/test_main/flag_test/output_flag/output"
-    local input_dir="src/test/test_main/flag_test/output_flag/input"
+    CURRENT_TESTING_DIR="src/test/test_main/flag_test/output_flag"
+    local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
+    local output_dir="$CURRENT_TESTING_DIR/output"
+    local input_dir="$CURRENT_TESTING_DIR/input"
 
-    [  -d "$output_dir" ] && rm -rf "$output_dir"
-    mkdir "$output_dir"
+    clean_output_dir "$output_dir"
 
     local files=$(find $input_dir -type f -name "*.txt" -printf "%f\n")
 
     for file in $files; do
         local output_file="$output_dir/$file"
-        local input_file="$input_dir/$file"
+        CURRENT_TESTING_FILE="$input_dir/$file"
+        CURRENT_FLAGS=("-o=$output_file")
 
-        local flag="-o=$output_file"
-
-        if $use_valgrind; then
-            run_with_valgrind "./main" $input_file $flag || has_test_output_failed=true
-        else
-            ./main $input_file $flag || has_test_output_failed=true
-        fi
+        run_program "./main" || has_test_output_failed=true
 
         test_one_output $expected_output_dir $output_dir $file || has_test_output_failed=true
     done
@@ -108,26 +127,21 @@ function test_main_record_flag(){
     echo "-> Testing record flag"
 
     local has_test_record_failed=false
-    local expected_output_dir="src/test/test_main/flag_test/record_flag/expected_output"
-    local output_dir="src/test/test_main/flag_test/record_flag/output"
-    local input_dir="src/test/test_main/flag_test/record_flag/input"
+    CURRENT_TESTING_DIR="src/test/test_main/flag_test/record_flag"
+    local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
+    local output_dir="$CURRENT_TESTING_DIR/output"
+    local input_dir="$CURRENT_TESTING_DIR/input"
 
-    [  -d "$output_dir" ] && rm -rf "$output_dir"
-    mkdir "$output_dir"
+    clean_output_dir "$output_dir"
 
     local files=$(find $input_dir -type f -name "*.txt" -printf "%f\n")
 
     for file in $files; do
         local output_file="$output_dir/$file"
-        local input_file="$input_dir/$file"
+        CURRENT_TESTING_FILE="$input_dir/$file"
+        CURRENT_FLAGS=("-r=$output_file -o=/dev/null")
 
-        local flag="-r=$output_file -o=/dev/null"
-
-        if $use_valgrind; then
-            run_with_valgrind "./main" $input_file $flag ||  has_test_record_failed=true
-        else
-            ./main $input_file $flag || has_test_record_failed=true
-        fi
+        run_program "./main" || has_test_record_failed=true
 
         test_one_output $expected_output_dir $output_dir $file || has_test_record_failed=true
     done
@@ -150,7 +164,7 @@ function test_flags(){
 
 function test_main(){
     echo
-    echo "|-=-=-=-=-=-=-=-=-| Testing compiling main |-=-=-=-=-=-=-=-=-|"
+    echo "|-=-=-=-=-=-=-=-=-| Compiling main |-=-=-=-=-=-=-=-=-|"
     make all
 
     echo
@@ -158,12 +172,12 @@ function test_main(){
 
     echo "-> Testing main function"
     local has_main_test_failed=false
-    local expected_output_dir="src/test/test_main/expected_output"
-    local output_dir="src/test/test_main/output"
-    local input_dir="src/test/test_main/input"
+    CURRENT_TESTING_DIR="src/test/test_main"
+    local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
+    local output_dir="$CURRENT_TESTING_DIR/output"
+    local input_dir="$CURRENT_TESTING_DIR/input"
 
-    [  -d "$output_dir" ] && rm -rf "$output_dir"
-    mkdir "$output_dir"
+    clean_output_dir "$output_dir"
 
     # Get a list of output file names (excluding directories)
     local expected_output_files=$(find $expected_output_dir -type f -name "*.txt" -printf "%f\n")
@@ -171,24 +185,19 @@ function test_main(){
     for file in $expected_output_files; do
         # Create the corresponding output file name
         local output_file="$output_dir/$file"
-        local input_file="$input_dir/$file"
-        local flags=()
+        CURRENT_TESTING_FILE="$input_dir/$file"
 
-        flags+=("-o=$output_file")
-        echo $file | grep "verbose" > /dev/null && flags+=("-v")
+        CURRENT_FLAGS=("-o=$output_file")
+        echo $file | grep "verbose" > /dev/null && CURRENT_FLAGS+=("-v")
 
-        if $use_valgrind; then
-            run_with_valgrind "./main" $input_file  "${flags[@]}" || has_main_test_failed=true
-        else
-            ./main $input_file "${flags[@]}" || has_main_test_failed=true
-        fi
+        run_program "./main" || has_main_test_failed=true
 
         # if the test fails then set has_test_output_failed to true
         test_one_output $expected_output_dir $output_dir $file || has_main_test_failed=true
     done
 
     clean_temp_files
-    test_flags|| has_main_test_failed=true
+    test_flags || has_main_test_failed=true
     $has_main_test_failed && has_passed=false
 
     echo
@@ -205,9 +214,9 @@ function compile_test(){
     echo "|-=-=-=-=-=-=-=-=-| Compiling tests |-=-=-=-=-=-=-=-=|"
     make test
 
-    local output_dir="src/test/output"
-    [ -d "$output_dir" ] && rm -rf "$output_dir"
-    mkdir "$output_dir"
+    CURRENT_TESTING_DIR="src/test"
+    local output_dir="$CURRENT_TESTING_DIR/output"
+    clean_output_dir "$output_dir"
 }
 
 function run_tests(){
@@ -218,7 +227,7 @@ function run_tests(){
 
     if $use_valgrind ; then
         echo "|-=-=-=-=-=-=-=-=-| Running tests with valgrind |-=-=-=-=-=-=-=-=-|"
-        run_with_valgrind   "./test" "" $flag || has_passed=false
+        run_with_valgrind   "./test" "" false $flag || has_passed=false
     else
         echo "|-=-=-=-=-=-=-=-=-| Running tests |-=-=-=-=-=-=-=-=-|"
         ./test $flag || has_passed=false
