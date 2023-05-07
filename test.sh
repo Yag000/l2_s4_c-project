@@ -60,7 +60,6 @@ function run_with_valgrind(){
     return 0
 }
 
-
 function run_program(){
 
     local exec=$1
@@ -81,6 +80,12 @@ function clean_temp_files(){
     rm -f $TEMP_DIFF_FILE
     rm -f $TEMP_VALGRIND_FILE
 }
+
+function clean_output_dir(){
+    output_dir=$1
+    [  -d "$output_dir" ] && rm -rf "$output_dir"
+    mkdir "$output_dir"
+}
 #----------------------------------------------#
 #----------------- Test Main ------------------#
 #----------------------------------------------#
@@ -95,8 +100,7 @@ function test_main_output_flag(){
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
 
-    [  -d "$output_dir" ] && rm -rf "$output_dir"
-    mkdir "$output_dir"
+    clean_output_dir "$output_dir"
 
     local files=$(find $input_dir -type f -name "*.txt" -printf "%f\n")
 
@@ -128,8 +132,7 @@ function test_main_record_flag(){
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
 
-    [  -d "$output_dir" ] && rm -rf "$output_dir"
-    mkdir "$output_dir"
+    clean_output_dir "$output_dir"
 
     local files=$(find $input_dir -type f -name "*.txt" -printf "%f\n")
 
@@ -174,8 +177,7 @@ function test_main(){
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
 
-    [  -d "$output_dir" ] && rm -rf "$output_dir"
-    mkdir "$output_dir"
+    clean_output_dir "$output_dir"
 
     # Get a list of output file names (excluding directories)
     local expected_output_files=$(find $expected_output_dir -type f -name "*.txt" -printf "%f\n")
@@ -184,8 +186,8 @@ function test_main(){
         # Create the corresponding output file name
         local output_file="$output_dir/$file"
         CURRENT_TESTING_FILE="$input_dir/$file"
-    
-        CURRENT_FLAGS=("-o=$output_file") 
+
+        CURRENT_FLAGS=("-o=$output_file")
         echo $file | grep "verbose" > /dev/null && CURRENT_FLAGS+=("-v")
 
         run_program "./main" || has_main_test_failed=true
@@ -212,10 +214,9 @@ function compile_test(){
     echo "|-=-=-=-=-=-=-=-=-| Compiling tests |-=-=-=-=-=-=-=-=|"
     make test
 
-    CURRENT_TESTING_DIR = "src/test"
+    CURRENT_TESTING_DIR="src/test"
     local output_dir="$CURRENT_TESTING_DIR/output"
-    [ -d "$output_dir" ] && rm -rf "$output_dir"
-    mkdir "$output_dir"
+    clean_output_dir "$output_dir"
 }
 
 function run_tests(){
