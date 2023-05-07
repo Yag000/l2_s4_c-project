@@ -69,9 +69,9 @@ function run_program(){
     $verbose && echo "Running $exec $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]}, should fail : $should_fail"
 
     if $use_valgrind; then
-        run_with_valgrind "./main" $should_fail ||  return 1
+        run_with_valgrind $exec $should_fail ||  return 1
     else
-        ./main $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]} || ( $should_fail && return 0 ) || ( printf "%s%s%s\n" $RED "The program failed unexpectedly while testing $CURRENT_TESTING_FILE" $COLOR_OFF
+        $exec $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]} || ( $should_fail && return 0 ) || ( printf "%s%s%s\n" $RED "The program failed unexpectedly while testing $CURRENT_TESTING_FILE" $COLOR_OFF
         return 1)
     fi
 }
@@ -89,6 +89,23 @@ function clean_output_dir(){
 #----------------------------------------------#
 #----------------- Test Main ------------------#
 #----------------------------------------------#
+
+function test_invalid_flag(){
+    local output_dir=$1
+    local expected_output_dir=$2
+
+    local has_test_invalid_flag_failed=false
+    local test_name="invalid_output_fail"
+    $verbose && test_name+="_verbose"
+    test_name+=".txt"
+
+    $verbose && echo "Running ./main $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]}, should fail : true"
+    run_program "./main" > "$output_dir/$test_name" && has_test_invalid_flag_failed=true
+    test_one_output $expected_output_dir $output_dir $test_name || has_test_invalid_flag_failed=true
+
+    $has_test_output_failed && return 1
+    return 0
+}
 
 function test_main_output_flag(){
 
@@ -113,6 +130,11 @@ function test_main_output_flag(){
 
         test_one_output $expected_output_dir $output_dir $file || has_test_output_failed=true
     done
+
+    # Testing invalid output file
+    CURRENT_TESTING_FILE="$input_dir/invalid_output_fail.txt"
+    CURRENT_FLAGS=("-o=")
+    test_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
 
     clean_temp_files
     $has_test_output_failed && has_passed=false
@@ -145,6 +167,11 @@ function test_main_record_flag(){
 
         test_one_output $expected_output_dir $output_dir $file || has_test_record_failed=true
     done
+
+    # Testing invalid output file
+    CURRENT_TESTING_FILE="$input_dir/invalid_output_fail.txt"
+    CURRENT_FLAGS=("-r=")
+    test_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
 
     clean_temp_files
     $has_test_record_failed && has_passed=false
@@ -195,6 +222,13 @@ function test_main(){
         # if the test fails then set has_test_output_failed to true
         test_one_output $expected_output_dir $output_dir $file || has_main_test_failed=true
     done
+
+    # Testing invalid input file
+
+    CURRENT_TESTING_FILE="$input_dir/invalid_input_fail.txt"
+    CURRENT_FLAGS=("-o=$output_dir/invalid_input_fail.txt")
+    run_program "./main" || has_main_test_failed=true
+    test_one_output $expected_output_dir $output_dir "invalid_input_fail.txt" || has_main_test_failed=true
 
     clean_temp_files
     test_flags || has_main_test_failed=true

@@ -81,10 +81,7 @@ static flags *parse_flags(int argc, char *argv[])
             continue;
         }
 
-        char *error_message = malloc(sizeof(char) * (strlen(argv[i]) + 50));
-        sprintf(error_message, "Unknown flag: %s", argv[i]);
-        perror(error_message);
-        free(error_message);
+        fprintf (out_stream, "Unknown flag: %s", argv[i]);
         free(flag);
         exit(EXIT_FAILURE);
  
@@ -104,7 +101,9 @@ static void activate_flags(flags *flag)
         out_stream = open_file(out_stream_path, "w");
         if (out_stream == NULL)
         {
-            perror("Could not open output file");
+            // We use stdin for testing purposes
+            fprintf(stdin, "Error: Could not open output file: %s\n", out_stream_path);
+            free(flag);
             exit(EXIT_FAILURE);
         }
     }
@@ -115,9 +114,10 @@ static void activate_flags(flags *flag)
         command_record_stream = open_file(command_record_path, "w");
         if (command_record_stream == NULL)
         {
-            perror("Could not open record command file");
-
+            // We use stdin for testing purposes
+            fprintf(stdin, "Error: Could not open command record file: %s\n", command_record_path);
             close_file(out_stream, out_stream_path);
+            free(flag);
             exit(EXIT_FAILURE);
         }
     }
