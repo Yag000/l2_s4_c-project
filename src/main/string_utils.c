@@ -169,7 +169,7 @@ char *concat_words_with_delimiter(size_t size, char **words, char delimiter)
 {
     char *words_concat;
 
-    if (size <= 0 || words == NULL)
+    if (size == 0 || words == NULL)
     {
         words_concat = malloc(sizeof(char));
         assert(words_concat != NULL);
