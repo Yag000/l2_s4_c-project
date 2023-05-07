@@ -13,6 +13,10 @@ GREEN="$(tput setaf 2)"
 TEMP_DIFF_FILE=".diff_tmp"
 TEMP_VALGRIND_FILE=".valgrind_tmp"
 
+CURRENT_TESTING_DIR=""
+CURRENT_TESTING_FILE=""
+CURRENT_FLAGS=()
+
 
 function clean_before(){
     echo "|-=-=-=-=-=-=-=-=-| Cleaning up before tests |-=-=-=-=-=-=-=-=-|"
@@ -43,15 +47,12 @@ function test_one_output(){
 function run_with_valgrind(){
     local executable=$1
     shift
-    local input_file=$1
-    shift
     local should_fail=$1
     shift
-    local flags=("$@")
-    if ! valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=1 --log-file="$TEMP_VALGRIND_FILE" -q $executable  $input_file "${flags[@]}" ;
+    if ! valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --error-exitcode=1 --log-file="$TEMP_VALGRIND_FILE" -q $executable  $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]} ;
     then
         [ -z $(cat $TEMP_VALGRIND_FILE) ] && $should_fail  && return 0
-        printf "%s%s%s\n" $RED "The program failed unexpectedly while testing $input_file" $COLOR_OFF
+        printf "%s%s%s\n" $RED "The program failed unexpectedly while testing $CURRENT_TESTING_FILE" $COLOR_OFF
         cat $TEMP_VALGRIND_FILE
         echo "----------------------------------------------"
         return 1
@@ -63,17 +64,15 @@ function run_with_valgrind(){
 function run_program(){
 
     local exec=$1
-    local input_file=$2
-    local should_fail=$(echo $input_file | grep "fail" > /dev/null && echo true || echo false)
-    shift 2
-    local flags=("$@")
+    local should_fail=$(echo $CURRENT_TESTING_FILE | grep "fail" > /dev/null && echo true || echo false)
+    shift 1
 
-    $verbose && echo "Running $exec $input_file ${flags[@]}, should_fail: $should_fail"
+    $verbose && echo "Running $exec $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]}, should fail : $should_fail"
 
     if $use_valgrind; then
-        run_with_valgrind "./main" $input_file $should_fail ${flags[@]} ||  return 1
+        run_with_valgrind "./main" $should_fail ||  return 1
     else
-        ./main $input_file "${flags[@]}"  || ( $should_fail && return 0 ) || ( printf "%s%s%s\n" $RED "The program failed unexpectedly while testing $input_file" $COLOR_OFF
+        ./main $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]} || ( $should_fail && return 0 ) || ( printf "%s%s%s\n" $RED "The program failed unexpectedly while testing $CURRENT_TESTING_FILE" $COLOR_OFF
         return 1)
     fi
 }
@@ -91,10 +90,10 @@ function test_main_output_flag(){
     echo "-> Testing output flag"
 
     local has_test_output_failed=false
-    local testing_dir="src/test/test_main/flag_test/output_flag"
-    local expected_output_dir="$testing_dir/expected_output"
-    local output_dir="$testing_dir/output"
-    local input_dir="$testing_dir/input"
+    CURRENT_TESTING_DIR="src/test/test_main/flag_test/output_flag"
+    local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
+    local output_dir="$CURRENT_TESTING_DIR/output"
+    local input_dir="$CURRENT_TESTING_DIR/input"
 
     [  -d "$output_dir" ] && rm -rf "$output_dir"
     mkdir "$output_dir"
@@ -103,10 +102,10 @@ function test_main_output_flag(){
 
     for file in $files; do
         local output_file="$output_dir/$file"
-        local input_file="$input_dir/$file"
-        local flags="-o=$output_file"
+        CURRENT_TESTING_FILE="$input_dir/$file"
+        CURRENT_FLAGS=("-o=$output_file")
 
-        run_program "./main" $input_file $flags || has_test_output_failed=true
+        run_program "./main" || has_test_output_failed=true
 
         test_one_output $expected_output_dir $output_dir $file || has_test_output_failed=true
     done
@@ -124,22 +123,22 @@ function test_main_record_flag(){
     echo "-> Testing record flag"
 
     local has_test_record_failed=false
-    local testing_dir="src/test/test_main/flag_test/record_flag"
-    local expected_output_dir="$testing_dir/expected_output"
-    local output_dir="$testing_dir/output"
-    local input_dir="$testing_dir/input"
+    CURRENT_TESTING_DIR="src/test/test_main/flag_test/record_flag"
+    local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
+    local output_dir="$CURRENT_TESTING_DIR/output"
+    local input_dir="$CURRENT_TESTING_DIR/input"
 
     [  -d "$output_dir" ] && rm -rf "$output_dir"
     mkdir "$output_dir"
- 
+
     local files=$(find $input_dir -type f -name "*.txt" -printf "%f\n")
 
     for file in $files; do
         local output_file="$output_dir/$file"
-        local input_file="$input_dir/$file"
-        local flag="-r=$output_file -o=/dev/null"
+        CURRENT_TESTING_FILE="$input_dir/$file"
+        CURRENT_FLAGS=("-r=$output_file -o=/dev/null")
 
-        run_program "./main" $input_file $flag || has_test_record_failed=true
+        run_program "./main" || has_test_record_failed=true
 
         test_one_output $expected_output_dir $output_dir $file || has_test_record_failed=true
     done
@@ -170,10 +169,10 @@ function test_main(){
 
     echo "-> Testing main function"
     local has_main_test_failed=false
-    local testing_dir="src/test/test_main"
-    local expected_output_dir="$testing_dir/expected_output"
-    local output_dir="$testing_dir/output"
-    local input_dir="$testing_dir/input"
+    CURRENT_TESTING_DIR="src/test/test_main"
+    local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
+    local output_dir="$CURRENT_TESTING_DIR/output"
+    local input_dir="$CURRENT_TESTING_DIR/input"
 
     [  -d "$output_dir" ] && rm -rf "$output_dir"
     mkdir "$output_dir"
@@ -184,13 +183,12 @@ function test_main(){
     for file in $expected_output_files; do
         # Create the corresponding output file name
         local output_file="$output_dir/$file"
-        local input_file="$input_dir/$file"
+        CURRENT_TESTING_FILE="$input_dir/$file"
+    
+        CURRENT_FLAGS=("-o=$output_file") 
+        echo $file | grep "verbose" > /dev/null && CURRENT_FLAGS+=("-v")
 
-        local flags=()
-        flags+=("-o=$output_file")
-        echo $file | grep "verbose" > /dev/null && flags+=("-v")
-
-        run_program "./main" $input_file "${flags[@]}" || has_main_test_failed=true
+        run_program "./main" || has_main_test_failed=true
 
         # if the test fails then set has_test_output_failed to true
         test_one_output $expected_output_dir $output_dir $file || has_main_test_failed=true
@@ -214,7 +212,8 @@ function compile_test(){
     echo "|-=-=-=-=-=-=-=-=-| Compiling tests |-=-=-=-=-=-=-=-=|"
     make test
 
-    local output_dir="src/test/output"
+    CURRENT_TESTING_DIR = "src/test"
+    local output_dir="$CURRENT_TESTING_DIR/output"
     [ -d "$output_dir" ] && rm -rf "$output_dir"
     mkdir "$output_dir"
 }
