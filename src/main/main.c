@@ -40,5 +40,10 @@ int main(int argc, char *argv[])
 
     destroy_tree();
 
-    return error_code == SUCCESS || error_code == EXIT_PROGRAM_SUCCESS ? EXIT_SUCCESS : EXIT_FAILURE;
+    if (error_code == EXIT_PROGRAM_SUCCESS || error_code == SUCCESS || error_code == EMPTY_COMMAND)
+    {
+        return EXIT_SUCCESS;
+    }
+
+    return EXIT_FAILURE;
 }
