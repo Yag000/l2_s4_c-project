@@ -207,6 +207,8 @@ function test_main(){
     clean_output_dir "$output_dir"
 
     # Get a list of output file names (excluding directories)
+    # we use the output instead of the input because we want to alse tests 
+    # invalid input files.
     local expected_output_files=$(find $expected_output_dir -type f -name "*.txt" -printf "%f\n")
     # Loop through the input files
     for file in $expected_output_files; do
