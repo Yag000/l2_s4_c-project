@@ -1,0 +1,11 @@
+/ (D)
+|-- Rep1 (D)
+|   \-- Rep11 (D)
+|       \-- Rep111 (D)
+|           \-- file1111 (F)
+\-- Rep2 (D)
+    \-- file21 (F)
+/Rep2
+/ (D)
+\-- Rep2 (D)
+    \-- file21 (F)
