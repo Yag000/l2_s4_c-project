@@ -255,13 +255,13 @@ function compile_test(){
 
 function run_tests(){
     echo
-    
+    CURRENT_TESTING_FILE=""
     CURRENT_FLAGS=("")
     $verbose && CURRENT_FLAGS=("-v")
     
     if $use_valgrind ; then
         echo "|-=-=-=-=-=-=-=-=-| Running tests with valgrind |-=-=-=-=-=-=-=-=-|"
-        run_with_valgrind   "./test" "" false || has_passed=false
+        run_with_valgrind "./test" "" false || has_passed=false
     else
         echo "|-=-=-=-=-=-=-=-=-| Running tests |-=-=-=-=-=-=-=-=-|"
         ./test ${CURRENT_FLAGS[@]} || has_passed=false
