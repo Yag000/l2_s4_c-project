@@ -45,7 +45,16 @@ static void test_touch_empty(test_info *info)
     out_stream = open_file(out_stream_path, "w");
 
     current_node = create_root_noeud();
-    invalid_name_format_test_handler("", info);
+
+    char **args = malloc(sizeof(char *));
+    args[0] = "";
+
+    command *cmd = create_command("touch", 1, args);
+    handle_int_test(INVALID_PATH, touch(cmd), __LINE__, __FILE__, info);
+
+    free(args);
+    free(cmd);
+
     destroy_tree();
 
     close_file(out_stream, out_stream_path);

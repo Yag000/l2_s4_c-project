@@ -1,7 +1,7 @@
-Invalid path of file.
-Invalid path of file.
-Invalid path of file.
-Invalid path of file.
-Invalid path of file.
-Invalid path of file.
-Invalid path of file.
+Invalid name : the name of an element can neither be empty nor contain special characters.
+Invalid name : the name of an element can neither be empty nor contain special characters.
+Invalid name : the name of an element can neither be empty nor contain special characters.
+Invalid name : the name of an element can neither be empty nor contain special characters.
+Invalid name : the name of an element can neither be empty nor contain special characters.
+Invalid name : the name of an element can neither be empty nor contain special characters.
+Invalid name : the name of an element can neither be empty nor contain special characters.

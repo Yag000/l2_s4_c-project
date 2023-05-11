@@ -33,6 +33,13 @@ int mv(const command *cmd)
         return INVALID_PATH;
     }
 
+    if (!is_valid_name_node(node_to_append->nom))
+    {
+        write_result_command("Invalid name : the name of an element can neither be empty nor contain special characters.");
+        destroy_noeud(node_to_append);
+        return INVALID_NAME;
+    }
+
     if (is_noeud_inside(node_to_append->pere, node_to_move))
     {
         write_result_command("A directory cannot be moved inside itself.");
