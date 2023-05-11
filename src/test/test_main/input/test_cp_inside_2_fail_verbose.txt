@@ -1,0 +1,4 @@
+mkdir h
+mkdir h/ll
+mkdir h/ll/y
+cp h/ll /h/ll/p

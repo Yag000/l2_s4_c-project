@@ -1,0 +1,2 @@
+mkdir t
+cp t tt/k

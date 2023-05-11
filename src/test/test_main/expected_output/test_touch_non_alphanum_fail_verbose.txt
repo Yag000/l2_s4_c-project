@@ -1,0 +1,3 @@
+Parsing file src/test/test_main/input/test_touch_non_alphanum_fail_verbose.txt ...
+/$ touch this_Does-Bot.wor
+Invalid path of file.

@@ -1,0 +1,6 @@
+mkdir t
+cd t
+mkdir h
+mkdir l
+cd
+mv t t/l/k

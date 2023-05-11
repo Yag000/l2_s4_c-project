@@ -1,0 +1,18 @@
+Rep1 [D]
+Rep2 [D]
+Rep3 [D]
+/Rep1/Rep12
+file121 [F]
+file122 [F]
+file111 [F]
+/ (D)
+|-- Rep1 (D)
+|   |-- Rep11 (D)
+|   |   \-- file111 (F)
+|   \-- Rep12 (D)
+|       |-- file121 (F)
+|       \-- file122 (F)
+|-- Rep2 (D)
+|   |-- file21 (F)
+|   \-- file22 (F)
+\-- Rep3 (D)

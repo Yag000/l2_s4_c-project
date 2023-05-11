@@ -82,7 +82,8 @@ int parse_file(const char *path)
 
 static bool should_program_stop(int exit_code)
 {
-    if (error_occurs_stop && exit_code != SUCCESS)
+    // We consider an empty command as a valid one and thus we do not stop the program
+    if (error_occurs_stop && exit_code != SUCCESS && exit_code != EMPTY_COMMAND)
     {
         return true;
     }
@@ -112,9 +113,14 @@ int parse_line(char *line)
     if (iterator == NULL)
     {
         perror("Initialization iterator problem");
-
         free(line);
         return FATAL_ERROR;
+    }
+
+    if (!has_next_word(iterator))
+    {
+        destroy_string_iterator(iterator);
+        return EMPTY_COMMAND;
     }
 
     command *command = get_command_from_string_iterator(iterator);
@@ -137,4 +143,3 @@ int parse_line(char *line)
 
     return exit_code;
 }
-

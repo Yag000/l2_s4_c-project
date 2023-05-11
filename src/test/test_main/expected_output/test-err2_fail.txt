@@ -1,0 +1,1 @@
+An element cannot be copied inside a directory contained in the copy.

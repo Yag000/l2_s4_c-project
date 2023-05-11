@@ -1,0 +1,5 @@
+Parsing file src/test/test_main/input/test_mv_invalid_target_path_verbose_fail.txt ...
+/$ mkdir t
+/$ mkdir h
+/$ mv t h/k/j
+Invalid path for the movement.

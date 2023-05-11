@@ -1,0 +1,8 @@
+Parsing file src/test/test_main/input/test_mv_current_dir_fail_verbose.txt ...
+/$ mkdir t
+/$ cd t
+/t$ mkdir q
+/t$ mkdir w
+/t$ cd q
+/t/q$ mv . ../l
+An directory containing the current node cannot be moved.

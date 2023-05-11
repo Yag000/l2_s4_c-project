@@ -1,0 +1,3 @@
+mkdir t
+mkdir h
+mv t h/k/j
