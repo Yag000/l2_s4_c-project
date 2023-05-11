@@ -28,11 +28,6 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
     assert(pere != NULL);
 
-    if (!is_valid_name_node(nom))
-    {
-        return NULL;
-    }
-
     noeud *node = create_empty_noeud();
 
     int length_nom = strlen(nom);
