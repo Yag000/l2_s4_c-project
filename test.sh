@@ -175,7 +175,7 @@ function test_main_record_flag(){
 
     clean_temp_files
     $has_test_record_failed && has_passed=false
-    ($has_test_record_failed && printf "%s%s%s\n" $RED "There is at least one problem with the output flag" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The output flag works" $COLOR_OFF
+    ($has_test_record_failed && printf "%s%s%s\n" $RED "There is at least one problem with the record flag" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The record flag works" $COLOR_OFF
 
     $has_test_record_failed && return 1
     return 0
