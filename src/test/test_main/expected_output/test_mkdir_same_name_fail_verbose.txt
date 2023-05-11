@@ -1,0 +1,4 @@
+Parsing file src/test/test_main/input/test_mkdir_same_name_fail_verbose.txt ...
+/$ mkdir t
+/$ mkdir t
+Invalid name : an element with the same name already exists.

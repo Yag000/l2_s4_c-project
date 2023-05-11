@@ -1,0 +1,6 @@
+mkdir t
+cd t
+mkdir q
+mkdir w
+cd q
+mv . ../l

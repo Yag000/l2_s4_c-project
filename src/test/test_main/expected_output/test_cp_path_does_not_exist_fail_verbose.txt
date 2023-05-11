@@ -1,0 +1,3 @@
+Parsing file src/test/test_main/input/test_cp_path_does_not_exist_fail_verbose.txt ...
+/$ cp t tt
+Invalid path to copy.

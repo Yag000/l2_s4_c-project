@@ -1,0 +1,5 @@
+Parsing file src/test/test_main/input/test_rm_2_arguments_fail_verbose.txt ...
+/$ mkdir t
+/$ mkdir tt
+/$ rm t tt
+An incorrect number of arguments was given: 2 instead of 1 expected.
