@@ -33,7 +33,7 @@ function test_one_output(){
     local output_dir=$2
     local file=$3
     local output_file="$output_dir/$file"
-
+    
     if  ! diff -y  "$expected_output_dir/$file" "$output_file" > $TEMP_DIFF_FILE;
     then
         printf "%s%s%s\n" $RED "FAIL: $file" $COLOR_OFF
@@ -61,13 +61,13 @@ function run_with_valgrind(){
 }
 
 function run_program(){
-
+    
     local exec=$1
     local should_fail=$(echo $CURRENT_TESTING_FILE | grep "fail" > /dev/null && echo true || echo false)
     shift 1
-
+    
     $verbose && echo "Running $exec $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]}, should fail : $should_fail"
-
+    
     if $use_valgrind; then
         run_with_valgrind $exec $should_fail ||  return 1
     else
@@ -93,90 +93,90 @@ function clean_output_dir(){
 function test_invalid_flag(){
     local output_dir=$1
     local expected_output_dir=$2
-
+    
     local has_test_invalid_flag_failed=false
     local test_name="invalid_output_fail"
     $verbose && test_name+="_verbose"
     test_name+=".txt"
-
+    
     $verbose && echo "Running ./main $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]}, should fail : true"
     run_program "./main" > "$output_dir/$test_name" && has_test_invalid_flag_failed=true
     test_one_output $expected_output_dir $output_dir $test_name || has_test_invalid_flag_failed=true
-
+    
     $has_test_output_failed && return 1
     return 0
 }
 
 function test_main_output_flag(){
-
+    
     echo "-> Testing output flag"
-
+    
     local has_test_output_failed=false
     CURRENT_TESTING_DIR="src/test/test_main/flag_test/output_flag"
     local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
-
+    
     clean_output_dir "$output_dir"
-
+    
     local files=$(find $input_dir -type f -name "*.txt" -printf "%f\n")
-
+    
     for file in $files; do
         local output_file="$output_dir/$file"
         CURRENT_TESTING_FILE="$input_dir/$file"
         CURRENT_FLAGS=("-o=$output_file")
-
+        
         run_program "./main" || has_test_output_failed=true
-
+        
         test_one_output $expected_output_dir $output_dir $file || has_test_output_failed=true
     done
-
+    
     # Testing invalid output file
     CURRENT_TESTING_FILE="$input_dir/invalid_output_fail.txt"
     CURRENT_FLAGS=("-o=")
     test_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
-
+    
     clean_temp_files
     $has_test_output_failed && has_passed=false
     ($has_test_output_failed && printf "%s%s%s\n" $RED "There is at least one problem with the output flag" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The output flag works" $COLOR_OFF
-
+    
     $has_test_output_failed && return 1
     return 0
 }
 
 function test_main_record_flag(){
-
+    
     echo "-> Testing record flag"
-
+    
     local has_test_record_failed=false
     CURRENT_TESTING_DIR="src/test/test_main/flag_test/record_flag"
     local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
-
+    
     clean_output_dir "$output_dir"
-
+    
     local files=$(find $input_dir -type f -name "*.txt" -printf "%f\n")
-
+    
     for file in $files; do
         local output_file="$output_dir/$file"
         CURRENT_TESTING_FILE="$input_dir/$file"
         CURRENT_FLAGS=("-r=$output_file -o=/dev/null")
-
+        
         run_program "./main" || has_test_record_failed=true
-
+        
         test_one_output $expected_output_dir $output_dir $file || has_test_record_failed=true
     done
-
+    
     # Testing invalid output file
     CURRENT_TESTING_FILE="$input_dir/invalid_output_fail.txt"
     CURRENT_FLAGS=("-r=")
     test_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
-
+    
     clean_temp_files
     $has_test_record_failed && has_passed=false
     ($has_test_record_failed && printf "%s%s%s\n" $RED "There is at least one problem with the output flag" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The output flag works" $COLOR_OFF
-
+    
     $has_test_record_failed && return 1
     return 0
 }
@@ -185,7 +185,7 @@ function test_flags(){
     local has_test_flags_failed=0
     test_main_output_flag || has_test_flags_failed=1
     test_main_record_flag || has_test_flags_failed=1
-
+    
     return $has_test_flags_failed
 }
 
@@ -193,19 +193,19 @@ function test_main(){
     echo
     echo "|-=-=-=-=-=-=-=-=-| Compiling main |-=-=-=-=-=-=-=-=-|"
     make all
-
+    
     echo
     echo "|-=-=-=-=-=-=-=-=-| Testing main function |-=-=-=-=-=-=-=-=-|"
-
+    
     echo "-> Testing main function"
     local has_main_test_failed=false
     CURRENT_TESTING_DIR="src/test/test_main"
     local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
-
+    
     clean_output_dir "$output_dir"
-
+    
     # Get a list of output file names (excluding directories)
     local expected_output_files=$(find $expected_output_dir -type f -name "*.txt" -printf "%f\n")
     # Loop through the input files
@@ -213,30 +213,30 @@ function test_main(){
         # Create the corresponding output file name
         local output_file="$output_dir/$file"
         CURRENT_TESTING_FILE="$input_dir/$file"
-
+        
         CURRENT_FLAGS=("-o=$output_file")
         echo $file | grep "verbose" > /dev/null && CURRENT_FLAGS+=("-v")
-
+        
         run_program "./main" || has_main_test_failed=true
-
+        
         # if the test fails then set has_test_output_failed to true
         test_one_output $expected_output_dir $output_dir $file || has_main_test_failed=true
     done
-
+    
     # Testing invalid input file
-
+    
     CURRENT_TESTING_FILE="$input_dir/invalid_input_fail.txt"
     CURRENT_FLAGS=("-o=$output_dir/invalid_input_fail.txt")
     run_program "./main" || has_main_test_failed=true
     test_one_output $expected_output_dir $output_dir "invalid_input_fail.txt" || has_main_test_failed=true
-
+    
     clean_temp_files
     test_flags || has_main_test_failed=true
     $has_main_test_failed && has_passed=false
-
+    
     echo
     ($has_main_test_failed && printf "%s%s%s\n" $RED "There is at least one problem with the main function" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The main function works" $COLOR_OFF
-
+    
 }
 
 #----------------------------------------------#
@@ -247,7 +247,7 @@ function compile_test(){
     echo
     echo "|-=-=-=-=-=-=-=-=-| Compiling tests |-=-=-=-=-=-=-=-=|"
     make test
-
+    
     CURRENT_TESTING_DIR="src/test"
     local output_dir="$CURRENT_TESTING_DIR/output"
     clean_output_dir "$output_dir"
@@ -255,38 +255,38 @@ function compile_test(){
 
 function run_tests(){
     echo
-
-    local flag=""
-    $verbose && flag="-v"
-
+    
+    CURRENT_FLAGS=("")
+    $verbose && CURRENT_FLAGS=("-v")
+    
     if $use_valgrind ; then
         echo "|-=-=-=-=-=-=-=-=-| Running tests with valgrind |-=-=-=-=-=-=-=-=-|"
-        run_with_valgrind   "./test" "" false $flag || has_passed=false
+        run_with_valgrind   "./test" "" false || has_passed=false
     else
         echo "|-=-=-=-=-=-=-=-=-| Running tests |-=-=-=-=-=-=-=-=-|"
-        ./test $flag || has_passed=false
+        ./test ${CURRENT_FLAGS[@]} || has_passed=false
     fi
-
+    
     $use_valgrind && rm $TEMP_VALGRIND_FILE
 }
 
 function test_ouput(){
     echo
     echo "|-=-=-=-=-=-=-=-=-| Testing output |-=-=-=-=-=-=-=-=-|"
-
+    
     local has_test_output_failed=false
     local expected_output_dir="src/test/expected_output"
     local output_dir="src/test/output"
-
+    
     # Get a list of input file names (excluding directories)
     local expected_output_files=$(find $expected_output_dir -type f -name "*.txt" -printf "%f\n")
-
+    
     # Loop through the input files
     for file in $expected_output_files; do
         # if the test fails then set has_test_output_failed to true
         test_one_output $expected_output_dir $output_dir $file || has_test_output_failed=true
     done
-
+    
     clean_temp_files
     $has_test_output_failed && has_passed=false
     ($has_test_output_failed && printf "%s%s%s\n" $RED "There is at least one difference from the expected output" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The output is correct" $COLOR_OFF
@@ -296,10 +296,10 @@ function test_ouput(){
 function unit_tests(){
     # Compile and run the tests
     compile_test
-
+    
     # Run tests
     run_tests
-
+    
     # Test the output
     test_ouput
 }
@@ -323,24 +323,24 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         -v)
             verbose=true
-            ;;
+        ;;
         --valgrind)
             use_valgrind=true
-            ;;
+        ;;
         --only-main)
             only_main=true
-            ;;
+        ;;
         --only-unit)
             only_unit=true
-            ;;
+        ;;
         -h|--help)
             help
             exit 0
-            ;;
+        ;;
         *)
             echo "Invalid option: $1"
             exit 1
-            ;;
+        ;;
     esac
     shift
 done
