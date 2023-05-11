@@ -32,7 +32,8 @@ int cp(const command *cmd)
     if (!is_valid_name_node(node_to_append->nom))
     {
         write_result_command("Invalid name : the name of an element can neither be empty nor contain special characters.");
-        return INVALID_PATH;
+        destroy_noeud(node_to_append);
+        return INVALID_NAME;
     }
 
     if (is_noeud_inside(node_to_append->pere, node_to_copy))

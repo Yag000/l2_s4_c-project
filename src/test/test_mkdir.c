@@ -49,7 +49,11 @@ static void test_mkdir_empty(test_info *info)
     print_test_name("Testing mkdir with empty name");
 
     current_node = create_root_noeud();
-    invalid_name_format_test_handler("", info);
+
+    command *cmd = string_to_command("");
+    handle_int_test(INVALID_PATH, mkdir(cmd), __LINE__, __FILE__, info);
+    destroy_command(cmd);
+
     destroy_tree();
 }
 

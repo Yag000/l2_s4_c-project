@@ -115,11 +115,11 @@ static void test_error_of_cp(test_info *info)
 
     tab_command[0] = "/test";
     tab_command[1] = ".";
-    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NAME, __LINE__, __FILE__, info);
 
     tab_command[0] = "/test";
     tab_command[1] = "../../.";
-    handle_boolean_test(true, execute_command(cmd) == INVALID_PATH, __LINE__, __FILE__, info);
+    handle_boolean_test(true, execute_command(cmd) == INVALID_NAME, __LINE__, __FILE__, info);
 
     tab_command[0] = "/test";
     tab_command[1] = "test12/test3/test";
