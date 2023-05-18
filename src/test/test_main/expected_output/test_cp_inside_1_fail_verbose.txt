@@ -1,5 +1,5 @@
 Parsing file src/test/test_main/input/test_cp_inside_1_fail_verbose.txt ...
 /$ mkdir t
 /$ mkdir k
-/$ mv k k/tt
-A directory cannot be moved inside itself.
+/$ cp k k/tt
+An element cannot be copied inside a directory contained in the copy.
