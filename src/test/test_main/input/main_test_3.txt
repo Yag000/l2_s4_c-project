@@ -1,0 +1,18 @@
+touch a
+mkdir b
+touch c
+mkdir d
+mv a b/mva
+cp c d/cpc
+ls
+ls b
+ls d
+rm c
+ls d
+ls
+mv d b/mvd
+ls
+ls b
+ls b/mvd
+rm b
+ls

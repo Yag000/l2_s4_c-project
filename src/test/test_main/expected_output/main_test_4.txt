@@ -1,0 +1,33 @@
+/ (D)
+\-- a (D)
+    \-- b (D)
+        \-- c (D)
+            \-- d (D)
+                \-- e (D)
+                    \-- f (D)
+/a/b/c/d/e
+d [D]
+/a/b/c
+/a/b/c
+/a/b
+/a/b/c/d/e/f
+/
+/ (D)
+|-- a (D)
+|   \-- b (D)
+|       \-- c (D)
+|           \-- d (D)
+|               \-- e (D)
+|                   \-- f (D)
+\-- copyc (D)
+    \-- d (D)
+        \-- e (D)
+            \-- f (D)
+/copyc/d/e
+/
+a     [D]
+copyc [D]
+copyc [D]
+/ (D)
+\-- copyc (D)
+/ (D)

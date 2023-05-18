@@ -1,0 +1,13 @@
+mkdir a
+mkdir a/b
+mkdir a/b/c
+mkdir a/b/c/d
+cp a cpa
+cd a/b/.././b/c/./d/.././.././../../../cpa/b/../b/./c/./d
+pwd
+cd
+cp a/b/.././b/c/./d/.././.././../../../cpa/b/.. a/b/.././b/c/./d/.././../../../copycopya
+print
+rm a/b/.././b/../b/c/./d/.././../../../copycopya
+print
+mv a/b/.././b/c/./d/../d/. a/.././../a/b/c/./../c/newd
