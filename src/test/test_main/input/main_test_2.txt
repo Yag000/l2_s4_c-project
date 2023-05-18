@@ -1,0 +1,46 @@
+ls
+mkdir a
+mkdir b
+mkdir c
+mkdir d
+mkdir e
+mkdir f
+ls
+print
+mv /f /a/f
+mv /e /a/e
+mv /d /a/d
+mv /c /a/c
+mv /b /a/b
+ls
+print
+mv /a/c /a/b/c
+mv /a/d /a/b/c/d
+mv /a/e /a/b/c/d/e
+mv /a/f /a/b/c/d/e/f
+ls /a
+ls /a/b
+ls /a/b/c
+ls /a/b/c/d
+ls /a/b/c/d/e
+ls /a/b/c/d/e/f
+cp /a /copya
+ls
+cp /copya /copycopya
+cp /copycopya /copycopycopya
+cp /copycopycopya /copycopycopycopya
+cp /copycopycopycopya /copycopycopycopycopya
+print
+rm /a
+print
+rm /copya
+print
+rm /copycopya
+print
+rm /copycopycopya
+print
+rm /copycopycopycopya
+print
+rm /copycopycopycopycopya
+print
+ls

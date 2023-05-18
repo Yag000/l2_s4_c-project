@@ -1,0 +1,50 @@
+mkdir a
+cd a
+pwd    
+mkdir b
+cd b
+pwd
+mkdir c
+cd c
+pwd
+cd
+pwd
+mkdir a/b/c/d
+pwd
+mkdir a/b/c/d/e
+mkdir a/b/c/d/e/f
+print
+mv a newa
+print
+mv newa/b newa/newb
+mv newa/newb/c newa/newb/newc
+mv newa/newb/newc/d newa/newb/newc/newd    
+mv newa/newb/newc/newd/e newa/newb/newc/newd/newe        
+mv newa/newb/newc/newd/newe/f newa/newb/newc/newd/newe/newf
+print
+cp newa copya
+cp newa/newb copya/copyb
+rm copya/newb
+cp newa/newb/newc copya/copyb/copyc
+rm copya/copyb/newc
+cp newa/newb/newc/newd copya/copyb/copyc/copyd
+rm copya/copyb/copyc/newd
+cp newa/newb/newc/newd/newe copya/copyb/copyc/copyd/copye
+rm copya/copyb/copyc/copyd/newe
+cp newa/newb/newc/newd/newe/newf copya/copyb/copyc/copyd/copye/copyf
+rm copya/copyb/copyc/copyd/copye/newf
+print
+cd newa/newb/newc/newd/newe/newf
+pwd
+mv /copya/copyb ./copyb
+rm /copya
+print
+mkdir /copya
+cp copyb /copya/copyb
+print
+rm copyb
+print
+cd
+rm newa
+rm copya
+print

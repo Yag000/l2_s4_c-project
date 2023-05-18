@@ -1,0 +1,40 @@
+mkdir a
+cd a
+mkdir b
+cd b
+mkdir c
+cd c
+mkdir d
+cd d
+mkdir e
+cd e
+mkdir f
+cd f
+ls
+print
+cd ..
+pwd
+cd ../..
+ls
+pwd
+cd .
+pwd
+cd ./../.
+pwd
+cd c/d/e/f
+pwd
+cd
+pwd
+cp a/b/c copyc
+print
+cd a/b/c/d/e/f/../../../../../.././a/../copyc/d/e
+pwd
+cd
+pwd
+ls
+rm a
+ls
+rm copyc/d
+print
+rm copyc
+print
