@@ -54,8 +54,15 @@ static void print_command(const command *cmd)
     fputs("\n", out_stream);
 }
 
+/*
+Prints the coimmand header. The command header is the current node path followed by a $.
+*/
 void print_command_header() { print_command_header_with_stream(out_stream); }
 
+/*
+Prints the coimmand header. The command header is the current node path followed by a $.
+It will print the header in the given stream.
+*/
 void print_command_header_with_stream(FILE *stream)
 {
     if (current_node != NULL)
@@ -86,7 +93,7 @@ int print_command_in_record_file(command *cmd)
 }
 
 /*
-Returns a command from a string iterator.
+Creates a command from a string iterator.
 */
 command *get_command_from_string_iterator(string_iterator *iterator)
 {
@@ -103,7 +110,7 @@ command *get_command_from_string_iterator(string_iterator *iterator)
     char **args = malloc(sizeof(char *) * args_number);
     assert(args != NULL);
 
-    int i =0;
+    int i = 0;
     while (has_next_word(iterator))
     {
         args[i] = next_word(iterator);
@@ -112,6 +119,7 @@ command *get_command_from_string_iterator(string_iterator *iterator)
 
     return create_command(command_, args_number, args);
 }
+
 /*
 Returns true if the command name matches the given name.
 */
@@ -168,9 +176,11 @@ int execute_command(const command *cmd)
     {
         return EXIT_PROGRAM_SUCCESS;
     }
-
-    write_result_command("Command not found :");
-    write_result_command(cmd->name);
+    int error_message_size = 100 + strlen(cmd->name);
+    char *error_message = malloc(sizeof(char) * (error_message_size + 1));
+    snprintf(error_message, error_message_size, "Command not found : %s", cmd->name);
+    write_result_command(error_message);
+    free(error_message);
     return EXIT_FAILURE;
 }
 
@@ -216,6 +226,8 @@ Writes the string of result in the out_stream
 */
 int write_result_command(char *result)
 {
+    // We need to also write the result in stdout if we are in interactive mode.
+    // If not the user will not see the result.
     if (interactive && out_stream != stdout)
     {
         fputs(result, stdout);
@@ -229,7 +241,7 @@ int write_result_command(char *result)
 }
 
 /*
-Writes all string of results in the out_stream
+Writes a series of strings in the out_stream
 */
 int write_result_lines_command(size_t lines_number, char **results)
 {

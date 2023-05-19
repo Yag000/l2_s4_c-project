@@ -17,12 +17,14 @@ static void test_invalid_number_of_arg_of_ls(test_info *);
 
 test_info *test_ls()
 {
-    // Create the test info
+    // Test setup
     print_test_header("ls");
     clock_t before = clock();
     test_info *info = create_test_info();
+ 
     // Add tests here
     test_ls_function(info);
+    
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("ls", info);

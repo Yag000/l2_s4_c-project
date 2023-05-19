@@ -20,8 +20,7 @@ static noeud *create_empty_noeud()
 }
 
 /*
-Returns the node if nom is valid name
-
+Returns the node if nom is a valid name
 Otherwise it returns NULL
 */
 noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
@@ -56,8 +55,8 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 }
 
 /*
-Returns false if a name is an empty string, is ".", is ".." or if it contains '/'
-Otherwise it returns true
+Returns true if a node name is valid. In this context, a valid name is a name
+that contains only alphanumeric characters.
 */
 bool is_valid_name_node(const char *name) { return is_alphanumeric(name); }
 
@@ -281,7 +280,7 @@ void destroy_liste_noeud(liste_noeud *node_list)
 }
 
 /*
-Returns true if the liste_noeud node_list contains node.
+Returns true if node_list contains node.
 */
 bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
 {
@@ -354,8 +353,8 @@ int append_liste_noeud(liste_noeud *node_list, noeud *node)
 }
 
 /*
-Returns the new list without node if it founds node.
-Free the list removed (but don't free the node).
+Returns the new list without node if it finds node.
+Frees the removed list (but does not free node).
 */
 liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
 {
@@ -367,9 +366,6 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
     if (are_noeuds_equal(node_list->no, node))
     {
         liste_noeud *acc = node_list->succ;
-
-        // !WARNING! here, just the list is freed, the user must free the node
-        // themselves
         free(node_list);
 
         return acc;
@@ -564,6 +560,9 @@ bool is_noeud_inside(const noeud *node1, const noeud *node2)
     return false;
 }
 
+/*
+Returns the size of the longest name of fils of node
+*/
 unsigned get_longest_name_length_of_node_fils(const noeud *node)
 {
     assert(node != NULL);

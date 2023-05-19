@@ -1,2 +1,0 @@
-Running ./main src/resources/test_main/flag_test/output_flag/input/invalid_output_fail.txt -o=, should fail : true
-Failure while opening:  

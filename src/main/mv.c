@@ -1,9 +1,9 @@
-#include <stdlib.h>
 #include <assert.h>
+#include <stdlib.h>
 
-#include "tree_dir_core.h"
 #include "command.h"
 #include "constants.h"
+#include "tree_dir_core.h"
 
 int mv(const command *cmd)
 {
@@ -25,7 +25,8 @@ int mv(const command *cmd)
         return INVALID_SELECTION;
     }
 
-    noeud *node_to_append = search_node_in_tree_with_node_creation(current_node, cmd->args[1], node_to_move->est_dossier);
+    noeud *node_to_append =
+        search_node_in_tree_with_node_creation(current_node, cmd->args[1], node_to_move->est_dossier);
 
     if (node_to_append == NULL)
     {
@@ -35,7 +36,8 @@ int mv(const command *cmd)
 
     if (!is_valid_name_node(node_to_append->nom))
     {
-        write_result_command("Invalid name : the name of an element can neither be empty nor contain special characters.");
+        write_result_command(
+            "Invalid name : the name of an element can neither be empty nor contain special characters.");
         destroy_noeud(node_to_append);
         return INVALID_NAME;
     }

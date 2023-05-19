@@ -63,6 +63,7 @@ test
 
 src/resources/unit_tests/output
 src/resources/test_main/output
+src/resources/test_main/flag_test/invalid_flag/output
 src/resources/test_main/flag_test/record_flag/output
 src/resources/test_main/flag_test/output_flag/output
 
@@ -72,3 +73,7 @@ _clang-format
 
 # PDF
 *.pdf
+
+# Project testing tmp files
+.valgrind_tmp
+.diff_tmp

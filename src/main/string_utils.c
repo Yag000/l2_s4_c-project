@@ -48,15 +48,15 @@ char *next_word(string_iterator *iterator)
 
     char *result = malloc(sizeof(char) * (length + 1));
     assert(result != NULL);
-    result = memmove(result, iterator->string + start, length);
-    assert(result != NULL);
+    memmove(result, iterator->string + start, length);
     result[length] = '\0';
 
     return result;
 }
 
 /*
-Updates the index to the next word in the string.
+Updates the index to the next word in the string. This will move the index to the
+first character of the next word, ignoring any delimiters.
 */
 static void update_index_to_next_word(string_iterator *iterator)
 {
@@ -116,7 +116,7 @@ void strip_newline(char *str)
 }
 
 /*
-Returns the number of char in an array of arrays of char.
+Returns the number of characters in an array of arrays of characters.
 */
 unsigned get_number_of_char(size_t size, char **words)
 {
@@ -224,7 +224,7 @@ bool is_alphanumeric(const char *str)
 }
 
 /*
-Retuns a new pointer of string, allocated, and equal to the given string
+Retuns a new pointer to a string, allocated, and equal to the given string
 */
 char *get_alloc_pointer_of_string(const char *s)
 {
@@ -238,6 +238,9 @@ char *get_alloc_pointer_of_string(const char *s)
     return result;
 }
 
+/*
+Returns true if the given string starts with the given prefix.
+*/
 bool starts_with(const char *str, const char *prefix)
 {
     if (str == NULL || prefix == NULL)
