@@ -226,6 +226,8 @@ Writes the string of result in the out_stream
 */
 int write_result_command(char *result)
 {
+    // We need to also write the result in stdout if we are in interactive mode.
+    // If not the user will not see the result.
     if (interactive && out_stream != stdout)
     {
         fputs(result, stdout);
@@ -239,7 +241,7 @@ int write_result_command(char *result)
 }
 
 /*
-Writes all string of results in the out_stream
+Writes writes a series of strings in the out_stream
 */
 int write_result_lines_command(size_t lines_number, char **results)
 {

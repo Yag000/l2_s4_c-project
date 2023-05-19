@@ -1,9 +1,9 @@
-#include <stdlib.h>
 #include <assert.h>
+#include <stdlib.h>
 
-#include "tree_dir_core.h"
 #include "command.h"
 #include "constants.h"
+#include "tree_dir_core.h"
 
 static void copy_content_of(noeud *, noeud *);
 
@@ -21,7 +21,8 @@ int cp(const command *cmd)
         return INVALID_PATH;
     }
 
-    noeud *node_to_append = search_node_in_tree_with_node_creation(current_node, cmd->args[1], node_to_copy->est_dossier);
+    noeud *node_to_append =
+        search_node_in_tree_with_node_creation(current_node, cmd->args[1], node_to_copy->est_dossier);
 
     if (node_to_append == NULL)
     {
@@ -31,7 +32,8 @@ int cp(const command *cmd)
 
     if (!is_valid_name_node(node_to_append->nom))
     {
-        write_result_command("Invalid name : the name of an element can neither be empty nor contain special characters.");
+        write_result_command(
+            "Invalid name : the name of an element can neither be empty nor contain special characters.");
         destroy_noeud(node_to_append);
         return INVALID_NAME;
     }
@@ -67,7 +69,8 @@ int cp(const command *cmd)
 /*
 Copy all contents of node1 inside node2
 
-The node1 should be empty to avoid problem of same name in append
+The node1 should be empty, that means that it should not have any offspring,
+to avoid the problem of same name in append_a_fils_to_noeud.
 */
 static void copy_content_of(noeud *node1, noeud *node2)
 {
