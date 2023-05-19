@@ -1,0 +1,96 @@
+mkdir a
+mkdir a/b
+touch a/c
+mkdir a/d
+touch a/e
+mkdir a/f
+touch a/g
+mkdir a/h
+touch a/i
+mkdir a/j
+touch a/k
+mkdir a/l
+touch a/m
+mkdir a/n
+touch a/o
+mkdir a/p
+touch a/q
+mkdir a/r
+touch a/s
+mkdir a/t
+touch a/u
+mkdir a/v
+touch a/w
+mkdir a/x
+touch a/y
+mkdir a/z
+cp a copya
+cp copya a/b/copya
+cp copya a/d/copya
+cp copya a/f/copya
+cp copya a/h/copya
+cp copya a/j/copya
+cp copya a/l/copya
+cp copya a/n/copya
+cp copya a/p/copya
+cp copya a/r/copya
+cp copya a/t/copya
+cp copya a/v/copya
+cp copya a/x/copya
+cp copya a/z/copya
+cp copya a/b/copya/copya
+cp copya a/d/copya/copya
+cp copya a/f/copya/copya
+cp copya a/h/copya/copya
+cp copya a/j/copya/copya
+cp copya a/l/copya/copya
+cp copya a/n/copya/copya
+cp copya a/p/copya/copya
+cp copya a/r/copya/copya
+cp copya a/t/copya/copya
+cp copya a/v/copya/copya
+cp copya a/x/copya/copya
+cp copya a/z/copya/copya
+print
+mv copya a/copya
+print
+mv a/b cpb
+mv a/c cpc
+mv a/d cpd
+mv a/e cpe
+mv a/f cpf
+mv a/g cpg
+mv a/h cph
+mv a/i cpi
+mv a/j cpj
+mv a/k cpk
+mv a/l cpl
+mv a/m cpm
+mv a/n cpn
+mv a/o cpo
+mv a/p cpp
+mv a/q cpq
+mv a/r cpr
+mv a/s cps
+mv a/t cpt
+mv a/u cpu
+mv a/v cpv
+mv a/w cpw
+mv a/x cpx
+mv a/y cpy
+mv a/z cpz
+print
+mv cpb/copya/b a/cpb
+mv cpd/copya/d a/cpd
+mv cpf/copya/f a/cpf
+mv cph/copya/h a/cph
+mv cpj/copya/j a/cpj
+mv cpl/copya/l a/cpl
+mv cpn/copya/n a/cpn
+mv cpp/copya/p a/cpp
+mv cpr/copya/r a/cpr
+mv cpt/copya/t a/cpt
+mv cpv/copya/v a/cpv
+mv cpx/copya/x a/cpx
+mv cpz/copya/z a/cpz
+print

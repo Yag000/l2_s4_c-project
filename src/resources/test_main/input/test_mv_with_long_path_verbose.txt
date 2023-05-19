@@ -1,0 +1,70 @@
+mkdir a
+cd a
+mkdir b
+cd b
+mkdir c
+cd c
+mkdir d
+cd d
+mkdir e
+cd e
+mkdir f
+cd f
+mkdir g
+cd g
+mkdir h
+cd h
+mkdir i
+cd i
+mkdir j
+cd j
+mkdir k
+cd k
+mkdir l
+cd l
+mkdir m
+cd m
+mkdir n
+cd n
+mkdir o
+cd o
+mkdir p
+cd p
+mkdir q
+cd q
+mkdir r
+cd r
+mkdir s
+cd s
+mkdir t
+cd t
+mkdir u
+cd u
+mkdir v
+cd v
+mkdir w
+cd w
+mkdir x
+cd x
+mkdir y
+cd y
+mkdir z
+cd z
+pwd
+print
+cd
+cp a cpa
+mv a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v newv
+print
+mv a cpa/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/mva
+print
+touch to
+mv to cpa/b/c/d/e/f/g/h/to
+mv cpa/b/c/d/e/f/g/h/i newi
+print
+rm cpa
+print
+rm newi
+print
+rm newv
+print
