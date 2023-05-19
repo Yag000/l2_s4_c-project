@@ -1,12 +1,12 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
-#include "test_core.h"
 #include "../main/command.h"
 #include "../main/constants.h"
 #include "../main/file_manager.h"
 #include "../main/tree_dir_core.h"
+#include "test_core.h"
 
 #define N 10
 
@@ -34,7 +34,7 @@ static void test_write_result_command(test_info *info)
 {
     print_test_name("Testing to write result command in an output");
 
-    out_stream_path = "src/test/output/test_command_write_result_empty.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_command_write_result_empty.txt";
 
     out_stream = open_file(out_stream_path, "w");
 
@@ -43,7 +43,7 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
-    out_stream_path = "src/test/output/test_command_write_result_1.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_command_write_result_1.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)
@@ -53,7 +53,7 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
-    out_stream_path = "src/test/output/test_command_write_result_2.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_command_write_result_2.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)
@@ -65,7 +65,7 @@ static void test_write_result_command(test_info *info)
         close_file(out_stream, out_stream_path);
     }
 
-    out_stream_path = "src/test/output/test_command_write_result_3.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_command_write_result_3.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)
@@ -92,7 +92,7 @@ static void test_handle_number_of_args(test_info *info)
 {
     print_test_name("Testing to handle the number of arguments in an output");
 
-    out_stream_path = "src/test/output/test_command_handle_number_of_args.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_command_handle_number_of_args.txt";
     out_stream = open_file(out_stream_path, "w");
 
     if (out_stream != NULL)

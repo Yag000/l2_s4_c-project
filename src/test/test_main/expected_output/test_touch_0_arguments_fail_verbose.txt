@@ -1,3 +1,0 @@
-Parsing file src/test/test_main/input/test_touch_0_arguments_fail_verbose.txt ...
-/$ touch
-An incorrect number of arguments was given: 0 instead of 1 expected.

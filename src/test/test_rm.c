@@ -43,7 +43,7 @@ static void test_command_rm_with_tree(test_info *info)
 {
     print_test_name("Testing rm with a tree");
 
-    out_stream_path = "src/test/output/test_rm.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_rm.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(0);
@@ -123,7 +123,7 @@ static void test_error_of_rm(test_info *info)
 
     current_node = create_basic_testing_tree();
 
-    out_stream_path = "src/test/output/test_rm_error.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_rm_error.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(sizeof(char *));

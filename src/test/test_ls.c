@@ -1,13 +1,13 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
-#include "test_core.h"
 #include "../main/command.h"
 #include "../main/constants.h"
-#include "../main/tree_dir_core.h"
 #include "../main/file_manager.h"
 #include "../main/string_utils.h"
+#include "../main/tree_dir_core.h"
+#include "test_core.h"
 
 static void test_ls_function(test_info *);
 static noeud *create_tree_and_test_ls_without_path_while(test_info *);
@@ -51,7 +51,7 @@ static noeud *create_tree_and_test_ls_without_path_while(test_info *info)
 {
     print_test_name("Testing command ls without path ");
 
-    out_stream_path = "src/test/output/test_ls_without_path.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_ls_without_path.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(0);
@@ -110,7 +110,7 @@ static void test_ls_with_path(test_info *info, noeud *root)
 {
     print_test_name("Testing command ls with path ");
 
-    out_stream_path = "src/test/output/test_ls_with_path.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_ls_with_path.txt";
     out_stream = open_file(out_stream_path, "w");
 
     current_node = root;
@@ -145,7 +145,7 @@ static void test_ls_error_with_path(test_info *info, noeud *root)
 {
     print_test_name("Testing command ls errors with path ");
 
-    out_stream_path = "src/test/output/test_ls_error_with_path.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_ls_error_with_path.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(sizeof(char *));
@@ -190,7 +190,7 @@ static void test_invalid_number_of_arg_of_ls(test_info *info)
 {
     print_test_name("Testing command ls errors of invalid number of args ");
 
-    out_stream_path = "src/test/output/test_ls_invalid_number_of_args.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_ls_invalid_number_of_args.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(sizeof(char *) * 2);

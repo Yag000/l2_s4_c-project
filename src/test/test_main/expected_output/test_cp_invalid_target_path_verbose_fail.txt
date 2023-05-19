@@ -1,5 +1,0 @@
-Parsing file src/test/test_main/input/test_cp_invalid_target_path_verbose_fail.txt ...
-/$ touch target
-/$ touch l
-/$ cp l target/k
-Invalid path to create a copy.

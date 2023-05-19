@@ -61,10 +61,10 @@ main
 test
 !src/test
 
-src/test/output
-src/test/test_main/output
-src/test/test_main/flag_test/record_flag/output
-src/test/test_main/flag_test/output_flag/output
+src/resources/unit_tests/output
+src/resources/test_main/output
+src/resources/test_main/flag_test/record_flag/output
+src/resources/test_main/flag_test/output_flag/output
 
 # VSCode
 .vscode/

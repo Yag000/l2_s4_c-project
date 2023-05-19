@@ -31,7 +31,7 @@ static void test_pwd_function(test_info *info)
 {
     print_test_name("Testing command pwd");
 
-    out_stream_path = "src/test/output/test_pwd.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_pwd.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(0);

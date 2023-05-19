@@ -1,2 +1,0 @@
-Running ./main src/test/test_main/flag_test/record_flag/input/invalid_output_fail.txt -r=, should fail : true
-Failure while opening:  

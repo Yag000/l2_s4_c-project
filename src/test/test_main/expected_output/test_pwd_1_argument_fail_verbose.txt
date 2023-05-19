@@ -1,3 +1,0 @@
-Parsing file src/test/test_main/input/test_pwd_1_argument_fail_verbose.txt ...
-/$ pwd .
-An incorrect number of arguments was given: 1 instead of 0 expected.
