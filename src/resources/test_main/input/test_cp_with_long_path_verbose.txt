@@ -1,0 +1,59 @@
+mkdir a
+cd a
+mkdir b
+cd b
+mkdir c
+cd c
+mkdir d
+cd d
+mkdir e
+cd e
+mkdir f
+cd f
+mkdir g
+cd g
+mkdir h
+cd h
+mkdir i
+cd i
+mkdir j
+cd j
+mkdir k
+cd k
+mkdir l
+cd l
+mkdir m
+cd m
+mkdir n
+cd n
+mkdir o
+cd o
+mkdir p
+cd p
+mkdir q
+cd q
+mkdir r
+cd r
+mkdir s
+cd s
+mkdir t
+cd t
+mkdir u
+cd u
+mkdir v
+cd v
+mkdir w
+cd w
+mkdir x
+cd x
+mkdir y
+cd y
+mkdir z
+cd z
+pwd
+print
+cd
+cp a cpa
+print
+rm a
+print
