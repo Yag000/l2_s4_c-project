@@ -1,0 +1,5 @@
+mkdir t
+cd t
+mkdir tt
+cd tt
+rm /t

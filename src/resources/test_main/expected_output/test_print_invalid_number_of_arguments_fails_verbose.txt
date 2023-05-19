@@ -1,0 +1,3 @@
+Parsing file src/resources/test_main/input/test_print_invalid_number_of_arguments_fails_verbose.txt ...
+/$ print t
+An incorrect number of arguments was given: 1 instead of 0 expected.

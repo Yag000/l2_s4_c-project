@@ -1,0 +1,44 @@
+Parsing file src/resources/test_main/input/test_mv_change_name_verbose.txt ...
+/$ mkdir a
+/$ print
+/ (D)
+\-- a (D)
+/$ mv a b
+/$ print
+/ (D)
+\-- b (D)
+/$ touch c
+/$ print
+/ (D)
+|-- b (D)
+\-- c (F)
+/$ mv c d
+/$ print
+/ (D)
+|-- b (D)
+\-- d (F)
+/$ mkdir b/e
+/$ mkdir b/e/f
+/$ print
+/ (D)
+|-- b (D)
+|   \-- e (D)
+|       \-- f (D)
+\-- d (F)
+/$ mv b/e/f b/e/g
+/$ touch b/e/f
+/$ print
+/ (D)
+|-- b (D)
+|   \-- e (D)
+|       |-- g (D)
+|       \-- f (F)
+\-- d (F)
+/$ mv b/e/f b/e/t
+/$ print
+/ (D)
+|-- b (D)
+|   \-- e (D)
+|       |-- g (D)
+|       \-- t (F)
+\-- d (F)

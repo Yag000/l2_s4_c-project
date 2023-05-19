@@ -1,0 +1,5 @@
+Parsing file src/resources/test_main/input/test_mv_target_to_file_fail_verbose.txt ...
+/$ touch objective
+/$ mkdir k
+/$ mv k objective/l
+Invalid path for the movement.

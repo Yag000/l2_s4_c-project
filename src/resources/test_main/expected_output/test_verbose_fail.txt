@@ -1,0 +1,3 @@
+Parsing file src/resources/test_main/input/test_verbose_fail.txt ...
+/$ test
+Command not found : test

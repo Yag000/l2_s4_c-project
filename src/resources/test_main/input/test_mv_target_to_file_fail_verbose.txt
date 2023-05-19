@@ -1,0 +1,3 @@
+touch objective
+mkdir k
+mv k objective/l

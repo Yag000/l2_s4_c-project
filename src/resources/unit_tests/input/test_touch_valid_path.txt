@@ -1,0 +1,12 @@
+print
+touch test
+mkdir Test1
+mkdir Test1/Test2
+print
+touch Test1/Test3
+cd Test1
+touch /test4
+cd Test2
+touch /test5
+touch /Tets1/
+print

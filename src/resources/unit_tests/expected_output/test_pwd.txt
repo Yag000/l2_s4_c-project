@@ -1,0 +1,16 @@
+/$ pwd
+/
+/test$ pwd
+/test
+/test/test2$ pwd
+/test/test2
+/test/test2/test3$ pwd
+/test/test2/test3
+/test/test2/test3/test4$ pwd
+/test/test2/test3/test4
+/test5$ pwd
+/test5
+/test5$ pwd test
+An incorrect number of arguments was given: 1 instead of 0 expected.
+/test5$ pwd test test
+An incorrect number of arguments was given: 2 instead of 0 expected.

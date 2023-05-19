@@ -1,0 +1,4 @@
+Parsing file src/resources/test_main/input/test_mv_1_arguments_fail_verbose.txt ...
+/$ mkdir t
+/$ mv t
+An incorrect number of arguments was given: 1 instead of 2 expected.

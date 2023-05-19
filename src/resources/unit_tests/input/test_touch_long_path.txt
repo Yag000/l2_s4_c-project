@@ -1,0 +1,5 @@
+mkdir Test
+mkdir Test/Test1
+mkdir Test/Test1/Test2
+touch ../../.././Test/../Test/../Test/Test1/Test2/file
+print

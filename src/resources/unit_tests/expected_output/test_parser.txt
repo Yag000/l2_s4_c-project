@@ -1,0 +1,14 @@
+Parsing file src/resources/unit_tests/input/test_parser.txt ...
+$ echo
+$ echo one
+one
+$ echo one two
+one two
+$ echo one two
+one two
+$ echo one two
+one two
+$ echo one two
+one two
+$ echo one two three
+one two three

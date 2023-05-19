@@ -1,0 +1,1 @@
+Failure while opening:  src/resources/test_main/input/invalid_input_fail.txt

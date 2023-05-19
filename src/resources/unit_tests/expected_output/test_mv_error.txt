@@ -1,0 +1,36 @@
+/$ mv test/test5/ /test11/test5
+Invalid path to move.
+/$ mv test13 /test11/test5
+Invalid path to move.
+/$ mv test/test5/test /test11/test5
+Invalid path to move.
+/$ mv test/test5 /test11/test5/
+Invalid path for the movement.
+/$ mv /test/test5 /test11/test8/test11
+Invalid path for the movement.
+/$ mv /test/test5 /test11/test10/test11
+Invalid path for the movement.
+/$ mv /test/test5 /testt/test5
+Invalid path for the movement.
+/$ mv /test/test5 /testt/test5
+Invalid path for the movement.
+/$ mv /test /test/test5/New
+A directory cannot be moved inside itself.
+/$ mv /test11 /test11/new
+A directory cannot be moved inside itself.
+/$ mv /test/test5 /test/test5/New
+A directory cannot be moved inside itself.
+/$ mv . /test/test5/New
+An directory containing the current node cannot be moved.
+/test/test5$ mv /test /test11/New
+An directory containing the current node cannot be moved.
+/test/test5$ mv /test/test5 /test/test11/New
+An directory containing the current node cannot be moved.
+/$ mv /test/test5 /test/test5
+Invalid name : an element with the same name already exists.
+/$ mv /test/test5 /test
+Invalid name : an element with the same name already exists.
+/$ mv
+An incorrect number of arguments was given: 0 instead of 2 expected.
+/$ mv test test test
+An incorrect number of arguments was given: 3 instead of 2 expected.

@@ -1,0 +1,15 @@
+Parsing file src/resources/test_main/input/test_cp_current_dir_verbose.txt ...
+/$ mkdir t
+/$ cd t
+/t$ cp . /j
+/t$ print
+/ (D)
+|-- t (D)
+\-- j (D)
+/t$ touch yes
+/t$ print
+/ (D)
+|-- t (D)
+|   \-- yes (F)
+\-- j (D)
+/t$ exit
