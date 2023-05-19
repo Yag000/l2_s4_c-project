@@ -38,7 +38,7 @@ function test_one_output(){
     
     if  ! diff -y  "$expected_output_dir/$file" "$output_file" > $TEMP_DIFF_FILE;
     then
-        printf "%s%s%s\n" $RED "FAIL: $file" $COLOR_OFF
+        printf "%s%s%s\n" $RED "FAIL: the output (rigth) does not match the expected output (left) for the file $file" $COLOR_OFF
         cat $TEMP_DIFF_FILE
         echo "----------------------------------------------"
         return 1
@@ -88,8 +88,9 @@ function clean_output_dir(){
     [  -d "$output_dir" ] && rm -rf "$output_dir"
     mkdir "$output_dir"
 }
+
 #----------------------------------------------#
-#----------------- Test Main ------------------#
+#---------------- Flag Testing ----------------#
 #----------------------------------------------#
 
 function test_one_invalid_flag(){
@@ -103,12 +104,12 @@ function test_one_invalid_flag(){
     $verbose && echo "Running ./main $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]}, should fail : true"
     local verbose_tmp=$verbose
     verbose=false
-    run_program "./main" > "$output_dir/$test_name" && has_test_invalid_flag_failed=true
+    run_program "./main" > "$output_dir/$test_name" || has_test_invalid_flag_failed=true
     verbose=$verbose_tmp
     
     test_one_output $expected_output_dir $output_dir $test_name || has_test_invalid_flag_failed=true
     
-    $has_test_output_failed && return 1
+    $has_test_invalid_flag_failed && return 1
     return 0
 }
 
@@ -121,22 +122,28 @@ function test_main_invalid_flag(){
     local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
+    local has_test_main_invalid_flag_failed=false
     
     CURRENT_TESTING_FILE="$input_dir/invalid_flag_fail.txt"
     CURRENT_FLAGS=("-this_does_not_exist")
     
-    test_one_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
+    test_one_invalid_flag $output_dir $expected_output_dir || has_test_main_invalid_flag_failed=true
+    
+    ($has_test_main_invalid_flag_failed && printf "%s%s%s\n" $RED "There is at least one problem when giving invalid flags" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The program handles invalid flags correctely" $COLOR_OFF
+    
+    $has_test_main_invalid_flag_failed && return 1
+    return 0
 }
 
 function test_main_output_flag(){
     
     echo "-> Testing output flag"
     
-    local has_test_output_failed=false
     CURRENT_TESTING_DIR=$RESOURCES_DIR"/test_main/flag_test/output_flag"
     local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
+    local has_test_output_failed=false
     
     clean_output_dir "$output_dir"
     
@@ -210,6 +217,10 @@ function test_flags(){
     
     return $has_test_flags_failed
 }
+
+#----------------------------------------------#
+#----------------- Main Tests -----------------#
+#----------------------------------------------#
 
 function test_main(){
     echo
