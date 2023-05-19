@@ -7,24 +7,24 @@
 Tout d'abord, pour compiler le projet, il faut utiliser la commande :
 
 ```bash
-$make main
+make main
 ```
 
 Puis pour lancer le programme, il faut utiliser la commande :
 
 ```bash
-$./main text.txt
+./main text.txt
 ```
 
 Le résultat s'affichera alors dans le terminal courant.
 
-On met à disposition aussi plusieurs flags pour l'exécution du main _(le fichier texte doit toujours rester en 1ère position si le main en requiert un)_ :
+On met à disposition aussi plusieurs flags pour l'exécution du main _(le fichier texte doit toujours rester en première position, sauf pour l'utilisation de `-i`)_ :
 
-- `-i` qui permet de prendre en entrée le terminal courant au lieu d'un fichier texte _(si un fichier texte est donné en première position, ce flag est ignoré, et vous pouvez utiliser la commande `exit` pour en sortir)_.
+- `-i` qui permet de prendre en entrée le terminal courant au lieu d'un fichier texte _(si un fichier texte est donné en première position, ce flag est ignoré)_. Cette option doit toujours être mise en **première position**. Vous pouvez utiliser la commande `exit` pour en sortir.
 
 - `-v` qui permet d'afficher la commande, en plus de l'affichage de base donnés par la commande _(couplé avec le le flag `-i`, ce flag est ignoré)_.
 
-- `-c` qui permet de continuer la lecture du texte, même après une erreur qui ne nécéssite pas l'arrêt du programme _(une erreur de chemin par exemple)_.
+- `-c` qui permet de continuer la lecture du texte, même après une erreur qui ne nécessite pas l'arrêt du programme _(une erreur de chemin par exemple)_.
 
 - `-o=output.txt` qui permet, en remplaçant "output.txt" par un fichier de sortie, d'afficher les résultats des commandes dans ce fichier au lieu du terminal courant _(si le fichier n'existe pas, il est alors créé si c'est possible)_.
 
@@ -37,7 +37,7 @@ Vous pouvez lancer une batterie de tests, qui va vérifier si le code compile bi
 Pour cela, il est possible d'utiliser la commande :
 
 ```bash
-$./test.sh
+./test.sh
 ```
 
 On met aussi à disposition plusieurs flags pour l'execution de cette batterie de tests :
@@ -51,7 +51,7 @@ On met aussi à disposition plusieurs flags pour l'execution de cette batterie d
 Vous pouvez aussi compiler et lancer seulement les tests unitaires, en utilisant la commande :
 
 ```bash
-$make test && ./test
+make test && ./test
 ```
 
 _À noter que vous pouvez ajouter `-v` à la fin pour afficher plus de détails sur les tests unitaires effectués._
@@ -61,7 +61,7 @@ _À noter que vous pouvez ajouter `-v` à la fin pour afficher plus de détails 
 Pour supprimer ce qui a été compilé, il faut utiliser la commande :
 
 ```bash
-$make clean
+make clean
 ```
 
 ## Autres ajouts
