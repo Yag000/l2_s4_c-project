@@ -92,21 +92,40 @@ function clean_output_dir(){
 #----------------- Test Main ------------------#
 #----------------------------------------------#
 
-function test_invalid_flag(){
+function test_one_invalid_flag(){
+    
     local output_dir=$1
     local expected_output_dir=$2
-    
+    local test_name=$(basename $CURRENT_TESTING_FILE)
     local has_test_invalid_flag_failed=false
-    local test_name="invalid_output_fail"
-    $verbose && test_name+="_verbose"
-    test_name+=".txt"
     
+    # We need to disable verbose mode for this test
     $verbose && echo "Running ./main $CURRENT_TESTING_FILE ${CURRENT_FLAGS[@]}, should fail : true"
+    local verbose_tmp=$verbose
+    verbose=false
     run_program "./main" > "$output_dir/$test_name" && has_test_invalid_flag_failed=true
+    verbose=$verbose_tmp
+    
     test_one_output $expected_output_dir $output_dir $test_name || has_test_invalid_flag_failed=true
     
     $has_test_output_failed && return 1
     return 0
+}
+
+function test_main_invalid_flag(){
+    
+    echo "-> Testing invalid flag"
+    
+    CURRENT_TESTING_DIR=$RESOURCES_DIR"/test_main/flag_test/invalid_flag"
+    
+    local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
+    local output_dir="$CURRENT_TESTING_DIR/output"
+    local input_dir="$CURRENT_TESTING_DIR/input"
+    
+    CURRENT_TESTING_FILE="$input_dir/invalid_flag_fail.txt"
+    CURRENT_FLAGS=("-this_does_not_exist")
+    
+    test_one_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
 }
 
 function test_main_output_flag(){
@@ -136,7 +155,7 @@ function test_main_output_flag(){
     # Testing invalid output file
     CURRENT_TESTING_FILE="$input_dir/invalid_output_fail.txt"
     CURRENT_FLAGS=("-o=")
-    test_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
+    test_one_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
     
     clean_temp_files
     $has_test_output_failed && has_passed=false
@@ -173,7 +192,7 @@ function test_main_record_flag(){
     # Testing invalid output file
     CURRENT_TESTING_FILE="$input_dir/invalid_output_fail.txt"
     CURRENT_FLAGS=("-r=")
-    test_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
+    test_one_invalid_flag $output_dir $expected_output_dir || has_test_output_failed=true
     
     clean_temp_files
     $has_test_record_failed && has_passed=false
@@ -185,6 +204,7 @@ function test_main_record_flag(){
 
 function test_flags(){
     local has_test_flags_failed=0
+    test_main_invalid_flag|| has_test_flags_failed=1
     test_main_output_flag || has_test_flags_failed=1
     test_main_record_flag || has_test_flags_failed=1
     
