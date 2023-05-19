@@ -2,11 +2,11 @@ Projet de C du S4 de la licence d'informatique (par Yago Iglesias Vazquez et Gab
 
 Tout d'abord, pour compiler le projet, il faut utiliser la commande :
 
-$ make main
+$make main
 
 Puis pour lancer le programme, il faut utiliser la commande :
 
-$ ./main text.txt
+$./main text.txt
 
 Le résultat s'affichera alors dans le terminal courant.
 

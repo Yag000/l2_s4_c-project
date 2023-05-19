@@ -7,13 +7,13 @@
 Tout d'abord, pour compiler le projet, il faut utiliser la commande :
 
 ```bash
-$make main
+make main
 ```
 
 Puis pour lancer le programme, il faut utiliser la commande :
 
 ```bash
-$./main text.txt
+./main text.txt
 ```
 
 Le résultat s'affichera alors dans le terminal courant.
@@ -37,7 +37,7 @@ Vous pouvez lancer une batterie de tests, qui va vérifier si le code compile bi
 Pour cela, il est possible d'utiliser la commande :
 
 ```bash
-$./test.sh
+./test.sh
 ```
 
 On met aussi à disposition plusieurs flags pour l'execution de cette batterie de tests :
@@ -51,7 +51,7 @@ On met aussi à disposition plusieurs flags pour l'execution de cette batterie d
 Vous pouvez aussi compiler et lancer seulement les tests unitaires, en utilisant la commande :
 
 ```bash
-$make test && ./test
+make test && ./test
 ```
 
 _À noter que vous pouvez ajouter `-v` à la fin pour afficher plus de détails sur les tests unitaires effectués._
@@ -61,7 +61,7 @@ _À noter que vous pouvez ajouter `-v` à la fin pour afficher plus de détails 
 Pour supprimer ce qui a été compilé, il faut utiliser la commande :
 
 ```bash
-$make clean
+make clean
 ```
 
 ## Autres ajouts
