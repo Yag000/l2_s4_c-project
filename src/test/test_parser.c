@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-#include "../main/parser.h"
 #include "../main/constants.h"
 #include "../main/file_manager.h"
+#include "../main/parser.h"
 #include "test_core.h"
 
 static void test_parse_file(test_info *);
@@ -25,7 +25,7 @@ test_info *test_parser()
 
 static void test_parse_file(test_info *info)
 {
-    out_stream_path = "src/test/output/test_parser.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_parser.txt";
     int error_code = -1;
 
     out_stream = open_file(out_stream_path, "w");
@@ -35,7 +35,7 @@ static void test_parse_file(test_info *info)
         return;
     }
 
-    error_code = parse_file("src/test/input/test_parser.txt");
+    error_code = parse_file("src/resources/unit_tests/input/test_parser.txt");
 
     close_file(out_stream, out_stream_path);
 

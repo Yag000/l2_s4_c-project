@@ -1,3 +1,0 @@
-Parsing file src/test/test_main/input/test_rm_invalid_path_fail_verbose.txt ...
-/$ rm t
-Invalid path given.

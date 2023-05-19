@@ -26,7 +26,7 @@ test_info *test_mkdir()
     clock_t before = clock();
     test_info *info = create_test_info();
 
-    out_stream_path = "src/test/output/test_mkdir_invalid_input.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_mkdir_invalid_input.txt";
     out_stream = open_file(out_stream_path, "w");
 
     // Add tests here

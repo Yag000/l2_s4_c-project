@@ -13,6 +13,8 @@ GREEN="$(tput setaf 2)"
 TEMP_DIFF_FILE=".diff_tmp"
 TEMP_VALGRIND_FILE=".valgrind_tmp"
 
+RESOURCES_DIR="src/resources"
+
 CURRENT_TESTING_DIR=""
 CURRENT_TESTING_FILE=""
 CURRENT_FLAGS=()
@@ -112,7 +114,7 @@ function test_main_output_flag(){
     echo "-> Testing output flag"
     
     local has_test_output_failed=false
-    CURRENT_TESTING_DIR="src/test/test_main/flag_test/output_flag"
+    CURRENT_TESTING_DIR=$RESOURCES_DIR"/test_main/flag_test/output_flag"
     local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
@@ -149,7 +151,7 @@ function test_main_record_flag(){
     echo "-> Testing record flag"
     
     local has_test_record_failed=false
-    CURRENT_TESTING_DIR="src/test/test_main/flag_test/record_flag"
+    CURRENT_TESTING_DIR=$RESOURCES_DIR"/test_main/flag_test/record_flag"
     local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
@@ -176,7 +178,7 @@ function test_main_record_flag(){
     clean_temp_files
     $has_test_record_failed && has_passed=false
     ($has_test_record_failed && printf "%s%s%s\n" $RED "There is at least one problem with the record flag" $COLOR_OFF ) || printf '%s%s%s\n' $GREEN "The record flag works" $COLOR_OFF
-
+    
     $has_test_record_failed && return 1
     return 0
 }
@@ -199,7 +201,7 @@ function test_main(){
     
     echo "-> Testing main function"
     local has_main_test_failed=false
-    CURRENT_TESTING_DIR="src/test/test_main"
+    CURRENT_TESTING_DIR=$RESOURCES_DIR"/test_main"
     local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
@@ -207,7 +209,7 @@ function test_main(){
     clean_output_dir "$output_dir"
     
     # Get a list of output file names (excluding directories)
-    # we use the output instead of the input because we want to alse tests 
+    # we use the output instead of the input because we want to alse tests
     # invalid input files.
     local expected_output_files=$(find $expected_output_dir -type f -name "*.txt" -printf "%f\n")
     # Loop through the input files
@@ -250,7 +252,7 @@ function compile_test(){
     echo "|-=-=-=-=-=-=-=-=-| Compiling tests |-=-=-=-=-=-=-=-=|"
     make test
     
-    CURRENT_TESTING_DIR="src/test"
+    CURRENT_TESTING_DIR=$RESOURCES_DIR"/unit_tests"
     local output_dir="$CURRENT_TESTING_DIR/output"
     clean_output_dir "$output_dir"
 }
@@ -277,8 +279,8 @@ function test_ouput(){
     echo "|-=-=-=-=-=-=-=-=-| Testing output |-=-=-=-=-=-=-=-=-|"
     
     local has_test_output_failed=false
-    local expected_output_dir="src/test/expected_output"
-    local output_dir="src/test/output"
+    local expected_output_dir="src/resources/unit_tests/expected_output"
+    local output_dir="src/resources/unit_tests/output"
     
     # Get a list of input file names (excluding directories)
     local expected_output_files=$(find $expected_output_dir -type f -name "*.txt" -printf "%f\n")

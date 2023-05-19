@@ -1,4 +1,0 @@
-Parsing file src/test/test_main/input/test_cp_target_does_not_exist_file_fail_verbose.txt ...
-/$ touch t
-/$ cp t tt/t
-Invalid path to create a copy.

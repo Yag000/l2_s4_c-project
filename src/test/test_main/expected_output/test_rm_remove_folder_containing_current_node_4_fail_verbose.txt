@@ -1,5 +1,0 @@
-Parsing file src/test/test_main/input/test_rm_remove_folder_containing_current_node_4_fail_verbose.txt ...
-/$ mkdir tt
-/$ cd tt
-/tt$ rm /tt
-A directory that contains the current folder cannot be deleted.

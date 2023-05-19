@@ -1,0 +1,10 @@
+src/resources/unit_tests/output/test_command_write_result_3.txt
+src/resources/unit_tests/output/test_command_write_result_3.txt
+src/resources/unit_tests/output/test_command_write_result_3.txt
+src/resources/unit_tests/output/test_command_write_result_3.txt
+src/resources/unit_tests/output/test_command_write_result_3.txt
+src/resources/unit_tests/output/test_command_write_result_3.txt
+src/resources/unit_tests/output/test_command_write_result_3.txt
+src/resources/unit_tests/output/test_command_write_result_3.txt
+src/resources/unit_tests/output/test_command_write_result_3.txt
+src/resources/unit_tests/output/test_command_write_result_3.txt

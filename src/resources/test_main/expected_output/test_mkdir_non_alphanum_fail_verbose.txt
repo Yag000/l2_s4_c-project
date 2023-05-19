@@ -1,0 +1,3 @@
+Parsing file src/resources/test_main/input/test_mkdir_non_alphanum_fail_verbose.txt ...
+/$ mkdir thida=foes.not-=e
+Invalid name : the name of an element can neither be empty nor contain special characters.

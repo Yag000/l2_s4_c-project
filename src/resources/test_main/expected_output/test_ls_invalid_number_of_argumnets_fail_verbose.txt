@@ -1,0 +1,3 @@
+Parsing file src/resources/test_main/input/test_ls_invalid_number_of_argumnets_fail_verbose.txt ...
+/$ ls a a
+An incorrect number of arguments was given: 2 instead of a number between 0 and 1 expected.
