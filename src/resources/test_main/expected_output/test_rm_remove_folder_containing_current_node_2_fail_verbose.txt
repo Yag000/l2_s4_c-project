@@ -1,0 +1,3 @@
+Parsing file src/resources/test_main/input/test_rm_remove_folder_containing_current_node_2_fail_verbose.txt ...
+/$ rm .
+A directory that contains the current folder cannot be deleted.

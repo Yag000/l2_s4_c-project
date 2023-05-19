@@ -45,7 +45,7 @@ static void test_error_codes(test_info *info)
 
     print_test_name("Testing return values of cd");
 
-    out_stream_path = "src/test/output/test_cd_return_values.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_cd_return_values.txt";
     out_stream = open_file(out_stream_path, "w");
 
     // Invalid number of arguments
@@ -76,21 +76,22 @@ static void test_error_codes(test_info *info)
 static void test_invalid_invalid_number_args(test_info *info)
 {
     print_test_name("Testing cd with an invalid number of args");
-    execute_test(info, "src/test/input/test_cd_invalid_number_of_args.txt",
-                 "src/test/output/test_cd_invalid_number_of_args.txt");
+    execute_test(info, "src/resources/unit_tests/input/test_cd_invalid_number_of_args.txt",
+                 "src/resources/unit_tests/output/test_cd_invalid_number_of_args.txt");
 }
 
 static void test_invalid_path(test_info *info)
 {
     print_test_name("Testing cd with an invalid path");
-    execute_test(info, "src/test/input/test_cd_invalid_path.txt", "src/test/output/test_cd_invalid_path.txt");
+    execute_test(info, "src/resources/unit_tests/input/test_cd_invalid_path.txt",
+                 "src/resources/unit_tests/output/test_cd_invalid_path.txt");
 }
 
 static void test_go_to_root(test_info *info)
 {
     print_test_name("Testing cd to root");
 
-    out_stream_path = "src/test/output/test_cd_go_to_root.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_cd_go_to_root.txt";
     out_stream = open_file(out_stream_path, "w");
 
     current_node = current_node->racine;
@@ -107,14 +108,15 @@ static void test_go_to_root(test_info *info)
 static void test_go_to_previous_directory(test_info *info)
 {
     print_test_name("Testing cd to previous directory");
-    execute_test(info, "src/test/input/test_cd_go_to_previous_directory.txt",
-                 "src/test/output/test_cd_go_to_previous_directory.txt");
+    execute_test(info, "src/resources/unit_tests/input/test_cd_go_to_previous_directory.txt",
+                 "src/resources/unit_tests/output/test_cd_go_to_previous_directory.txt");
 }
 
 static void test_valid_paths(test_info *info)
 {
     print_test_name("Testing cd with valid paths");
-    execute_test(info, "src/test/input/test_cd_valid_paths.txt", "src/test/output/test_cd_valid_paths.txt");
+    execute_test(info, "src/resources/unit_tests/input/test_cd_valid_paths.txt",
+                 "src/resources/unit_tests/output/test_cd_valid_paths.txt");
 }
 
 static void execute_test(test_info *info, char *input, char *output)

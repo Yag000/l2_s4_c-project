@@ -1,4 +1,0 @@
-Parsing file src/test/test_main/input/test_cp_root_fail_verbose.txt ...
-/$ mkdir t
-/$ cp . t/k
-An element cannot be copied inside a directory contained in the copy.

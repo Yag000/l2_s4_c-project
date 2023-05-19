@@ -1,0 +1,29 @@
+Parsing file src/resources/unit_tests/input/test_cd_valid_paths.txt ...
+/$ print
+/ (D)
+|-- test (D)
+|   |-- test2 (F)
+|   |-- test3 (D)
+|   |-- test4 (F)
+|   |-- test5 (D)
+|   |   |-- test6 (F)
+|   |   |-- test7 (D)
+|   |   \-- test8 (F)
+|   \-- test9 (F)
+|-- test10 (F)
+|-- test11 (D)
+\-- test12 (D)
+    |-- test13 (F)
+    |-- test14 (F)
+    \-- test15 (F)
+/$ cd test/test3
+/test/test3$ cd /test/test5/test7
+/test/test5/test7$ cd ./../../test5
+/test/test5$ cd
+/$ cd /test11
+/test11$ cd .
+/test11$ cd ..
+/$ cd ..
+/$ cd test12
+/test12$ pwd
+/test12

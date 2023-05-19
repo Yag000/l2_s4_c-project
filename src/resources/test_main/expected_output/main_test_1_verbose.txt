@@ -1,0 +1,14 @@
+Parsing file src/resources/test_main/input/main_test_1_verbose.txt ...
+/$ echo
+/$ echo one
+one
+/$ echo one two
+one two
+/$ echo one two
+one two
+/$ echo one two
+one two
+/$ echo one two
+one two
+/$ echo one two three
+one two three

@@ -1,8 +1,0 @@
-Parsing file src/test/test_main/input/test_mv_move_inside_fail_verbose.txt ...
-/$ mkdir t
-/$ cd t
-/t$ mkdir h
-/t$ mkdir l
-/t$ cd
-/$ mv t t/l/k
-A directory cannot be moved inside itself.

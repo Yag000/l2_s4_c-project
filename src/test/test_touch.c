@@ -41,7 +41,7 @@ test_info *test_touch()
 static void test_touch_empty(test_info *info)
 {
     print_test_name("Testing touch with empty name");
-    out_stream_path = "src/test/output/test_touch_empty.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_touch_empty.txt";
     out_stream = open_file(out_stream_path, "w");
 
     current_node = create_root_noeud();
@@ -63,7 +63,7 @@ static void test_touch_empty(test_info *info)
 static void test_touch_invalid_name(test_info *info)
 {
     print_test_name("Testing touch with invalid name");
-    out_stream_path = "src/test/output/test_touch_invalid_name.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_touch_invalid_name.txt";
     out_stream = open_file(out_stream_path, "w");
 
     current_node = create_root_noeud();
@@ -102,7 +102,8 @@ static void test_touch_valid_name(test_info *info)
     print_test_name("Testing touch with valid name");
 
     current_node = create_root_noeud();
-    execute_test(info, "src/test/input/test_touch_valid_path.txt", "src/test/output/test_touch_valid_path.txt");
+    execute_test(info, "src/resources/unit_tests/input/test_touch_valid_path.txt",
+                 "src/resources/unit_tests/output/test_touch_valid_path.txt");
     destroy_tree();
 }
 
@@ -111,7 +112,8 @@ static void test_touch_already_exists(test_info *info)
     print_test_name("Testing touch with already existing name");
 
     current_node = create_root_noeud();
-    execute_test(info, "src/test/input/test_touch_already_exists.txt", "src/test/output/test_touch_already_exists.txt");
+    execute_test(info, "src/resources/unit_tests/input/test_touch_already_exists.txt",
+                 "src/resources/unit_tests/output/test_touch_already_exists.txt");
     destroy_tree();
 }
 
@@ -120,7 +122,8 @@ static void test_touch_long_path(test_info *info)
     print_test_name("Testing touch with long paths");
     current_node = create_root_noeud();
 
-    execute_test(info, "src/test/input/test_touch_long_path.txt", "src/test/output/test_touch_long_path.txt");
+    execute_test(info, "src/resources/unit_tests/input/test_touch_long_path.txt",
+                 "src/resources/unit_tests/output/test_touch_long_path.txt");
 
     destroy_tree();
 }

@@ -45,7 +45,7 @@ static void test_command_mv_with_tree(test_info *info)
 
     print_test_name("Testing mv with a tree");
 
-    out_stream_path = "src/test/output/test_mv.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_mv.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(0);
@@ -102,7 +102,7 @@ static void test_error_of_mv(test_info *info)
 
     print_test_name("Testing mv errors");
 
-    out_stream_path = "src/test/output/test_mv_error.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_mv_error.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(2 * (sizeof(char *)));

@@ -1,13 +1,13 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
-#include "test_core.h"
 #include "../main/command.h"
 #include "../main/constants.h"
-#include "../main/tree_dir_core.h"
 #include "../main/file_manager.h"
 #include "../main/string_utils.h"
+#include "../main/tree_dir_core.h"
+#include "test_core.h"
 
 static void test_print_function(test_info *);
 static void test_print_while_creating_tree(test_info *);
@@ -44,7 +44,7 @@ static void test_print_function(test_info *info)
 
 static void test_print_while_creating_tree(test_info *info)
 {
-    out_stream_path = "src/test/output/test_print_display.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_print_display.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(0);
@@ -94,7 +94,7 @@ static void test_print_while_creating_tree(test_info *info)
 static void test_illegal_number_of_args_of_print(test_info *info)
 {
     current_node = create_root_noeud();
-    out_stream_path = "src/test/output/test_print_illegal_number_of_args.txt";
+    out_stream_path = "src/resources/unit_tests/output/test_print_illegal_number_of_args.txt";
     out_stream = open_file(out_stream_path, "w");
 
     char **tab_command = malloc(sizeof(char *));
