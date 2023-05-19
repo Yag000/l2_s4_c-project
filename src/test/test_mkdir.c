@@ -21,7 +21,7 @@ static command *string_to_command(const char *);
 
 test_info *test_mkdir()
 {
-    // Create the test info
+    // Test setup
     print_test_header("mkdir");
     clock_t before = clock();
     test_info *info = create_test_info();

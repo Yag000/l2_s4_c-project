@@ -15,7 +15,7 @@ static void test_error_of_cp(test_info *);
 
 test_info *test_cp()
 {
-    // Create the test info
+    // Test setup
     print_test_header("cp");
     clock_t before = clock();
     test_info *info = create_test_info();

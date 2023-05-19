@@ -15,14 +15,14 @@ static void test_illegal_number_of_args_of_print(test_info *);
 
 test_info *test_print()
 {
+    // Test setup
     print_test_header("print");
-
     clock_t before = clock();
-    // Create the test info
     test_info *info = create_test_info();
 
     // Add tests here
     test_print_function(info);
+ 
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("print", info);
