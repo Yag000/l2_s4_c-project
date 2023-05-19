@@ -60,7 +60,6 @@ static void print_with_depth(noeud *node, unsigned depth, bool is_last)
     {
         if (lst->succ == NULL)
         {
-
             print_with_depth(lst->no, depth + 1, true);
         }
         else
