@@ -13,7 +13,7 @@ Le résultat s'affichera alors dans le terminal courant.
 On met à disposition aussi plusieurs flags pour l'execution du main :
 (le fichier texte doit toujours rester en première position, sauf pour l'utilisation de "-i")
 
-"-i" qui permet de prendre en entrée le terminal courant au lieu d'un fichier texte (si un fichier texte est donné en première position, ce flag est ignoré)Cette option doit toujours être mise en **première position**. Vous pouvez utiliser la commande `exit` pour en sortir.
+"-i" qui permet de prendre en entrée le terminal courant au lieu d'un fichier texte (si un fichier texte est donné en première position, ce flag est ignoré). Cette option doit toujours être mise en **première position**. Vous pouvez utiliser la commande `exit` pour en sortir.
 "-v" qui permet d'afficher la commande, en plus de l'affichage de base (couplé avec le "-i", ce flag est ignoré).
 "-c" qui permet de continuer la lecture du texte, même après une erreur qui ne nécessite pas l'arrêt du programme (une erreur de chemin par exemple).
 "-o=output.txt" qui permet, en remplaçant "output.txt" par un fichier de sortie, d'afficher les résultats des commandes dans ce fichier au lieu du terminal courant (si le fichier n'existe pas, il est alors créé si c'est possible)
