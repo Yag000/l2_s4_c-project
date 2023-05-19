@@ -1,0 +1,16 @@
+mkdir a
+print
+mv a b
+print
+touch c
+print
+mv c d
+print
+mkdir b/e
+mkdir b/e/f
+print
+mv b/e/f b/e/g
+touch b/e/f
+print
+mv b/e/f b/e/t
+print

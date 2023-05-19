@@ -1,0 +1,311 @@
+Parsing file src/resources/test_main/input/test_mv_with_long_path_verbose.txt ...
+/$ mkdir a
+/$ cd a
+/a$ mkdir b
+/a$ cd b
+/a/b$ mkdir c
+/a/b$ cd c
+/a/b/c$ mkdir d
+/a/b/c$ cd d
+/a/b/c/d$ mkdir e
+/a/b/c/d$ cd e
+/a/b/c/d/e$ mkdir f
+/a/b/c/d/e$ cd f
+/a/b/c/d/e/f$ mkdir g
+/a/b/c/d/e/f$ cd g
+/a/b/c/d/e/f/g$ mkdir h
+/a/b/c/d/e/f/g$ cd h
+/a/b/c/d/e/f/g/h$ mkdir i
+/a/b/c/d/e/f/g/h$ cd i
+/a/b/c/d/e/f/g/h/i$ mkdir j
+/a/b/c/d/e/f/g/h/i$ cd j
+/a/b/c/d/e/f/g/h/i/j$ mkdir k
+/a/b/c/d/e/f/g/h/i/j$ cd k
+/a/b/c/d/e/f/g/h/i/j/k$ mkdir l
+/a/b/c/d/e/f/g/h/i/j/k$ cd l
+/a/b/c/d/e/f/g/h/i/j/k/l$ mkdir m
+/a/b/c/d/e/f/g/h/i/j/k/l$ cd m
+/a/b/c/d/e/f/g/h/i/j/k/l/m$ mkdir n
+/a/b/c/d/e/f/g/h/i/j/k/l/m$ cd n
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n$ mkdir o
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n$ cd o
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o$ mkdir p
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o$ cd p
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p$ mkdir q
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p$ cd q
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q$ mkdir r
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q$ cd r
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r$ mkdir s
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r$ cd s
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s$ mkdir t
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s$ cd t
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t$ mkdir u
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t$ cd u
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u$ mkdir v
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u$ cd v
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v$ mkdir w
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v$ cd w
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w$ mkdir x
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w$ cd x
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x$ mkdir y
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x$ cd y
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y$ mkdir z
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y$ cd z
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z$ pwd
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z$ print
+/ (D)
+\-- a (D)
+    \-- b (D)
+        \-- c (D)
+            \-- d (D)
+                \-- e (D)
+                    \-- f (D)
+                        \-- g (D)
+                            \-- h (D)
+                                \-- i (D)
+                                    \-- j (D)
+                                        \-- k (D)
+                                            \-- l (D)
+                                                \-- m (D)
+                                                    \-- n (D)
+                                                        \-- o (D)
+                                                            \-- p (D)
+                                                                \-- q (D)
+                                                                    \-- r (D)
+                                                                        \-- s (D)
+                                                                            \-- t (D)
+                                                                                \-- u (D)
+                                                                                    \-- v (D)
+                                                                                        \-- w (D)
+                                                                                            \-- x (D)
+                                                                                                \-- y (D)
+                                                                                                    \-- z (D)
+/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z$ cd
+/$ cp a cpa
+/$ mv a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v newv
+/$ print
+/ (D)
+|-- a (D)
+|   \-- b (D)
+|       \-- c (D)
+|           \-- d (D)
+|               \-- e (D)
+|                   \-- f (D)
+|                       \-- g (D)
+|                           \-- h (D)
+|                               \-- i (D)
+|                                   \-- j (D)
+|                                       \-- k (D)
+|                                           \-- l (D)
+|                                               \-- m (D)
+|                                                   \-- n (D)
+|                                                       \-- o (D)
+|                                                           \-- p (D)
+|                                                               \-- q (D)
+|                                                                   \-- r (D)
+|                                                                       \-- s (D)
+|                                                                           \-- t (D)
+|                                                                               \-- u (D)
+|-- cpa (D)
+|   \-- b (D)
+|       \-- c (D)
+|           \-- d (D)
+|               \-- e (D)
+|                   \-- f (D)
+|                       \-- g (D)
+|                           \-- h (D)
+|                               \-- i (D)
+|                                   \-- j (D)
+|                                       \-- k (D)
+|                                           \-- l (D)
+|                                               \-- m (D)
+|                                                   \-- n (D)
+|                                                       \-- o (D)
+|                                                           \-- p (D)
+|                                                               \-- q (D)
+|                                                                   \-- r (D)
+|                                                                       \-- s (D)
+|                                                                           \-- t (D)
+|                                                                               \-- u (D)
+|                                                                                   \-- v (D)
+|                                                                                       \-- w (D)
+|                                                                                           \-- x (D)
+|                                                                                               \-- y (D)
+|                                                                                                   \-- z (D)
+\-- newv (D)
+    \-- w (D)
+        \-- x (D)
+            \-- y (D)
+                \-- z (D)
+/$ mv a cpa/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/mva
+/$ print
+/ (D)
+|-- cpa (D)
+|   \-- b (D)
+|       \-- c (D)
+|           \-- d (D)
+|               \-- e (D)
+|                   \-- f (D)
+|                       \-- g (D)
+|                           \-- h (D)
+|                               \-- i (D)
+|                                   \-- j (D)
+|                                       \-- k (D)
+|                                           \-- l (D)
+|                                               \-- m (D)
+|                                                   \-- n (D)
+|                                                       \-- o (D)
+|                                                           \-- p (D)
+|                                                               \-- q (D)
+|                                                                   \-- r (D)
+|                                                                       \-- s (D)
+|                                                                           \-- t (D)
+|                                                                               \-- u (D)
+|                                                                                   \-- v (D)
+|                                                                                       \-- w (D)
+|                                                                                           \-- x (D)
+|                                                                                               \-- y (D)
+|                                                                                                   \-- z (D)
+|                                                                                                       \-- mva (D)
+|                                                                                                           \-- b (D)
+|                                                                                                               \-- c (D)
+|                                                                                                                   \-- d (D)
+|                                                                                                                       \-- e (D)
+|                                                                                                                           \-- f (D)
+|                                                                                                                               \-- g (D)
+|                                                                                                                                   \-- h (D)
+|                                                                                                                                       \-- i (D)
+|                                                                                                                                           \-- j (D)
+|                                                                                                                                               \-- k (D)
+|                                                                                                                                                   \-- l (D)
+|                                                                                                                                                       \-- m (D)
+|                                                                                                                                                           \-- n (D)
+|                                                                                                                                                               \-- o (D)
+|                                                                                                                                                                   \-- p (D)
+|                                                                                                                                                                       \-- q (D)
+|                                                                                                                                                                           \-- r (D)
+|                                                                                                                                                                               \-- s (D)
+|                                                                                                                                                                                   \-- t (D)
+|                                                                                                                                                                                       \-- u (D)
+\-- newv (D)
+    \-- w (D)
+        \-- x (D)
+            \-- y (D)
+                \-- z (D)
+/$ touch to
+/$ mv to cpa/b/c/d/e/f/g/h/to
+/$ mv cpa/b/c/d/e/f/g/h/i newi
+/$ print
+/ (D)
+|-- cpa (D)
+|   \-- b (D)
+|       \-- c (D)
+|           \-- d (D)
+|               \-- e (D)
+|                   \-- f (D)
+|                       \-- g (D)
+|                           \-- h (D)
+|                               \-- to (F)
+|-- newv (D)
+|   \-- w (D)
+|       \-- x (D)
+|           \-- y (D)
+|               \-- z (D)
+\-- newi (D)
+    \-- j (D)
+        \-- k (D)
+            \-- l (D)
+                \-- m (D)
+                    \-- n (D)
+                        \-- o (D)
+                            \-- p (D)
+                                \-- q (D)
+                                    \-- r (D)
+                                        \-- s (D)
+                                            \-- t (D)
+                                                \-- u (D)
+                                                    \-- v (D)
+                                                        \-- w (D)
+                                                            \-- x (D)
+                                                                \-- y (D)
+                                                                    \-- z (D)
+                                                                        \-- mva (D)
+                                                                            \-- b (D)
+                                                                                \-- c (D)
+                                                                                    \-- d (D)
+                                                                                        \-- e (D)
+                                                                                            \-- f (D)
+                                                                                                \-- g (D)
+                                                                                                    \-- h (D)
+                                                                                                        \-- i (D)
+                                                                                                            \-- j (D)
+                                                                                                                \-- k (D)
+                                                                                                                    \-- l (D)
+                                                                                                                        \-- m (D)
+                                                                                                                            \-- n (D)
+                                                                                                                                \-- o (D)
+                                                                                                                                    \-- p (D)
+                                                                                                                                        \-- q (D)
+                                                                                                                                            \-- r (D)
+                                                                                                                                                \-- s (D)
+                                                                                                                                                    \-- t (D)
+                                                                                                                                                        \-- u (D)
+/$ rm cpa
+/$ print
+/ (D)
+|-- newv (D)
+|   \-- w (D)
+|       \-- x (D)
+|           \-- y (D)
+|               \-- z (D)
+\-- newi (D)
+    \-- j (D)
+        \-- k (D)
+            \-- l (D)
+                \-- m (D)
+                    \-- n (D)
+                        \-- o (D)
+                            \-- p (D)
+                                \-- q (D)
+                                    \-- r (D)
+                                        \-- s (D)
+                                            \-- t (D)
+                                                \-- u (D)
+                                                    \-- v (D)
+                                                        \-- w (D)
+                                                            \-- x (D)
+                                                                \-- y (D)
+                                                                    \-- z (D)
+                                                                        \-- mva (D)
+                                                                            \-- b (D)
+                                                                                \-- c (D)
+                                                                                    \-- d (D)
+                                                                                        \-- e (D)
+                                                                                            \-- f (D)
+                                                                                                \-- g (D)
+                                                                                                    \-- h (D)
+                                                                                                        \-- i (D)
+                                                                                                            \-- j (D)
+                                                                                                                \-- k (D)
+                                                                                                                    \-- l (D)
+                                                                                                                        \-- m (D)
+                                                                                                                            \-- n (D)
+                                                                                                                                \-- o (D)
+                                                                                                                                    \-- p (D)
+                                                                                                                                        \-- q (D)
+                                                                                                                                            \-- r (D)
+                                                                                                                                                \-- s (D)
+                                                                                                                                                    \-- t (D)
+                                                                                                                                                        \-- u (D)
+/$ rm newi
+/$ print
+/ (D)
+\-- newv (D)
+    \-- w (D)
+        \-- x (D)
+            \-- y (D)
+                \-- z (D)
+/$ rm newv
+/$ print
+/ (D)
