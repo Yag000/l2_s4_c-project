@@ -38,7 +38,7 @@ function test_one_output(){
     
     if  ! diff -y  "$expected_output_dir/$file" "$output_file" > $TEMP_DIFF_FILE;
     then
-        printf "%s%s%s\n" $RED "FAIL: the output (rigth) does not match the expected output (left) for the file $file" $COLOR_OFF
+        printf "%s%s%s\n" $RED "FAIL: the output (right) does not match the expected output (left) for the file $file" $COLOR_OFF
         cat $TEMP_DIFF_FILE
         echo "----------------------------------------------"
         return 1

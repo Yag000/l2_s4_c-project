@@ -241,7 +241,7 @@ int write_result_command(char *result)
 }
 
 /*
-Writes writes a series of strings in the out_stream
+Writes a series of strings in the out_stream
 */
 int write_result_lines_command(size_t lines_number, char **results)
 {
