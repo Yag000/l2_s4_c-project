@@ -118,7 +118,8 @@ function test_main_invalid_flag(){
     echo "-> Testing invalid flag"
     
     CURRENT_TESTING_DIR=$RESOURCES_DIR"/test_main/flag_test/invalid_flag"
-    
+    clean_output_dir "$CURRENT_TESTING_DIR/output"
+
     local expected_output_dir="$CURRENT_TESTING_DIR/expected_output"
     local output_dir="$CURRENT_TESTING_DIR/output"
     local input_dir="$CURRENT_TESTING_DIR/input"
