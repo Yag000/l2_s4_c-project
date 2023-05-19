@@ -53,8 +53,7 @@ int parse_file(const char *path)
 
     char *line = NULL;
     size_t len = 0;
-    ssize_t read;
-    while ((read = getline(&line, &len, file)) != -1)
+    while (getline(&line, &len, file) != -1)
     {
         exit_code = parse_line(line);
 
@@ -96,7 +95,7 @@ static bool should_program_stop(int exit_code)
 
 /*
 Parses a line of the file.
-It returns 0 if the command execution is successful.
+It returns SUCCESS if the command execution is successful.
 */
 int parse_line(char *line)
 {
