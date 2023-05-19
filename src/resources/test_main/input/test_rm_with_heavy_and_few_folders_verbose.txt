@@ -1,0 +1,110 @@
+mkdir a
+mkdir a/b
+touch a/c
+mkdir a/d
+touch a/e
+mkdir a/f
+touch a/g
+mkdir a/h
+touch a/i
+mkdir a/j
+touch a/k
+mkdir a/l
+touch a/m
+mkdir a/n
+touch a/o
+mkdir a/p
+touch a/q
+mkdir a/r
+touch a/s
+mkdir a/t
+touch a/u
+mkdir a/v
+touch a/w
+mkdir a/x
+touch a/y
+mkdir a/z
+cp a copya
+cp copya a/b/copya
+cp copya a/d/copya
+cp copya a/f/copya
+cp copya a/h/copya
+cp copya a/j/copya
+cp copya a/l/copya
+cp copya a/n/copya
+cp copya a/p/copya
+cp copya a/r/copya
+cp copya a/t/copya
+cp copya a/v/copya
+cp copya a/x/copya
+cp copya a/z/copya
+cp copya a/b/copya/copya
+cp copya a/d/copya/copya
+cp copya a/f/copya/copya
+cp copya a/h/copya/copya
+cp copya a/j/copya/copya
+cp copya a/l/copya/copya
+cp copya a/n/copya/copya
+cp copya a/p/copya/copya
+cp copya a/r/copya/copya
+cp copya a/t/copya/copya
+cp copya a/v/copya/copya
+cp copya a/x/copya/copya
+cp copya a/z/copya/copya
+print
+rm copya
+print
+rm a/b
+ls a
+rm a/c
+ls a
+rm a/d
+ls a
+rm a/e
+ls a
+rm a/f
+ls a
+rm a/g
+ls a
+rm a/h
+ls a
+rm a/i
+ls a
+rm a/j
+ls a
+rm a/k
+ls a
+rm a/l
+ls a
+rm a/m
+ls a
+rm a/n
+ls a
+rm a/o
+ls a
+rm a/p
+ls a
+rm a/q
+ls a
+rm a/r
+ls a
+rm a/s
+ls a
+rm a/t
+ls a
+rm a/u
+ls a
+rm a/v
+ls a
+rm a/w
+ls a
+rm a/x
+ls a
+rm a/y
+ls a
+rm a/z
+ls a
+print
+rm a
+ls
+print
