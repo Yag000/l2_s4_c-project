@@ -48,8 +48,7 @@ char *next_word(string_iterator *iterator)
 
     char *result = malloc(sizeof(char) * (length + 1));
     assert(result != NULL);
-    result = memmove(result, iterator->string + start, length);
-    assert(result != NULL);
+    memmove(result, iterator->string + start, length);
     result[length] = '\0';
 
     return result;
