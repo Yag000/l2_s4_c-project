@@ -162,29 +162,29 @@ node *create_basic_testing_tree()
     node *root = create_root_node();
 
     node *node1 = create_node(true, "test", root);
-    append_a_fils_to_node(root, node1);
+    append_child_to_node(root, node1);
 
-    append_a_fils_to_node(node1, create_node(false, "test2", node1));
-    append_a_fils_to_node(node1, create_node(true, "test3", node1));
-    append_a_fils_to_node(node1, create_node(false, "test4", node1));
+    append_child_to_node(node1, create_node(false, "test2", node1));
+    append_child_to_node(node1, create_node(true, "test3", node1));
+    append_child_to_node(node1, create_node(false, "test4", node1));
 
     node *node2 = create_node(true, "test5", node1);
-    append_a_fils_to_node(node1, node2);
+    append_child_to_node(node1, node2);
 
-    append_a_fils_to_node(node2, create_node(false, "test6", node2));
-    append_a_fils_to_node(node2, create_node(true, "test7", node2));
-    append_a_fils_to_node(node2, create_node(false, "test8", node2));
+    append_child_to_node(node2, create_node(false, "test6", node2));
+    append_child_to_node(node2, create_node(true, "test7", node2));
+    append_child_to_node(node2, create_node(false, "test8", node2));
 
-    append_a_fils_to_node(node1, create_node(false, "test9", node2));
-    append_a_fils_to_node(root, create_node(false, "test10", root));
-    append_a_fils_to_node(root, create_node(true, "test11", root));
+    append_child_to_node(node1, create_node(false, "test9", node2));
+    append_child_to_node(root, create_node(false, "test10", root));
+    append_child_to_node(root, create_node(true, "test11", root));
 
     node1 = create_node(true, "test12", root);
 
-    append_a_fils_to_node(root, node1);
-    append_a_fils_to_node(node1, create_node(false, "test13", node1));
-    append_a_fils_to_node(node1, create_node(false, "test14", node1));
-    append_a_fils_to_node(node1, create_node(false, "test15", node1));
+    append_child_to_node(root, node1);
+    append_child_to_node(node1, create_node(false, "test13", node1));
+    append_child_to_node(node1, create_node(false, "test14", node1));
+    append_child_to_node(node1, create_node(false, "test15", node1));
 
     return root;
 }

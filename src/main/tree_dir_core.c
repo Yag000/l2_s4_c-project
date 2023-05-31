@@ -41,7 +41,7 @@ node *create_node(bool is_directory, const char *nom, node *parent)
     node1->nom[length_nom] = '\0';
 
     node1->is_directory = is_directory;
-    node1->fils = NULL;
+    node1->children = NULL;
 
     if (parent == NULL)
     {
@@ -60,11 +60,11 @@ that contains only alphanumeric characters.
 */
 bool is_valid_name_node(const char *name) { return is_alphanumeric(name); }
 
-node *create_node_with_fils(bool is_directory, const char *name, node *parent, liste_node *children)
+node *create_node_with_children(bool is_directory, const char *name, node *parent, liste_node *children)
 {
     node *node1 = create_node(is_directory, name, parent);
 
-    node1->fils = children;
+    node1->children = children;
 
     return node1;
 }
@@ -81,7 +81,7 @@ node *create_root_node()
     node1->parent = node1;
     node1->root = node1;
     node1->is_directory = true;
-    node1->fils = NULL;
+    node1->children = NULL;
 
     return node1;
 }
@@ -92,7 +92,7 @@ void destroy_node(node *node1)
 
     if (node1->is_directory)
     {
-        destroy_liste_node(node1->fils);
+        destroy_liste_node(node1->children);
     }
     free(node1);
 }
@@ -124,17 +124,17 @@ bool is_root_node(const node *node1)
     return (strcmp(node1->nom, "") == 0) && node1 == node1->parent && node1 == node1->root;
 }
 
-bool is_fils_of_node_empty(const node *node1)
+bool is_children_of_node_empty(const node *node1)
 {
     if (node1 == NULL)
     {
         return true;
     }
-    return node1->fils == NULL;
+    return node1->children == NULL;
 }
 
 /*
-Returns true if the node parent contains node in his own fils.
+Returns true if the node parent contains node in his own children.
 */
 bool contains_node(node *parent, node *node1)
 {
@@ -142,20 +142,20 @@ bool contains_node(node *parent, node *node1)
     {
         return false;
     }
-    return contains_liste_node(parent->fils, node1);
+    return contains_liste_node(parent->children, node1);
 }
 
-unsigned get_number_of_fils(node *node1)
+unsigned get_number_of_children(node *node1)
 {
     assert(node1 != NULL);
 
-    return size_liste_node(node1->fils);
+    return size_liste_node(node1->children);
 }
 
 /*
 Returns the node that has its nom equal to name.
 */
-node *get_a_fils_of_node(node *node1, const char *name)
+node *get_a_child_of_node(node *node1, const char *name)
 {
     assert(node1 != NULL && name != NULL);
 
@@ -163,16 +163,16 @@ node *get_a_fils_of_node(node *node1, const char *name)
     {
         return NULL;
     }
-    return get_a_node_in_liste_node(node1->fils, name);
+    return get_a_node_in_liste_node(node1->children, name);
 }
 
 /*
-Appends node to the fils of parent. If the append is successful,
+Appends node to the children of parent. If the append is successful,
 it will return true, otherwise it will return false.
 The append will be successful the parent is a directory and does
 not already contain node.
 */
-int append_a_fils_to_node(node *parent, node *node1)
+int append_child_to_node(node *parent, node *node1)
 {
     assert(parent != NULL && node1 != NULL);
 
@@ -183,15 +183,15 @@ int append_a_fils_to_node(node *parent, node *node1)
 
     int append_error_value;
 
-    if (parent->fils == NULL)
+    if (parent->children == NULL)
     {
-        parent->fils = create_liste_node(node1);
+        parent->children = create_liste_node(node1);
 
         append_error_value = SUCCESS;
     }
     else
     {
-        append_error_value = append_liste_node(parent->fils, node1);
+        append_error_value = append_liste_node(parent->children, node1);
     }
 
     if (append_error_value == SUCCESS)
@@ -203,11 +203,11 @@ int append_a_fils_to_node(node *parent, node *node1)
 }
 
 /*
-Returns true if node has been removed from the fils of parent
+Returns true if node has been removed from the children of parent
 Otherwise, return false. If parent did not contain node or if
 the parent is not a directory it will fail.
 */
-int remove_a_node_from_fils(node *parent, node *node1)
+int remove_a_child_from_children(node *parent, node *node1)
 {
     assert(parent != NULL && node1 != NULL);
 
@@ -216,22 +216,22 @@ int remove_a_node_from_fils(node *parent, node *node1)
         return INVALID_SELECTION;
     }
 
-    if (!contains_liste_node(parent->fils, node1))
+    if (!contains_liste_node(parent->children, node1))
     {
         return INVALID_SELECTION;
     }
 
-    parent->fils = remove_liste_node(parent->fils, node1);
+    parent->children = remove_liste_node(parent->children, node1);
 
     return SUCCESS;
 }
 
 /*
-Returns true if node has been removed from the fils of parent
+Returns true if node has been removed from the children of parent
 and has been destroyed. Otherwise, return false.
 If parent did not contain it or if the parent is not a directory it will fail.
 */
-int remove_a_fils_of_node(node *parent, const char *name)
+int remove_a_child_of_node(node *parent, const char *name)
 {
     assert(parent != NULL);
 
@@ -240,13 +240,13 @@ int remove_a_fils_of_node(node *parent, const char *name)
         return INVALID_SELECTION;
     }
 
-    node *node1 = get_a_node_in_liste_node(parent->fils, name);
+    node *node1 = get_a_node_in_liste_node(parent->children, name);
 
     if (node1 == NULL)
     {
         return INVALID_SELECTION;
     }
-    parent->fils = remove_liste_node(parent->fils, node1);
+    parent->children = remove_liste_node(parent->children, node1);
     destroy_node(node1);
 
     return SUCCESS;
@@ -475,7 +475,7 @@ static node *search_node(node *deb, char *path, bool is_name_included, bool is_d
 Search a node in a tree with the iteration of iterator until its end
 If the iteration is ".", applies the function to the same node
 If the iteration is "..", applies the function to the parent of node
-If the iteration is not found in fils of node, returns NULL
+If the iteration is not found in children of node, returns NULL
 If the name is included then it will stop before reaching the end of
 the path and return a node with it's nom as the last word of the path.
 Otherwise applies the function to the found child
@@ -521,7 +521,7 @@ static node *search_node_in_tree_with_iterator(node *node1, string_iterator *ite
         return search_node_in_tree_with_iterator(node1->parent, iterator, is_name_included, is_directory);
     }
 
-    node *next_node = get_a_fils_of_node(node1, name);
+    node *next_node = get_a_child_of_node(node1, name);
 
     free(name);
 
@@ -561,9 +561,9 @@ bool is_node_inside(const node *node1, const node *node2)
 }
 
 /*
-Returns the size of the longest name of fils of node.
+Returns the size of the longest name of children of node.
 */
-unsigned get_longest_name_length_of_node_fils(const node *node1)
+unsigned get_longest_name_length_of_node_children(const node *node1)
 {
     assert(node1 != NULL);
 
@@ -573,7 +573,7 @@ unsigned get_longest_name_length_of_node_fils(const node *node1)
     }
     unsigned max_len = 0;
 
-    for (liste_node *lst = node1->fils; lst != NULL; lst = lst->succ)
+    for (liste_node *lst = node1->children; lst != NULL; lst = lst->succ)
     {
         unsigned len_name = strlen(lst->no->nom);
 
@@ -586,20 +586,20 @@ unsigned get_longest_name_length_of_node_fils(const node *node1)
 }
 
 /*
-Move the fils of node to a new node and frees.node1
+Move the children of node to a new node and frees.node1
 */
-void move_fils_of_node_to_new_node(node *node1, node *new_node)
+void move_children_of_node_to_new_node(node *node1, node *new_node)
 {
     assert(node1 != NULL && new_node != NULL);
 
-    if (new_node->fils != NULL)
+    if (new_node->children != NULL)
     {
         return;
     }
 
-    new_node->fils = node1->fils;
+    new_node->children = node1->children;
 
-    for (liste_node *lst = node1->fils; lst != NULL; lst = lst->succ)
+    for (liste_node *lst = node1->children; lst != NULL; lst = lst->succ)
     {
         lst->no->parent = new_node;
     }

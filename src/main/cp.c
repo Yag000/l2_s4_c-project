@@ -45,7 +45,7 @@ int cp(const command *cmd)
         return INVALID_SELECTION;
     }
 
-    int append_error_value = append_a_fils_to_node(node_to_append->parent, node_to_append);
+    int append_error_value = append_child_to_node(node_to_append->parent, node_to_append);
 
     if (append_error_value == INVALID_NAME)
     {
@@ -70,7 +70,7 @@ int cp(const command *cmd)
 Copy all contents of node1 inside node2
 
 The node1 should be empty, that means that it should not have any offspring,
-to avoid the problem of same name in append_a_fils_to_node.
+to avoid the problem of same name in append_child_to_node.
 */
 static void copy_content_of(node *node1, node *node2)
 {
@@ -78,10 +78,10 @@ static void copy_content_of(node *node1, node *node2)
     {
         return;
     }
-    for (liste_node *lst = node2->fils; lst != NULL; lst = lst->succ)
+    for (liste_node *lst = node2->children; lst != NULL; lst = lst->succ)
     {
         node *node_to_append = create_node(lst->no->is_directory, lst->no->nom, node1);
-        append_a_fils_to_node(node1, node_to_append);
+        append_child_to_node(node1, node_to_append);
 
         copy_content_of(node_to_append, lst->no);
     }

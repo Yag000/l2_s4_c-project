@@ -66,34 +66,34 @@ static node *create_tree_and_test_ls_without_path_while(test_info *info)
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     node *node1 = create_node(true, "test", root);
-    append_a_fils_to_node(root, node1);
+    append_child_to_node(root, node1);
 
     current_node = node1;
 
-    append_a_fils_to_node(node1, create_node(false, "test2", node1));
+    append_child_to_node(node1, create_node(false, "test2", node1));
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    append_a_fils_to_node(node1, create_node(true, "test3", node1));
+    append_child_to_node(node1, create_node(true, "test3", node1));
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    append_a_fils_to_node(node1, create_node(false, "test4", node1));
+    append_child_to_node(node1, create_node(false, "test4", node1));
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     node *node2 = create_node(true, "test5", node1);
-    append_a_fils_to_node(node1, node2);
-    append_a_fils_to_node(node2, create_node(false, "test6", node2));
-    append_a_fils_to_node(node2, create_node(true, "test7", node2));
-    append_a_fils_to_node(node2, create_node(false, "test8", node2));
+    append_child_to_node(node1, node2);
+    append_child_to_node(node2, create_node(false, "test6", node2));
+    append_child_to_node(node2, create_node(true, "test7", node2));
+    append_child_to_node(node2, create_node(false, "test8", node2));
 
     current_node = node2;
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    append_a_fils_to_node(root, create_node(false, "test9", root));
-    append_a_fils_to_node(root, create_node(true, "test10", root));
+    append_child_to_node(root, create_node(false, "test9", root));
+    append_child_to_node(root, create_node(true, "test10", root));
 
     node1 = create_node(true, "test11", root);
-    append_a_fils_to_node(root, node1);
-    append_a_fils_to_node(node1, create_node(false, "test12", node1));
+    append_child_to_node(root, node1);
+    append_child_to_node(node1, create_node(false, "test12", node1));
 
     current_node = root;
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);

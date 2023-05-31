@@ -24,7 +24,7 @@ int rm(const command *cmd)
         return INVALID_SELECTION;
     }
 
-    int remove_error_value = remove_a_fils_of_node(node1->parent, node1->nom);
+    int remove_error_value = remove_a_child_of_node(node1->parent, node1->nom);
 
     if (remove_error_value != SUCCESS)
     {

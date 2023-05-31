@@ -32,7 +32,7 @@ int touch(const command *cmd)
         return INVALID_NAME;
     }
 
-    int append_error_value = append_a_fils_to_node(new_node->parent, new_node);
+    int append_error_value = append_child_to_node(new_node->parent, new_node);
 
     if (append_error_value == INVALID_NAME)
     {

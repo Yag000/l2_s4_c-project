@@ -49,7 +49,7 @@ int mv(const command *cmd)
         return INVALID_SELECTION;
     }
 
-    int append_error_value = append_a_fils_to_node(node_to_append->parent, node_to_append);
+    int append_error_value = append_child_to_node(node_to_append->parent, node_to_append);
 
     if (append_error_value == INVALID_NAME)
     {
@@ -65,7 +65,7 @@ int mv(const command *cmd)
         return FATAL_ERROR;
     }
 
-    int remove_error_value = remove_a_node_from_fils(node_to_move->parent, node_to_move);
+    int remove_error_value = remove_a_child_from_children(node_to_move->parent, node_to_move);
 
     if (remove_error_value != SUCCESS)
     {
@@ -73,7 +73,7 @@ int mv(const command *cmd)
         return FATAL_ERROR;
     }
 
-    move_fils_of_node_to_new_node(node_to_move, node_to_append);
+    move_children_of_node_to_new_node(node_to_move, node_to_append);
 
     return SUCCESS;
 }
