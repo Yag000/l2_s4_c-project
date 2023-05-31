@@ -10,7 +10,7 @@ static void test_is_valid_name_of_node(test_info *);
 static void test_are_node_equal(test_info *);
 static void test_is_root_node(test_info *);
 static void test_is_children_of_node_empty(test_info *);
-static void test_create_liste_node(test_info *);
+static void test_create_list_node(test_info *);
 static void test_contains(test_info *);
 static void test_get(test_info *);
 static void test_append(test_info *);
@@ -32,7 +32,7 @@ test_info *test_tree_dir_core()
     test_are_node_equal(info);
     test_is_root_node(info);
     test_is_children_of_node_empty(info);
-    test_create_liste_node(info);
+    test_create_list_node(info);
     test_contains(info);
     test_get(info);
     test_append(info);
@@ -64,7 +64,7 @@ static void test_create_node(test_info *info)
     handle_boolean_test(true, are_nodes_equal(parent->root, node1->root), __LINE__, __FILE__, info);
     handle_boolean_test(true, node1->children == NULL, __LINE__, __FILE__, info);
 
-    liste_node *node_list = create_liste_node(node1);
+    list_node *node_list = create_list_node(node1);
     node *node2 = create_node_with_children(true, "test2", parent, node_list);
 
     handle_boolean_test(true, node2->is_directory, __LINE__, __FILE__, info);
@@ -158,21 +158,21 @@ static void test_is_children_of_node_empty(test_info *info)
     destroy_node(root);
 }
 
-static void test_create_liste_node(test_info *info)
+static void test_create_list_node(test_info *info)
 {
-    print_test_name("Testing to create a liste node");
+    print_test_name("Testing to create a list node");
 
     node *root_node = create_root_node();
 
     node *node1 = create_node(false, "test1", root_node);
 
-    root_node->children = create_liste_node(node1);
+    root_node->children = create_list_node(node1);
     handle_string_test("test1", root_node->children->no->name, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->children->succ == NULL, __LINE__, __FILE__, info);
 
     node *node2 = create_node(false, "test2", root_node);
 
-    handle_boolean_test(true, append_liste_node(root_node->children, node2) == SUCCESS, __LINE__, __FILE__, info);
+    handle_boolean_test(true, append_list_node(root_node->children, node2) == SUCCESS, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->children->succ != NULL, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->children->succ->succ == NULL, __LINE__, __FILE__, info);
     handle_string_test("test2", root_node->children->succ->no->name, __LINE__, __FILE__, info);
@@ -182,24 +182,24 @@ static void test_create_liste_node(test_info *info)
 
 static void test_contains(test_info *info)
 {
-    print_test_name("Testing contains liste node");
+    print_test_name("Testing contains list node");
 
     node *root_node = create_root_node();
 
     node *node1 = create_node(true, "test", root_node);
-    handle_boolean_test(false, contains_liste_node(root_node->children, node1), __LINE__, __FILE__, info);
+    handle_boolean_test(false, contains_list_node(root_node->children, node1), __LINE__, __FILE__, info);
     append_child_to_node(root_node, node1);
-    handle_boolean_test(true, contains_liste_node(root_node->children, node1), __LINE__, __FILE__, info);
+    handle_boolean_test(true, contains_list_node(root_node->children, node1), __LINE__, __FILE__, info);
 
     append_child_to_node(root_node, create_node(false, "test2", root_node));
     append_child_to_node(root_node, create_node(false, "test3", root_node));
     node1 = create_node(false, "test4", root_node);
-    handle_boolean_test(false, contains_liste_node(root_node->children, node1), __LINE__, __FILE__, info);
+    handle_boolean_test(false, contains_list_node(root_node->children, node1), __LINE__, __FILE__, info);
 
     append_child_to_node(root_node, node1);
-    handle_boolean_test(true, contains_liste_node(root_node->children, node1), __LINE__, __FILE__, info);
+    handle_boolean_test(true, contains_list_node(root_node->children, node1), __LINE__, __FILE__, info);
     append_child_to_node(root_node, create_node(false, "test5", root_node));
-    handle_boolean_test(true, contains_liste_node(root_node->children, node1), __LINE__, __FILE__, info);
+    handle_boolean_test(true, contains_list_node(root_node->children, node1), __LINE__, __FILE__, info);
 
     destroy_node(root_node);
 }
@@ -207,7 +207,7 @@ static void test_contains(test_info *info)
 static void test_get(test_info *info)
 {
 
-    print_test_name("Testing to get a node in a liste_node with name");
+    print_test_name("Testing to get a node in a list_node with name");
 
     node *root_node = create_root_node();
 
@@ -238,7 +238,7 @@ static void test_get(test_info *info)
 static void test_append(test_info *info)
 {
 
-    print_test_name("Testing to append a node in a liste_node");
+    print_test_name("Testing to append a node in a list_node");
 
     node *root_node = create_root_node();
     handle_boolean_test(true, root_node->children == NULL, __LINE__, __FILE__, info);
@@ -251,9 +251,9 @@ static void test_append(test_info *info)
     handle_boolean_test(true, are_nodes_equal(root_node->children->no->root, root_node), __LINE__, __FILE__, info);
 
     node *node2 = create_node(false, "test2", root_node);
-    handle_boolean_test(false, contains_liste_node(root_node->children, node2), __LINE__, __FILE__, info);
+    handle_boolean_test(false, contains_list_node(root_node->children, node2), __LINE__, __FILE__, info);
     handle_boolean_test(true, append_child_to_node(root_node, node2) == SUCCESS, __LINE__, __FILE__, info);
-    handle_boolean_test(true, contains_liste_node(root_node->children, node2), __LINE__, __FILE__, info);
+    handle_boolean_test(true, contains_list_node(root_node->children, node2), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(node2->parent, root_node), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(node2->root, root_node), __LINE__, __FILE__, info);
 
@@ -264,9 +264,9 @@ static void test_append(test_info *info)
 
     handle_boolean_test(true, append_child_to_node(root_node, create_node(false, "test3", root_node)) == SUCCESS,
                         __LINE__, __FILE__, info);
-    handle_boolean_test(true, contains_liste_node(root_node->children, node2), __LINE__, __FILE__, info);
+    handle_boolean_test(true, contains_list_node(root_node->children, node2), __LINE__, __FILE__, info);
 
-    handle_boolean_test(true, size_liste_node(root_node->children) == 3, __LINE__, __FILE__, info);
+    handle_boolean_test(true, size_list_node(root_node->children) == 3, __LINE__, __FILE__, info);
 
     node1 = create_node(true, "test", root_node);
     handle_boolean_test(true, append_child_to_node(root_node, node1) == INVALID_NAME, __LINE__, __FILE__, info);
@@ -288,7 +288,7 @@ static void test_append(test_info *info)
 
 static void test_remove(test_info *info)
 {
-    print_test_name("Testing to remove a node in a liste_node");
+    print_test_name("Testing to remove a node in a list_node");
 
     node *root_node = create_root_node();
 
@@ -329,8 +329,8 @@ static void test_remove(test_info *info)
     destroy_node(root_node);
 
     node1 = create_root_node();
-    liste_node *list = create_liste_node(node1);
-    handle_boolean_test(true, remove_liste_node(list, node1) == NULL, __LINE__, __FILE__, info);
+    list_node *list = create_list_node(node1);
+    handle_boolean_test(true, remove_list_node(list, node1) == NULL, __LINE__, __FILE__, info);
 
     destroy_node(node1);
 }

@@ -78,7 +78,7 @@ static void copy_content_of(node *node1, node *node2)
     {
         return;
     }
-    for (liste_node *lst = node2->children; lst != NULL; lst = lst->succ)
+    for (list_node *lst = node2->children; lst != NULL; lst = lst->succ)
     {
         node *node_to_append = create_node(lst->no->is_directory, lst->no->name, node1);
         append_child_to_node(node1, node_to_append);

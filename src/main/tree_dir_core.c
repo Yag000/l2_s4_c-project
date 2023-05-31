@@ -60,7 +60,7 @@ that contains only alphanumeric characters.
 */
 bool is_valid_name_node(const char *name) { return is_alphanumeric(name); }
 
-node *create_node_with_children(bool is_directory, const char *name, node *parent, liste_node *children)
+node *create_node_with_children(bool is_directory, const char *name, node *parent, list_node *children)
 {
     node *node1 = create_node(is_directory, name, parent);
 
@@ -92,7 +92,7 @@ void destroy_node(node *node1)
 
     if (node1->is_directory)
     {
-        destroy_liste_node(node1->children);
+        destroy_list_node(node1->children);
     }
     free(node1);
 }
@@ -142,14 +142,14 @@ bool contains_node(node *parent, node *node1)
     {
         return false;
     }
-    return contains_liste_node(parent->children, node1);
+    return contains_list_node(parent->children, node1);
 }
 
 unsigned get_number_of_children(node *node1)
 {
     assert(node1 != NULL);
 
-    return size_liste_node(node1->children);
+    return size_list_node(node1->children);
 }
 
 /*
@@ -163,7 +163,7 @@ node *get_a_child_of_node(node *node1, const char *name)
     {
         return NULL;
     }
-    return get_a_node_in_liste_node(node1->children, name);
+    return get_a_node_in_list_node(node1->children, name);
 }
 
 /*
@@ -185,13 +185,13 @@ int append_child_to_node(node *parent, node *node1)
 
     if (parent->children == NULL)
     {
-        parent->children = create_liste_node(node1);
+        parent->children = create_list_node(node1);
 
         append_error_value = SUCCESS;
     }
     else
     {
-        append_error_value = append_liste_node(parent->children, node1);
+        append_error_value = append_list_node(parent->children, node1);
     }
 
     if (append_error_value == SUCCESS)
@@ -216,12 +216,12 @@ int remove_a_child_from_children(node *parent, node *node1)
         return INVALID_SELECTION;
     }
 
-    if (!contains_liste_node(parent->children, node1))
+    if (!contains_list_node(parent->children, node1))
     {
         return INVALID_SELECTION;
     }
 
-    parent->children = remove_liste_node(parent->children, node1);
+    parent->children = remove_list_node(parent->children, node1);
 
     return SUCCESS;
 }
@@ -240,23 +240,23 @@ int remove_a_child_of_node(node *parent, const char *name)
         return INVALID_SELECTION;
     }
 
-    node *node1 = get_a_node_in_liste_node(parent->children, name);
+    node *node1 = get_a_node_in_list_node(parent->children, name);
 
     if (node1 == NULL)
     {
         return INVALID_SELECTION;
     }
-    parent->children = remove_liste_node(parent->children, node1);
+    parent->children = remove_list_node(parent->children, node1);
     destroy_node(node1);
 
     return SUCCESS;
 }
 
-liste_node *create_liste_node(node *node1)
+list_node *create_list_node(node *node1)
 {
     assert(node1 != NULL);
 
-    liste_node *node_list = malloc(sizeof(liste_node));
+    list_node *node_list = malloc(sizeof(list_node));
 
     assert(node_list != NULL);
 
@@ -266,14 +266,14 @@ liste_node *create_liste_node(node *node1)
     return node_list;
 }
 
-void destroy_liste_node(liste_node *node_list)
+void destroy_list_node(list_node *node_list)
 {
     if (node_list == NULL)
     {
         return;
     }
 
-    destroy_liste_node(node_list->succ);
+    destroy_list_node(node_list->succ);
     destroy_node(node_list->no);
 
     free(node_list);
@@ -282,7 +282,7 @@ void destroy_liste_node(liste_node *node_list)
 /*
 Returns true if node_list contains node.
 */
-bool contains_liste_node(liste_node *node_list, node *node1)
+bool contains_list_node(list_node *node_list, node *node1)
 {
     if (node_list == NULL)
     {
@@ -294,27 +294,27 @@ bool contains_liste_node(liste_node *node_list, node *node1)
         return true;
     }
 
-    return contains_liste_node(node_list->succ, node1);
+    return contains_list_node(node_list->succ, node1);
 }
 
 /*
 Returns the number of nodes in node_list.
 */
-unsigned size_liste_node(liste_node *node_list)
+unsigned size_list_node(list_node *node_list)
 {
     if (node_list == NULL)
     {
         return 0;
     }
 
-    return 1 + size_liste_node(node_list->succ);
+    return 1 + size_list_node(node_list->succ);
 }
 
 /*
 Returns a node in node_list which has its name equal to name.
 Return NULL otherwise.
 */
-node *get_a_node_in_liste_node(liste_node *node_list, const char *name)
+node *get_a_node_in_list_node(list_node *node_list, const char *name)
 {
     if (node_list == NULL)
     {
@@ -326,7 +326,7 @@ node *get_a_node_in_liste_node(liste_node *node_list, const char *name)
         return node_list->no;
     }
 
-    return get_a_node_in_liste_node(node_list->succ, name);
+    return get_a_node_in_list_node(node_list->succ, name);
 }
 
 /*
@@ -334,7 +334,7 @@ Returns true if the append of node in node_list succeeds.
 Otherwise return false, this will happen if the node is already inside
 node_list.
 */
-int append_liste_node(liste_node *node_list, node *node1)
+int append_list_node(list_node *node_list, node *node1)
 {
     assert(node_list != NULL);
 
@@ -345,18 +345,18 @@ int append_liste_node(liste_node *node_list, node *node1)
 
     if (node_list->succ == NULL)
     {
-        node_list->succ = create_liste_node(node1);
+        node_list->succ = create_list_node(node1);
         return SUCCESS;
     }
 
-    return append_liste_node(node_list->succ, node1);
+    return append_list_node(node_list->succ, node1);
 }
 
 /*
 Returns the new list without node if it finds node.
 Frees the removed list (but does not free node).
 */
-liste_node *remove_liste_node(liste_node *node_list, node *node1)
+list_node *remove_list_node(list_node *node_list, node *node1)
 {
     if (node_list == NULL)
     {
@@ -365,13 +365,13 @@ liste_node *remove_liste_node(liste_node *node_list, node *node1)
 
     if (are_nodes_equal(node_list->no, node1))
     {
-        liste_node *acc = node_list->succ;
+        list_node *acc = node_list->succ;
         free(node_list);
 
         return acc;
     }
 
-    node_list->succ = remove_liste_node(node_list->succ, node1);
+    node_list->succ = remove_list_node(node_list->succ, node1);
 
     return node_list;
 }
@@ -573,7 +573,7 @@ unsigned get_longest_name_length_of_node_children(const node *node1)
     }
     unsigned max_len = 0;
 
-    for (liste_node *lst = node1->children; lst != NULL; lst = lst->succ)
+    for (list_node *lst = node1->children; lst != NULL; lst = lst->succ)
     {
         unsigned len_name = strlen(lst->no->name);
 
@@ -599,7 +599,7 @@ void move_children_of_node_to_new_node(node *node1, node *new_node)
 
     new_node->children = node1->children;
 
-    for (liste_node *lst = node1->children; lst != NULL; lst = lst->succ)
+    for (list_node *lst = node1->children; lst != NULL; lst = lst->succ)
     {
         lst->no->parent = new_node;
     }

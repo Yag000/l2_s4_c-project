@@ -56,7 +56,7 @@ static void print_with_depth(node *node1, unsigned depth, bool is_last)
     {
         return;
     }
-    for (liste_node *lst = node1->children; lst != NULL; lst = lst->succ)
+    for (list_node *lst = node1->children; lst != NULL; lst = lst->succ)
     {
         if (lst->succ == NULL)
         {

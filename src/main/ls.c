@@ -53,7 +53,7 @@ static void print_ls(node *node)
 {
     unsigned max_length_name = get_longest_name_length_of_node_children(node);
 
-    for (liste_node *lst = node->children; lst != NULL; lst = lst->succ)
+    for (list_node *lst = node->children; lst != NULL; lst = lst->succ)
     {
         char *line = get_line_ls(lst->no->name, lst->no->is_directory, max_length_name);
 
