@@ -3,12 +3,12 @@
 
 #include <stdbool.h>
 
-#define MAX_LENGTH_NOM 100
+#define MAX_LENGTH_NAME 100
 
 typedef struct node
 {
     bool is_directory;
-    char nom[MAX_LENGTH_NOM];
+    char name[MAX_LENGTH_NAME];
     struct node *parent;
     struct node *root;
     struct liste_node *children;

@@ -59,7 +59,7 @@ static void test_create_node(test_info *info)
     node *node1 = create_node(false, "test", parent);
 
     handle_boolean_test(false, node1->is_directory, __LINE__, __FILE__, info);
-    handle_string_test("test", node1->nom, __LINE__, __FILE__, info);
+    handle_string_test("test", node1->name, __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(parent, node1->parent), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(parent->root, node1->root), __LINE__, __FILE__, info);
     handle_boolean_test(true, node1->children == NULL, __LINE__, __FILE__, info);
@@ -68,7 +68,7 @@ static void test_create_node(test_info *info)
     node *node2 = create_node_with_children(true, "test2", parent, node_list);
 
     handle_boolean_test(true, node2->is_directory, __LINE__, __FILE__, info);
-    handle_string_test("test2", node2->nom, __LINE__, __FILE__, info);
+    handle_string_test("test2", node2->name, __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(parent, node2->parent), __LINE__, __FILE__, info);
     handle_boolean_test(true, node2->children != NULL, __LINE__, __FILE__, info);
 
@@ -167,7 +167,7 @@ static void test_create_liste_node(test_info *info)
     node *node1 = create_node(false, "test1", root_node);
 
     root_node->children = create_liste_node(node1);
-    handle_string_test("test1", root_node->children->no->nom, __LINE__, __FILE__, info);
+    handle_string_test("test1", root_node->children->no->name, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->children->succ == NULL, __LINE__, __FILE__, info);
 
     node *node2 = create_node(false, "test2", root_node);
@@ -175,7 +175,7 @@ static void test_create_liste_node(test_info *info)
     handle_boolean_test(true, append_liste_node(root_node->children, node2) == SUCCESS, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->children->succ != NULL, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->children->succ->succ == NULL, __LINE__, __FILE__, info);
-    handle_string_test("test2", root_node->children->succ->no->nom, __LINE__, __FILE__, info);
+    handle_string_test("test2", root_node->children->succ->no->name, __LINE__, __FILE__, info);
 
     destroy_node(root_node);
 }
@@ -321,9 +321,9 @@ static void test_remove(test_info *info)
     node1 = create_node(false, "test", root_node);
     append_child_to_node(root_node, node1);
 
-    handle_boolean_test(true, remove_a_child_of_node(root_node, node1->nom) == SUCCESS, __LINE__, __FILE__, info);
+    handle_boolean_test(true, remove_a_child_of_node(root_node, node1->name) == SUCCESS, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->children == NULL, __LINE__, __FILE__, info);
-    handle_boolean_test(true, remove_a_child_of_node(root_node, node1->nom) == INVALID_SELECTION, __LINE__, __FILE__,
+    handle_boolean_test(true, remove_a_child_of_node(root_node, node1->name) == INVALID_SELECTION, __LINE__, __FILE__,
                         info);
 
     destroy_node(root_node);
@@ -499,23 +499,23 @@ static void test_search_with_create(test_info *info)
     handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
     node1 = search_node_in_tree_with_node_creation(current_node, ".", false);
-    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    handle_boolean_test(true, !is_valid_name_node(node1->name), __LINE__, __FILE__, info);
     destroy_node(node1);
 
     node1 = search_node_in_tree_with_node_creation(current_node, "..", false);
-    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    handle_boolean_test(true, !is_valid_name_node(node1->name), __LINE__, __FILE__, info);
     destroy_node(node1);
 
     node1 = search_node_in_tree_with_node_creation(current_node, "./.././..", false);
-    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    handle_boolean_test(true, !is_valid_name_node(node1->name), __LINE__, __FILE__, info);
     destroy_node(node1);
 
     node1 = search_node_in_tree_with_node_creation(current_node, "./.././../test/.", false);
-    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    handle_boolean_test(true, !is_valid_name_node(node1->name), __LINE__, __FILE__, info);
     destroy_node(node1);
 
     node1 = search_node_in_tree_with_node_creation(current_node, "./.././../test/./abc_efg", false);
-    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    handle_boolean_test(true, !is_valid_name_node(node1->name), __LINE__, __FILE__, info);
     destroy_node(node1);
 
     node1 = search_node_in_tree_with_node_creation(current_node, "./.././../test/", false);

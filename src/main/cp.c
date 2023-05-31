@@ -30,7 +30,7 @@ int cp(const command *cmd)
         return INVALID_PATH;
     }
 
-    if (!is_valid_name_node(node_to_append->nom))
+    if (!is_valid_name_node(node_to_append->name))
     {
         write_result_command(
             "Invalid name : the name of an element can neither be empty nor contain special characters.");
@@ -80,7 +80,7 @@ static void copy_content_of(node *node1, node *node2)
     }
     for (liste_node *lst = node2->children; lst != NULL; lst = lst->succ)
     {
-        node *node_to_append = create_node(lst->no->is_directory, lst->no->nom, node1);
+        node *node_to_append = create_node(lst->no->is_directory, lst->no->name, node1);
         append_child_to_node(node1, node_to_append);
 
         copy_content_of(node_to_append, lst->no);

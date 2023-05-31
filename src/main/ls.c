@@ -55,22 +55,22 @@ static void print_ls(node *node)
 
     for (liste_node *lst = node->children; lst != NULL; lst = lst->succ)
     {
-        char *line = get_line_ls(lst->no->nom, lst->no->is_directory, max_length_name);
+        char *line = get_line_ls(lst->no->name, lst->no->is_directory, max_length_name);
 
         write_result_command(line);
         free(line);
     }
 }
 
-static char *get_line_ls(const char *nom, bool is_directory, unsigned max_length_name)
+static char *get_line_ls(const char *name, bool is_directory, unsigned max_length_name)
 {
-    unsigned len_name = strlen(nom);
+    unsigned len_name = strlen(name);
     unsigned len_transition = max_length_name - len_name + 1;
 
     char *result = malloc(sizeof(char) * (len_name + len_transition + 4));
     assert(result != NULL);
 
-    memmove(result, nom, len_name);
+    memmove(result, name, len_name);
 
     add_transition_at_string(result, len_name, len_transition);
     add_file_type_at_string(result, len_name + len_transition, is_directory);

@@ -156,7 +156,7 @@ static void test_mkdir_long_path(test_info *info)
     current_node = get_a_child_of_node(current_node->root, "test");
     assert(current_node != NULL);
     handle_boolean_test(true, current_node->is_directory, __LINE__, __FILE__, info);
-    handle_string_test("test", current_node->nom, __LINE__, __FILE__, info);
+    handle_string_test("test", current_node->name, __LINE__, __FILE__, info);
     handle_boolean_test(true, current_node->root == current_node->parent, __LINE__, __FILE__, info);
     destroy_command(cmd);
 

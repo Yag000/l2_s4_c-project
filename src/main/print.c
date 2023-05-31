@@ -43,7 +43,7 @@ int print(const command *cmd)
 
 static void print_with_depth(node *node1, unsigned depth, bool is_last)
 {
-    char *line = get_a_print_line(node1->nom, node1->is_directory, depth, is_last);
+    char *line = get_a_print_line(node1->name, node1->is_directory, depth, is_last);
 
     write_result_command(line);
     if (last_line != NULL)
@@ -69,10 +69,10 @@ static void print_with_depth(node *node1, unsigned depth, bool is_last)
     }
 }
 
-static char *get_a_print_line(const char *nom, bool is_directory, unsigned depth, bool is_last)
+static char *get_a_print_line(const char *name, bool is_directory, unsigned depth, bool is_last)
 {
     unsigned len_start_transition = depth * FILLER_SIZE;
-    unsigned len_name = strlen(nom);
+    unsigned len_name = strlen(name);
 
     if (len_name == 0)
     {
@@ -83,7 +83,7 @@ static char *get_a_print_line(const char *nom, bool is_directory, unsigned depth
     assert(result != NULL);
 
     add_start_transition_at_string(result, len_start_transition, is_last);
-    add_file_name_at_string(result, nom, len_start_transition, len_name);
+    add_file_name_at_string(result, name, len_start_transition, len_name);
 
     result[len_start_transition + len_name] = FILLER_CHAR;
 
@@ -143,15 +143,15 @@ static void add_start_transition_at_string(char *string_to_fill, unsigned end, b
     string_to_fill[end - 1] = FILLER_CHAR;
 }
 
-static void add_file_name_at_string(char *string_to_fill, const char *nom, unsigned start, unsigned len_name)
+static void add_file_name_at_string(char *string_to_fill, const char *name, unsigned start, unsigned len_name)
 {
-    if (strcmp(nom, "") == 0)
+    if (strcmp(name, "") == 0)
     {
         string_to_fill[start] = ROOT_CHAR;
     }
     else
     {
-        memmove(string_to_fill + start, nom, len_name);
+        memmove(string_to_fill + start, name, len_name);
     }
 }
 

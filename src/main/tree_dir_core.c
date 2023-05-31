@@ -20,25 +20,25 @@ static node *create_empty_node()
 }
 
 /*
-Returns the node if nom is a valid name
+Returns the node if name is a valid name
 Otherwise it returns NULL
 */
-node *create_node(bool is_directory, const char *nom, node *parent)
+node *create_node(bool is_directory, const char *name, node *parent)
 {
     assert(parent != NULL);
 
     node *node1 = create_empty_node();
 
-    int length_nom = strlen(nom);
+    int length_name = strlen(name);
 
-    if (length_nom > MAX_LENGTH_NOM - 1)
+    if (length_name > MAX_LENGTH_NAME - 1)
     {
-        length_nom = MAX_LENGTH_NOM - 1;
+        length_name = MAX_LENGTH_NAME - 1;
     }
 
-    memmove(node1->nom, nom, length_nom);
-    assert(node1->nom != NULL);
-    node1->nom[length_nom] = '\0';
+    memmove(node1->name, name, length_name);
+    assert(node1->name != NULL);
+    node1->name[length_name] = '\0';
 
     node1->is_directory = is_directory;
     node1->children = NULL;
@@ -77,7 +77,7 @@ node *create_root_node()
 {
     node *node1 = create_empty_node();
 
-    node1->nom[0] = '\0';
+    node1->name[0] = '\0';
     node1->parent = node1;
     node1->root = node1;
     node1->is_directory = true;
@@ -121,7 +121,7 @@ bool is_root_node(const node *node1)
     {
         return false;
     }
-    return (strcmp(node1->nom, "") == 0) && node1 == node1->parent && node1 == node1->root;
+    return (strcmp(node1->name, "") == 0) && node1 == node1->parent && node1 == node1->root;
 }
 
 bool is_children_of_node_empty(const node *node1)
@@ -153,7 +153,7 @@ unsigned get_number_of_children(node *node1)
 }
 
 /*
-Returns the node that has its nom equal to name.
+Returns the node that has its name equal to name.
 */
 node *get_a_child_of_node(node *node1, const char *name)
 {
@@ -311,7 +311,7 @@ unsigned size_liste_node(liste_node *node_list)
 }
 
 /*
-Returns a node in node_list which has its nom equal to name.
+Returns a node in node_list which has its name equal to name.
 Return NULL otherwise.
 */
 node *get_a_node_in_liste_node(liste_node *node_list, const char *name)
@@ -321,7 +321,7 @@ node *get_a_node_in_liste_node(liste_node *node_list, const char *name)
         return NULL;
     }
 
-    if (strcmp(node_list->no->nom, name) == 0)
+    if (strcmp(node_list->no->name, name) == 0)
     {
         return node_list->no;
     }
@@ -338,7 +338,7 @@ int append_liste_node(liste_node *node_list, node *node1)
 {
     assert(node_list != NULL);
 
-    if (strcmp(node_list->no->nom, node1->nom) == 0)
+    if (strcmp(node_list->no->name, node1->name) == 0)
     {
         return INVALID_NAME;
     }
@@ -408,7 +408,7 @@ char *get_absolute_path_of_node(const node *node1)
         assert(root_path != NULL);
         root_path[0] = '\0';
 
-        absolute_path = concat_two_words_with_delimiter(root_path, node1->nom, '/');
+        absolute_path = concat_two_words_with_delimiter(root_path, node1->name, '/');
 
         free(root_path);
 
@@ -416,7 +416,7 @@ char *get_absolute_path_of_node(const node *node1)
     }
 
     char *parent_absolute_path = get_absolute_path_of_node(node1->parent);
-    absolute_path = concat_two_words_with_delimiter(parent_absolute_path, node1->nom, '/');
+    absolute_path = concat_two_words_with_delimiter(parent_absolute_path, node1->name, '/');
 
     free(parent_absolute_path);
 
@@ -477,7 +477,7 @@ If the iteration is ".", applies the function to the same node
 If the iteration is "..", applies the function to the parent of node
 If the iteration is not found in children of node, returns NULL
 If the name is included then it will stop before reaching the end of
-the path and return a node with it's nom as the last word of the path.
+the path and return a node with it's name as the last word of the path.
 Otherwise applies the function to the found child
 */
 static node *search_node_in_tree_with_iterator(node *node1, string_iterator *iterator, bool is_name_included,
@@ -575,7 +575,7 @@ unsigned get_longest_name_length_of_node_children(const node *node1)
 
     for (liste_node *lst = node1->children; lst != NULL; lst = lst->succ)
     {
-        unsigned len_name = strlen(lst->no->nom);
+        unsigned len_name = strlen(lst->no->name);
 
         if (len_name > max_len)
         {

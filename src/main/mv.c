@@ -34,7 +34,7 @@ int mv(const command *cmd)
         return INVALID_PATH;
     }
 
-    if (!is_valid_name_node(node_to_append->nom))
+    if (!is_valid_name_node(node_to_append->name))
     {
         write_result_command(
             "Invalid name : the name of an element can neither be empty nor contain special characters.");
