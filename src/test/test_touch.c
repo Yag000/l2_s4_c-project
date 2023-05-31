@@ -137,6 +137,6 @@ static void execute_test(test_info *info, char *input, char *output)
 
     handle_int_test(SUCCESS, result, __LINE__, __FILE__, info);
 
-    current_node = current_node->racine;
+    current_node = current_node->root;
     close_file(out_stream, out_stream_path);
 }

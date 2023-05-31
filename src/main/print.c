@@ -33,7 +33,7 @@ int print(const command *cmd)
     {
         return INVALID_NUMBER_OF_ARGS;
     }
-    print_with_depth(current_node->racine, 0, false);
+    print_with_depth(current_node->root, 0, false);
 
     free(last_line);
     last_line = NULL;

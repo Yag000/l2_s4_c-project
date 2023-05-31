@@ -13,7 +13,7 @@ int cd(const command *cmd)
 
     if (cmd->args_number == 0)
     {
-        current_node = current_node->racine;
+        current_node = current_node->root;
         return SUCCESS;
     }
 

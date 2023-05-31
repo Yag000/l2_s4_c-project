@@ -53,7 +53,7 @@ static void test_create_node(test_info *info)
 
     node *parent = create_root_node();
     handle_boolean_test(true, are_nodes_equal(parent, parent->parent), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_nodes_equal(parent, parent->racine), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_nodes_equal(parent, parent->root), __LINE__, __FILE__, info);
     handle_boolean_test(true, parent->is_directory, __LINE__, __FILE__, info);
 
     node *node1 = create_node(false, "test", parent);
@@ -61,7 +61,7 @@ static void test_create_node(test_info *info)
     handle_boolean_test(false, node1->is_directory, __LINE__, __FILE__, info);
     handle_string_test("test", node1->nom, __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(parent, node1->parent), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_nodes_equal(parent->racine, node1->racine), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_nodes_equal(parent->root, node1->root), __LINE__, __FILE__, info);
     handle_boolean_test(true, node1->fils == NULL, __LINE__, __FILE__, info);
 
     liste_node *node_list = create_liste_node(node1);
@@ -137,7 +137,7 @@ static void test_is_root_node(test_info *info)
     handle_boolean_test(false, is_root_node(node1), __LINE__, __FILE__, info);
 
     node1->parent = node1;
-    node1->racine = node1;
+    node1->root = node1;
     handle_boolean_test(false, is_root_node(node1), __LINE__, __FILE__, info);
 
     destroy_node(root_node);
@@ -248,14 +248,14 @@ static void test_append(test_info *info)
     handle_boolean_test(true, root_node->fils != NULL, __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(root_node->fils->no, node1), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(root_node->fils->no->parent, root_node), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_nodes_equal(root_node->fils->no->racine, root_node), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_nodes_equal(root_node->fils->no->root, root_node), __LINE__, __FILE__, info);
 
     node *node2 = create_node(false, "test2", root_node);
     handle_boolean_test(false, contains_liste_node(root_node->fils, node2), __LINE__, __FILE__, info);
     handle_boolean_test(true, append_a_fils_to_node(root_node, node2) == SUCCESS, __LINE__, __FILE__, info);
     handle_boolean_test(true, contains_liste_node(root_node->fils, node2), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(node2->parent, root_node), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_nodes_equal(node2->racine, root_node), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_nodes_equal(node2->root, root_node), __LINE__, __FILE__, info);
 
     handle_boolean_test(true, append_a_fils_to_node(node1, node2) == INVALID_SELECTION, __LINE__, __FILE__, info);
     handle_boolean_test(true, append_a_fils_to_node(node2, node1) == INVALID_SELECTION, __LINE__, __FILE__, info);

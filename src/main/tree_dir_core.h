@@ -10,7 +10,7 @@ typedef struct node
     bool is_directory;
     char nom[MAX_LENGTH_NOM];
     struct node *parent;
-    struct node *racine;
+    struct node *root;
     struct liste_node *fils;
 } node;
 

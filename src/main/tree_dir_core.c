@@ -46,11 +46,11 @@ node *create_node(bool is_directory, const char *nom, node *parent)
     if (parent == NULL)
     {
         node1->parent = node1;
-        node1->racine = node1;
+        node1->root = node1;
         return node1;
     }
     node1->parent = parent;
-    node1->racine = parent->racine;
+    node1->root = parent->root;
     return node1;
 }
 
@@ -70,7 +70,7 @@ node *create_node_with_fils(bool is_directory, const char *name, node *parent, l
 }
 
 /*
-Creates a node with parent and racine set to himself. It will represent the root
+Creates a node with parent and root set to himself. It will represent the root
 of our file system.
 */
 node *create_root_node()
@@ -79,7 +79,7 @@ node *create_root_node()
 
     node1->nom[0] = '\0';
     node1->parent = node1;
-    node1->racine = node1;
+    node1->root = node1;
     node1->is_directory = true;
     node1->fils = NULL;
 
@@ -121,7 +121,7 @@ bool is_root_node(const node *node1)
     {
         return false;
     }
-    return (strcmp(node1->nom, "") == 0) && node1 == node1->parent && node1 == node1->racine;
+    return (strcmp(node1->nom, "") == 0) && node1 == node1->parent && node1 == node1->root;
 }
 
 bool is_fils_of_node_empty(const node *node1)
@@ -197,7 +197,7 @@ int append_a_fils_to_node(node *parent, node *node1)
     if (append_error_value == SUCCESS)
     {
         node1->parent = parent;
-        node1->racine = parent->racine;
+        node1->root = parent->root;
     }
     return append_error_value;
 }
@@ -379,9 +379,9 @@ liste_node *remove_liste_node(liste_node *node_list, node *node1)
 void destroy_tree()
 {
     assert(current_node != NULL);
-    assert(current_node->racine != NULL);
+    assert(current_node->root != NULL);
 
-    destroy_node(current_node->racine);
+    destroy_node(current_node->root);
 }
 /*
 Returns the string containing the absolute path of the node.
@@ -461,7 +461,7 @@ static node *search_node(node *deb, char *path, bool is_name_included, bool is_d
 
     if (path[0] == '/')
     {
-        deb = deb->racine;
+        deb = deb->root;
     }
 
     node *result = search_node_in_tree_with_iterator(deb, iterator, is_name_included, is_directory);
