@@ -1,12 +1,12 @@
+#include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
 #include "command.h"
+#include "constants.h"
 #include "string_utils.h"
 #include "tree_dir_core.h"
-#include "constants.h"
 
 #define FILLER_SIZE 4
 #define ROOT_CHAR '/'
@@ -19,7 +19,7 @@
 #define FILE_TYPE_CHAR 'F'
 #define DIRECTORY_TYPE_CHAR 'D'
 
-static void print_with_depth(noeud *, unsigned, bool);
+static void print_with_depth(node *, unsigned, bool);
 static char *get_a_print_line(const char *, bool, unsigned, bool);
 static void add_start_transition_at_string(char *, unsigned, bool);
 static void add_file_name_at_string(char *, const char *, unsigned, unsigned);
@@ -33,7 +33,7 @@ int print(const command *cmd)
     {
         return INVALID_NUMBER_OF_ARGS;
     }
-    print_with_depth(current_node->racine, 0, false);
+    print_with_depth(current_node->root, 0, false);
 
     free(last_line);
     last_line = NULL;
@@ -41,9 +41,9 @@ int print(const command *cmd)
     return SUCCESS;
 }
 
-static void print_with_depth(noeud *node, unsigned depth, bool is_last)
+static void print_with_depth(node *node1, unsigned depth, bool is_last)
 {
-    char *line = get_a_print_line(node->nom, node->est_dossier, depth, is_last);
+    char *line = get_a_print_line(node1->name, node1->is_directory, depth, is_last);
 
     write_result_command(line);
     if (last_line != NULL)
@@ -52,11 +52,11 @@ static void print_with_depth(noeud *node, unsigned depth, bool is_last)
     }
     last_line = line;
 
-    if (!node->est_dossier)
+    if (!node1->is_directory)
     {
         return;
     }
-    for (liste_noeud *lst = node->fils; lst != NULL; lst = lst->succ)
+    for (list_node *lst = node1->children; lst != NULL; lst = lst->succ)
     {
         if (lst->succ == NULL)
         {
@@ -69,10 +69,10 @@ static void print_with_depth(noeud *node, unsigned depth, bool is_last)
     }
 }
 
-static char *get_a_print_line(const char *nom, bool est_dossier, unsigned depth, bool is_last)
+static char *get_a_print_line(const char *name, bool is_directory, unsigned depth, bool is_last)
 {
     unsigned len_start_transition = depth * FILLER_SIZE;
-    unsigned len_name = strlen(nom);
+    unsigned len_name = strlen(name);
 
     if (len_name == 0)
     {
@@ -83,11 +83,11 @@ static char *get_a_print_line(const char *nom, bool est_dossier, unsigned depth,
     assert(result != NULL);
 
     add_start_transition_at_string(result, len_start_transition, is_last);
-    add_file_name_at_string(result, nom, len_start_transition, len_name);
+    add_file_name_at_string(result, name, len_start_transition, len_name);
 
     result[len_start_transition + len_name] = FILLER_CHAR;
 
-    add_file_type_at_string(result, len_start_transition + len_name + 1, est_dossier);
+    add_file_type_at_string(result, len_start_transition + len_name + 1, is_directory);
 
     result[len_start_transition + len_name + 4] = '\0';
 
@@ -143,23 +143,23 @@ static void add_start_transition_at_string(char *string_to_fill, unsigned end, b
     string_to_fill[end - 1] = FILLER_CHAR;
 }
 
-static void add_file_name_at_string(char *string_to_fill, const char *nom, unsigned start, unsigned len_name)
+static void add_file_name_at_string(char *string_to_fill, const char *name, unsigned start, unsigned len_name)
 {
-    if (strcmp(nom, "") == 0)
+    if (strcmp(name, "") == 0)
     {
         string_to_fill[start] = ROOT_CHAR;
     }
     else
     {
-        memmove(string_to_fill + start, nom, len_name);
+        memmove(string_to_fill + start, name, len_name);
     }
 }
 
-static void add_file_type_at_string(char *string_to_fill, unsigned start, bool est_dossier)
+static void add_file_type_at_string(char *string_to_fill, unsigned start, bool is_directory)
 {
     string_to_fill[start] = START_CONTOUR_CHAR;
 
-    if (est_dossier)
+    if (is_directory)
     {
         string_to_fill[start + 1] = DIRECTORY_TYPE_CHAR;
     }

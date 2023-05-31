@@ -44,7 +44,7 @@ static void test_touch_empty(test_info *info)
     out_stream_path = "src/resources/unit_tests/output/test_touch_empty.txt";
     out_stream = open_file(out_stream_path, "w");
 
-    current_node = create_root_noeud();
+    current_node = create_root_node();
 
     char **args = malloc(sizeof(char *));
     args[0] = "";
@@ -66,7 +66,7 @@ static void test_touch_invalid_name(test_info *info)
     out_stream_path = "src/resources/unit_tests/output/test_touch_invalid_name.txt";
     out_stream = open_file(out_stream_path, "w");
 
-    current_node = create_root_noeud();
+    current_node = create_root_node();
 
     invalid_name_format_test_handler("te|st", info);
     invalid_name_format_test_handler("te\\st", info);
@@ -101,7 +101,7 @@ static void test_touch_valid_name(test_info *info)
 {
     print_test_name("Testing touch with valid name");
 
-    current_node = create_root_noeud();
+    current_node = create_root_node();
     execute_test(info, "src/resources/unit_tests/input/test_touch_valid_path.txt",
                  "src/resources/unit_tests/output/test_touch_valid_path.txt");
     destroy_tree();
@@ -111,7 +111,7 @@ static void test_touch_already_exists(test_info *info)
 {
     print_test_name("Testing touch with already existing name");
 
-    current_node = create_root_noeud();
+    current_node = create_root_node();
     execute_test(info, "src/resources/unit_tests/input/test_touch_already_exists.txt",
                  "src/resources/unit_tests/output/test_touch_already_exists.txt");
     destroy_tree();
@@ -120,7 +120,7 @@ static void test_touch_already_exists(test_info *info)
 static void test_touch_long_path(test_info *info)
 {
     print_test_name("Testing touch with long paths");
-    current_node = create_root_noeud();
+    current_node = create_root_node();
 
     execute_test(info, "src/resources/unit_tests/input/test_touch_long_path.txt",
                  "src/resources/unit_tests/output/test_touch_long_path.txt");
@@ -137,6 +137,6 @@ static void execute_test(test_info *info, char *input, char *output)
 
     handle_int_test(SUCCESS, result, __LINE__, __FILE__, info);
 
-    current_node = current_node->racine;
+    current_node = current_node->root;
     close_file(out_stream, out_stream_path);
 }

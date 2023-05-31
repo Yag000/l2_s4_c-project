@@ -16,34 +16,34 @@ int mkdir(const command *cmd)
         return INVALID_NUMBER_OF_ARGS;
     }
 
-    noeud *new_node = search_node_in_tree_with_node_creation(current_node, cmd->args[0], true);
+    node *new_node = search_node_in_tree_with_node_creation(current_node, cmd->args[0], true);
 
     if (new_node == NULL)
     {
         write_result_command("Invalid path of directory.");
         return INVALID_PATH;
     }
-    if (!is_valid_name_node(new_node->nom))
+    if (!is_valid_name_node(new_node->name))
     {
         write_result_command(
             "Invalid name : the name of an element can neither be empty nor contain special characters.");
-        destroy_noeud(new_node);
+        destroy_node(new_node);
         return INVALID_NAME;
     }
 
-    int append_error_value = append_a_fils_to_noeud(new_node->pere, new_node);
+    int append_error_value = append_child_to_node(new_node->parent, new_node);
 
     if (append_error_value == INVALID_NAME)
     {
         write_result_command("Invalid name : an element with the same name already exists.");
-        destroy_noeud(new_node);
+        destroy_node(new_node);
         return INVALID_NAME;
     }
 
     if (append_error_value != SUCCESS)
     {
         write_result_command("Error while creating directory.");
-        destroy_noeud(new_node);
+        destroy_node(new_node);
         return FATAL_ERROR;
     }
 

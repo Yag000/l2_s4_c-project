@@ -10,9 +10,9 @@
 #include "test_core.h"
 
 static void test_ls_function(test_info *);
-static noeud *create_tree_and_test_ls_without_path_while(test_info *);
-static void test_ls_with_path(test_info *, noeud *);
-static void test_ls_error_with_path(test_info *, noeud *);
+static node *create_tree_and_test_ls_without_path_while(test_info *);
+static void test_ls_with_path(test_info *, node *);
+static void test_ls_error_with_path(test_info *, node *);
 static void test_invalid_number_of_arg_of_ls(test_info *);
 
 test_info *test_ls()
@@ -21,10 +21,10 @@ test_info *test_ls()
     print_test_header("ls");
     clock_t before = clock();
     test_info *info = create_test_info();
- 
+
     // Add tests here
     test_ls_function(info);
-    
+
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("ls", info);
@@ -35,13 +35,13 @@ static void test_ls_function(test_info *info)
 {
     print_test_name("Testing command ls");
 
-    noeud *root = create_tree_and_test_ls_without_path_while(info);
+    node *root = create_tree_and_test_ls_without_path_while(info);
 
     test_ls_with_path(info, root);
     test_ls_error_with_path(info, root);
     test_invalid_number_of_arg_of_ls(info);
 
-    destroy_noeud(root);
+    destroy_node(root);
 
     out_stream = stdout;
     out_stream_path = NULL;
@@ -49,7 +49,7 @@ static void test_ls_function(test_info *info)
     current_node = NULL;
 }
 
-static noeud *create_tree_and_test_ls_without_path_while(test_info *info)
+static node *create_tree_and_test_ls_without_path_while(test_info *info)
 {
     print_test_name("Testing command ls without path ");
 
@@ -60,40 +60,40 @@ static noeud *create_tree_and_test_ls_without_path_while(test_info *info)
     assert(tab_command != NULL);
     command *cmd = create_command(get_alloc_pointer_of_string("ls"), 0, tab_command);
 
-    noeud *root = create_root_noeud();
+    node *root = create_root_node();
     current_node = root;
 
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    noeud *node1 = create_noeud(true, "test", root);
-    append_a_fils_to_noeud(root, node1);
+    node *node1 = create_node(true, "test", root);
+    append_child_to_node(root, node1);
 
     current_node = node1;
 
-    append_a_fils_to_noeud(node1, create_noeud(false, "test2", node1));
+    append_child_to_node(node1, create_node(false, "test2", node1));
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    append_a_fils_to_noeud(node1, create_noeud(true, "test3", node1));
+    append_child_to_node(node1, create_node(true, "test3", node1));
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    append_a_fils_to_noeud(node1, create_noeud(false, "test4", node1));
+    append_child_to_node(node1, create_node(false, "test4", node1));
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    noeud *node2 = create_noeud(true, "test5", node1);
-    append_a_fils_to_noeud(node1, node2);
-    append_a_fils_to_noeud(node2, create_noeud(false, "test6", node2));
-    append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
-    append_a_fils_to_noeud(node2, create_noeud(false, "test8", node2));
+    node *node2 = create_node(true, "test5", node1);
+    append_child_to_node(node1, node2);
+    append_child_to_node(node2, create_node(false, "test6", node2));
+    append_child_to_node(node2, create_node(true, "test7", node2));
+    append_child_to_node(node2, create_node(false, "test8", node2));
 
     current_node = node2;
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    append_a_fils_to_noeud(root, create_noeud(false, "test9", root));
-    append_a_fils_to_noeud(root, create_noeud(true, "test10", root));
+    append_child_to_node(root, create_node(false, "test9", root));
+    append_child_to_node(root, create_node(true, "test10", root));
 
-    node1 = create_noeud(true, "test11", root);
-    append_a_fils_to_noeud(root, node1);
-    append_a_fils_to_noeud(node1, create_noeud(false, "test12", node1));
+    node1 = create_node(true, "test11", root);
+    append_child_to_node(root, node1);
+    append_child_to_node(node1, create_node(false, "test12", node1));
 
     current_node = root;
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
@@ -108,7 +108,7 @@ static noeud *create_tree_and_test_ls_without_path_while(test_info *info)
     return root;
 }
 
-static void test_ls_with_path(test_info *info, noeud *root)
+static void test_ls_with_path(test_info *info, node *root)
 {
     print_test_name("Testing command ls with path ");
 
@@ -143,7 +143,7 @@ static void test_ls_with_path(test_info *info, noeud *root)
     close_file(out_stream, out_stream_path);
 }
 
-static void test_ls_error_with_path(test_info *info, noeud *root)
+static void test_ls_error_with_path(test_info *info, node *root)
 {
     print_test_name("Testing command ls errors with path ");
 

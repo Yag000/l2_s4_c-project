@@ -13,13 +13,13 @@ int cd(const command *cmd)
 
     if (cmd->args_number == 0)
     {
-        current_node = current_node->racine;
+        current_node = current_node->root;
         return SUCCESS;
     }
 
-    noeud *tmp = search_node_in_tree(current_node, cmd->args[0]);
+    node *tmp = search_node_in_tree(current_node, cmd->args[0]);
 
-    if (tmp == NULL || !tmp->est_dossier)
+    if (tmp == NULL || !tmp->is_directory)
     {
         write_result_command("No such file or directory.");
         return INVALID_PATH;

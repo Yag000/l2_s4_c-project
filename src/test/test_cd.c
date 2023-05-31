@@ -69,7 +69,7 @@ static void test_error_codes(test_info *info)
     free(cmd);
     free(args);
 
-    current_node = current_node->racine;
+    current_node = current_node->root;
     close_file(out_stream, out_stream_path);
 }
 
@@ -94,8 +94,8 @@ static void test_go_to_root(test_info *info)
     out_stream_path = "src/resources/unit_tests/output/test_cd_go_to_root.txt";
     out_stream = open_file(out_stream_path, "w");
 
-    current_node = current_node->racine;
-    current_node = get_a_fils_of_noeud(current_node, "test");
+    current_node = current_node->root;
+    current_node = get_a_child_of_node(current_node, "test");
     command *cmd = create_command("cd", 0, NULL);
     print(cmd);
     handle_int_test(SUCCESS, cd(cmd), __LINE__, __FILE__, info);
@@ -128,6 +128,6 @@ static void execute_test(test_info *info, char *input, char *output)
 
     handle_int_test(SUCCESS, result, __LINE__, __FILE__, info);
 
-    current_node = current_node->racine;
+    current_node = current_node->root;
     close_file(out_stream, out_stream_path);
 }

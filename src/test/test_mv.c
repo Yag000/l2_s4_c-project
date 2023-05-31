@@ -182,7 +182,7 @@ static void test_error_of_mv(test_info *info)
 
     handle_boolean_test(true, execute_command(cmd) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
-    current_node = current_node->racine;
+    current_node = current_node->root;
 
     tab_command[0] = "/test/test5";
     tab_command[1] = "/test/test5";

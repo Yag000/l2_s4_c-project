@@ -8,7 +8,7 @@
 #include "parser.h"
 #include "tree_dir_core.h"
 
-noeud *current_node;
+node *current_node;
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     out_stream = stdout;
     out_stream_path = NULL;
 
-    // Hnadle 0 arguments
+    // Handle 0 arguments
     if (argc <= 1)
     {
         perror("No argument was given");
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
     initialize_flags(argc, argv);
 
-    current_node = create_root_noeud();
+    current_node = create_root_node();
 
     int error_code = parse_file(argv[1]);
 

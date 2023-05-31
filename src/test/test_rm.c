@@ -22,6 +22,7 @@ test_info *test_rm()
 
     // Add tests here
     test_rm_function(info);
+
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("rm", info);
@@ -103,7 +104,7 @@ static void test_command_rm_with_tree(test_info *info)
     handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
     execute_command(cmd_print);
 
-    current_node = current_node->racine;
+    current_node = current_node->root;
 
     tab_command[0] = get_alloc_pointer_of_string("test");
     handle_boolean_test(true, execute_command(cmd_rm) == SUCCESS, __LINE__, __FILE__, info);
@@ -176,7 +177,7 @@ static void test_error_of_rm(test_info *info)
     handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
-    destroy_noeud(current_node->racine);
+    destroy_node(current_node->root);
 
     close_file(out_stream, out_stream_path);
 }
