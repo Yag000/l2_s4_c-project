@@ -1,10 +1,10 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#include "file_manager.h"
 #include "constants.h"
+#include "file_manager.h"
 
 static void print_error_message(const char *, const char *);
 
@@ -51,5 +51,5 @@ static void print_error_message(const char *error_message, const char *path)
         return;
     }
 
-    fprintf(out_stream,"%s %s\n", error_message, path);
+    fprintf(out_stream, "%s %s\n", error_message, path);
 }

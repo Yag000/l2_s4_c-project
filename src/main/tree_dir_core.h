@@ -3,57 +3,57 @@
 
 #include <stdbool.h>
 
-#define MAX_LENGTH_NOM 100
+#define MAX_LENGTH_NAME 100
 
-typedef struct noeud
+typedef struct node
 {
-    bool est_dossier;
-    char nom[MAX_LENGTH_NOM];
-    struct noeud *pere;
-    struct noeud *racine;
-    struct liste_noeud *fils;
-} noeud;
+    bool is_directory;
+    char name[MAX_LENGTH_NAME];
+    struct node *parent;
+    struct node *root;
+    struct list_node *children;
+} node;
 
-typedef struct liste_noeud
+typedef struct list_node
 {
-    struct noeud *no;
-    struct liste_noeud *succ;
-} liste_noeud;
+    struct node *no;
+    struct list_node *succ;
+} list_node;
 
-extern noeud *current_node;
+extern node *current_node;
 
-noeud *create_noeud(bool, const char *, noeud *);
-noeud *create_noeud_with_fils(bool, const char *, noeud *, liste_noeud *);
+node *create_node(bool, const char *, node *);
+node *create_node_with_children(bool, const char *, node *, list_node *);
 bool is_valid_name_node(const char *);
-noeud *create_root_noeud();
-void destroy_noeud(noeud *);
-bool are_noeuds_equal(const noeud *, const noeud *);
-bool is_root_node(const noeud *);
-bool is_fils_of_noeud_empty(const noeud *);
-bool contains_noeud(noeud *, noeud *);
-unsigned get_number_of_fils(noeud *);
-noeud *get_a_fils_of_noeud(noeud *, const char *);
-int append_a_fils_to_noeud(noeud *, noeud *);
-int remove_a_node_from_fils(noeud *, noeud *);
-int remove_a_fils_of_noeud(noeud *, const char *);
+node *create_root_node();
+void destroy_node(node *);
+bool are_nodes_equal(const node *, const node *);
+bool is_root_node(const node *);
+bool is_children_of_node_empty(const node *);
+bool contains_node(node *, node *);
+unsigned get_number_of_children(node *);
+node *get_a_child_of_node(node *, const char *);
+int append_child_to_node(node *, node *);
+int remove_a_child_from_children(node *, node *);
+int remove_a_child_of_node(node *, const char *);
 
-liste_noeud *create_liste_noeud(noeud *);
-void destroy_liste_noeud(liste_noeud *);
-bool contains_liste_noeud(liste_noeud *, noeud *);
-unsigned size_liste_noeud(liste_noeud *);
-noeud *get_a_noeud_in_liste_noeud(liste_noeud *, const char *);
-int append_liste_noeud(liste_noeud *, noeud *);
-liste_noeud *remove_liste_noeud(liste_noeud *, noeud *);
+list_node *create_list_node(node *);
+void destroy_list_node(list_node *);
+bool contains_list_node(list_node *, node *);
+unsigned size_list_node(list_node *);
+node *get_a_node_in_list_node(list_node *, const char *);
+int append_list_node(list_node *, node *);
+list_node *remove_list_node(list_node *, node *);
 
-noeud *search_node_in_tree(noeud *, char *);
-bool is_noeud_inside(const noeud *, const noeud *);
+node *search_node_in_tree(node *, char *);
+bool is_node_inside(const node *, const node *);
 void destroy_tree();
 
-unsigned get_longest_name_length_of_node_fils(const noeud *);
-char *get_absolute_path_of_node(const noeud *);
-noeud *search_node_in_tree(noeud *, char *);
-noeud *search_node_in_tree_with_node_creation(noeud *, char *, bool);
+unsigned get_longest_name_length_of_node_children(const node *);
+char *get_absolute_path_of_node(const node *);
+node *search_node_in_tree(node *, char *);
+node *search_node_in_tree_with_node_creation(node *, char *, bool);
 
-void move_fils_of_node_to_new_node(noeud *, noeud *);
+void move_children_of_node_to_new_node(node *, node *);
 
 #endif

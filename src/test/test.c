@@ -7,7 +7,7 @@
 #include "test_core.h"
 
 bool debug;
-noeud *current_node;
+node *current_node;
 
 static void update_test_info(test_info *, test_info *);
 
@@ -33,7 +33,6 @@ int main(int argc, char *argv[])
     interactive = false;
 
     // Add tests here
-
     update_test_info(info, test_string_utils());
     update_test_info(info, test_tree_dir_core());
     update_test_info(info, test_parser());
@@ -49,7 +48,6 @@ int main(int argc, char *argv[])
     update_test_info(info, test_mv());
 
     // End of tests
-
     clock_t end = clock();
     info->time = clock_ticks_to_seconds(end - before);
     bool success = info->passed == info->total;

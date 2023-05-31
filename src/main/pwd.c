@@ -1,9 +1,9 @@
-#include <stdlib.h>
 #include <assert.h>
+#include <stdlib.h>
 
-#include "tree_dir_core.h"
 #include "command.h"
 #include "constants.h"
+#include "tree_dir_core.h"
 
 /*
 Adds to the output the absolute path of the current node.

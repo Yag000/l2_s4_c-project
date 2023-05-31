@@ -1,25 +1,16 @@
 #include <assert.h>
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "test_core.h"
 #include "../main/tree_dir_core.h"
+#include "test_core.h"
 
-static void print_green()
-{
-    printf("\033[0;32m");
-}
+static void print_green() { printf("\033[0;32m"); }
 
-static void print_red()
-{
-    printf("\033[0;31m");
-}
+static void print_red() { printf("\033[0;31m"); }
 
-static void print_no_color()
-{
-    printf("\033[0m");
-}
+static void print_no_color() { printf("\033[0m"); }
 
 /*
 Creates a new test_info.
@@ -39,10 +30,7 @@ test_info *create_test_info()
 /*
 Destroys the test_info .
 */
-void destroy_test_info(test_info *info)
-{
-    free(info);
-}
+void destroy_test_info(test_info *info) { free(info); }
 
 /*
 Prints the test info.
@@ -57,14 +45,12 @@ void print_test_info(const test_info *info)
     {
         print_green();
     }
-    printf("passed: %d, failed: %d, total: %d, time: %f seconds\n", info->passed, info->failed, info->total, info->time);
+    printf("passed: %d, failed: %d, total: %d, time: %f seconds\n", info->passed, info->failed, info->total,
+           info->time);
     print_no_color();
 }
 
-double clock_ticks_to_seconds(clock_t ticks)
-{
-    return (double)ticks / CLOCKS_PER_SEC;
-}
+double clock_ticks_to_seconds(clock_t ticks) { return (double)ticks / CLOCKS_PER_SEC; }
 
 void print_test_header(const char *name)
 {
@@ -157,34 +143,34 @@ void handle_int_test(int expected, int actual, int line, const char *file, test_
     info->passed++;
 }
 
-noeud *create_basic_testing_tree()
+node *create_basic_testing_tree()
 {
-    noeud *root = create_root_noeud();
+    node *root = create_root_node();
 
-    noeud *node1 = create_noeud(true, "test", root);
-    append_a_fils_to_noeud(root, node1);
+    node *node1 = create_node(true, "test", root);
+    append_child_to_node(root, node1);
 
-    append_a_fils_to_noeud(node1, create_noeud(false, "test2", node1));
-    append_a_fils_to_noeud(node1, create_noeud(true, "test3", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test4", node1));
+    append_child_to_node(node1, create_node(false, "test2", node1));
+    append_child_to_node(node1, create_node(true, "test3", node1));
+    append_child_to_node(node1, create_node(false, "test4", node1));
 
-    noeud *node2 = create_noeud(true, "test5", node1);
-    append_a_fils_to_noeud(node1, node2);
+    node *node2 = create_node(true, "test5", node1);
+    append_child_to_node(node1, node2);
 
-    append_a_fils_to_noeud(node2, create_noeud(false, "test6", node2));
-    append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
-    append_a_fils_to_noeud(node2, create_noeud(false, "test8", node2));
+    append_child_to_node(node2, create_node(false, "test6", node2));
+    append_child_to_node(node2, create_node(true, "test7", node2));
+    append_child_to_node(node2, create_node(false, "test8", node2));
 
-    append_a_fils_to_noeud(node1, create_noeud(false, "test9", node2));
-    append_a_fils_to_noeud(root, create_noeud(false, "test10", root));
-    append_a_fils_to_noeud(root, create_noeud(true, "test11", root));
+    append_child_to_node(node1, create_node(false, "test9", node2));
+    append_child_to_node(root, create_node(false, "test10", root));
+    append_child_to_node(root, create_node(true, "test11", root));
 
-    node1 = create_noeud(true, "test12", root);
+    node1 = create_node(true, "test12", root);
 
-    append_a_fils_to_noeud(root, node1);
-    append_a_fils_to_noeud(node1, create_noeud(false, "test13", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test14", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test15", node1));
+    append_child_to_node(root, node1);
+    append_child_to_node(node1, create_node(false, "test13", node1));
+    append_child_to_node(node1, create_node(false, "test14", node1));
+    append_child_to_node(node1, create_node(false, "test15", node1));
 
     return root;
 }

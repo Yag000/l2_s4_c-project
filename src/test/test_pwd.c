@@ -38,38 +38,38 @@ static void test_pwd_function(test_info *info)
     assert(tab_command != NULL);
     command *c = create_command(get_alloc_pointer_of_string("pwd"), 0, tab_command);
 
-    noeud *root = create_root_noeud();
+    node *root = create_root_node();
     current_node = root;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    noeud *node = create_noeud(true, "test", root);
-    append_a_fils_to_noeud(root, node);
-    current_node = node;
+    node *node1 = create_node(true, "test", root);
+    append_child_to_node(root, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    node = create_noeud(true, "test2", current_node);
-    append_a_fils_to_noeud(current_node, node);
-    current_node = node;
+    node1 = create_node(true, "test2", current_node);
+    append_child_to_node(current_node, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    node = create_noeud(true, "test3", current_node);
-    append_a_fils_to_noeud(current_node, node);
-    current_node = node;
+    node1 = create_node(true, "test3", current_node);
+    append_child_to_node(current_node, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    node = create_noeud(true, "test4", current_node);
-    append_a_fils_to_noeud(current_node, node);
-    current_node = node;
+    node1 = create_node(true, "test4", current_node);
+    append_child_to_node(current_node, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    node = create_noeud(true, "test5", root);
-    append_a_fils_to_noeud(root, node);
-    current_node = node;
+    node1 = create_node(true, "test5", root);
+    append_child_to_node(root, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
@@ -90,7 +90,7 @@ static void test_pwd_function(test_info *info)
     handle_boolean_test(true, execute_command(c) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
     destroy_command(c);
 
-    destroy_noeud(root);
+    destroy_node(root);
 
     close_file(out_stream, out_stream_path);
 

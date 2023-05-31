@@ -81,11 +81,10 @@ static flags *parse_flags(int argc, char *argv[])
             continue;
         }
 
-        fprintf (out_stream, "Unknown flag: %s", argv[i]);
+        fprintf(out_stream, "Unknown flag: %s", argv[i]);
         free(flag);
         exit(EXIT_FAILURE);
- 
-        }
+    }
     return flag;
 }
 

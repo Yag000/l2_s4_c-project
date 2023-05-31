@@ -22,6 +22,7 @@ test_info *test_cp()
 
     // Add tests here
     test_cp_function(info);
+
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("cp", info);
