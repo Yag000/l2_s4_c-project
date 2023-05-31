@@ -27,7 +27,8 @@ int touch(const command *cmd)
 
     if (!is_valid_name_node(new_node->name))
     {
-        write_result_command("Invalid name : the name of an element can neither be empty nor contain special characters.");
+        write_result_command(
+            "Invalid name : the name of an element can neither be empty nor contain special characters.");
         destroy_node(new_node);
         return INVALID_NAME;
     }

@@ -22,6 +22,7 @@ test_info *test_rm()
 
     // Add tests here
     test_rm_function(info);
+
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("rm", info);

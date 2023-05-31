@@ -21,10 +21,10 @@ test_info *test_ls()
     print_test_header("ls");
     clock_t before = clock();
     test_info *info = create_test_info();
- 
+
     // Add tests here
     test_ls_function(info);
-    
+
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("ls", info);

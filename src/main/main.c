@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     out_stream = stdout;
     out_stream_path = NULL;
 
-    // Hnadle 0 arguments
+    // Handle 0 arguments
     if (argc <= 1)
     {
         perror("No argument was given");

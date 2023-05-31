@@ -1,25 +1,16 @@
 #include <assert.h>
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "test_core.h"
 #include "../main/tree_dir_core.h"
+#include "test_core.h"
 
-static void print_green()
-{
-    printf("\033[0;32m");
-}
+static void print_green() { printf("\033[0;32m"); }
 
-static void print_red()
-{
-    printf("\033[0;31m");
-}
+static void print_red() { printf("\033[0;31m"); }
 
-static void print_no_color()
-{
-    printf("\033[0m");
-}
+static void print_no_color() { printf("\033[0m"); }
 
 /*
 Creates a new test_info.
@@ -39,10 +30,7 @@ test_info *create_test_info()
 /*
 Destroys the test_info .
 */
-void destroy_test_info(test_info *info)
-{
-    free(info);
-}
+void destroy_test_info(test_info *info) { free(info); }
 
 /*
 Prints the test info.
@@ -57,14 +45,12 @@ void print_test_info(const test_info *info)
     {
         print_green();
     }
-    printf("passed: %d, failed: %d, total: %d, time: %f seconds\n", info->passed, info->failed, info->total, info->time);
+    printf("passed: %d, failed: %d, total: %d, time: %f seconds\n", info->passed, info->failed, info->total,
+           info->time);
     print_no_color();
 }
 
-double clock_ticks_to_seconds(clock_t ticks)
-{
-    return (double)ticks / CLOCKS_PER_SEC;
-}
+double clock_ticks_to_seconds(clock_t ticks) { return (double)ticks / CLOCKS_PER_SEC; }
 
 void print_test_header(const char *name)
 {

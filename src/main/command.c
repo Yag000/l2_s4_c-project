@@ -55,12 +55,12 @@ static void print_command(const command *cmd)
 }
 
 /*
-Prints the coimmand header. The command header is the current node path followed by a $.
+Prints the command header. The command header is the current node path followed by a $.
 */
 void print_command_header() { print_command_header_with_stream(out_stream); }
 
 /*
-Prints the coimmand header. The command header is the current node path followed by a $.
+Prints the command header. The command header is the current node path followed by a $.
 It will print the header in the given stream.
 */
 void print_command_header_with_stream(FILE *stream)

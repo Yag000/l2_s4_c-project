@@ -22,7 +22,7 @@ test_info *test_print()
 
     // Add tests here
     test_print_function(info);
- 
+
     // End of tests
     info->time = clock_ticks_to_seconds(clock() - before);
     print_test_footer("print", info);
