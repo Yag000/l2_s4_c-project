@@ -1,12 +1,12 @@
+#include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
 #include "command.h"
+#include "constants.h"
 #include "string_utils.h"
 #include "tree_dir_core.h"
-#include "constants.h"
 
 #define FILLER_SIZE 4
 #define ROOT_CHAR '/'
@@ -41,9 +41,9 @@ int print(const command *cmd)
     return SUCCESS;
 }
 
-static void print_with_depth(noeud *node, unsigned depth, bool is_last)
+static void print_with_depth(noeud *node1, unsigned depth, bool is_last)
 {
-    char *line = get_a_print_line(node->nom, node->est_dossier, depth, is_last);
+    char *line = get_a_print_line(node1->nom, node1->est_dossier, depth, is_last);
 
     write_result_command(line);
     if (last_line != NULL)
@@ -52,11 +52,11 @@ static void print_with_depth(noeud *node, unsigned depth, bool is_last)
     }
     last_line = line;
 
-    if (!node->est_dossier)
+    if (!node1->est_dossier)
     {
         return;
     }
-    for (liste_noeud *lst = node->fils; lst != NULL; lst = lst->succ)
+    for (liste_noeud *lst = node1->fils; lst != NULL; lst = lst->succ)
     {
         if (lst->succ == NULL)
         {

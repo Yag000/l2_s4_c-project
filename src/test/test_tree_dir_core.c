@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../main/tree_dir_core.h"
 #include "../main/constants.h"
+#include "../main/tree_dir_core.h"
 #include "test_core.h"
 
 static void test_create_noeud(test_info *);
@@ -56,15 +56,15 @@ static void test_create_noeud(test_info *info)
     handle_boolean_test(true, are_noeuds_equal(pere, pere->racine), __LINE__, __FILE__, info);
     handle_boolean_test(true, pere->est_dossier, __LINE__, __FILE__, info);
 
-    noeud *node = create_noeud(false, "test", pere);
+    noeud *node1 = create_noeud(false, "test", pere);
 
-    handle_boolean_test(false, node->est_dossier, __LINE__, __FILE__, info);
-    handle_string_test("test", node->nom, __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(pere, node->pere), __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(pere->racine, node->racine), __LINE__, __FILE__, info);
-    handle_boolean_test(true, node->fils == NULL, __LINE__, __FILE__, info);
+    handle_boolean_test(false, node1->est_dossier, __LINE__, __FILE__, info);
+    handle_string_test("test", node1->nom, __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(pere, node1->pere), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(pere->racine, node1->racine), __LINE__, __FILE__, info);
+    handle_boolean_test(true, node1->fils == NULL, __LINE__, __FILE__, info);
 
-    liste_noeud *node_list = create_liste_noeud(node);
+    liste_noeud *node_list = create_liste_noeud(node1);
     noeud *node2 = create_noeud_with_fils(true, "test2", pere, node_list);
 
     handle_boolean_test(true, node2->est_dossier, __LINE__, __FILE__, info);
@@ -74,7 +74,7 @@ static void test_create_noeud(test_info *info)
 
     if (node2->fils != NULL)
     {
-        handle_boolean_test(true, are_noeuds_equal(node2->fils->no, node), __LINE__, __FILE__, info);
+        handle_boolean_test(true, are_noeuds_equal(node2->fils->no, node1), __LINE__, __FILE__, info);
     }
 
     destroy_noeud(node2);
@@ -112,14 +112,14 @@ static void test_are_noeud_equal(test_info *info)
     handle_boolean_test(true, are_noeuds_equal(root_node1, root_node1), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_noeuds_equal(root_node2, root_node2), __LINE__, __FILE__, info);
 
-    noeud *node = create_noeud(false, "test", root_node1);
-    append_a_fils_to_noeud(root_node1, node);
-    handle_boolean_test(true, are_noeuds_equal(node, node), __LINE__, __FILE__, info);
+    noeud *node1 = create_noeud(false, "test", root_node1);
+    append_a_fils_to_noeud(root_node1, node1);
+    handle_boolean_test(true, are_noeuds_equal(node1, node1), __LINE__, __FILE__, info);
 
     noeud *node2 = create_noeud(false, "test", root_node2);
     append_a_fils_to_noeud(root_node2, node2);
     handle_boolean_test(true, are_noeuds_equal(node2, node2), __LINE__, __FILE__, info);
-    handle_boolean_test(false, are_noeuds_equal(node, node2), __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(node1, node2), __LINE__, __FILE__, info);
 
     destroy_noeud(root_node1);
     destroy_noeud(root_node2);
@@ -132,13 +132,13 @@ static void test_is_root_node(test_info *info)
     noeud *root_node = create_root_noeud();
     handle_boolean_test(true, is_root_node(root_node), __LINE__, __FILE__, info);
 
-    noeud *node = create_noeud(true, "test", root_node);
-    append_a_fils_to_noeud(root_node, node);
-    handle_boolean_test(false, is_root_node(node), __LINE__, __FILE__, info);
+    noeud *node1 = create_noeud(true, "test", root_node);
+    append_a_fils_to_noeud(root_node, node1);
+    handle_boolean_test(false, is_root_node(node1), __LINE__, __FILE__, info);
 
-    node->pere = node;
-    node->racine = node;
-    handle_boolean_test(false, is_root_node(node), __LINE__, __FILE__, info);
+    node1->pere = node1;
+    node1->racine = node1;
+    handle_boolean_test(false, is_root_node(node1), __LINE__, __FILE__, info);
 
     destroy_noeud(root_node);
 }
@@ -150,9 +150,9 @@ static void test_is_fils_of_node_empty(test_info *info)
     noeud *root = create_root_noeud();
 
     handle_boolean_test(true, is_fils_of_noeud_empty(root), __LINE__, __FILE__, info);
-    noeud *node = create_noeud(false, "test", root);
+    noeud *node1 = create_noeud(false, "test", root);
 
-    append_a_fils_to_noeud(root, node);
+    append_a_fils_to_noeud(root, node1);
     handle_boolean_test(false, is_fils_of_noeud_empty(root), __LINE__, __FILE__, info);
 
     destroy_noeud(root);
@@ -164,9 +164,9 @@ static void test_create_liste_noeud(test_info *info)
 
     noeud *root_node = create_root_noeud();
 
-    noeud *node = create_noeud(false, "test1", root_node);
+    noeud *node1 = create_noeud(false, "test1", root_node);
 
-    root_node->fils = create_liste_noeud(node);
+    root_node->fils = create_liste_noeud(node1);
     handle_string_test("test1", root_node->fils->no->nom, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->fils->succ == NULL, __LINE__, __FILE__, info);
 
@@ -186,20 +186,20 @@ static void test_contains(test_info *info)
 
     noeud *root_node = create_root_noeud();
 
-    noeud *node = create_noeud(true, "test", root_node);
-    handle_boolean_test(false, contains_liste_noeud(root_node->fils, node), __LINE__, __FILE__, info);
-    append_a_fils_to_noeud(root_node, node);
-    handle_boolean_test(true, contains_liste_noeud(root_node->fils, node), __LINE__, __FILE__, info);
+    noeud *node1 = create_noeud(true, "test", root_node);
+    handle_boolean_test(false, contains_liste_noeud(root_node->fils, node1), __LINE__, __FILE__, info);
+    append_a_fils_to_noeud(root_node, node1);
+    handle_boolean_test(true, contains_liste_noeud(root_node->fils, node1), __LINE__, __FILE__, info);
 
     append_a_fils_to_noeud(root_node, create_noeud(false, "test2", root_node));
     append_a_fils_to_noeud(root_node, create_noeud(false, "test3", root_node));
-    node = create_noeud(false, "test4", root_node);
-    handle_boolean_test(false, contains_liste_noeud(root_node->fils, node), __LINE__, __FILE__, info);
+    node1 = create_noeud(false, "test4", root_node);
+    handle_boolean_test(false, contains_liste_noeud(root_node->fils, node1), __LINE__, __FILE__, info);
 
-    append_a_fils_to_noeud(root_node, node);
-    handle_boolean_test(true, contains_liste_noeud(root_node->fils, node), __LINE__, __FILE__, info);
+    append_a_fils_to_noeud(root_node, node1);
+    handle_boolean_test(true, contains_liste_noeud(root_node->fils, node1), __LINE__, __FILE__, info);
     append_a_fils_to_noeud(root_node, create_noeud(false, "test5", root_node));
-    handle_boolean_test(true, contains_liste_noeud(root_node->fils, node), __LINE__, __FILE__, info);
+    handle_boolean_test(true, contains_liste_noeud(root_node->fils, node1), __LINE__, __FILE__, info);
 
     destroy_noeud(root_node);
 }
@@ -211,27 +211,28 @@ static void test_get(test_info *info)
 
     noeud *root_node = create_root_noeud();
 
-    noeud *node = create_noeud(false, "test", root_node);
-    append_a_fils_to_noeud(root_node, node);
-    handle_boolean_test(true, are_noeuds_equal(get_a_fils_of_noeud(root_node, "test"), node), __LINE__, __FILE__, info);
-
-    remove_a_node_from_fils(root_node, node);
-    handle_boolean_test(true, get_a_fils_of_noeud(root_node, "test") == NULL, __LINE__, __FILE__, info);
-
-    destroy_noeud(node);
-
-    node = create_noeud(false, "test3", root_node);
-    append_a_fils_to_noeud(root_node, create_noeud(false, "test1", root_node));
-    append_a_fils_to_noeud(root_node, create_noeud(false, "test2", root_node));
-    append_a_fils_to_noeud(root_node, node);
-    append_a_fils_to_noeud(root_node, create_noeud(false, "test4", root_node));
-    handle_boolean_test(true, are_noeuds_equal(get_a_fils_of_noeud(root_node, "test3"), node), __LINE__, __FILE__,
+    noeud *node1 = create_noeud(false, "test", root_node);
+    append_a_fils_to_noeud(root_node, node1);
+    handle_boolean_test(true, are_noeuds_equal(get_a_fils_of_noeud(root_node, "test"), node1), __LINE__, __FILE__,
                         info);
 
-    remove_a_node_from_fils(root_node, node);
+    remove_a_node_from_fils(root_node, node1);
+    handle_boolean_test(true, get_a_fils_of_noeud(root_node, "test") == NULL, __LINE__, __FILE__, info);
+
+    destroy_noeud(node1);
+
+    node1 = create_noeud(false, "test3", root_node);
+    append_a_fils_to_noeud(root_node, create_noeud(false, "test1", root_node));
+    append_a_fils_to_noeud(root_node, create_noeud(false, "test2", root_node));
+    append_a_fils_to_noeud(root_node, node1);
+    append_a_fils_to_noeud(root_node, create_noeud(false, "test4", root_node));
+    handle_boolean_test(true, are_noeuds_equal(get_a_fils_of_noeud(root_node, "test3"), node1), __LINE__, __FILE__,
+                        info);
+
+    remove_a_node_from_fils(root_node, node1);
     handle_boolean_test(true, get_a_fils_of_noeud(root_node, "test3") == NULL, __LINE__, __FILE__, info);
 
-    destroy_noeud(node);
+    destroy_noeud(node1);
     destroy_noeud(root_node);
 }
 
@@ -243,10 +244,10 @@ static void test_append(test_info *info)
     noeud *root_node = create_root_noeud();
     handle_boolean_test(true, root_node->fils == NULL, __LINE__, __FILE__, info);
 
-    noeud *node = create_noeud(false, "test", root_node);
-    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node) == SUCCESS, __LINE__, __FILE__, info);
+    noeud *node1 = create_noeud(false, "test", root_node);
+    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node1) == SUCCESS, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->fils != NULL, __LINE__, __FILE__, info);
-    handle_boolean_test(true, are_noeuds_equal(root_node->fils->no, node), __LINE__, __FILE__, info);
+    handle_boolean_test(true, are_noeuds_equal(root_node->fils->no, node1), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_noeuds_equal(root_node->fils->no->pere, root_node), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_noeuds_equal(root_node->fils->no->racine, root_node), __LINE__, __FILE__, info);
 
@@ -257,31 +258,32 @@ static void test_append(test_info *info)
     handle_boolean_test(true, are_noeuds_equal(node2->pere, root_node), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_noeuds_equal(node2->racine, root_node), __LINE__, __FILE__, info);
 
-    handle_boolean_test(true, append_a_fils_to_noeud(node, node2) == INVALID_SELECTION, __LINE__, __FILE__, info);
-    handle_boolean_test(true, append_a_fils_to_noeud(node2, node) == INVALID_SELECTION, __LINE__, __FILE__, info);
+    handle_boolean_test(true, append_a_fils_to_noeud(node1, node2) == INVALID_SELECTION, __LINE__, __FILE__, info);
+    handle_boolean_test(true, append_a_fils_to_noeud(node2, node1) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
     handle_boolean_test(true, append_a_fils_to_noeud(root_node, node2) == INVALID_NAME, __LINE__, __FILE__, info);
 
-    handle_boolean_test(true, append_a_fils_to_noeud(root_node, create_noeud(false, "test3", root_node)) == SUCCESS, __LINE__, __FILE__, info);
+    handle_boolean_test(true, append_a_fils_to_noeud(root_node, create_noeud(false, "test3", root_node)) == SUCCESS,
+                        __LINE__, __FILE__, info);
     handle_boolean_test(true, contains_liste_noeud(root_node->fils, node2), __LINE__, __FILE__, info);
 
     handle_boolean_test(true, size_liste_noeud(root_node->fils) == 3, __LINE__, __FILE__, info);
 
-    node = create_noeud(true, "test", root_node);
-    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node) == INVALID_NAME, __LINE__, __FILE__, info);
-    free(node);
+    node1 = create_noeud(true, "test", root_node);
+    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node1) == INVALID_NAME, __LINE__, __FILE__, info);
+    free(node1);
 
-    node = create_noeud(false, "test", root_node);
-    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node) == INVALID_NAME, __LINE__, __FILE__, info);
-    free(node);
+    node1 = create_noeud(false, "test", root_node);
+    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node1) == INVALID_NAME, __LINE__, __FILE__, info);
+    free(node1);
 
-    node = create_noeud(true, "test2", root_node);
-    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node) == INVALID_NAME, __LINE__, __FILE__, info);
-    free(node);
+    node1 = create_noeud(true, "test2", root_node);
+    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node1) == INVALID_NAME, __LINE__, __FILE__, info);
+    free(node1);
 
-    node = create_noeud(true, "test3", root_node);
-    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node) == INVALID_NAME, __LINE__, __FILE__, info);
-    free(node);
+    node1 = create_noeud(true, "test3", root_node);
+    handle_boolean_test(true, append_a_fils_to_noeud(root_node, node1) == INVALID_NAME, __LINE__, __FILE__, info);
+    free(node1);
     destroy_noeud(root_node);
 }
 
@@ -291,45 +293,46 @@ static void test_remove(test_info *info)
 
     noeud *root_node = create_root_noeud();
 
-    noeud *node = create_noeud(false, "test", root_node);
-    append_a_fils_to_noeud(root_node, node);
-    handle_boolean_test(true, are_noeuds_equal(root_node->fils->no, node), __LINE__, __FILE__, info);
+    noeud *node1 = create_noeud(false, "test", root_node);
+    append_a_fils_to_noeud(root_node, node1);
+    handle_boolean_test(true, are_noeuds_equal(root_node->fils->no, node1), __LINE__, __FILE__, info);
 
-    handle_boolean_test(true, remove_a_node_from_fils(root_node, node) == SUCCESS, __LINE__, __FILE__, info);
+    handle_boolean_test(true, remove_a_node_from_fils(root_node, node1) == SUCCESS, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->fils == NULL, __LINE__, __FILE__, info);
-    handle_boolean_test(false, remove_a_node_from_fils(root_node, node) == SUCCESS, __LINE__, __FILE__, info);
+    handle_boolean_test(false, remove_a_node_from_fils(root_node, node1) == SUCCESS, __LINE__, __FILE__, info);
 
-    destroy_noeud(node);
+    destroy_noeud(node1);
 
     append_a_fils_to_noeud(root_node, create_noeud(false, "test1", root_node));
     append_a_fils_to_noeud(root_node, create_noeud(false, "test2", root_node));
-    node = create_noeud(false, "test3", root_node);
-    append_a_fils_to_noeud(root_node, node);
+    node1 = create_noeud(false, "test3", root_node);
+    append_a_fils_to_noeud(root_node, node1);
     append_a_fils_to_noeud(root_node, create_noeud(false, "test4", root_node));
 
-    handle_boolean_test(true, contains_noeud(root_node, node), __LINE__, __FILE__, info);
-    handle_boolean_test(true, remove_a_node_from_fils(root_node, node) == SUCCESS, __LINE__, __FILE__, info);
-    handle_boolean_test(false, contains_noeud(root_node, node), __LINE__, __FILE__, info);
-    handle_boolean_test(true, remove_a_node_from_fils(root_node, node) == INVALID_SELECTION, __LINE__, __FILE__, info);
+    handle_boolean_test(true, contains_noeud(root_node, node1), __LINE__, __FILE__, info);
+    handle_boolean_test(true, remove_a_node_from_fils(root_node, node1) == SUCCESS, __LINE__, __FILE__, info);
+    handle_boolean_test(false, contains_noeud(root_node, node1), __LINE__, __FILE__, info);
+    handle_boolean_test(true, remove_a_node_from_fils(root_node, node1) == INVALID_SELECTION, __LINE__, __FILE__, info);
 
-    destroy_noeud(node);
+    destroy_noeud(node1);
     destroy_noeud(root_node);
 
     root_node = create_root_noeud();
-    node = create_noeud(false, "test", root_node);
-    append_a_fils_to_noeud(root_node, node);
+    node1 = create_noeud(false, "test", root_node);
+    append_a_fils_to_noeud(root_node, node1);
 
-    handle_boolean_test(true, remove_a_fils_of_noeud(root_node, node->nom) == SUCCESS, __LINE__, __FILE__, info);
+    handle_boolean_test(true, remove_a_fils_of_noeud(root_node, node1->nom) == SUCCESS, __LINE__, __FILE__, info);
     handle_boolean_test(true, root_node->fils == NULL, __LINE__, __FILE__, info);
-    handle_boolean_test(true, remove_a_fils_of_noeud(root_node, node->nom) == INVALID_SELECTION, __LINE__, __FILE__, info);
+    handle_boolean_test(true, remove_a_fils_of_noeud(root_node, node1->nom) == INVALID_SELECTION, __LINE__, __FILE__,
+                        info);
 
     destroy_noeud(root_node);
 
-    node = create_root_noeud();
-    liste_noeud *list = create_liste_noeud(node);
-    handle_boolean_test(true, remove_liste_noeud(list, node) == NULL, __LINE__, __FILE__, info);
+    node1 = create_root_noeud();
+    liste_noeud *list = create_liste_noeud(node1);
+    handle_boolean_test(true, remove_liste_noeud(list, node1) == NULL, __LINE__, __FILE__, info);
 
-    destroy_noeud(node);
+    destroy_noeud(node1);
 }
 
 static void test_get_absolute_path_of_node(test_info *info)
@@ -380,18 +383,18 @@ static void test_search_without_create(test_info *info)
     current_node = create_basic_testing_tree();
     char *absolute_path;
 
-    noeud *node = search_node_in_tree(current_node, "test/test2");
-    absolute_path = get_absolute_path_of_node(node);
+    noeud *node1 = search_node_in_tree(current_node, "test/test2");
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test/test2", absolute_path, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    node = search_node_in_tree(current_node, "test12/../test/../test12/././test13");
-    absolute_path = get_absolute_path_of_node(node);
+    node1 = search_node_in_tree(current_node, "test12/../test/../test12/././test13");
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test12/test13", absolute_path, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    node = search_node_in_tree(current_node, "test/.././../test/./.");
-    absolute_path = get_absolute_path_of_node(node);
+    node1 = search_node_in_tree(current_node, "test/.././../test/./.");
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test", absolute_path, __LINE__, __FILE__, info);
     free(absolute_path);
 
@@ -400,54 +403,54 @@ static void test_search_without_create(test_info *info)
     handle_string_test("/test/test5/test7", absolute_path, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    node = search_node_in_tree(current_node, "..");
-    absolute_path = get_absolute_path_of_node(node);
+    node1 = search_node_in_tree(current_node, "..");
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test/test5", absolute_path, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    node = search_node_in_tree(current_node, "../..");
-    absolute_path = get_absolute_path_of_node(node);
+    node1 = search_node_in_tree(current_node, "../..");
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test", absolute_path, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    node = search_node_in_tree(current_node, "/test12/test15");
-    absolute_path = get_absolute_path_of_node(node);
+    node1 = search_node_in_tree(current_node, "/test12/test15");
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test12/test15", absolute_path, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    node = search_node_in_tree(current_node, "/test");
-    absolute_path = get_absolute_path_of_node(node);
+    node1 = search_node_in_tree(current_node, "/test");
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test", absolute_path, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    node = search_node_in_tree(current_node, "/test/test5/.");
-    absolute_path = get_absolute_path_of_node(node);
+    node1 = search_node_in_tree(current_node, "/test/test5/.");
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test/test5", absolute_path, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    node = search_node_in_tree(current_node, "");
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree(current_node, "");
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree(current_node, "test");
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree(current_node, "test");
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree(current_node, ".../test5");
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree(current_node, ".../test5");
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree(current_node, "/test5");
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree(current_node, "/test5");
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree(current_node, "/test/test12");
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree(current_node, "/test/test12");
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree(current_node, "../test4/");
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree(current_node, "../test4/");
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree(current_node, "/test12/test13/");
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree(current_node, "/test12/test13/");
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree(current_node, "/test12/test13/..");
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree(current_node, "/test12/test13/..");
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
     destroy_tree();
 
@@ -460,66 +463,69 @@ static void test_search_with_create(test_info *info)
     current_node = create_basic_testing_tree();
     char *absolute_path;
 
-    noeud *node = search_node_in_tree_with_node_creation(current_node, "test/test2", false);
-    absolute_path = get_absolute_path_of_node(node);
+    noeud *node1 = search_node_in_tree_with_node_creation(current_node, "test/test2", false);
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test/test2", absolute_path, __LINE__, __FILE__, info);
-    handle_boolean_test(false, are_noeuds_equal(node, search_node_in_tree(current_node, "test/test2")), __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(node1, search_node_in_tree(current_node, "test/test2")), __LINE__,
+                        __FILE__, info);
     free(absolute_path);
 
-    destroy_noeud(node);
+    destroy_noeud(node1);
 
-    node = search_node_in_tree_with_node_creation(current_node, "test12/test42", false);
-    absolute_path = get_absolute_path_of_node(node);
+    node1 = search_node_in_tree_with_node_creation(current_node, "test12/test42", false);
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test12/test42", absolute_path, __LINE__, __FILE__, info);
-    handle_boolean_test(false, are_noeuds_equal(node, search_node_in_tree(current_node, "test12/test42")), __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(node1, search_node_in_tree(current_node, "test12/test42")), __LINE__,
+                        __FILE__, info);
     handle_boolean_test(true, search_node_in_tree(current_node, "test12/test42") == NULL, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    destroy_noeud(node);
+    destroy_noeud(node1);
 
-    node = search_node_in_tree_with_node_creation(current_node, "test/test", true);
-    absolute_path = get_absolute_path_of_node(node);
+    node1 = search_node_in_tree_with_node_creation(current_node, "test/test", true);
+    absolute_path = get_absolute_path_of_node(node1);
     handle_string_test("/test/test", absolute_path, __LINE__, __FILE__, info);
-    handle_boolean_test(false, are_noeuds_equal(node, search_node_in_tree(current_node, "test")), __LINE__, __FILE__, info);
+    handle_boolean_test(false, are_noeuds_equal(node1, search_node_in_tree(current_node, "test")), __LINE__, __FILE__,
+                        info);
     handle_boolean_test(true, search_node_in_tree(current_node, "test/test") == NULL, __LINE__, __FILE__, info);
     free(absolute_path);
 
-    destroy_noeud(node);
+    destroy_noeud(node1);
 
-    node = search_node_in_tree_with_node_creation(current_node, "./", false);
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree_with_node_creation(current_node, "./", false);
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree_with_node_creation(current_node, "../", false);
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree_with_node_creation(current_node, "../", false);
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree_with_node_creation(current_node, ".", false);
-    handle_boolean_test(true, !is_valid_name_node(node->nom), __LINE__, __FILE__, info);
-    destroy_noeud(node);
+    node1 = search_node_in_tree_with_node_creation(current_node, ".", false);
+    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    destroy_noeud(node1);
 
-    node = search_node_in_tree_with_node_creation(current_node, "..", false);
-    handle_boolean_test(true, !is_valid_name_node(node->nom), __LINE__, __FILE__, info);
-    destroy_noeud(node);
+    node1 = search_node_in_tree_with_node_creation(current_node, "..", false);
+    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    destroy_noeud(node1);
 
-    node = search_node_in_tree_with_node_creation(current_node, "./.././..", false);
-    handle_boolean_test(true, !is_valid_name_node(node->nom), __LINE__, __FILE__, info);
-    destroy_noeud(node);
+    node1 = search_node_in_tree_with_node_creation(current_node, "./.././..", false);
+    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    destroy_noeud(node1);
 
-    node = search_node_in_tree_with_node_creation(current_node, "./.././../test/.", false);
-    handle_boolean_test(true, !is_valid_name_node(node->nom), __LINE__, __FILE__, info);
-    destroy_noeud(node);
+    node1 = search_node_in_tree_with_node_creation(current_node, "./.././../test/.", false);
+    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    destroy_noeud(node1);
 
-    node = search_node_in_tree_with_node_creation(current_node, "./.././../test/./abc_efg", false);
-    handle_boolean_test(true, !is_valid_name_node(node->nom), __LINE__, __FILE__, info);
-    destroy_noeud(node);
+    node1 = search_node_in_tree_with_node_creation(current_node, "./.././../test/./abc_efg", false);
+    handle_boolean_test(true, !is_valid_name_node(node1->nom), __LINE__, __FILE__, info);
+    destroy_noeud(node1);
 
-    node = search_node_in_tree_with_node_creation(current_node, "./.././../test/", false);
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree_with_node_creation(current_node, "./.././../test/", false);
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree_with_node_creation(current_node, "test/test/", false);
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree_with_node_creation(current_node, "test/test/", false);
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
-    node = search_node_in_tree_with_node_creation(current_node, "./.././../test/new/test", false);
-    handle_boolean_test(true, node == NULL, __LINE__, __FILE__, info);
+    node1 = search_node_in_tree_with_node_creation(current_node, "./.././../test/new/test", false);
+    handle_boolean_test(true, node1 == NULL, __LINE__, __FILE__, info);
 
     destroy_tree();
 

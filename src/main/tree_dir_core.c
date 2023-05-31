@@ -3,20 +3,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "constants.h"
 #include "string_utils.h"
 #include "tree_dir_core.h"
-#include "constants.h"
 
 static noeud *search_node(noeud *, char *, bool, bool);
 static noeud *search_node_in_tree_with_iterator(noeud *, string_iterator *, bool, bool);
 
 static noeud *create_empty_noeud()
 {
-    noeud *node = malloc(sizeof(noeud));
+    noeud *node1 = malloc(sizeof(noeud));
 
-    assert(node != NULL);
+    assert(node1 != NULL);
 
-    return node;
+    return node1;
 }
 
 /*
@@ -27,7 +27,7 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
 {
     assert(pere != NULL);
 
-    noeud *node = create_empty_noeud();
+    noeud *node1 = create_empty_noeud();
 
     int length_nom = strlen(nom);
 
@@ -36,22 +36,22 @@ noeud *create_noeud(bool est_dossier, const char *nom, noeud *pere)
         length_nom = MAX_LENGTH_NOM - 1;
     }
 
-    memmove(node->nom, nom, length_nom);
-    assert(node->nom != NULL);
-    node->nom[length_nom] = '\0';
+    memmove(node1->nom, nom, length_nom);
+    assert(node1->nom != NULL);
+    node1->nom[length_nom] = '\0';
 
-    node->est_dossier = est_dossier;
-    node->fils = NULL;
+    node1->est_dossier = est_dossier;
+    node1->fils = NULL;
 
     if (pere == NULL)
     {
-        node->pere = node;
-        node->racine = node;
-        return node;
+        node1->pere = node1;
+        node1->racine = node1;
+        return node1;
     }
-    node->pere = pere;
-    node->racine = pere->racine;
-    return node;
+    node1->pere = pere;
+    node1->racine = pere->racine;
+    return node1;
 }
 
 /*
@@ -62,11 +62,11 @@ bool is_valid_name_node(const char *name) { return is_alphanumeric(name); }
 
 noeud *create_noeud_with_fils(bool is_directory, const char *name, noeud *parent, liste_noeud *children)
 {
-    noeud *node = create_noeud(is_directory, name, parent);
+    noeud *node1 = create_noeud(is_directory, name, parent);
 
-    node->fils = children;
+    node1->fils = children;
 
-    return node;
+    return node1;
 }
 
 /*
@@ -75,26 +75,26 @@ of our file system.
 */
 noeud *create_root_noeud()
 {
-    noeud *node = create_empty_noeud();
+    noeud *node1 = create_empty_noeud();
 
-    node->nom[0] = '\0';
-    node->pere = node;
-    node->racine = node;
-    node->est_dossier = true;
-    node->fils = NULL;
+    node1->nom[0] = '\0';
+    node1->pere = node1;
+    node1->racine = node1;
+    node1->est_dossier = true;
+    node1->fils = NULL;
 
-    return node;
+    return node1;
 }
 
-void destroy_noeud(noeud *node)
+void destroy_noeud(noeud *node1)
 {
-    assert(node != NULL);
+    assert(node1 != NULL);
 
-    if (node->est_dossier)
+    if (node1->est_dossier)
     {
-        destroy_liste_noeud(node->fils);
+        destroy_liste_noeud(node1->fils);
     }
-    free(node);
+    free(node1);
 }
 
 /*
@@ -115,55 +115,55 @@ bool are_noeuds_equal(const noeud *node1, const noeud *node2)
     return node1 == node2;
 }
 
-bool is_root_node(const noeud *node)
+bool is_root_node(const noeud *node1)
 {
-    if (node == NULL)
+    if (node1 == NULL)
     {
         return false;
     }
-    return (strcmp(node->nom, "") == 0) && node == node->pere && node == node->racine;
+    return (strcmp(node1->nom, "") == 0) && node1 == node1->pere && node1 == node1->racine;
 }
 
-bool is_fils_of_noeud_empty(const noeud *node)
+bool is_fils_of_noeud_empty(const noeud *node1)
 {
-    if (node == NULL)
+    if (node1 == NULL)
     {
         return true;
     }
-    return node->fils == NULL;
+    return node1->fils == NULL;
 }
 
 /*
 Returns true if the node pere contains node in his own fils.
 */
-bool contains_noeud(noeud *parent, noeud *node)
+bool contains_noeud(noeud *parent, noeud *node1)
 {
     if (parent == NULL)
     {
         return false;
     }
-    return contains_liste_noeud(parent->fils, node);
+    return contains_liste_noeud(parent->fils, node1);
 }
 
-unsigned get_number_of_fils(noeud *node)
+unsigned get_number_of_fils(noeud *node1)
 {
-    assert(node != NULL);
+    assert(node1 != NULL);
 
-    return size_liste_noeud(node->fils);
+    return size_liste_noeud(node1->fils);
 }
 
 /*
 Returns the node that has its nom equal to name.
 */
-noeud *get_a_fils_of_noeud(noeud *node, const char *name)
+noeud *get_a_fils_of_noeud(noeud *node1, const char *name)
 {
-    assert(node != NULL && name != NULL);
+    assert(node1 != NULL && name != NULL);
 
-    if (!node->est_dossier)
+    if (!node1->est_dossier)
     {
         return NULL;
     }
-    return get_a_noeud_in_liste_noeud(node->fils, name);
+    return get_a_noeud_in_liste_noeud(node1->fils, name);
 }
 
 /*
@@ -172,9 +172,9 @@ it will return true, otherwise it will return false.
 The append will be successful the parent is a directory and does
 not already contain node.
 */
-int append_a_fils_to_noeud(noeud *parent, noeud *node)
+int append_a_fils_to_noeud(noeud *parent, noeud *node1)
 {
-    assert(parent != NULL && node != NULL);
+    assert(parent != NULL && node1 != NULL);
 
     if (!parent->est_dossier)
     {
@@ -185,19 +185,19 @@ int append_a_fils_to_noeud(noeud *parent, noeud *node)
 
     if (parent->fils == NULL)
     {
-        parent->fils = create_liste_noeud(node);
+        parent->fils = create_liste_noeud(node1);
 
         append_error_value = SUCCESS;
     }
     else
     {
-        append_error_value = append_liste_noeud(parent->fils, node);
+        append_error_value = append_liste_noeud(parent->fils, node1);
     }
 
     if (append_error_value == SUCCESS)
     {
-        node->pere = parent;
-        node->racine = parent->racine;
+        node1->pere = parent;
+        node1->racine = parent->racine;
     }
     return append_error_value;
 }
@@ -207,21 +207,21 @@ Returns true if node has been removed from the fils of parent
 Otherwise, return false. If parent did not contain node or if
 the parent is not a directory it will fail.
 */
-int remove_a_node_from_fils(noeud *parent, noeud *node)
+int remove_a_node_from_fils(noeud *parent, noeud *node1)
 {
-    assert(parent != NULL && node != NULL);
+    assert(parent != NULL && node1 != NULL);
 
     if (!parent->est_dossier)
     {
         return INVALID_SELECTION;
     }
 
-    if (!contains_liste_noeud(parent->fils, node))
+    if (!contains_liste_noeud(parent->fils, node1))
     {
         return INVALID_SELECTION;
     }
 
-    parent->fils = remove_liste_noeud(parent->fils, node);
+    parent->fils = remove_liste_noeud(parent->fils, node1);
 
     return SUCCESS;
 }
@@ -240,27 +240,27 @@ int remove_a_fils_of_noeud(noeud *parent, const char *name)
         return INVALID_SELECTION;
     }
 
-    noeud *node = get_a_noeud_in_liste_noeud(parent->fils, name);
+    noeud *node1 = get_a_noeud_in_liste_noeud(parent->fils, name);
 
-    if (node == NULL)
+    if (node1 == NULL)
     {
         return INVALID_SELECTION;
     }
-    parent->fils = remove_liste_noeud(parent->fils, node);
-    destroy_noeud(node);
+    parent->fils = remove_liste_noeud(parent->fils, node1);
+    destroy_noeud(node1);
 
     return SUCCESS;
 }
 
-liste_noeud *create_liste_noeud(noeud *node)
+liste_noeud *create_liste_noeud(noeud *node1)
 {
-    assert(node != NULL);
+    assert(node1 != NULL);
 
     liste_noeud *node_list = malloc(sizeof(liste_noeud));
 
     assert(node_list != NULL);
 
-    node_list->no = node;
+    node_list->no = node1;
     node_list->succ = NULL;
 
     return node_list;
@@ -282,23 +282,23 @@ void destroy_liste_noeud(liste_noeud *node_list)
 /*
 Returns true if node_list contains node.
 */
-bool contains_liste_noeud(liste_noeud *node_list, noeud *node)
+bool contains_liste_noeud(liste_noeud *node_list, noeud *node1)
 {
     if (node_list == NULL)
     {
         return false;
     }
 
-    if (are_noeuds_equal(node_list->no, node))
+    if (are_noeuds_equal(node_list->no, node1))
     {
         return true;
     }
 
-    return contains_liste_noeud(node_list->succ, node);
+    return contains_liste_noeud(node_list->succ, node1);
 }
 
 /*
-Returns the number of noeuds in node_list.
+Returns the number of nodes in node_list.
 */
 unsigned size_liste_noeud(liste_noeud *node_list)
 {
@@ -334,36 +334,36 @@ Returns true if the append of node in node_list succeeds.
 Otherwise return false, this will happen if the node is already inside
 node_list.
 */
-int append_liste_noeud(liste_noeud *node_list, noeud *node)
+int append_liste_noeud(liste_noeud *node_list, noeud *node1)
 {
     assert(node_list != NULL);
 
-    if (strcmp(node_list->no->nom, node->nom) == 0)
+    if (strcmp(node_list->no->nom, node1->nom) == 0)
     {
         return INVALID_NAME;
     }
 
     if (node_list->succ == NULL)
     {
-        node_list->succ = create_liste_noeud(node);
+        node_list->succ = create_liste_noeud(node1);
         return SUCCESS;
     }
 
-    return append_liste_noeud(node_list->succ, node);
+    return append_liste_noeud(node_list->succ, node1);
 }
 
 /*
 Returns the new list without node if it finds node.
 Frees the removed list (but does not free node).
 */
-liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
+liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node1)
 {
     if (node_list == NULL)
     {
         return NULL;
     }
 
-    if (are_noeuds_equal(node_list->no, node))
+    if (are_noeuds_equal(node_list->no, node1))
     {
         liste_noeud *acc = node_list->succ;
         free(node_list);
@@ -371,7 +371,7 @@ liste_noeud *remove_liste_noeud(liste_noeud *node_list, noeud *node)
         return acc;
     }
 
-    node_list->succ = remove_liste_noeud(node_list->succ, node);
+    node_list->succ = remove_liste_noeud(node_list->succ, node1);
 
     return node_list;
 }
@@ -386,13 +386,13 @@ void destroy_tree()
 /*
 Returns the string containing the absolute path of the node.
 */
-char *get_absolute_path_of_node(const noeud *node)
+char *get_absolute_path_of_node(const noeud *node1)
 {
-    assert(node != NULL);
+    assert(node1 != NULL);
 
     char *absolute_path;
 
-    if (is_root_node(node))
+    if (is_root_node(node1))
     {
         absolute_path = malloc(2 * sizeof(char));
         assert(absolute_path != NULL);
@@ -402,21 +402,21 @@ char *get_absolute_path_of_node(const noeud *node)
         return absolute_path;
     }
 
-    if (is_root_node(node->pere))
+    if (is_root_node(node1->pere))
     {
         char *root_path = malloc(sizeof(char));
         assert(root_path != NULL);
         root_path[0] = '\0';
 
-        absolute_path = concat_two_words_with_delimiter(root_path, node->nom, '/');
+        absolute_path = concat_two_words_with_delimiter(root_path, node1->nom, '/');
 
         free(root_path);
 
         return absolute_path;
     }
 
-    char *parent_absolute_path = get_absolute_path_of_node(node->pere);
-    absolute_path = concat_two_words_with_delimiter(parent_absolute_path, node->nom, '/');
+    char *parent_absolute_path = get_absolute_path_of_node(node1->pere);
+    absolute_path = concat_two_words_with_delimiter(parent_absolute_path, node1->nom, '/');
 
     free(parent_absolute_path);
 
@@ -480,14 +480,14 @@ If the name is included then it will stop before reaching the end of
 the path and return a noeud with it's nom as the last word of the path.
 Otherwise applies the function to the found child
 */
-static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *iterator, bool is_name_included,
+static noeud *search_node_in_tree_with_iterator(noeud *node1, string_iterator *iterator, bool is_name_included,
                                                 bool is_directory)
 {
     if (!has_next_word(iterator) && !is_name_included)
     {
-        return node;
+        return node1;
     }
-    if (!node->est_dossier)
+    if (!node1->est_dossier)
     {
         return NULL;
     }
@@ -497,7 +497,7 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
     if (!has_next_word(iterator) && is_name_included)
     {
 
-        noeud *result = create_noeud(is_directory, name, node);
+        noeud *result = create_noeud(is_directory, name, node1);
 
         free(name);
         return result;
@@ -507,21 +507,21 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
     {
         free(name);
 
-        return search_node_in_tree_with_iterator(node, iterator, is_name_included, is_directory);
+        return search_node_in_tree_with_iterator(node1, iterator, is_name_included, is_directory);
     }
 
     if (strcmp(name, "..") == 0)
     {
         free(name);
 
-        if (node->pere == NULL)
+        if (node1->pere == NULL)
         {
             return NULL;
         }
-        return search_node_in_tree_with_iterator(node->pere, iterator, is_name_included, is_directory);
+        return search_node_in_tree_with_iterator(node1->pere, iterator, is_name_included, is_directory);
     }
 
-    noeud *next_node = get_a_fils_of_noeud(node, name);
+    noeud *next_node = get_a_fils_of_noeud(node1, name);
 
     free(name);
 
@@ -534,7 +534,7 @@ static noeud *search_node_in_tree_with_iterator(noeud *node, string_iterator *it
 }
 
 /*
-Returns true if the node2 is a parent of node1
+Returns true if the node2 is a parent of node.
  */
 bool is_noeud_inside(const noeud *node1, const noeud *node2)
 {
@@ -561,19 +561,19 @@ bool is_noeud_inside(const noeud *node1, const noeud *node2)
 }
 
 /*
-Returns the size of the longest name of fils of node
+Returns the size of the longest name of fils of node.
 */
-unsigned get_longest_name_length_of_node_fils(const noeud *node)
+unsigned get_longest_name_length_of_node_fils(const noeud *node1)
 {
-    assert(node != NULL);
+    assert(node1 != NULL);
 
-    if (!node->est_dossier)
+    if (!node1->est_dossier)
     {
         return 0;
     }
     unsigned max_len = 0;
 
-    for (liste_noeud *lst = node->fils; lst != NULL; lst = lst->succ)
+    for (liste_noeud *lst = node1->fils; lst != NULL; lst = lst->succ)
     {
         unsigned len_name = strlen(lst->no->nom);
 
@@ -586,22 +586,22 @@ unsigned get_longest_name_length_of_node_fils(const noeud *node)
 }
 
 /*
-Move the fils of node to a new node and frees node
+Move the fils of node to a new node and frees.node1
 */
-void move_fils_of_node_to_new_node(noeud *node, noeud *new_node)
+void move_fils_of_node_to_new_node(noeud *node1, noeud *new_node)
 {
-    assert(node != NULL && new_node != NULL);
+    assert(node1 != NULL && new_node != NULL);
 
     if (new_node->fils != NULL)
     {
         return;
     }
 
-    new_node->fils = node->fils;
+    new_node->fils = node1->fils;
 
-    for (liste_noeud *lst = node->fils; lst != NULL; lst = lst->succ)
+    for (liste_noeud *lst = node1->fils; lst != NULL; lst = lst->succ)
     {
         lst->no->pere = new_node;
     }
-    free(node);
+    free(node1);
 }

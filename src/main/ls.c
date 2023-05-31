@@ -1,11 +1,11 @@
+#include <assert.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
-#include <assert.h>
 
-#include "tree_dir_core.h"
 #include "command.h"
 #include "constants.h"
+#include "tree_dir_core.h"
 
 #define FILLER_CHAR ' '
 #define START_CONTOUR_CHAR '['
@@ -31,20 +31,20 @@ int ls(const command *cmd)
         return SUCCESS;
     }
 
-    noeud *node = search_node_in_tree(current_node, cmd->args[0]);
+    noeud *node1 = search_node_in_tree(current_node, cmd->args[0]);
 
-    if (node == NULL)
+    if (node1 == NULL)
     {
         write_result_command("Invalid path of directory.");
         return INVALID_PATH;
     }
-    if (!node->est_dossier)
+    if (!node1->est_dossier)
     {
         write_result_command("Invalid path of directory : the path of a file has been given.");
         return INVALID_SELECTION;
     }
 
-    print_ls(node);
+    print_ls(node1);
 
     return SUCCESS;
 }

@@ -43,33 +43,33 @@ static void test_pwd_function(test_info *info)
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    noeud *node = create_noeud(true, "test", root);
-    append_a_fils_to_noeud(root, node);
-    current_node = node;
+    noeud *node1 = create_noeud(true, "test", root);
+    append_a_fils_to_noeud(root, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    node = create_noeud(true, "test2", current_node);
-    append_a_fils_to_noeud(current_node, node);
-    current_node = node;
+    node1 = create_noeud(true, "test2", current_node);
+    append_a_fils_to_noeud(current_node, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    node = create_noeud(true, "test3", current_node);
-    append_a_fils_to_noeud(current_node, node);
-    current_node = node;
+    node1 = create_noeud(true, "test3", current_node);
+    append_a_fils_to_noeud(current_node, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    node = create_noeud(true, "test4", current_node);
-    append_a_fils_to_noeud(current_node, node);
-    current_node = node;
+    node1 = create_noeud(true, "test4", current_node);
+    append_a_fils_to_noeud(current_node, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
-    node = create_noeud(true, "test5", root);
-    append_a_fils_to_noeud(root, node);
-    current_node = node;
+    node1 = create_noeud(true, "test5", root);
+    append_a_fils_to_noeud(root, node1);
+    current_node = node1;
 
     handle_boolean_test(true, execute_command(c) == SUCCESS, __LINE__, __FILE__, info);
 
