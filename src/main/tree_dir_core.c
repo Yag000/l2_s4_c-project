@@ -23,9 +23,9 @@ static node *create_empty_node()
 Returns the node if nom is a valid name
 Otherwise it returns NULL
 */
-node *create_node(bool is_directory, const char *nom, node *pere)
+node *create_node(bool is_directory, const char *nom, node *parent)
 {
-    assert(pere != NULL);
+    assert(parent != NULL);
 
     node *node1 = create_empty_node();
 
@@ -43,14 +43,14 @@ node *create_node(bool is_directory, const char *nom, node *pere)
     node1->is_directory = is_directory;
     node1->fils = NULL;
 
-    if (pere == NULL)
+    if (parent == NULL)
     {
-        node1->pere = node1;
+        node1->parent = node1;
         node1->racine = node1;
         return node1;
     }
-    node1->pere = pere;
-    node1->racine = pere->racine;
+    node1->parent = parent;
+    node1->racine = parent->racine;
     return node1;
 }
 
@@ -70,7 +70,7 @@ node *create_node_with_fils(bool is_directory, const char *name, node *parent, l
 }
 
 /*
-Creates a node with pere and racine set to himself. It will represent the root
+Creates a node with parent and racine set to himself. It will represent the root
 of our file system.
 */
 node *create_root_node()
@@ -78,7 +78,7 @@ node *create_root_node()
     node *node1 = create_empty_node();
 
     node1->nom[0] = '\0';
-    node1->pere = node1;
+    node1->parent = node1;
     node1->racine = node1;
     node1->is_directory = true;
     node1->fils = NULL;
@@ -121,7 +121,7 @@ bool is_root_node(const node *node1)
     {
         return false;
     }
-    return (strcmp(node1->nom, "") == 0) && node1 == node1->pere && node1 == node1->racine;
+    return (strcmp(node1->nom, "") == 0) && node1 == node1->parent && node1 == node1->racine;
 }
 
 bool is_fils_of_node_empty(const node *node1)
@@ -134,7 +134,7 @@ bool is_fils_of_node_empty(const node *node1)
 }
 
 /*
-Returns true if the node pere contains node in his own fils.
+Returns true if the node parent contains node in his own fils.
 */
 bool contains_node(node *parent, node *node1)
 {
@@ -196,7 +196,7 @@ int append_a_fils_to_node(node *parent, node *node1)
 
     if (append_error_value == SUCCESS)
     {
-        node1->pere = parent;
+        node1->parent = parent;
         node1->racine = parent->racine;
     }
     return append_error_value;
@@ -402,7 +402,7 @@ char *get_absolute_path_of_node(const node *node1)
         return absolute_path;
     }
 
-    if (is_root_node(node1->pere))
+    if (is_root_node(node1->parent))
     {
         char *root_path = malloc(sizeof(char));
         assert(root_path != NULL);
@@ -415,7 +415,7 @@ char *get_absolute_path_of_node(const node *node1)
         return absolute_path;
     }
 
-    char *parent_absolute_path = get_absolute_path_of_node(node1->pere);
+    char *parent_absolute_path = get_absolute_path_of_node(node1->parent);
     absolute_path = concat_two_words_with_delimiter(parent_absolute_path, node1->nom, '/');
 
     free(parent_absolute_path);
@@ -514,11 +514,11 @@ static node *search_node_in_tree_with_iterator(node *node1, string_iterator *ite
     {
         free(name);
 
-        if (node1->pere == NULL)
+        if (node1->parent == NULL)
         {
             return NULL;
         }
-        return search_node_in_tree_with_iterator(node1->pere, iterator, is_name_included, is_directory);
+        return search_node_in_tree_with_iterator(node1->parent, iterator, is_name_included, is_directory);
     }
 
     node *next_node = get_a_fils_of_node(node1, name);
@@ -554,7 +554,7 @@ bool is_node_inside(const node *node1, const node *node2)
         {
             return true;
         }
-        node1 = node1->pere;
+        node1 = node1->parent;
     }
 
     return false;
@@ -601,7 +601,7 @@ void move_fils_of_node_to_new_node(node *node1, node *new_node)
 
     for (liste_node *lst = node1->fils; lst != NULL; lst = lst->succ)
     {
-        lst->no->pere = new_node;
+        lst->no->parent = new_node;
     }
     free(node1);
 }

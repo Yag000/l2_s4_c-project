@@ -42,14 +42,14 @@ int mv(const command *cmd)
         return INVALID_NAME;
     }
 
-    if (is_node_inside(node_to_append->pere, node_to_move))
+    if (is_node_inside(node_to_append->parent, node_to_move))
     {
         write_result_command("A directory cannot be moved inside itself.");
         destroy_node(node_to_append);
         return INVALID_SELECTION;
     }
 
-    int append_error_value = append_a_fils_to_node(node_to_append->pere, node_to_append);
+    int append_error_value = append_a_fils_to_node(node_to_append->parent, node_to_append);
 
     if (append_error_value == INVALID_NAME)
     {
@@ -65,7 +65,7 @@ int mv(const command *cmd)
         return FATAL_ERROR;
     }
 
-    int remove_error_value = remove_a_node_from_fils(node_to_move->pere, node_to_move);
+    int remove_error_value = remove_a_node_from_fils(node_to_move->parent, node_to_move);
 
     if (remove_error_value != SUCCESS)
     {

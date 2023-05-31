@@ -38,14 +38,14 @@ int cp(const command *cmd)
         return INVALID_NAME;
     }
 
-    if (is_node_inside(node_to_append->pere, node_to_copy))
+    if (is_node_inside(node_to_append->parent, node_to_copy))
     {
         write_result_command("An element cannot be copied inside a directory contained in the copy.");
         destroy_node(node_to_append);
         return INVALID_SELECTION;
     }
 
-    int append_error_value = append_a_fils_to_node(node_to_append->pere, node_to_append);
+    int append_error_value = append_a_fils_to_node(node_to_append->parent, node_to_append);
 
     if (append_error_value == INVALID_NAME)
     {

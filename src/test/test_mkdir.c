@@ -139,7 +139,7 @@ static void test_mkdir_long_path(test_info *info)
     char *name = "../../test5";
     command *cmd = string_to_command(name);
     handle_int_test(0, mkdir(cmd), __LINE__, __FILE__, info);
-    current_node = get_a_fils_of_node(current_node->pere->pere, "test5");
+    current_node = get_a_fils_of_node(current_node->parent->parent, "test5");
     assert(current_node != NULL);
     handle_boolean_test(true, current_node->is_directory, __LINE__, __FILE__, info);
     destroy_command(cmd);
@@ -157,7 +157,7 @@ static void test_mkdir_long_path(test_info *info)
     assert(current_node != NULL);
     handle_boolean_test(true, current_node->is_directory, __LINE__, __FILE__, info);
     handle_string_test("test", current_node->nom, __LINE__, __FILE__, info);
-    handle_boolean_test(true, current_node->racine == current_node->pere, __LINE__, __FILE__, info);
+    handle_boolean_test(true, current_node->racine == current_node->parent, __LINE__, __FILE__, info);
     destroy_command(cmd);
 
     destroy_tree();
@@ -170,7 +170,7 @@ static node *create_and_test_node_creation_without_path(const char *name, test_i
     node *created_node = get_a_fils_of_node(current_node, name);
     assert(created_node != NULL);
     handle_boolean_test(true, created_node->is_directory, __LINE__, __FILE__, info);
-    handle_boolean_test(true, created_node->pere == current_node, __LINE__, __FILE__, info);
+    handle_boolean_test(true, created_node->parent == current_node, __LINE__, __FILE__, info);
     destroy_command(cmd);
 
     return created_node;
