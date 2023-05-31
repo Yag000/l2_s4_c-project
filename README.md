@@ -1,6 +1,9 @@
 # C project for the S4 of the Computer Science Bachelor's Degree
 
-**(by Yago Iglesias Vazquez(@Yag000) and Gabin Dudillieu(@GabinDDL))**
+## Authors
+
+- Yago Iglesias Vázquez (@Yag000)
+- Gabin Dudillieu (@GabinDDL)
 
 ## Compilation and execution of the main program
 
