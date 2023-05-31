@@ -19,7 +19,7 @@
 #define FILE_TYPE_CHAR 'F'
 #define DIRECTORY_TYPE_CHAR 'D'
 
-static void print_with_depth(noeud *, unsigned, bool);
+static void print_with_depth(node *, unsigned, bool);
 static char *get_a_print_line(const char *, bool, unsigned, bool);
 static void add_start_transition_at_string(char *, unsigned, bool);
 static void add_file_name_at_string(char *, const char *, unsigned, unsigned);
@@ -41,7 +41,7 @@ int print(const command *cmd)
     return SUCCESS;
 }
 
-static void print_with_depth(noeud *node1, unsigned depth, bool is_last)
+static void print_with_depth(node *node1, unsigned depth, bool is_last)
 {
     char *line = get_a_print_line(node1->nom, node1->est_dossier, depth, is_last);
 
@@ -56,7 +56,7 @@ static void print_with_depth(noeud *node1, unsigned depth, bool is_last)
     {
         return;
     }
-    for (liste_noeud *lst = node1->fils; lst != NULL; lst = lst->succ)
+    for (liste_node *lst = node1->fils; lst != NULL; lst = lst->succ)
     {
         if (lst->succ == NULL)
         {

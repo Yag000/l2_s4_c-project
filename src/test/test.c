@@ -7,7 +7,7 @@
 #include "test_core.h"
 
 bool debug;
-noeud *current_node;
+node *current_node;
 
 static void update_test_info(test_info *, test_info *);
 

@@ -157,34 +157,34 @@ void handle_int_test(int expected, int actual, int line, const char *file, test_
     info->passed++;
 }
 
-noeud *create_basic_testing_tree()
+node *create_basic_testing_tree()
 {
-    noeud *root = create_root_noeud();
+    node *root = create_root_node();
 
-    noeud *node1 = create_noeud(true, "test", root);
-    append_a_fils_to_noeud(root, node1);
+    node *node1 = create_node(true, "test", root);
+    append_a_fils_to_node(root, node1);
 
-    append_a_fils_to_noeud(node1, create_noeud(false, "test2", node1));
-    append_a_fils_to_noeud(node1, create_noeud(true, "test3", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test4", node1));
+    append_a_fils_to_node(node1, create_node(false, "test2", node1));
+    append_a_fils_to_node(node1, create_node(true, "test3", node1));
+    append_a_fils_to_node(node1, create_node(false, "test4", node1));
 
-    noeud *node2 = create_noeud(true, "test5", node1);
-    append_a_fils_to_noeud(node1, node2);
+    node *node2 = create_node(true, "test5", node1);
+    append_a_fils_to_node(node1, node2);
 
-    append_a_fils_to_noeud(node2, create_noeud(false, "test6", node2));
-    append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
-    append_a_fils_to_noeud(node2, create_noeud(false, "test8", node2));
+    append_a_fils_to_node(node2, create_node(false, "test6", node2));
+    append_a_fils_to_node(node2, create_node(true, "test7", node2));
+    append_a_fils_to_node(node2, create_node(false, "test8", node2));
 
-    append_a_fils_to_noeud(node1, create_noeud(false, "test9", node2));
-    append_a_fils_to_noeud(root, create_noeud(false, "test10", root));
-    append_a_fils_to_noeud(root, create_noeud(true, "test11", root));
+    append_a_fils_to_node(node1, create_node(false, "test9", node2));
+    append_a_fils_to_node(root, create_node(false, "test10", root));
+    append_a_fils_to_node(root, create_node(true, "test11", root));
 
-    node1 = create_noeud(true, "test12", root);
+    node1 = create_node(true, "test12", root);
 
-    append_a_fils_to_noeud(root, node1);
-    append_a_fils_to_noeud(node1, create_noeud(false, "test13", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test14", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test15", node1));
+    append_a_fils_to_node(root, node1);
+    append_a_fils_to_node(node1, create_node(false, "test13", node1));
+    append_a_fils_to_node(node1, create_node(false, "test14", node1));
+    append_a_fils_to_node(node1, create_node(false, "test15", node1));
 
     return root;
 }

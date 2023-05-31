@@ -13,7 +13,7 @@
 #define FILE_TYPE_CHAR 'F'
 #define DIRECTORY_TYPE_CHAR 'D'
 
-static void print_ls(noeud *);
+static void print_ls(node *);
 static char *get_line_ls(const char *, bool, unsigned);
 static void add_transition_at_string(char *, unsigned, unsigned);
 static void add_file_type_at_string(char *, unsigned, bool);
@@ -31,7 +31,7 @@ int ls(const command *cmd)
         return SUCCESS;
     }
 
-    noeud *node1 = search_node_in_tree(current_node, cmd->args[0]);
+    node *node1 = search_node_in_tree(current_node, cmd->args[0]);
 
     if (node1 == NULL)
     {
@@ -49,11 +49,11 @@ int ls(const command *cmd)
     return SUCCESS;
 }
 
-static void print_ls(noeud *noeud)
+static void print_ls(node *node)
 {
-    unsigned max_length_name = get_longest_name_length_of_node_fils(noeud);
+    unsigned max_length_name = get_longest_name_length_of_node_fils(node);
 
-    for (liste_noeud *lst = noeud->fils; lst != NULL; lst = lst->succ)
+    for (liste_node *lst = node->fils; lst != NULL; lst = lst->succ)
     {
         char *line = get_line_ls(lst->no->nom, lst->no->est_dossier, max_length_name);
 

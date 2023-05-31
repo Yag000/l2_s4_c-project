@@ -11,20 +11,20 @@ int rm(const command *cmd)
     {
         return INVALID_NUMBER_OF_ARGS;
     }
-    noeud *node1 = search_node_in_tree(current_node, cmd->args[0]);
+    node *node1 = search_node_in_tree(current_node, cmd->args[0]);
 
     if (node1 == NULL)
     {
         write_result_command("Invalid path given.");
         return INVALID_PATH;
     }
-    if (is_noeud_inside(current_node, node1))
+    if (is_node_inside(current_node, node1))
     {
         write_result_command("A directory that contains the current folder cannot be deleted.");
         return INVALID_SELECTION;
     }
 
-    int remove_error_value = remove_a_fils_of_noeud(node1->pere, node1->nom);
+    int remove_error_value = remove_a_fils_of_node(node1->pere, node1->nom);
 
     if (remove_error_value != SUCCESS)
     {

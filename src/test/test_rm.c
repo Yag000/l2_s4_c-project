@@ -176,7 +176,7 @@ static void test_error_of_rm(test_info *info)
     handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
-    destroy_noeud(current_node->racine);
+    destroy_node(current_node->racine);
 
     close_file(out_stream, out_stream_path);
 }

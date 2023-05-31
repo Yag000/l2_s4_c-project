@@ -51,49 +51,49 @@ static void test_print_while_creating_tree(test_info *info)
     assert(tab_command != NULL);
     command *cmd = create_command(get_alloc_pointer_of_string("print"), 0, tab_command);
 
-    noeud *root = create_root_noeud();
+    node *root = create_root_node();
     current_node = root;
 
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    noeud *node1 = create_noeud(true, "test", root);
-    append_a_fils_to_noeud(root, node1);
+    node *node1 = create_node(true, "test", root);
+    append_a_fils_to_node(root, node1);
 
-    append_a_fils_to_noeud(node1, create_noeud(false, "test2", node1));
-    append_a_fils_to_noeud(node1, create_noeud(true, "test3", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test4", node1));
+    append_a_fils_to_node(node1, create_node(false, "test2", node1));
+    append_a_fils_to_node(node1, create_node(true, "test3", node1));
+    append_a_fils_to_node(node1, create_node(false, "test4", node1));
 
-    noeud *node2 = create_noeud(true, "test5", node1);
-    append_a_fils_to_noeud(node1, node2);
+    node *node2 = create_node(true, "test5", node1);
+    append_a_fils_to_node(node1, node2);
 
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
-    append_a_fils_to_noeud(node2, create_noeud(false, "test6", node2));
-    append_a_fils_to_noeud(node2, create_noeud(true, "test7", node2));
-    append_a_fils_to_noeud(node2, create_noeud(false, "test8", node2));
+    append_a_fils_to_node(node2, create_node(false, "test6", node2));
+    append_a_fils_to_node(node2, create_node(true, "test7", node2));
+    append_a_fils_to_node(node2, create_node(false, "test8", node2));
 
-    append_a_fils_to_noeud(node1, create_noeud(false, "test9", node2));
-    append_a_fils_to_noeud(root, create_noeud(false, "test10", root));
-    append_a_fils_to_noeud(root, create_noeud(true, "test11", root));
+    append_a_fils_to_node(node1, create_node(false, "test9", node2));
+    append_a_fils_to_node(root, create_node(false, "test10", root));
+    append_a_fils_to_node(root, create_node(true, "test11", root));
 
-    node1 = create_noeud(true, "test12", root);
+    node1 = create_node(true, "test12", root);
 
-    append_a_fils_to_noeud(root, node1);
-    append_a_fils_to_noeud(node1, create_noeud(false, "test13", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test14", node1));
-    append_a_fils_to_noeud(node1, create_noeud(false, "test15", node1));
+    append_a_fils_to_node(root, node1);
+    append_a_fils_to_node(node1, create_node(false, "test13", node1));
+    append_a_fils_to_node(node1, create_node(false, "test14", node1));
+    append_a_fils_to_node(node1, create_node(false, "test15", node1));
 
     handle_boolean_test(true, execute_command(cmd) == SUCCESS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
-    destroy_noeud(root);
+    destroy_node(root);
 
     close_file(out_stream, out_stream_path);
 }
 
 static void test_illegal_number_of_args_of_print(test_info *info)
 {
-    current_node = create_root_noeud();
+    current_node = create_root_node();
     out_stream_path = "src/resources/unit_tests/output/test_print_illegal_number_of_args.txt";
     out_stream = open_file(out_stream_path, "w");
 
@@ -112,7 +112,7 @@ static void test_illegal_number_of_args_of_print(test_info *info)
     handle_boolean_test(true, execute_command(cmd) == INVALID_NUMBER_OF_ARGS, __LINE__, __FILE__, info);
 
     destroy_command(cmd);
-    destroy_noeud(current_node);
+    destroy_node(current_node);
 
     close_file(out_stream, out_stream_path);
 }

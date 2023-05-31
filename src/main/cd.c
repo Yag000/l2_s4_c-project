@@ -17,7 +17,7 @@ int cd(const command *cmd)
         return SUCCESS;
     }
 
-    noeud *tmp = search_node_in_tree(current_node, cmd->args[0]);
+    node *tmp = search_node_in_tree(current_node, cmd->args[0]);
 
     if (tmp == NULL || !tmp->est_dossier)
     {

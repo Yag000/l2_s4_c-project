@@ -95,7 +95,7 @@ static void test_go_to_root(test_info *info)
     out_stream = open_file(out_stream_path, "w");
 
     current_node = current_node->racine;
-    current_node = get_a_fils_of_noeud(current_node, "test");
+    current_node = get_a_fils_of_node(current_node, "test");
     command *cmd = create_command("cd", 0, NULL);
     print(cmd);
     handle_int_test(SUCCESS, cd(cmd), __LINE__, __FILE__, info);

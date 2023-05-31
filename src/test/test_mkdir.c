@@ -15,7 +15,7 @@ static void test_mkdir_already_exists(test_info *);
 static void test_mkdir_long_path(test_info *);
 
 static void invalid_name_format_test_handler(const char *, test_info *);
-static noeud *create_and_test_node_creation_without_path(const char *, test_info *);
+static node *create_and_test_node_creation_without_path(const char *, test_info *);
 
 static command *string_to_command(const char *);
 
@@ -48,7 +48,7 @@ static void test_mkdir_empty(test_info *info)
 {
     print_test_name("Testing mkdir with empty name");
 
-    current_node = create_root_noeud();
+    current_node = create_root_node();
 
     command *cmd = string_to_command("");
     handle_int_test(INVALID_PATH, mkdir(cmd), __LINE__, __FILE__, info);
@@ -61,7 +61,7 @@ static void test_mkdir_invalid_name(test_info *info)
 {
     print_test_name("Testing mkdir with invalid name");
 
-    current_node = create_root_noeud();
+    current_node = create_root_node();
 
     invalid_name_format_test_handler("te|st", info);
     invalid_name_format_test_handler("te\\st", info);
@@ -89,7 +89,7 @@ static void test_mkdir_valid_name(test_info *info)
 {
     print_test_name("Testing mkdir with valid name");
 
-    current_node = create_root_noeud();
+    current_node = create_root_node();
 
     create_and_test_node_creation_without_path("test", info);
     current_node = create_and_test_node_creation_without_path("test1", info);
@@ -104,9 +104,9 @@ static void test_mkdir_already_exists(test_info *info)
 {
     print_test_name("Testing mkdir with already existing name");
 
-    current_node = create_root_noeud();
+    current_node = create_root_node();
 
-    noeud *created_node = create_and_test_node_creation_without_path("test", info);
+    node *created_node = create_and_test_node_creation_without_path("test", info);
 
     char *name = "test";
     command *cmd = string_to_command(name);
@@ -129,7 +129,7 @@ static void test_mkdir_long_path(test_info *info)
 {
 
     print_test_name("Testing mkdir with long paths");
-    current_node = create_root_noeud();
+    current_node = create_root_node();
 
     current_node = create_and_test_node_creation_without_path("test1", info);
     current_node = create_and_test_node_creation_without_path("test2", info);
@@ -139,7 +139,7 @@ static void test_mkdir_long_path(test_info *info)
     char *name = "../../test5";
     command *cmd = string_to_command(name);
     handle_int_test(0, mkdir(cmd), __LINE__, __FILE__, info);
-    current_node = get_a_fils_of_noeud(current_node->pere->pere, "test5");
+    current_node = get_a_fils_of_node(current_node->pere->pere, "test5");
     assert(current_node != NULL);
     handle_boolean_test(true, current_node->est_dossier, __LINE__, __FILE__, info);
     destroy_command(cmd);
@@ -153,7 +153,7 @@ static void test_mkdir_long_path(test_info *info)
     name = "/test";
     cmd = string_to_command(name);
     handle_int_test(0, mkdir(cmd), __LINE__, __FILE__, info);
-    current_node = get_a_fils_of_noeud(current_node->racine, "test");
+    current_node = get_a_fils_of_node(current_node->racine, "test");
     assert(current_node != NULL);
     handle_boolean_test(true, current_node->est_dossier, __LINE__, __FILE__, info);
     handle_string_test("test", current_node->nom, __LINE__, __FILE__, info);
@@ -163,11 +163,11 @@ static void test_mkdir_long_path(test_info *info)
     destroy_tree();
 }
 
-static noeud *create_and_test_node_creation_without_path(const char *name, test_info *info)
+static node *create_and_test_node_creation_without_path(const char *name, test_info *info)
 {
     command *cmd = string_to_command(name);
     handle_int_test(0, mkdir(cmd), __LINE__, __FILE__, info);
-    noeud *created_node = get_a_fils_of_noeud(current_node, name);
+    node *created_node = get_a_fils_of_node(current_node, name);
     assert(created_node != NULL);
     handle_boolean_test(true, created_node->est_dossier, __LINE__, __FILE__, info);
     handle_boolean_test(true, created_node->pere == current_node, __LINE__, __FILE__, info);
