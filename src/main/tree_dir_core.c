@@ -23,7 +23,7 @@ static node *create_empty_node()
 Returns the node if nom is a valid name
 Otherwise it returns NULL
 */
-node *create_node(bool est_dossier, const char *nom, node *pere)
+node *create_node(bool is_directory, const char *nom, node *pere)
 {
     assert(pere != NULL);
 
@@ -40,7 +40,7 @@ node *create_node(bool est_dossier, const char *nom, node *pere)
     assert(node1->nom != NULL);
     node1->nom[length_nom] = '\0';
 
-    node1->est_dossier = est_dossier;
+    node1->is_directory = is_directory;
     node1->fils = NULL;
 
     if (pere == NULL)
@@ -80,7 +80,7 @@ node *create_root_node()
     node1->nom[0] = '\0';
     node1->pere = node1;
     node1->racine = node1;
-    node1->est_dossier = true;
+    node1->is_directory = true;
     node1->fils = NULL;
 
     return node1;
@@ -90,7 +90,7 @@ void destroy_node(node *node1)
 {
     assert(node1 != NULL);
 
-    if (node1->est_dossier)
+    if (node1->is_directory)
     {
         destroy_liste_node(node1->fils);
     }
@@ -159,7 +159,7 @@ node *get_a_fils_of_node(node *node1, const char *name)
 {
     assert(node1 != NULL && name != NULL);
 
-    if (!node1->est_dossier)
+    if (!node1->is_directory)
     {
         return NULL;
     }
@@ -176,7 +176,7 @@ int append_a_fils_to_node(node *parent, node *node1)
 {
     assert(parent != NULL && node1 != NULL);
 
-    if (!parent->est_dossier)
+    if (!parent->is_directory)
     {
         return INVALID_SELECTION;
     }
@@ -211,7 +211,7 @@ int remove_a_node_from_fils(node *parent, node *node1)
 {
     assert(parent != NULL && node1 != NULL);
 
-    if (!parent->est_dossier)
+    if (!parent->is_directory)
     {
         return INVALID_SELECTION;
     }
@@ -235,7 +235,7 @@ int remove_a_fils_of_node(node *parent, const char *name)
 {
     assert(parent != NULL);
 
-    if (!parent->est_dossier)
+    if (!parent->is_directory)
     {
         return INVALID_SELECTION;
     }
@@ -487,7 +487,7 @@ static node *search_node_in_tree_with_iterator(node *node1, string_iterator *ite
     {
         return node1;
     }
-    if (!node1->est_dossier)
+    if (!node1->is_directory)
     {
         return NULL;
     }
@@ -567,7 +567,7 @@ unsigned get_longest_name_length_of_node_fils(const node *node1)
 {
     assert(node1 != NULL);
 
-    if (!node1->est_dossier)
+    if (!node1->is_directory)
     {
         return 0;
     }

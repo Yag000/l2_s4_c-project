@@ -43,7 +43,7 @@ int print(const command *cmd)
 
 static void print_with_depth(node *node1, unsigned depth, bool is_last)
 {
-    char *line = get_a_print_line(node1->nom, node1->est_dossier, depth, is_last);
+    char *line = get_a_print_line(node1->nom, node1->is_directory, depth, is_last);
 
     write_result_command(line);
     if (last_line != NULL)
@@ -52,7 +52,7 @@ static void print_with_depth(node *node1, unsigned depth, bool is_last)
     }
     last_line = line;
 
-    if (!node1->est_dossier)
+    if (!node1->is_directory)
     {
         return;
     }
@@ -69,7 +69,7 @@ static void print_with_depth(node *node1, unsigned depth, bool is_last)
     }
 }
 
-static char *get_a_print_line(const char *nom, bool est_dossier, unsigned depth, bool is_last)
+static char *get_a_print_line(const char *nom, bool is_directory, unsigned depth, bool is_last)
 {
     unsigned len_start_transition = depth * FILLER_SIZE;
     unsigned len_name = strlen(nom);
@@ -87,7 +87,7 @@ static char *get_a_print_line(const char *nom, bool est_dossier, unsigned depth,
 
     result[len_start_transition + len_name] = FILLER_CHAR;
 
-    add_file_type_at_string(result, len_start_transition + len_name + 1, est_dossier);
+    add_file_type_at_string(result, len_start_transition + len_name + 1, is_directory);
 
     result[len_start_transition + len_name + 4] = '\0';
 
@@ -155,11 +155,11 @@ static void add_file_name_at_string(char *string_to_fill, const char *nom, unsig
     }
 }
 
-static void add_file_type_at_string(char *string_to_fill, unsigned start, bool est_dossier)
+static void add_file_type_at_string(char *string_to_fill, unsigned start, bool is_directory)
 {
     string_to_fill[start] = START_CONTOUR_CHAR;
 
-    if (est_dossier)
+    if (is_directory)
     {
         string_to_fill[start + 1] = DIRECTORY_TYPE_CHAR;
     }

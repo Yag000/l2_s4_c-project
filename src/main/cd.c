@@ -19,7 +19,7 @@ int cd(const command *cmd)
 
     node *tmp = search_node_in_tree(current_node, cmd->args[0]);
 
-    if (tmp == NULL || !tmp->est_dossier)
+    if (tmp == NULL || !tmp->is_directory)
     {
         write_result_command("No such file or directory.");
         return INVALID_PATH;

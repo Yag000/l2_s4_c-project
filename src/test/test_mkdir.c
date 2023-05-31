@@ -141,7 +141,7 @@ static void test_mkdir_long_path(test_info *info)
     handle_int_test(0, mkdir(cmd), __LINE__, __FILE__, info);
     current_node = get_a_fils_of_node(current_node->pere->pere, "test5");
     assert(current_node != NULL);
-    handle_boolean_test(true, current_node->est_dossier, __LINE__, __FILE__, info);
+    handle_boolean_test(true, current_node->is_directory, __LINE__, __FILE__, info);
     destroy_command(cmd);
     char *path = get_absolute_path_of_node(current_node);
     handle_string_test("/test1/test2/test5", path, __LINE__, __FILE__, info);
@@ -155,7 +155,7 @@ static void test_mkdir_long_path(test_info *info)
     handle_int_test(0, mkdir(cmd), __LINE__, __FILE__, info);
     current_node = get_a_fils_of_node(current_node->racine, "test");
     assert(current_node != NULL);
-    handle_boolean_test(true, current_node->est_dossier, __LINE__, __FILE__, info);
+    handle_boolean_test(true, current_node->is_directory, __LINE__, __FILE__, info);
     handle_string_test("test", current_node->nom, __LINE__, __FILE__, info);
     handle_boolean_test(true, current_node->racine == current_node->pere, __LINE__, __FILE__, info);
     destroy_command(cmd);
@@ -169,7 +169,7 @@ static node *create_and_test_node_creation_without_path(const char *name, test_i
     handle_int_test(0, mkdir(cmd), __LINE__, __FILE__, info);
     node *created_node = get_a_fils_of_node(current_node, name);
     assert(created_node != NULL);
-    handle_boolean_test(true, created_node->est_dossier, __LINE__, __FILE__, info);
+    handle_boolean_test(true, created_node->is_directory, __LINE__, __FILE__, info);
     handle_boolean_test(true, created_node->pere == current_node, __LINE__, __FILE__, info);
     destroy_command(cmd);
 

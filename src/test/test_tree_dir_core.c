@@ -54,11 +54,11 @@ static void test_create_node(test_info *info)
     node *pere = create_root_node();
     handle_boolean_test(true, are_nodes_equal(pere, pere->pere), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(pere, pere->racine), __LINE__, __FILE__, info);
-    handle_boolean_test(true, pere->est_dossier, __LINE__, __FILE__, info);
+    handle_boolean_test(true, pere->is_directory, __LINE__, __FILE__, info);
 
     node *node1 = create_node(false, "test", pere);
 
-    handle_boolean_test(false, node1->est_dossier, __LINE__, __FILE__, info);
+    handle_boolean_test(false, node1->is_directory, __LINE__, __FILE__, info);
     handle_string_test("test", node1->nom, __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(pere, node1->pere), __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(pere->racine, node1->racine), __LINE__, __FILE__, info);
@@ -67,7 +67,7 @@ static void test_create_node(test_info *info)
     liste_node *node_list = create_liste_node(node1);
     node *node2 = create_node_with_fils(true, "test2", pere, node_list);
 
-    handle_boolean_test(true, node2->est_dossier, __LINE__, __FILE__, info);
+    handle_boolean_test(true, node2->is_directory, __LINE__, __FILE__, info);
     handle_string_test("test2", node2->nom, __LINE__, __FILE__, info);
     handle_boolean_test(true, are_nodes_equal(pere, node2->pere), __LINE__, __FILE__, info);
     handle_boolean_test(true, node2->fils != NULL, __LINE__, __FILE__, info);

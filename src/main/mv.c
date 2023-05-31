@@ -26,7 +26,7 @@ int mv(const command *cmd)
     }
 
     node *node_to_append =
-        search_node_in_tree_with_node_creation(current_node, cmd->args[1], node_to_move->est_dossier);
+        search_node_in_tree_with_node_creation(current_node, cmd->args[1], node_to_move->is_directory);
 
     if (node_to_append == NULL)
     {

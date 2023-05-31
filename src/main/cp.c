@@ -22,7 +22,7 @@ int cp(const command *cmd)
     }
 
     node *node_to_append =
-        search_node_in_tree_with_node_creation(current_node, cmd->args[1], node_to_copy->est_dossier);
+        search_node_in_tree_with_node_creation(current_node, cmd->args[1], node_to_copy->is_directory);
 
     if (node_to_append == NULL)
     {
@@ -74,13 +74,13 @@ to avoid the problem of same name in append_a_fils_to_node.
 */
 static void copy_content_of(node *node1, node *node2)
 {
-    if (!node1->est_dossier || !node2->est_dossier)
+    if (!node1->is_directory || !node2->is_directory)
     {
         return;
     }
     for (liste_node *lst = node2->fils; lst != NULL; lst = lst->succ)
     {
-        node *node_to_append = create_node(lst->no->est_dossier, lst->no->nom, node1);
+        node *node_to_append = create_node(lst->no->is_directory, lst->no->nom, node1);
         append_a_fils_to_node(node1, node_to_append);
 
         copy_content_of(node_to_append, lst->no);
